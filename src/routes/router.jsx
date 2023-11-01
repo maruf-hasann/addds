@@ -14,6 +14,8 @@ import AddAcademicGrade from "../pages/AcademicGrade/AddAcademicGrade/AddAcademi
 import AllAcademicGrade from "../pages/AcademicGrade/AllAcademicGrade/AllAcademicGrade";
 import AddTutoringSubject from "../pages/TutoringSubject/AddTutoringSubject/AddTutoringSubject";
 import AllTutoringSubject from "../pages/TutoringSubject/AllTutoringSubject/AllTutoringSubject";
+import AddCurriculumBoard from "../pages/CurriculumBoard/AddCurriculumBoard/AddCurriculumBoard";
+import AllCurriculumBoard from "../pages/CurriculumBoard/AllCurriculumBoard/AllCurriculumBoard";
 
 export const router = createBrowserRouter([
   {
@@ -72,14 +74,14 @@ export const router = createBrowserRouter([
         path: "/all-tutoring-subjects",
         element: <AllTutoringSubject />,
       },
-      // {
-      //   path: "/add-curriculum-board",
-      //   element: <AddCurriculumBoard />,
-      // },
-      // {
-      //   path: "/all-curriculum-board",
-      //   element: <AllCurriculumBoard />,
-      // },
+      {
+        path: "/add-curriculum-board",
+        element: <AddCurriculumBoard />,
+      },
+      {
+        path: "/all-curriculum-boards",
+        element: <AllCurriculumBoard />,
+      },
       // {
       //   path: "/add-tutors-info",
       //   element: <AddTutorsInfo />,
