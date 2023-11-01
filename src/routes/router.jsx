@@ -12,6 +12,7 @@ import AddAcademicClass from "../pages/AcademicClass/AddAcademicClass/AddAcademi
 import AllAcademicClass from "../pages/AcademicClass/AllAcademicClass/AllAcademicClass";
 import AddAcademicGrade from "../pages/AcademicGrade/AddAcademicGrade/AddAcademicGrade";
 import AllAcademicGrade from "../pages/AcademicGrade/AllAcademicGrade/AllAcademicGrade";
+import AddTutoringSubject from "../pages/TutoringSubject/AddTutoringSubject/AddTutoringSubject";
 
 export const router = createBrowserRouter([
   {
@@ -62,10 +63,10 @@ export const router = createBrowserRouter([
         path: "/all-academic-grades",
         element: <AllAcademicGrade />,
       },
-      // {
-      //   path: "/add-tutoring-subject",
-      //   element: <AddTutoringSubject />,
-      // },
+      {
+        path: "/add-tutoring-subject",
+        element: <AddTutoringSubject />,
+      },
       // {
       //   path: "/all-tutoring-subject",
       //   element: <AllTutoringSubject />,
