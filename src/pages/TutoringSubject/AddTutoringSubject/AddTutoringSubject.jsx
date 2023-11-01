@@ -19,7 +19,6 @@ const AddTutoringSubject = () => {
     setIsLoading(true);
   };
 
-  console.log(name);
 
   useEffect(() => {
     if (isLoading) {

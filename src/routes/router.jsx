@@ -16,6 +16,8 @@ import AddTutoringSubject from "../pages/TutoringSubject/AddTutoringSubject/AddT
 import AllTutoringSubject from "../pages/TutoringSubject/AllTutoringSubject/AllTutoringSubject";
 import AddCurriculumBoard from "../pages/CurriculumBoard/AddCurriculumBoard/AddCurriculumBoard";
 import AllCurriculumBoard from "../pages/CurriculumBoard/AllCurriculumBoard/AllCurriculumBoard";
+import AddTutorsInfo from "../pages/TutorsInfo/AddTutorsInfo/AddTutorsInfo";
+import AllTutoringInfo from "../pages/TutorsInfo/AllTutorsInfo/AllTutorsInfo";
 
 export const router = createBrowserRouter([
   {
@@ -82,14 +84,14 @@ export const router = createBrowserRouter([
         path: "/all-curriculum-boards",
         element: <AllCurriculumBoard />,
       },
-      // {
-      //   path: "/add-tutors-info",
-      //   element: <AddTutorsInfo />,
-      // },
-      // {
-      //   path: "/all-tutors-info",
-      //   element: <AllTutorsInfo />,
-      // },
+      {
+        path: "/add-tutor-info",
+        element: <AddTutorsInfo />,
+      },
+      {
+        path: "/all-tutor-infos",
+        element: <AllTutoringInfo />,
+      },
       
     ],
   },
