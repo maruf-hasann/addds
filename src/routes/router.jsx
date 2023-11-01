@@ -8,6 +8,7 @@ import AllCollege from "../pages/College/AllCollege/AllCollege";
 import AddCollege from "../pages/College/AddCollege/AddCollege";
 import AddSchool from "../pages/School/AddSchool/AddSchool";
 import AllSchool from "../pages/School/AllSchool/AllSchool";
+import AddAcademicClass from "../pages/AcademicClass/AddAcademicClass/AddAcademicClass";
 
 export const router = createBrowserRouter([
   {
@@ -42,10 +43,10 @@ export const router = createBrowserRouter([
         path: "/all-schools",
         element: <AllSchool />,
       },
-      // {
-      //   path: "/add-academic-class",
-      //   element: <AddAcademicClass />,
-      // },
+      {
+        path: "/add-academic-class",
+        element: <AddAcademicClass />,
+      },
       // {
       //   path: "/all-academic-class",
       //   element: <AllAcademicClass />,
