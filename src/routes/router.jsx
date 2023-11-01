@@ -10,6 +10,7 @@ import AddSchool from "../pages/School/AddSchool/AddSchool";
 import AllSchool from "../pages/School/AllSchool/AllSchool";
 import AddAcademicClass from "../pages/AcademicClass/AddAcademicClass/AddAcademicClass";
 import AllAcademicClass from "../pages/AcademicClass/AllAcademicClass/AllAcademicClass";
+import AddAcademicGrade from "../pages/AcademicGrade/AddAcademicGrade/AddAcademicGrade";
 
 export const router = createBrowserRouter([
   {
@@ -52,10 +53,10 @@ export const router = createBrowserRouter([
         path: "/all-academic-classes",
         element: <AllAcademicClass />,
       },
-      // {
-      //   path: "/add-academic-grade",
-      //   element: <AddAcademicGrade />,
-      // },
+      {
+        path: "/add-academic-grade",
+        element: <AddAcademicGrade />,
+      },
       // {
       //   path: "/all-academic-grade",
       //   element: <AllAcademicGrade />,
