@@ -11,15 +11,113 @@ const MainSideBar = () => {
   const menus = [
     {
       id: 1,
-      name: "Course",
+      name: "Education Variant",
       subMenus: [
         {
-          name: "add Course",
-          url: "./add-course",
+          name: "Add Education Variant",
+          url: "./add-education-variant",
         },
         {
-          name: "all Courses",
-          url: "./all-courses",
+          name: "All Education Variants",
+          url: "./all-education-variants",
+        },
+      ],
+    },
+    {
+      id: 2,
+      name: "College",
+      subMenus: [
+        {
+          name: "Add College",
+          url: "./add-college",
+        },
+        {
+          name: "All Colleges",
+          url: "./all-colleges",
+        },
+      ],
+    },
+    {
+      id: 3,
+      name: "School",
+      subMenus: [
+        {
+          name: "Add School",
+          url: "./add-school",
+        },
+        {
+          name: "All Schools",
+          url: "./all-schools",
+        },
+      ],
+    },
+    {
+      id: 4,
+      name: "Academic Class",
+      subMenus: [
+        {
+          name: "Add Academic Class",
+          url: "./add-academic-class",
+        },
+        {
+          name: "All Academic Classes",
+          url: "./all-academic-classes",
+        },
+      ],
+    },
+    {
+      id: 5,
+      name: "Academic Grade",
+      subMenus: [
+        {
+          name: "Add Academic Grade",
+          url: "./add-academic-grade",
+        },
+        {
+          name: "All Academic Grades",
+          url: "./all-academic-grades",
+        },
+      ],
+    },
+    {
+      id: 6,
+      name: "Tutoring Subject",
+      subMenus: [
+        {
+          name: "Add Tutoring Subject",
+          url: "./add-tutoring-subject",
+        },
+        {
+          name: "All Tutoring Subjects",
+          url: "./all-tutoring-subjects",
+        },
+      ],
+    },
+    {
+      id: 7,
+      name: "Curriculum Board",
+      subMenus: [
+        {
+          name: "Add Curriculum Board",
+          url: "./add-curriculum-board",
+        },
+        {
+          name: "All Curriculum Boards",
+          url: "./all-curriculum-boards",
+        },
+      ],
+    },
+    {
+      id: 8,
+      name: "Tutor Info",
+      subMenus: [
+        {
+          name: "Add Tutor Info",
+          url: "./add-tutor-info",
+        },
+        {
+          name: "All Tutor Infos",
+          url: "./all-tutor-infos",
         },
       ],
     },

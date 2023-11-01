@@ -2,7 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../Layout/Main";
 import SecondLayout from "../Layout/SecondLayout";
 import LoginPage from "../pages/Login/LoginPage";
-import Home from "../pages/Home/Home";
+import AddEducationVariant from "../pages/EducationVariant/AddEducationVariant/AddEducationVariant";
+import AllEducationVariant from "../pages/EducationVariant/AllEducationVariant/AllEducationVariant";
 
 export const router = createBrowserRouter([
   {
@@ -11,8 +12,72 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <AddEducationVariant />,
       },
+      {
+        path: "/add-education-variant",
+        element: <AddEducationVariant />,
+      },
+      {
+        path: "/all-education-variants",
+        element: <AllEducationVariant />,
+      },
+      // {
+      //   path: "/add-college",
+      //   element: <AddCollege />,
+      // },
+      // {
+      //   path: "/all-college",
+      //   element: <AllCollege />,
+      // },
+      // {
+      //   path: "/add-school",
+      //   element: <AddSchool />,
+      // },
+      // {
+      //   path: "/all-college",
+      //   element: <AllCollege />,
+      // },
+      // {
+      //   path: "/add-academic-class",
+      //   element: <AddAcademicClass />,
+      // },
+      // {
+      //   path: "/all-academic-class",
+      //   element: <AllAcademicClass />,
+      // },
+      // {
+      //   path: "/add-academic-grade",
+      //   element: <AddAcademicGrade />,
+      // },
+      // {
+      //   path: "/all-academic-grade",
+      //   element: <AllAcademicGrade />,
+      // },
+      // {
+      //   path: "/add-tutoring-subject",
+      //   element: <AddTutoringSubject />,
+      // },
+      // {
+      //   path: "/all-tutoring-subject",
+      //   element: <AllTutoringSubject />,
+      // },
+      // {
+      //   path: "/add-curriculum-board",
+      //   element: <AddCurriculumBoard />,
+      // },
+      // {
+      //   path: "/all-curriculum-board",
+      //   element: <AllCurriculumBoard />,
+      // },
+      // {
+      //   path: "/add-tutors-info",
+      //   element: <AddTutorsInfo />,
+      // },
+      // {
+      //   path: "/all-tutors-info",
+      //   element: <AllTutorsInfo />,
+      // },
       
     ],
   },
