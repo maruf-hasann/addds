@@ -14,12 +14,12 @@ const MainSideBar = () => {
       name: "Education Variant",
       subMenus: [
         {
-          name: "Add Education Variant",
-          url: "./add-education-variant",
-        },
-        {
           name: "All Education Variants",
           url: "./all-education-variants",
+        },
+        {
+          name: "Add Education Variant",
+          url: "./add-education-variant",
         },
       ],
     },
@@ -28,12 +28,12 @@ const MainSideBar = () => {
       name: "College",
       subMenus: [
         {
-          name: "Add College",
-          url: "./add-college",
-        },
-        {
           name: "All Colleges",
           url: "./all-colleges",
+        },
+        {
+          name: "Add College",
+          url: "./add-college",
         },
       ],
     },
@@ -42,12 +42,12 @@ const MainSideBar = () => {
       name: "School",
       subMenus: [
         {
-          name: "Add School",
-          url: "./add-school",
-        },
-        {
           name: "All Schools",
           url: "./all-schools",
+        },
+        {
+          name: "Add School",
+          url: "./add-school",
         },
       ],
     },
@@ -56,12 +56,12 @@ const MainSideBar = () => {
       name: "Academic Class",
       subMenus: [
         {
-          name: "Add Academic Class",
-          url: "./add-academic-class",
-        },
-        {
           name: "All Academic Classes",
           url: "./all-academic-classes",
+        },
+        {
+          name: "Add Academic Class",
+          url: "./add-academic-class",
         },
       ],
     },
@@ -70,12 +70,12 @@ const MainSideBar = () => {
       name: "Academic Grade",
       subMenus: [
         {
-          name: "Add Academic Grade",
-          url: "./add-academic-grade",
-        },
-        {
           name: "All Academic Grades",
           url: "./all-academic-grades",
+        },
+        {
+          name: "Add Academic Grade",
+          url: "./add-academic-grade",
         },
       ],
     },
@@ -84,12 +84,12 @@ const MainSideBar = () => {
       name: "Tutoring Subject",
       subMenus: [
         {
-          name: "Add Tutoring Subject",
-          url: "./add-tutoring-subject",
-        },
-        {
           name: "All Tutoring Subjects",
           url: "./all-tutoring-subjects",
+        },
+        {
+          name: "Add Tutoring Subject",
+          url: "./add-tutoring-subject",
         },
       ],
     },
@@ -98,12 +98,12 @@ const MainSideBar = () => {
       name: "Curriculum Board",
       subMenus: [
         {
-          name: "Add Curriculum Board",
-          url: "./add-curriculum-board",
-        },
-        {
           name: "All Curriculum Boards",
           url: "./all-curriculum-boards",
+        },
+        {
+          name: "Add Curriculum Board",
+          url: "./add-curriculum-board",
         },
       ],
     },
@@ -112,12 +112,12 @@ const MainSideBar = () => {
       name: "Tutor Info",
       subMenus: [
         {
-          name: "Add Tutor Info",
-          url: "./add-tutor-info",
-        },
-        {
           name: "All Tutor Infos",
           url: "./all-tutor-infos",
+        },
+        {
+          name: "Add Tutor Info",
+          url: "./add-tutor-info",
         },
       ],
     },

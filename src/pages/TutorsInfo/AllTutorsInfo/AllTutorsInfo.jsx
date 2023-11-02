@@ -18,58 +18,63 @@ const AllTutoringInfo = () => {
           Add New
         </Link>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto max-w-5xl">
         <table className="table">
           {/* head */}
           <thead>
             <tr>
-              <th>Sl</th>
-              <th>Type</th>
-              <th>Class</th>
-              <th>Subject</th>
-              <th>Meet Link</th>
-              <th>Interview Time</th>
-              <th>Emergency Contact Number</th>
-              <th>Home Address</th>
-              <th className="w-[120px] text-center">Actions</th>
+              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Sl</th>
+              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Type</th>
+              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Class</th>
+              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Subject</th>
+              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Meet Link</th>
+              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Interview Time</th>
+              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Emergency Contact Number</th>
+              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Home Address</th>
+              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap w-[120px] text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {/* row 1 */}
-            {tutorInfos.map((info, idx) => (
-              <tr key={info.id} className="hover">
-                <th>{idx + 1}</th>
-                <td>
-                  {
-                    educationVariants.find(
-                      (variant) => variant.id === Number(info.tutoringType)
-                    )?.name
-                  }
-                </td>
-                <td>{info.tutoringClass}</td>
-                <td>{info.tutoringSubject}</td>
-                <td>{info.meetLink}</td>
-                <td>
-                  {moment(info.interviewTime).format("DD MMM YYYY hh:mm A")}
-                </td>
-                <td>{info.emergencyContactNumber}</td>
-                <td>{info.homeAddress}</td>
-                <td className="w-[120px] flex justify-evenly items-center">
-                  <FaTrash
-                    onClick={() =>
-                      toast.success("Tutoring Info deleted successfully")
+            {tutorInfos.map((info, idx) => {
+              const classes = "p-4 border-b border-blue-gray-50";
+              return (
+                <tr key={info.id}>
+                  <th className={classes}>{idx + 1}</th>
+                  <td className={classes}>
+                    {
+                      educationVariants.find(
+                        (variant) => variant.id === Number(info.tutoringType)
+                      )?.name
                     }
-                    className="cursor-pointer hover:text-red-500"
-                  />{" "}
-                  <FaEdit
-                    onClick={() =>
-                      toast.success("Tutoring Info updated successfully")
-                    }
-                    className="cursor-pointer hover:text-sky-500"
-                  />
-                </td>
-              </tr>
-            ))}
+                  </td>
+                  <td className={classes}>{info.tutoringClass}</td>
+                  <td className={classes}>{info.tutoringSubject}</td>
+                  <td className={classes}>{info.meetLink}</td>
+                  <td className={classes}>
+                    {moment(info.interviewTime).format("DD MMM YYYY hh:mm A")}
+                  </td>
+                  <td className={classes}>{info.emergencyContactNumber}</td>
+                  <td className={classes}>{info.homeAddress}</td>
+                  <td className={`${classes} w-[120px]`}>
+                    <div className="flex justify-evenly items-center">
+                      <FaTrash
+                        onClick={() =>
+                          toast.success("College deleted successfully")
+                        }
+                        className="cursor-pointer hover:text-red-500"
+                      />{" "}
+                      <FaEdit
+                        onClick={() =>
+                          toast.success("College updated successfully")
+                        }
+                        className="cursor-pointer hover:text-sky-500"
+                      />
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
