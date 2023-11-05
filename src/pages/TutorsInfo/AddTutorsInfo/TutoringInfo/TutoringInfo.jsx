@@ -3,13 +3,17 @@ import { useForm } from "react-hook-form";
 
 import { RxCross2 } from "react-icons/rx";
 
-const TutoringInfo = ({setActiveTab}) => {
+const TutoringInfo = ({ setActiveTab }) => {
+  // const router = useRouter();
   const [variant, setVariant] = useState([]);
   const [oLevel, setOLevel] = useState(false);
   const [aLevel, setALevel] = useState(false);
   const [testPapers, setTestPapers] = useState(false);
   const [admissionTest, setAdmissionTest] = useState(false);
   const [oLevelSub, setOLevelSub] = useState([]);
+  const [aLevelSub, setALevelSub] = useState([]);
+
+  const [open, setOpen] = React.useState(1);
 
   const {
     control,
@@ -21,18 +25,11 @@ const TutoringInfo = ({setActiveTab}) => {
   } = useForm();
 
   const onSubmit = (data) => {
-    data.variant = variant;
+    // data.variant = variant
+    data.oLevelSubject = oLevelSub;
+    data.aLevelSubject = aLevelSub;
     console.log(data);
-    setActiveTab(5)
-    // router.push('apply?section=r')
-  };
-  const handleVariant = (value) => {
-    if (variant.includes(value)) {
-      const selectedVariant = variant.filter((select) => select !== value);
-      setVariant(selectedVariant);
-    } else {
-      setVariant([...variant, value]);
-    }
+    setActiveTab(5);
   };
 
   return (
@@ -49,10 +46,9 @@ const TutoringInfo = ({setActiveTab}) => {
               <div className="flex items-center pl-3">
                 <input
                   type="checkbox"
-                  {...register("check", {
+                  {...register("variant", {
                     required: "Select at least one variant",
                   })}
-                  onChange={(e) => handleVariant(e.target.value)}
                   id="tutor"
                   value="tutor"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
@@ -69,10 +65,9 @@ const TutoringInfo = ({setActiveTab}) => {
               <div className="flex items-center pl-3">
                 <input
                   type="checkbox"
-                  {...register("check", {
+                  {...register("variant", {
                     required: "Select at least one variant",
                   })}
-                  onChange={(e) => handleVariant(e.target.value)}
                   id="instructor"
                   value="instructor"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
@@ -89,10 +84,9 @@ const TutoringInfo = ({setActiveTab}) => {
               <div className="flex items-center pl-3">
                 <input
                   type="checkbox"
-                  {...register("check", {
+                  {...register("variant", {
                     required: "Select at least one variant",
                   })}
-                  onChange={(e) => handleVariant(e.target.value)}
                   id="trainer"
                   value="trainer"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
@@ -134,7 +128,7 @@ const TutoringInfo = ({setActiveTab}) => {
               Choose Subject
             </label>
             <select
-              {...register("a-lvl-sub")}
+              {...register("tutor-grade")}
               className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               <option value="subject1">Subject1</option>
@@ -169,7 +163,10 @@ const TutoringInfo = ({setActiveTab}) => {
               </div>
               <div className="flex items-center">
                 <input
-                  onInput={() => setOLevel(false)}
+                  onInput={() => {
+                    setOLevel(false);
+                    setOLevelSub();
+                  }}
                   id="o-level-radio-2"
                   type="radio"
                   value=""
@@ -195,18 +192,21 @@ const TutoringInfo = ({setActiveTab}) => {
               <option value="board3">Board</option>
             </select>
           </div>
-          <div className={`w-full ${!oLevel && "hidden"}`}>
+          <div className={`w-full ${!oLevel && "hidden"} mt-5`}>
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
               Choose Subject
             </label>
             <select
-              {...register("o-lvl-sub")}
+              {...register("oLevelSubject")}
               className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(event) => {
                 const selectedValue = event.target.value;
-                setOLevelSub([...oLevelSub, selectedValue]);
+                if (!oLevelSub.includes(selectedValue)) {
+                  setOLevelSub([...oLevelSub, selectedValue]);
+                }
                 console.log(selectedValue);
                 console.log(oLevelSub);
+                console.log(...oLevelSub);
               }}
             >
               <option value="">Choose Subject</option>
@@ -216,20 +216,22 @@ const TutoringInfo = ({setActiveTab}) => {
             </select>
           </div>
         </div>
-        <div className="flex">
-          {oLevelSub?.map((item, index) => (
+        <div className="flex mb-10 overflow-auto">
+          {oLevelSub?.map((item, idx) => (
             <div
               onClick={() => {
                 let selectedSub;
-                oLevelSub.splice(index, 1);
-                console.log(selectedSub);
-                // setOLevelSub(selectedSub)
+                selectedSub = oLevelSub.filter(
+                  (sub, index) => item[idx] !== sub[index]
+                );
+                setOLevelSub(selectedSub);
               }}
-              key={index}
-              className="flex items-center justify-between gap-1 bg-gray-100 mb-10 mx-1 rounded group"
+              onMouseOver={() => console.log(oLevelSub)}
+              key={idx}
+              className="flex items-center justify-between gap-1 bg-gray-100 mb-1 mx-1 rounded group"
             >
               <div className="py-1 pl-3 text-sm font-semibold text-gray-500 capitalize">
-                {index}
+                {idx}
                 {item}
               </div>
               <div className="hover:bg-red-500 h-full w-full flex justify-center items-center rounded-r px-1 cursor-pointer text-red-500 hover:text-white transition-colors duration-200">
@@ -239,7 +241,7 @@ const TutoringInfo = ({setActiveTab}) => {
           ))}
         </div>
 
-        <div className="lg:flex gap-5">
+        <div className=" mb-5">
           <div className={`w-full`}>
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
               Do you want to teach A Level?
@@ -263,7 +265,10 @@ const TutoringInfo = ({setActiveTab}) => {
               </div>
               <div className="flex items-center">
                 <input
-                  onInput={() => setALevel(false)}
+                  onInput={() => {
+                    setALevel(false);
+                    setALevelSub([]);
+                  }}
                   id="a-level-radio-2"
                   type="radio"
                   value=""
@@ -278,7 +283,6 @@ const TutoringInfo = ({setActiveTab}) => {
                 </label>
               </div>
             </div>
-
             <select
               {...register("a-lvl-board", { required: aLevel })}
               className={`bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
@@ -290,19 +294,52 @@ const TutoringInfo = ({setActiveTab}) => {
               <option value="board3">Board</option>
             </select>
           </div>
-          <div className={`w-full ${!aLevel && "hidden"}`}>
+          <div className={`w-full ${!aLevel && "hidden"} mt-5`}>
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
               Choose Subject
             </label>
             <select
-              {...register("o-lvl-sub")}
+              {...register("aLevelSubject")}
               className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={(event) => {
+                const selectedValue = event.target.value;
+                if (!aLevelSub.includes(selectedValue)) {
+                  setALevelSub([...aLevelSub, selectedValue]);
+                }
+                console.log(selectedValue);
+                console.log(aLevelSub);
+                console.log(...oLevelSub);
+              }}
             >
+              <option value="">Choose Subject</option>
               <option value="subject1">Subject1</option>
               <option value="subject2">Subject2</option>
               <option value="subject3">Subject3</option>
             </select>
           </div>
+        </div>
+        <div className="flex mb-10 overflow-auto">
+          {aLevelSub?.map((item, idx) => (
+            <div
+              onClick={() => {
+                let selectedSub;
+                selectedSub = aLevelSub.filter(
+                  (sub, index) => item[idx] !== sub[index]
+                );
+                setALevelSub(selectedSub);
+              }}
+              key={idx}
+              className="flex items-center justify-between gap-1 bg-gray-100 mb-1 mx-1 rounded group"
+            >
+              <div className="py-1 pl-3 text-sm font-semibold text-gray-500 capitalize">
+                {idx}
+                {item}
+              </div>
+              <div className="hover:bg-red-500 h-full w-full flex justify-center items-center rounded-r px-1 cursor-pointer text-red-500 hover:text-white transition-colors duration-200">
+                <RxCross2 className="h-5 w-5" />
+              </div>
+            </div>
+          ))}
         </div>
 
         <div className="lg:flex gap-5 my-10">
