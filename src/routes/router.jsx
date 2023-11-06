@@ -18,6 +18,8 @@ import AddCurriculumBoard from "../pages/CurriculumBoard/AddCurriculumBoard/AddC
 import AllCurriculumBoard from "../pages/CurriculumBoard/AllCurriculumBoard/AllCurriculumBoard";
 import AddTutorsInfo from "../pages/TutorsInfo/AddTutorsInfo/AddTutorsInfo";
 import AllTutoringInfo from "../pages/TutorsInfo/AllTutorsInfo/AllTutorsInfo";
+import AddTutoringVariant from "../pages/TutoringVariant/AddTutoringVariant/AddTutoringVariant";
+import AllTutoringVariant from "../pages/TutoringVariant/AllTutoringVariant/AllTutoringVariant";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +37,14 @@ export const router = createBrowserRouter([
       {
         path: "/all-education-variants",
         element: <AllEducationVariant />,
+      },
+      {
+        path: "/add-tutoring-variant",
+        element: <AddTutoringVariant />,
+      },
+      {
+        path: "/all-tutoring-variants",
+        element: <AllTutoringVariant />,
       },
       {
         path: "/add-college",

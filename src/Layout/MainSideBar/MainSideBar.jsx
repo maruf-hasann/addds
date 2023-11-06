@@ -25,6 +25,20 @@ const MainSideBar = () => {
     },
     {
       id: 2,
+      name: "Tutoring Variant",
+      subMenus: [
+        {
+          name: "All Tutoring Variants",
+          url: "./all-tutoring-variants",
+        },
+        {
+          name: "Add Tutoring Variant",
+          url: "./add-tutoring-variant",
+        },
+      ],
+    },
+    {
+      id: 3,
       name: "College",
       subMenus: [
         {
@@ -38,7 +52,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 3,
+      id: 4,
       name: "School",
       subMenus: [
         {
@@ -52,7 +66,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 4,
+      id: 5,
       name: "Academic Class",
       subMenus: [
         {
@@ -66,7 +80,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 5,
+      id: 6,
       name: "Academic Grade",
       subMenus: [
         {
@@ -80,7 +94,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 6,
+      id: 7,
       name: "Tutoring Subject",
       subMenus: [
         {
@@ -94,7 +108,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 7,
+      id: 8,
       name: "Curriculum Board",
       subMenus: [
         {
@@ -108,7 +122,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 8,
+      id: 9,
       name: "Tutor Info",
       subMenus: [
         {
