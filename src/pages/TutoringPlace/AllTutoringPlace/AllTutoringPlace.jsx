@@ -3,7 +3,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useState } from "react";
 import DeleteTutoringPlaceModal from "./DeleteTutoringPlace/DeleteTutoringPlaceModal";
 import EditTutoringPlaceModal from "./EditTutoringPlace/EditTutoringPlace";
-import { useGetTutoringPlacesQuery } from "../../../store/service/tutoringPlace/tutoringPlace";
+import { useGetTutoringPlacesQuery } from "../../../store/service/tutoringPlace/tutoringPlaceApiService";
 
 
 const AllTutoringPlace = () => {

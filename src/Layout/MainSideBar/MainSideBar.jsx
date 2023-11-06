@@ -151,6 +151,20 @@ const MainSideBar = () => {
     },
     {
       id: 11,
+      name: "Tutoring Program",
+      subMenus: [
+        {
+          name: "All Tutoring Programs",
+          url: "./all-tutoring-programs",
+        },
+        {
+          name: "Add Tutoring Program",
+          url: "./add-tutoring-program",
+        },
+      ],
+    },
+    {
+      id: 12,
       name: "Student Variant",
       subMenus: [
         {

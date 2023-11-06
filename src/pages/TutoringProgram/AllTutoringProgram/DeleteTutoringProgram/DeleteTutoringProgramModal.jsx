@@ -8,58 +8,60 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { toast } from "react-hot-toast";
-import { useDeleteTutoringVariantMutation } from "../../../../store/service/tutoringVariant/tutoringVariantApiService";
+import { useDeleteTutoringProgramMutation } from "../../../../store/service/tutoringProgram/tutoringProgramApiService";
 
 
 
-const DeleteTutoringVariantModal = ({
-  setDeleteTutoringVariantData,
-  deleteTutoringVariantData,
-  setOpenDeleteTutoringVariantModal,
-  openDeleteTutoringVariantModal,
+
+const DeleteTutoringProgramModal = ({
+  setDeleteTutoringProgramData,
+  deleteTutoringProgramData,
+  setOpenDeleteTutoringProgramModal,
+  openDeleteTutoringProgramModal,
 }) => {
-  const [deleteTutoringVariant] = useDeleteTutoringVariantMutation()
+  const [deleteTutoringProgram] = useDeleteTutoringProgramMutation()
 
   const handleClose = () => {
-    setDeleteTutoringVariantData(null);
-    setOpenDeleteTutoringVariantModal(!openDeleteTutoringVariantModal);
+    setDeleteTutoringProgramData(null);
+    setOpenDeleteTutoringProgramModal(!openDeleteTutoringProgramModal);
   };
   const handleOpen = () => {
-    setDeleteTutoringVariantData(null);
-    setOpenDeleteTutoringVariantModal(!openDeleteTutoringVariantModal);
+    setDeleteTutoringProgramData(null);
+    setOpenDeleteTutoringProgramModal(!openDeleteTutoringProgramModal);
   };
 
-  // handle delete tutoring variant function
+  // handle delete tutoring Program function
   const handleDelete = async (name) => {
-    const result = await deleteTutoringVariant({name});
+    console.log(name);
+    const result = await deleteTutoringProgram({name});
     if (result?.data?.success) {
       toast.success(result?.data?.message);
-      setDeleteTutoringVariantData(null);
-      setOpenDeleteTutoringVariantModal(!openDeleteTutoringVariantModal);
+      setDeleteTutoringProgramData(null);
+      setOpenDeleteTutoringProgramModal(!openDeleteTutoringProgramModal);
     } else {
       console.log(result.error);
       toast.error(result?.error?.data?.message);
-      setDeleteTutoringVariantData(null);
-      setOpenDeleteTutoringVariantModal(!openDeleteTutoringVariantModal);
+      setDeleteTutoringProgramData(null);
+      setOpenDeleteTutoringProgramModal(!openDeleteTutoringProgramModal);
     }
   };
 
   return (
     <>
       <Dialog
-        open={openDeleteTutoringVariantModal}
+        open={openDeleteTutoringProgramModal}
         handler={handleOpen}
         animate={{
           mount: { scale: 1, y: 0 },
           unmount: { scale: 0.9, y: -100 },
         }}
       >
-        <DialogHeader>Are you want to sure delete this Tutoring Variant?</DialogHeader>
+        <DialogHeader>Are you want to sure delete this Tutoring Program?</DialogHeader>
         <DialogBody divider>
           <div>
             <Typography>
               <span className="font-semibold">Name: </span>{" "}
-              {deleteTutoringVariantData?.variantName}
+              {deleteTutoringProgramData?.programName}
             </Typography>
           </div>
         </DialogBody>
@@ -75,7 +77,7 @@ const DeleteTutoringVariantModal = ({
           <Button
             variant="gradient"
             color="green"
-            onClick={() => handleDelete(deleteTutoringVariantData?.variantName)}
+            onClick={() => handleDelete(deleteTutoringProgramData?.programName)}
           >
             <span>Confirm</span>
           </Button>
@@ -85,4 +87,4 @@ const DeleteTutoringVariantModal = ({
   );
 };
 
-export default DeleteTutoringVariantModal;
+export default DeleteTutoringProgramModal;

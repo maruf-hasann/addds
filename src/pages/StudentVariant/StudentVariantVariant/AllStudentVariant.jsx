@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useState } from "react";
-import { useGetStudentVariantsQuery } from "../../../store/service/studentVariant/studentVariant";
 import DeleteStudentVariantModal from "./DeleteStudentVariant/DeleteStudentVariantModal";
 import EditStudentVariantModal from "./EditStudentVariant/EditStudentVariant";
+import { useGetStudentVariantsQuery } from "../../../store/service/studentVariant/studentVariantApiService";
 
 const AllStudentVariant = () => {
   const [deleteStudentVariantData, setDeleteStudentVariantData] =

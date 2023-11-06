@@ -8,7 +8,8 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { toast } from "react-hot-toast";
-import { useDeleteTutoringPlaceMutation } from "../../../../store/service/tutoringPlace/tutoringPlace";
+import { useDeleteTutoringPlaceMutation } from "../../../../store/service/tutoringPlace/tutoringPlaceApiService";
+
 
 
 

@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { toast } from "react-hot-toast";
-import { useDeleteStudentVariantMutation } from "../../../../store/service/studentVariant/studentVariant";
+import { useDeleteStudentVariantMutation } from "../../../../store/service/studentVariant/studentVariantApiService";
 
 
 

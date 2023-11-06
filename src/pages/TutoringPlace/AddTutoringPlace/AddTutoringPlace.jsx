@@ -2,7 +2,7 @@ import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useAddTutoringPlaceMutation } from "../../../store/service/tutoringPlace/tutoringPlace";
+import { useAddTutoringPlaceMutation } from "../../../store/service/tutoringPlace/tutoringPlaceApiService";
 
 const AddTutoringPlace = () => {
   const [addTutoringPlace, { isLoading }] = useAddTutoringPlaceMutation();

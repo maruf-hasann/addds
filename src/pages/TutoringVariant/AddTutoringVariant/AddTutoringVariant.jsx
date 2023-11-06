@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useAddTutoringVariantMutation } from "../../../store/service/tutoringVariant/tutoringVariant";
+import { useAddTutoringVariantMutation } from "../../../store/service/tutoringVariant/tutoringVariantApiService";
+
 
 const AddTutoringVariant = () => {
   const [addTutoringVariant, { isLoading }] = useAddTutoringVariantMutation();

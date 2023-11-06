@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import toast from "react-hot-toast";
-import { useGetTutoringVariantsQuery } from "../../../store/service/tutoringVariant/tutoringVariant";
+
 import { useState } from "react";
 import DeleteTutoringVariantModal from "./DeleteTutoringVariant/DeleteTutoringVariantModal";
 import EditTutoringVariantModal from "./EditTutoringVariant/EditTutoringVariant";
+import { useGetTutoringVariantsQuery } from "../../../store/service/tutoringVariant/tutoringVariantApiService";
 
 const AllTutoringVariant = () => {
   const [deleteTutoringVariantData, setDeleteTutoringVariantData] =
