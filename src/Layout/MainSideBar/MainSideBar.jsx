@@ -177,6 +177,20 @@ const MainSideBar = () => {
         },
       ],
     },
+    {
+      id: 13,
+      name: "Extra Subject",
+      subMenus: [
+        {
+          name: "All Extra Subjects",
+          url: "./all-extra-subjects",
+        },
+        {
+          name: "Add Extra Subject",
+          url: "./add-extra-subject",
+        },
+      ],
+    },
   ];
 
   return (
