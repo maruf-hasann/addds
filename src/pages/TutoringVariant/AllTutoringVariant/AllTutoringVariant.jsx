@@ -4,15 +4,16 @@ import toast from "react-hot-toast";
 import { useGetTutoringVariantsQuery } from "../../../store/service/tutoringVariant/tutoringVariant";
 import { useState } from "react";
 import DeleteTutoringVariantModal from "./DeleteTutoringVariant/DeleteTutoringVariantModal";
+import EditTutoringVariantModal from "./EditTutoringVariant/EditTutoringVariant";
 
 const AllTutoringVariant = () => {
-  // setDeleteTutoringVariantData,
-  // deleteTutoringVariantData,
-  // setOpenDeleteTutoringVariantModal,
-  // openDeleteTutoringVariantModal,
   const [deleteTutoringVariantData, setDeleteTutoringVariantData] =
     useState(null);
   const [openDeleteTutoringVariantModal, setOpenDeleteTutoringVariantModal] =
+    useState(false);
+
+  const [editTutoringVariantData, setEditTutoringVariantData] = useState(null);
+  const [openEditTutoringVariantModal, setOpenEditTutoringVariantModal] =
     useState(false);
 
   const { data: tutoringVariantsData } = useGetTutoringVariantsQuery();
@@ -64,11 +65,10 @@ const AllTutoringVariant = () => {
                           className="cursor-pointer hover:text-red-500"
                         />{" "}
                         <FaEdit
-                          onClick={() =>
-                            toast.success(
-                              "Tutoring variant updated successfully"
-                            )
-                          }
+                          onClick={() => {
+                            setEditTutoringVariantData(variant),
+                              setOpenEditTutoringVariantModal(true);
+                          }}
                           className="cursor-pointer hover:text-sky-500"
                         />
                       </div>
@@ -86,6 +86,14 @@ const AllTutoringVariant = () => {
           openDeleteTutoringVariantModal={openDeleteTutoringVariantModal}
           setDeleteTutoringVariantData={setDeleteTutoringVariantData}
           setOpenDeleteTutoringVariantModal={setOpenDeleteTutoringVariantModal}
+        />
+      )}
+      {openEditTutoringVariantModal && editTutoringVariantData && (
+        <EditTutoringVariantModal
+          editTutoringVariantData={editTutoringVariantData}
+          openEditTutoringVariantModal={openEditTutoringVariantModal}
+          setEditTutoringVariantData={setOpenEditTutoringVariantModal}
+          setOpenEditTutoringVariantModal={setOpenEditTutoringVariantModal}
         />
       )}
     </>
