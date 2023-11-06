@@ -3,25 +3,22 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useAddTutoringVariantMutation } from "../../../store/service/tutoringVariant/tutoringVariant";
 
 const AddTutoringVariant = () => {
-  const [name, setName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [addTutoringVariant, { isLoading }] = useAddTutoringVariantMutation();
 
-  const handleSubmit = (e) => {
-    setIsLoading(true);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  };
-
-  useEffect(() => {
-    if (isLoading) {
-      setTimeout(() => {
-        setIsLoading(false);
-        setName("");
-        toast.success("Tutoring variant added successfully");
-      }, 2000);
+    const variantName = e.target.name.value;
+    const result = await addTutoringVariant({ variantName });
+    if (result?.data?.success) {
+      toast.success(result?.data?.message);
+      e.target.reset();
+    } else {
+      toast.error(result?.error?.data?.message);
     }
-  }, [isLoading]);
+  };
 
   return (
     <div className="py-10">
@@ -34,7 +31,10 @@ const AddTutoringVariant = () => {
           See All
         </Link>
       </div>
-      <form className="max-w-md mx-auto p-4 border rounded-md mt-5">
+      <form
+        onSubmit={handleSubmit}
+        className="max-w-md mx-auto p-4 border rounded-md mt-5"
+      >
         <label
           htmlFor="name"
           className="block mb-2 font-semibold text-sm text-gray-500"
@@ -45,8 +45,6 @@ const AddTutoringVariant = () => {
           type="text"
           id="name"
           name="name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
           required
           placeholder="Trainer"
           className="w-full p-2 mb-4 border rounded-md"
@@ -56,7 +54,6 @@ const AddTutoringVariant = () => {
             <Button
               disabled
               className="bg-white text-blue-gray-700 border py-2 px-[39px] rounded-sm font-semibold cursor-wait "
-              onClick={handleSubmit}
             >
               <FaSpinner className="animate-spin" />
             </Button>
@@ -64,7 +61,6 @@ const AddTutoringVariant = () => {
             <Button
               type="submit"
               className="bg-white text-blue-gray-700 border py-2 px-8 rounded-sm font-semibold cursor-pointer"
-              onClick={handleSubmit}
             >
               Add
             </Button>

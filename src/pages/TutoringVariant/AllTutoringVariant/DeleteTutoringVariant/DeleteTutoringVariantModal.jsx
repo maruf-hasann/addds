@@ -30,7 +30,6 @@ const DeleteTutoringVariantModal = ({
 
   // handle delete tutoring variant function
   const handleDelete = async (name) => {
-    console.log(name);
     const result = await deleteTutoringVariant({name});
     if (result?.data?.success) {
       toast.success(result?.data?.message);
