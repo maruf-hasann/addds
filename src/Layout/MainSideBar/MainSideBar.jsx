@@ -135,6 +135,20 @@ const MainSideBar = () => {
         },
       ],
     },
+    {
+      id: 10,
+      name: "Student Variant",
+      subMenus: [
+        {
+          name: "All Student Variants",
+          url: "./all-student-variants",
+        },
+        {
+          name: "Add Student Variant",
+          url: "./add-student-variant",
+        },
+      ],
+    },
   ];
 
   return (

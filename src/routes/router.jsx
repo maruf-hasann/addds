@@ -20,6 +20,8 @@ import AddTutorsInfo from "../pages/TutorsInfo/AddTutorsInfo/AddTutorsInfo";
 import AllTutoringInfo from "../pages/TutorsInfo/AllTutorsInfo/AllTutorsInfo";
 import AddTutoringVariant from "../pages/TutoringVariant/AddTutoringVariant/AddTutoringVariant";
 import AllTutoringVariant from "../pages/TutoringVariant/AllTutoringVariant/AllTutoringVariant";
+import AddStudentVariant from "../pages/StudentVariant/AddStudentVariant/AddStudentVariant";
+import AllStudentVariant from "../pages/StudentVariant/StudentVariantVariant/AllStudentVariant";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ export const router = createBrowserRouter([
       {
         path: "/all-tutoring-variants",
         element: <AllTutoringVariant />,
+      },
+      {
+        path: "/add-student-variant",
+        element: <AddStudentVariant />,
+      },
+      {
+        path: "/all-student-variants",
+        element: <AllStudentVariant />,
       },
       {
         path: "/add-college",
@@ -102,7 +112,6 @@ export const router = createBrowserRouter([
         path: "/all-tutor-infos",
         element: <AllTutoringInfo />,
       },
-      
     ],
   },
   {

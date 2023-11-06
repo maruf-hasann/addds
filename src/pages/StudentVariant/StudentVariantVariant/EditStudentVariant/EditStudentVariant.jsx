@@ -5,27 +5,27 @@ import { toast } from "react-hot-toast";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaSpinner } from "react-icons/fa";
 
-const EditTutoringVariantModal = ({
-  setEditTutoringVariantData,
-  editTutoringVariantData,
-  setOpenEditTutoringVariantModal,
-  openEditTutoringVariantModal,
+const EditStudentVariantModal = ({
+  setEditStudentVariantData,
+  editStudentVariantData,
+  setOpenEditStudentVariantModal,
+  openEditStudentVariantModal,
 }) => {
 
-  const editTutoringVariant = null
+  const editStudentVariant = null
   const isLoading = false
 
 
   // handle close modal
   const handleClose = () => {
-    setEditTutoringVariantData(null);
-    setOpenEditTutoringVariantModal(!openEditTutoringVariantModal);
+    setEditStudentVariantData(null);
+    setOpenEditStudentVariantModal(!openEditStudentVariantModal);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const variantName = e.target.name.value;
-    const result = await editTutoringVariant({ variantName });
+    const result = await editStudentVariant({ variantName });
     if (result?.data?.success) {
       toast.success(result?.data?.message);
       e.target.reset();
@@ -37,7 +37,7 @@ const EditTutoringVariantModal = ({
   return (
     <div
       className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%-1rem)] max-h-full backdrop-blur-sm bg-white/5 ${
-        openEditTutoringVariantModal ? "block" : "hidden"
+        openEditStudentVariantModal ? "block" : "hidden"
       }`}
     >
       <div className="relative w-full max-w-2xl  max-h-full mt-20 mx-auto px-2 md:px-5 lg:px-10 xl:px-20">
@@ -68,7 +68,7 @@ const EditTutoringVariantModal = ({
               id="name"
               name="name"
               required
-              defaultValue={editTutoringVariantData?.variantName}
+              defaultValue={editStudentVariantData?.variantName}
               placeholder="Trainer"
               className="w-full p-2 mb-4 border rounded-md"
             />
@@ -97,4 +97,4 @@ const EditTutoringVariantModal = ({
   );
 };
 
-export default EditTutoringVariantModal;
+export default EditStudentVariantModal;
