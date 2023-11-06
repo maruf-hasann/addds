@@ -191,6 +191,20 @@ const MainSideBar = () => {
         },
       ],
     },
+    {
+      id: 14,
+      name: "Subject",
+      subMenus: [
+        {
+          name: "All Subjects",
+          url: "./all-board-wise-subjects",
+        },
+        {
+          name: "Add Subject",
+          url: "./add-board-wise-subject",
+        },
+      ],
+    },
   ];
 
   return (

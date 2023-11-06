@@ -28,6 +28,8 @@ import AddTutoringProgram from "../pages/TutoringProgram/AddTutoringProgram/AddT
 import AllTutoringProgram from "../pages/TutoringProgram/AllTutoringProgram/AllTutoringProgram";
 import AddExtraSubject from "../pages/ExtraSubject/AddExtraSubject/AddExtraSubject";
 import AllExtraSubject from "../pages/ExtraSubject/AllExtraSubject/AllExtraSubject";
+import AddBoardWiseSubject from "../pages/BoardWiseSubject/AddBoardWiseSubject/AddBoardWiseSubject";
+import AllBoardWiseSubject from "../pages/BoardWiseSubject/AllBoardWiseSubject/AllBoardWiseSubject";
 
 export const router = createBrowserRouter([
   {
@@ -141,6 +143,14 @@ export const router = createBrowserRouter([
       {
         path: "/all-extra-subjects",
         element: <AllExtraSubject />,
+      },
+      {
+        path: "/add-board-wise-subject",
+        element: <AddBoardWiseSubject />,
+      },
+      {
+        path: "/all-board-wise-subjects",
+        element: <AllBoardWiseSubject />,
       },
     ],
   },
