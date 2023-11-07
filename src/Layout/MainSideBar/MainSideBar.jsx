@@ -25,6 +25,20 @@ const MainSideBar = () => {
     },
     {
       id: 2,
+      name: "Tutoring Variant",
+      subMenus: [
+        {
+          name: "All Tutoring Variants",
+          url: "./all-tutoring-variants",
+        },
+        {
+          name: "Add Tutoring Variant",
+          url: "./add-tutoring-variant",
+        },
+      ],
+    },
+    {
+      id: 3,
       name: "College",
       subMenus: [
         {
@@ -38,7 +52,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 3,
+      id: 4,
       name: "School",
       subMenus: [
         {
@@ -52,7 +66,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 4,
+      id: 5,
       name: "Academic Class",
       subMenus: [
         {
@@ -66,7 +80,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 5,
+      id: 6,
       name: "Academic Grade",
       subMenus: [
         {
@@ -80,7 +94,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 6,
+      id: 7,
       name: "Tutoring Subject",
       subMenus: [
         {
@@ -94,7 +108,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 7,
+      id: 8,
       name: "Curriculum Board",
       subMenus: [
         {
@@ -108,7 +122,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 8,
+      id: 9,
       name: "Tutor Info",
       subMenus: [
         {
@@ -118,6 +132,76 @@ const MainSideBar = () => {
         {
           name: "Add Tutor Info",
           url: "./add-tutor-info",
+        },
+      ],
+    },
+    {
+      id: 10,
+      name: "Tutoring Place",
+      subMenus: [
+        {
+          name: "All Tutoring Places",
+          url: "./all-tutoring-places",
+        },
+        {
+          name: "Add Tutoring Place",
+          url: "./add-tutoring-place",
+        },
+      ],
+    },
+    {
+      id: 11,
+      name: "Tutoring Program",
+      subMenus: [
+        {
+          name: "All Tutoring Programs",
+          url: "./all-tutoring-programs",
+        },
+        {
+          name: "Add Tutoring Program",
+          url: "./add-tutoring-program",
+        },
+      ],
+    },
+    {
+      id: 12,
+      name: "Student Variant",
+      subMenus: [
+        {
+          name: "All Student Variants",
+          url: "./all-student-variants",
+        },
+        {
+          name: "Add Student Variant",
+          url: "./add-student-variant",
+        },
+      ],
+    },
+    {
+      id: 13,
+      name: "Extra Subject",
+      subMenus: [
+        {
+          name: "All Extra Subjects",
+          url: "./all-extra-subjects",
+        },
+        {
+          name: "Add Extra Subject",
+          url: "./add-extra-subject",
+        },
+      ],
+    },
+    {
+      id: 14,
+      name: "Subject",
+      subMenus: [
+        {
+          name: "All Subjects",
+          url: "./all-board-wise-subjects",
+        },
+        {
+          name: "Add Subject",
+          url: "./add-board-wise-subject",
         },
       ],
     },

@@ -18,6 +18,18 @@ import AddCurriculumBoard from "../pages/CurriculumBoard/AddCurriculumBoard/AddC
 import AllCurriculumBoard from "../pages/CurriculumBoard/AllCurriculumBoard/AllCurriculumBoard";
 import AddTutorsInfo from "../pages/TutorsInfo/AddTutorsInfo/AddTutorsInfo";
 import AllTutoringInfo from "../pages/TutorsInfo/AllTutorsInfo/AllTutorsInfo";
+import AddTutoringVariant from "../pages/TutoringVariant/AddTutoringVariant/AddTutoringVariant";
+import AllTutoringVariant from "../pages/TutoringVariant/AllTutoringVariant/AllTutoringVariant";
+import AddStudentVariant from "../pages/StudentVariant/AddStudentVariant/AddStudentVariant";
+import AllStudentVariant from "../pages/StudentVariant/StudentVariantVariant/AllStudentVariant";
+import AllTutoringPlace from "../pages/TutoringPlace/AllTutoringPlace/AllTutoringPlace";
+import AddTutoringPlace from "../pages/TutoringPlace/AddTutoringPlace/AddTutoringPlace";
+import AddTutoringProgram from "../pages/TutoringProgram/AddTutoringProgram/AddTutoringProgram";
+import AllTutoringProgram from "../pages/TutoringProgram/AllTutoringProgram/AllTutoringProgram";
+import AddExtraSubject from "../pages/ExtraSubject/AddExtraSubject/AddExtraSubject";
+import AllExtraSubject from "../pages/ExtraSubject/AllExtraSubject/AllExtraSubject";
+import AddBoardWiseSubject from "../pages/BoardWiseSubject/AddBoardWiseSubject/AddBoardWiseSubject";
+import AllBoardWiseSubject from "../pages/BoardWiseSubject/AllBoardWiseSubject/AllBoardWiseSubject";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +47,38 @@ export const router = createBrowserRouter([
       {
         path: "/all-education-variants",
         element: <AllEducationVariant />,
+      },
+      {
+        path: "/add-tutoring-variant",
+        element: <AddTutoringVariant />,
+      },
+      {
+        path: "/all-tutoring-variants",
+        element: <AllTutoringVariant />,
+      },
+      {
+        path: "/add-tutoring-program",
+        element: <AddTutoringProgram />,
+      },
+      {
+        path: "/all-tutoring-programs",
+        element: <AllTutoringProgram />,
+      },
+      {
+        path: "/add-tutoring-place",
+        element: <AddTutoringPlace />,
+      },
+      {
+        path: "/all-tutoring-places",
+        element: <AllTutoringPlace />,
+      },
+      {
+        path: "/add-student-variant",
+        element: <AddStudentVariant />,
+      },
+      {
+        path: "/all-student-variants",
+        element: <AllStudentVariant />,
       },
       {
         path: "/add-college",
@@ -92,7 +136,22 @@ export const router = createBrowserRouter([
         path: "/all-tutor-infos",
         element: <AllTutoringInfo />,
       },
-      
+      {
+        path: "/add-extra-subject",
+        element: <AddExtraSubject />,
+      },
+      {
+        path: "/all-extra-subjects",
+        element: <AllExtraSubject />,
+      },
+      {
+        path: "/add-board-wise-subject",
+        element: <AddBoardWiseSubject />,
+      },
+      {
+        path: "/all-board-wise-subjects",
+        element: <AllBoardWiseSubject />,
+      },
     ],
   },
   {
