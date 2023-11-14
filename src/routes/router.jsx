@@ -30,6 +30,8 @@ import AddExtraSubject from "../pages/ExtraSubject/AddExtraSubject/AddExtraSubje
 import AllExtraSubject from "../pages/ExtraSubject/AllExtraSubject/AllExtraSubject";
 import AddBoardWiseSubject from "../pages/BoardWiseSubject/AddBoardWiseSubject/AddBoardWiseSubject";
 import AllBoardWiseSubject from "../pages/BoardWiseSubject/AllBoardWiseSubject/AllBoardWiseSubject";
+import AddCurrentAffair from "../pages/CurrentAffair/AddCurrentAffair/AddCurrentAffair";
+import AllCurrentAffair from "../pages/CurrentAffair/AllCurrentAffair/AllCurrentAffair";
 
 export const router = createBrowserRouter([
   {
@@ -151,6 +153,30 @@ export const router = createBrowserRouter([
       {
         path: "/all-board-wise-subjects",
         element: <AllBoardWiseSubject />,
+      },
+      {
+        path: "/add-current-affair",
+        element: <AddCurrentAffair />,
+      },
+      {
+        path: "/all-current-affairs",
+        element: <AllCurrentAffair />,
+      },
+      {
+        path: "/add-university",
+        element: <AddCurrentAffair />,
+      },
+      {
+        path: "/all-universities",
+        element: <AllCurrentAffair />,
+      },
+      {
+        path: "/add-semester",
+        element: <AddCurrentAffair />,
+      },
+      {
+        path: "/all-semesters",
+        element: <AllCurrentAffair />,
       },
     ],
   },

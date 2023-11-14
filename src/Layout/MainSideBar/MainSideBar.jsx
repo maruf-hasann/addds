@@ -191,6 +191,7 @@ const MainSideBar = () => {
         },
       ],
     },
+
     {
       id: 14,
       name: "Subject",
@@ -202,6 +203,48 @@ const MainSideBar = () => {
         {
           name: "Add Subject",
           url: "./add-board-wise-subject",
+        },
+      ],
+    },
+    {
+      id: 15,
+      name: "Current Affair",
+      subMenus: [
+        {
+          name: "All Current Affairs",
+          url: "./all-current-affairs",
+        },
+        {
+          name: "Add Current Affair",
+          url: "./add-current-affair",
+        },
+      ],
+    },
+    {
+      id: 16,
+      name: "University",
+      subMenus: [
+        {
+          name: "All Universities",
+          url: "./all-universities",
+        },
+        {
+          name: "Add University",
+          url: "./add-university",
+        },
+      ],
+    },
+    {
+      id: 17,
+      name: "Semester",
+      subMenus: [
+        {
+          name: "All Semesters",
+          url: "./all-semesters",
+        },
+        {
+          name: "Add Semester",
+          url: "./add-semester",
         },
       ],
     },
