@@ -39,104 +39,6 @@ const MainSideBar = () => {
     },
     {
       id: 3,
-      name: "College",
-      subMenus: [
-        {
-          name: "All Colleges",
-          url: "./all-colleges",
-        },
-        {
-          name: "Add College",
-          url: "./add-college",
-        },
-      ],
-    },
-    {
-      id: 4,
-      name: "School",
-      subMenus: [
-        {
-          name: "All Schools",
-          url: "./all-schools",
-        },
-        {
-          name: "Add School",
-          url: "./add-school",
-        },
-      ],
-    },
-    {
-      id: 5,
-      name: "Academic Class",
-      subMenus: [
-        {
-          name: "All Academic Classes",
-          url: "./all-academic-classes",
-        },
-        {
-          name: "Add Academic Class",
-          url: "./add-academic-class",
-        },
-      ],
-    },
-    {
-      id: 6,
-      name: "Academic Grade",
-      subMenus: [
-        {
-          name: "All Academic Grades",
-          url: "./all-academic-grades",
-        },
-        {
-          name: "Add Academic Grade",
-          url: "./add-academic-grade",
-        },
-      ],
-    },
-    {
-      id: 7,
-      name: "Tutoring Subject",
-      subMenus: [
-        {
-          name: "All Tutoring Subjects",
-          url: "./all-tutoring-subjects",
-        },
-        {
-          name: "Add Tutoring Subject",
-          url: "./add-tutoring-subject",
-        },
-      ],
-    },
-    {
-      id: 8,
-      name: "Curriculum Board",
-      subMenus: [
-        {
-          name: "All Curriculum Boards",
-          url: "./all-curriculum-boards",
-        },
-        {
-          name: "Add Curriculum Board",
-          url: "./add-curriculum-board",
-        },
-      ],
-    },
-    {
-      id: 9,
-      name: "Tutor Info",
-      subMenus: [
-        {
-          name: "All Tutor Infos",
-          url: "./all-tutor-infos",
-        },
-        {
-          name: "Add Tutor Info",
-          url: "./add-tutor-info",
-        },
-      ],
-    },
-    {
-      id: 10,
       name: "Tutoring Place",
       subMenus: [
         {
@@ -150,7 +52,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 11,
+      id: 4,
       name: "Tutoring Program",
       subMenus: [
         {
@@ -164,7 +66,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 12,
+      id: 5,
       name: "Student Variant",
       subMenus: [
         {
@@ -178,7 +80,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 13,
+      id: 6,
       name: "Extra Subject",
       subMenus: [
         {
@@ -191,9 +93,8 @@ const MainSideBar = () => {
         },
       ],
     },
-
     {
-      id: 14,
+      id: 7,
       name: "Subject",
       subMenus: [
         {
@@ -207,7 +108,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 15,
+      id: 8,
       name: "Current Affair",
       subMenus: [
         {
@@ -221,7 +122,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 16,
+      id: 9,
       name: "University",
       subMenus: [
         {
@@ -235,7 +136,7 @@ const MainSideBar = () => {
       ],
     },
     {
-      id: 17,
+      id: 10,
       name: "Semester",
       subMenus: [
         {
@@ -245,6 +146,35 @@ const MainSideBar = () => {
         {
           name: "Add Semester",
           url: "./add-semester",
+        },
+      ],
+    },
+    {
+      id: 11,
+      name: "Tutoring Class",
+      subMenus: [
+        {
+          name: "All Tutoring Classes",
+          url: "./all-tutoring-classes",
+        },
+        {
+          name: "Add Tutoring Class",
+          url: "./add-tutoring-class",
+        },
+      ],
+    },
+
+    {
+      id: 12,
+      name: "Tutor Info",
+      subMenus: [
+        {
+          name: "All Tutor Infos",
+          url: "./all-tutor-infos",
+        },
+        {
+          name: "Add Tutor Info",
+          url: "./add-tutor-info",
         },
       ],
     },

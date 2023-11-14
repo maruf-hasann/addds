@@ -36,6 +36,8 @@ import AddSemester from "../pages/Semester/AddSemester/AddSemester";
 import AllSemester from "../pages/Semester/AllSemester/AllSemester";
 import AddUniversity from "../pages/University/AddUniversity/AddUniversity";
 import AllUniversity from "../pages/University/AllUniversity/AllUniversity";
+import AddTutoringClass from "../pages/TutoringClasses/AddTutoringClasses/AddTutoringClasses";
+import AllTutoringClass from "../pages/TutoringClasses/AllTutoringClasses/AllTutoringClasses";
 
 export const router = createBrowserRouter([
   {
@@ -181,6 +183,14 @@ export const router = createBrowserRouter([
       {
         path: "/all-semesters",
         element: <AllSemester />,
+      },
+      {
+        path: "/add-tutoring-class",
+        element: <AddTutoringClass />,
+      },
+      {
+        path: "/all-tutoring-classes",
+        element: <AllTutoringClass />,
       },
     ],
   },
