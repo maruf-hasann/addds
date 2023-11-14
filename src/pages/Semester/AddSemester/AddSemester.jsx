@@ -2,17 +2,18 @@ import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useAddStudentVariantMutation } from "../../../store/service/studentVariant/studentVariantApiService";
+import { useAddSemesterMutation } from "../../../store/service/semester/semesterApiService";
 
 
 
-const AddStudentVariant = () => {
-  const [addStudentVariant, { isLoading }] = useAddStudentVariantMutation();
+
+const AddSemester = () => {
+  const [addSemester, { isLoading }] = useAddSemesterMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const variantName = e.target.name.value;
-    const result = await addStudentVariant({ variantName });
+    const result = await addSemester({ variantName });
     if (result?.data?.success) {
       toast.success(result?.data?.message);
       e.target.reset();
@@ -24,9 +25,9 @@ const AddStudentVariant = () => {
   return (
     <div className="py-10">
       <div className="flex justify-between items-center border-b pb-3">
-        <h1 className="font-bold">Add Student Variant</h1>
+        <h1 className="font-bold">Add Semester</h1>
         <Link
-          to={"/dashboard/all-student-variant"}
+          to={"/all-semesters"}
           className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
         >
           See All
@@ -47,7 +48,7 @@ const AddStudentVariant = () => {
           id="name"
           name="name"
           required
-          placeholder="One to One"
+          placeholder="3rd"
           className="w-full p-2 mb-4 border rounded-md"
         />
         <div className="flex justify-end">
@@ -72,4 +73,4 @@ const AddStudentVariant = () => {
   );
 };
 
-export default AddStudentVariant;
+export default AddSemester;

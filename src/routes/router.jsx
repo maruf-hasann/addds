@@ -32,6 +32,8 @@ import AddBoardWiseSubject from "../pages/BoardWiseSubject/AddBoardWiseSubject/A
 import AllBoardWiseSubject from "../pages/BoardWiseSubject/AllBoardWiseSubject/AllBoardWiseSubject";
 import AddCurrentAffair from "../pages/CurrentAffair/AddCurrentAffair/AddCurrentAffair";
 import AllCurrentAffair from "../pages/CurrentAffair/AllCurrentAffair/AllCurrentAffair";
+import AddSemester from "../pages/Semester/AddSemester/AddSemester";
+import AllSemester from "../pages/Semester/AllSemester/AllSemester";
 
 export const router = createBrowserRouter([
   {
@@ -172,11 +174,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/add-semester",
-        element: <AddCurrentAffair />,
+        element: <AddSemester />,
       },
       {
         path: "/all-semesters",
-        element: <AllCurrentAffair />,
+        element: <AllSemester />,
       },
     ],
   },
