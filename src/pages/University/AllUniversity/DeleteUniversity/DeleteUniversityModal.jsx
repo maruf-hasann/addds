@@ -8,58 +8,57 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { toast } from "react-hot-toast";
-import { useDeleteStudentVariantMutation } from "../../../../store/service/studentVariant/studentVariantApiService";
+import { useDeleteUniversityMutation } from "../../../../store/service/university/universityApiService";
 
 
-
-const DeleteStudentVariantModal = ({
-  setDeleteStudentVariantData,
-  deleteStudentVariantData,
-  setOpenDeleteStudentVariantModal,
-  openDeleteStudentVariantModal,
+const DeleteUniversityModal = ({
+  setDeleteUniversityData,
+  deleteUniversityData,
+  setOpenDeleteUniversityModal,
+  openDeleteUniversityModal,
 }) => {
-  const [deleteStudentVariant] = useDeleteStudentVariantMutation()
+  const [deleteUniversity] = useDeleteUniversityMutation();
 
   const handleClose = () => {
-    setDeleteStudentVariantData(null);
-    setOpenDeleteStudentVariantModal(!openDeleteStudentVariantModal);
+    setDeleteUniversityData(null);
+    setOpenDeleteUniversityModal(!openDeleteUniversityModal);
   };
   const handleOpen = () => {
-    setDeleteStudentVariantData(null);
-    setOpenDeleteStudentVariantModal(!openDeleteStudentVariantModal);
+    setDeleteUniversityData(null);
+    setOpenDeleteUniversityModal(!openDeleteUniversityModal);
   };
 
   // handle delete Student variant function
-  const handleDelete = async (name) => {
-    const result = await deleteStudentVariant({name});
+  const handleDelete = async (id) => {
+    const result = await deleteUniversity(id);
     if (result?.data?.success) {
       toast.success(result?.data?.message);
-      setDeleteStudentVariantData(null);
-      setOpenDeleteStudentVariantModal(!openDeleteStudentVariantModal);
+      setDeleteUniversityData(null);
+      setOpenDeleteUniversityModal(!openDeleteUniversityModal);
     } else {
       console.log(result.error);
       toast.error(result?.error?.data?.message);
-      setDeleteStudentVariantData(null);
-      setOpenDeleteStudentVariantModal(!openDeleteStudentVariantModal);
+      setDeleteUniversityData(null);
+      setOpenDeleteUniversityModal(!openDeleteUniversityModal);
     }
   };
 
   return (
     <>
       <Dialog
-        open={openDeleteStudentVariantModal}
+        open={openDeleteUniversityModal}
         handler={handleOpen}
         animate={{
           mount: { scale: 1, y: 0 },
           unmount: { scale: 0.9, y: -100 },
         }}
       >
-        <DialogHeader>Are you want to sure delete this Student Variant?</DialogHeader>
+        <DialogHeader>Are you want to sure delete this University?</DialogHeader>
         <DialogBody divider>
           <div>
             <Typography>
               <span className="font-semibold">Name: </span>{" "}
-              {deleteStudentVariantData?.variantName}
+              {deleteUniversityData?.name}
             </Typography>
           </div>
         </DialogBody>
@@ -75,7 +74,7 @@ const DeleteStudentVariantModal = ({
           <Button
             variant="gradient"
             color="green"
-            onClick={() => handleDelete(deleteStudentVariantData?.variantName)}
+            onClick={() => handleDelete(deleteUniversityData?._id)}
           >
             <span>Confirm</span>
           </Button>
@@ -85,4 +84,4 @@ const DeleteStudentVariantModal = ({
   );
 };
 
-export default DeleteStudentVariantModal;
+export default DeleteUniversityModal;

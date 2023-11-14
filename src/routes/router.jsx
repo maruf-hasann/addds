@@ -34,6 +34,8 @@ import AddCurrentAffair from "../pages/CurrentAffair/AddCurrentAffair/AddCurrent
 import AllCurrentAffair from "../pages/CurrentAffair/AllCurrentAffair/AllCurrentAffair";
 import AddSemester from "../pages/Semester/AddSemester/AddSemester";
 import AllSemester from "../pages/Semester/AllSemester/AllSemester";
+import AddUniversity from "../pages/University/AddUniversity/AddUniversity";
+import AllUniversity from "../pages/University/AllUniversity/AllUniversity";
 
 export const router = createBrowserRouter([
   {
@@ -166,11 +168,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/add-university",
-        element: <AddCurrentAffair />,
+        element: <AddUniversity />,
       },
       {
         path: "/all-universities",
-        element: <AllCurrentAffair />,
+        element: <AllUniversity />,
       },
       {
         path: "/add-semester",

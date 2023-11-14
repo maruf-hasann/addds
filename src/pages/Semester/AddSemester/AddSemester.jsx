@@ -12,8 +12,8 @@ const AddSemester = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const variantName = e.target.name.value;
-    const result = await addSemester({ variantName });
+    const value = e.target.value.value;
+    const result = await addSemester({ value });
     if (result?.data?.success) {
       toast.success(result?.data?.message);
       e.target.reset();
@@ -38,15 +38,15 @@ const AddSemester = () => {
         className="max-w-md mx-auto p-4 border rounded-md mt-5"
       >
         <label
-          htmlFor="name"
+          htmlFor="value"
           className="block mb-2 font-semibold text-sm text-gray-500"
         >
           Name
         </label>
         <input
           type="text"
-          id="name"
-          name="name"
+          id="value"
+          name="value"
           required
           placeholder="3rd"
           className="w-full p-2 mb-4 border rounded-md"
