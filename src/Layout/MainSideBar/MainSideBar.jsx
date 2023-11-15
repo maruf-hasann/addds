@@ -1,6 +1,6 @@
 import React from "react";
 import { Accordion, AccordionBody, Typography } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 const MainSideBar = () => {
@@ -12,165 +12,115 @@ const MainSideBar = () => {
     {
       id: 1,
       name: "Education Variant",
-      subMenus: [
-        {
-          name: "All Education Variants",
-          url: "./all-education-variants",
-        },
-        {
-          name: "Add Education Variant",
-          url: "./add-education-variant",
-        },
-      ],
+      url: "./all-education-variants",
     },
     {
       id: 2,
       name: "Tutoring Variant",
-      subMenus: [
-        {
-          name: "All Tutoring Variants",
-          url: "./all-tutoring-variants",
-        },
-        {
-          name: "Add Tutoring Variant",
-          url: "./add-tutoring-variant",
-        },
-      ],
+      url: "./all-tutoring-variants",
     },
     {
       id: 3,
       name: "Tutoring Place",
-      subMenus: [
-        {
-          name: "All Tutoring Places",
-          url: "./all-tutoring-places",
-        },
-        {
-          name: "Add Tutoring Place",
-          url: "./add-tutoring-place",
-        },
-      ],
+      url: "./all-tutoring-places",
     },
     {
       id: 4,
       name: "Tutoring Program",
-      subMenus: [
-        {
-          name: "All Tutoring Programs",
-          url: "./all-tutoring-programs",
-        },
-        {
-          name: "Add Tutoring Program",
-          url: "./add-tutoring-program",
-        },
-      ],
+      url: "./all-tutoring-programs",
     },
     {
       id: 5,
       name: "Student Variant",
-      subMenus: [
-        {
-          name: "All Student Variants",
-          url: "./all-student-variants",
-        },
-        {
-          name: "Add Student Variant",
-          url: "./add-student-variant",
-        },
-      ],
+      url: "./all-student-variants",
     },
     {
       id: 6,
       name: "Extra Subject",
-      subMenus: [
-        {
-          name: "All Extra Subjects",
-          url: "./all-extra-subjects",
-        },
-        {
-          name: "Add Extra Subject",
-          url: "./add-extra-subject",
-        },
-      ],
+      url: "./all-extra-subjects",
     },
     {
       id: 7,
       name: "Subject",
-      subMenus: [
-        {
-          name: "All Subjects",
-          url: "./all-board-wise-subjects",
-        },
-        {
-          name: "Add Subject",
-          url: "./add-board-wise-subject",
-        },
-      ],
+      url: "./all-board-wise-subjects",
     },
     {
       id: 8,
       name: "Current Affair",
-      subMenus: [
-        {
-          name: "All Current Affairs",
-          url: "./all-current-affairs",
-        },
-        {
-          name: "Add Current Affair",
-          url: "./add-current-affair",
-        },
-      ],
+      url: "./all-current-affairs",
     },
     {
       id: 9,
       name: "University",
-      subMenus: [
-        {
-          name: "All Universities",
-          url: "./all-universities",
-        },
-        {
-          name: "Add University",
-          url: "./add-university",
-        },
-      ],
+      url: "./all-universities",
     },
     {
       id: 10,
       name: "Semester",
-      subMenus: [
-        {
-          name: "All Semesters",
-          url: "./all-semesters",
-        },
-        {
-          name: "Add Semester",
-          url: "./add-semester",
-        },
-      ],
+      url: "./all-semesters",
     },
     {
       id: 11,
       name: "Tutoring Class",
-      subMenus: [
-        {
-          name: "All Tutoring Classes",
-          url: "./all-tutoring-classes",
-        },
-        {
-          name: "Add Tutoring Class",
-          url: "./add-tutoring-class",
-        },
-      ],
+      url: "./all-tutoring-classes",
     },
 
     {
       id: 12,
       name: "Tutor Info",
+      url: "./all-tutor-infos",
+    },
+
+  ];
+
+  const withSubmenu = [
+    {
+      id: 1,
+      name: "Settings",
       subMenus: [
         {
-          name: "All Tutor Infos",
-          url: "./all-tutor-infos",
+          name: "Add Education Variant",
+          url: "./add-education-variant",
+        },
+        {
+          name: "Add Tutoring Variant",
+          url: "./add-tutoring-variant",
+        },
+        {
+          name: "Add Tutoring Place",
+          url: "./add-tutoring-place",
+        },
+        {
+          name: "Add Tutoring Program",
+          url: "./add-tutoring-program",
+        },
+        {
+          name: "Add Student Variant",
+          url: "./add-student-variant",
+        },
+        {
+          name: "Add Extra Subject",
+          url: "./add-extra-subject",
+        },
+        {
+          name: "Add Subject",
+          url: "./add-board-wise-subject",
+        },
+        {
+          name: "Add Current Affair",
+          url: "./add-current-affair",
+        },
+        {
+          name: "Add University",
+          url: "./add-university",
+        },
+        {
+          name: "Add Semester",
+          url: "./add-semester",
+        },
+        {
+          name: "Add Tutoring Class",
+          url: "./add-tutoring-class",
         },
         {
           name: "Add Tutor Info",
@@ -178,10 +128,10 @@ const MainSideBar = () => {
         },
       ],
     },
-  ];
+  ]
 
   return (
-    <aside className="border-r-2 flex flex-col h-full overflow-hidden">
+    <aside className="flex flex-col h-full overflow-hidden">
       {/* <div className="flex-none border-b-2 py-4">Header</div> */}
       <div
         className="flex-1 overflow-y-auto"
@@ -192,14 +142,18 @@ const MainSideBar = () => {
           scrollMarginRight: "15px", // Adjust as needed
         }}
       >
-        <div className="px-2">
-          {menus?.map((menu) => (
+        <div className="">
+
+          {
+            menus?.map(menu => (<NavLink key={menu?.id} to={menu?.url} className={({ isActive }) => (isActive ? ' block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-blue-700 capitalize py-1 bg-gray-200 px-2' : 'block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-gray-800 hover:text-gray-700 capitalize py-1 px-2 border border-b-0')}>{menu?.name}</NavLink>))
+          }
+          {withSubmenu?.map((menu) => (
             <Accordion open={open === menu?.id} key={menu?.id}>
               <div
                 onClick={() => handleOpen(menu?.id)}
-                className="flex items-center justify-between py-2 cursor-pointer"
+                className="flex items-center justify-between border p-2 cursor-pointer"
               >
-                <Typography variant="h6" className="text-gray-600 capitalize">
+                <Typography variant="h6" className="text-gray-800 font-medium capitalize">
                   {menu?.name}
                 </Typography>
                 {open === menu?.id ? (
@@ -209,15 +163,16 @@ const MainSideBar = () => {
                 )}
               </div>
               <AccordionBody className="py-0">
-                <div className="grid grid-cols-1">
+                <div className="grid grid-cols-1 border">
                   {menu?.subMenus?.map((sMenu, idx) => (
-                    <Link
+                    <NavLink
                       key={idx}
                       to={`${sMenu?.url}`}
-                      className="py-1 hover:bg-blue-gray-50 px-3 capitalize"
+                      // className="py-1 hover:bg-blue-gray-50 px-3 capitalize"
+                      className={({ isActive }) => (isActive ? ' block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-blue-700 capitalize py-1 pl-3' : 'block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-gray-800 hover:text-gray-700 capitalize py-1 pl-3')}
                     >
                       {sMenu?.name}
-                    </Link>
+                    </NavLink>
                   ))}
                 </div>
               </AccordionBody>

@@ -40,7 +40,7 @@ const AddAcademicClass = () => {
       <div className="flex justify-between items-center border-b pb-3">
         <h1 className="font-bold">Add AcademicClass</h1>
         <Link
-          to={"/dashboard/all-academic-class"}
+          to={"/all-academic-class"}
           className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
         >
           See All
