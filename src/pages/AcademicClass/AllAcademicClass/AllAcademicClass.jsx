@@ -8,16 +8,16 @@ import { schools } from "../../../data/school";
 const AllAcademicClass = () => {
   return (
     <div className="py-10">
-      <div className="flex justify-between items-center border-b pb-3">
+      <div className="flex justify-between items-center pb-3">
         <h1 className="font-bold">All Academic Class</h1>
         <Link
-          to={"/dashboard/add-academic-class"}
+          to={"/add-academic-class"}
           className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
         >
           Add New
         </Link>
       </div>
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto border-x rounded">
         <table className="w-full min-w-max table-auto text-left">
           {/* head */}
           <thead>

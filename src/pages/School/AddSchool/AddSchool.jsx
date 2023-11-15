@@ -39,7 +39,7 @@ const AddSchool = () => {
       <div className="flex justify-between items-center border-b pb-3">
         <h1 className="font-bold">Add School</h1>
         <Link
-          to={"/dashboard/all-school"}
+          to={"/all-school"}
           className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
         >
           See All

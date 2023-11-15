@@ -9,37 +9,37 @@ import { tutorInfos } from "../../../data/tutorInfo";
 const AllTutoringInfo = () => {
   return (
     <div className="py-10">
-      <div className="flex justify-between items-center border-b pb-3">
-        <h1 className="font-bold">All Tutoring Info</h1>
+      <div className="flex justify-between items-center pb-3">
+        <h1 className="font-bold text-gray-800">All Tutoring Info</h1>
         <Link
-          to={"/dashboard/add-tutoring-Info"}
+          to={"/add-tutor-info"}
           className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
         >
           Add New
         </Link>
       </div>
-      <div className="overflow-x-auto max-w-5xl">
+      <div className="overflow-x-auto max-w-5xl border-x rounded">
         <table className="table">
           {/* head */}
           <thead>
             <tr>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Sl</th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Type</th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Class</th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Subject</th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Meet Link</th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Interview Time</th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Emergency Contact Number</th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap">Home Address</th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap w-[120px] text-center">Actions</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Sl</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Type</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Class</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Subject</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Meet Link</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Interview Time</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Emergency Contact Number</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Home Address</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap w-[120px] text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
             {/* row 1 */}
             {tutorInfos.map((info, idx) => {
-              const classes = "p-4 border-b border-blue-gray-50";
+              const classes = "p-4 border-b border-blue-gray-50 text-base text-gray-800 font-normal";
               return (
-                <tr key={info.id}>
+                <tr key={info.id} className={` ${idx % 2 !== 0 && 'bg-gray-50'}`}>
                   <th className={classes}>{idx + 1}</th>
                   <td className={classes}>
                     {
