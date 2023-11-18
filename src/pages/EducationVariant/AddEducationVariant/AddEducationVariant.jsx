@@ -25,16 +25,16 @@ const AddEducationVariant = () => {
 
   return (
     <div className="py-10">
-      <div className="flex justify-between items-center border-b pb-3">
+      <div className="flex justify-between items-center pb-3">
         <h1 className="font-bold">Add Education Variant</h1>
         <Link
           to={"/all-education-variants"}
-          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
+          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
         >
           See All
         </Link>
       </div>
-      <form className="max-w-md mx-auto p-4 border rounded-md mt-5">
+      <form className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white">
         <label
           htmlFor="name"
           className="block mb-2 font-semibold text-sm text-gray-500"
