@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import useAuthData from "../../../hooks/useAuthData";
 import { useDispatch } from "react-redux";
 import { addUser } from "../../../store/features/user/userSlice";
+import Schooling from "../../../../public/logo.png"
 
 export function Header() {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -22,10 +23,10 @@ export function Header() {
 
   return (
     <>
-      <div className="flex gap-8 fixed w-full right-0">
-      <div className="w-52"></div>  
-      <Navbar className="flex-1 pt-2 w-full max-w-full fixe right-0 px-4 lg:px-8 lg:pt-4 shadow-none pb-0">
-        <div className=" flex items-center justify-between text-blue-gray-900 border-b-2 mb-2 pb-2 lg:pb-4">
+      <div className="flex fixed w-full right-0 z-50">
+      <div className="w-80 hidden lg:block"></div>  
+      <Navbar className="flex-1 pt-2 w-full max-w-full fixe right-0 px-4 lg:px-8 lg:py-4 rounded-none shadow-none pb-0">
+        <div className=" flex items-center justify-between text-blue-gray-900">
           <div className="flex items-center gap-5 lg:hidden">
             {/* open drawer icon */}
             <IconButton
@@ -69,12 +70,7 @@ export function Header() {
           </div>
           {/* logo */}
           <Link to="/">
-            <Typography
-              as="a"
-              className="cursor-pointer py-1.5 font-bold flex items-center gap-2 text-2xl"
-            >
-              <IoLogoMastodon /> Logo
-            </Typography>
+           <img src={Schooling} className=" w-40" alt="" />
           </Link>
           {/* login button */}
           {user?.email ? (

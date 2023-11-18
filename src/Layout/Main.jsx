@@ -24,13 +24,13 @@ const Main = () => {
   return (
     <>
       <Header />
-      <div className="flex gap-10 px-4 lg:px-8">
+      <div className="flex relative">
         {showSideBar && (
-          <div className="w-52 min-h-[calc(100vh-60px)] min-lg:h-[calc(100vh-80px)]">
+          <div className="w-80 min-h-[calc(100vh)] bg-dark z-50">
             <MainSideBar />
           </div>
         )}
-        <div className="flex-1">
+        <div className="flex-1 px-10 pt-14 overflow-x-auto">
           <Outlet />
         </div>
       </div>

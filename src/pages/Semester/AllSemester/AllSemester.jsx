@@ -22,12 +22,12 @@ const AllSemester = () => {
           <h1 className="font-bold to-gray-800">All Semesters</h1>
           <Link
             to={"/add-semester"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
           >
             Add New
           </Link>
         </div>
-        <div className="overflow-x-auto border-x rounded">
+        <div className="overflow-x-auto border-x rounded  bg-white">
           <table className="w-full min-w-max table-auto text-left">
             {/* head */}
             <thead>
