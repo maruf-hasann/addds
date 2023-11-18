@@ -24,7 +24,7 @@ const Main = () => {
   return (
     <>
       <Header />
-      <div className="flex mx-auto max-w-screen-2xl gap-10 px-4 lg:px-8">
+      <div className="flex gap-10 px-4 lg:px-8">
         {showSideBar && (
           <div className="w-52 min-h-[calc(100vh-60px)] min-lg:h-[calc(100vh-80px)]">
             <MainSideBar />
