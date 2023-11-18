@@ -133,13 +133,10 @@ const MainSideBar = () => {
   ]
 
   return (
-    <aside className="flex flex-col h-full w-80 fixed bg-dark" style={{
-      msOverflowStyle: "none",
-      scrollbarWidth: "none",
-    }}>
+    <aside className="flex flex-col h-full w-80 fixed bg-dark">
       {/* <div className="flex-none border-b-2 py-4">Header</div> */}
       <div
-        className="flex-1 overflow-y-auto"
+        className="flex-1"
         style={{
           scrollbarWidth: "thin",
           scrollbarColor: "#888 #f1f1f1",
@@ -147,8 +144,8 @@ const MainSideBar = () => {
           scrollMarginRight: "15px", // Adjust as needed
         }}
       >
-        <div className="px-4 overflow-y-auto">
-          <div>
+        <div className="px-4 pt-40">
+          <div className="fixed top-0 left-0 pl-4 bg-dark w-80">
             <img src={Schooling} className="w-40 py-10" alt="" />
           </div>
 
