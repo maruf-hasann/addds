@@ -1,30 +1,31 @@
 import { Button } from "@material-tailwind/react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useAddEducationVariantMutation } from "../../../store/service/educationVariant/educationVariantApiService";
-
-
-
 
 const AddEducationVariant = () => {
-  const [addEducationVariant, { isLoading }] = useAddEducationVariantMutation();
+  const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
+    setIsLoading(true);
     e.preventDefault();
-    const variantName = e.target.name.value;
-    const result = await addEducationVariant({ variantName });
-    if (result?.data?.success) {
-      toast.success(result?.data?.message);
-      e.target.reset();
-    } else {
-      toast.error(result?.error?.data?.message);
-    }
   };
+
+  useEffect(() => {
+    if (isLoading) {
+      setTimeout(() => {
+        setIsLoading(false);
+        setName("");
+        toast.success("Education variant added successfully");
+      }, 2000);
+    }
+  }, [isLoading]);
 
   return (
     <div className="py-10">
-      <div className="flex justify-between items-center border-b pb-3">
+      <div className="flex justify-between items-center pb-3">
         <h1 className="font-bold">Add Education Variant</h1>
         <Link
           to={"/all-education-variants"}
@@ -33,10 +34,7 @@ const AddEducationVariant = () => {
           See All
         </Link>
       </div>
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-md mx-auto p-4 border rounded-md mt-5"
-      >
+      <form className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white">
         <label
           htmlFor="name"
           className="block mb-2 font-semibold text-sm text-gray-500"
@@ -47,8 +45,10 @@ const AddEducationVariant = () => {
           type="text"
           id="name"
           name="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
-          placeholder="One to One"
+          placeholder="English Medium"
           className="w-full p-2 mb-4 border rounded-md"
         />
         <div className="flex justify-end">
@@ -56,6 +56,7 @@ const AddEducationVariant = () => {
             <Button
               disabled
               className="bg-white text-blue-gray-700 border py-2 px-[39px] rounded-sm font-semibold cursor-wait "
+              onClick={handleSubmit}
             >
               <FaSpinner className="animate-spin" />
             </Button>
@@ -63,6 +64,7 @@ const AddEducationVariant = () => {
             <Button
               type="submit"
               className="bg-white text-blue-gray-700 border py-2 px-8 rounded-sm font-semibold cursor-pointer"
+              onClick={handleSubmit}
             >
               Add
             </Button>
