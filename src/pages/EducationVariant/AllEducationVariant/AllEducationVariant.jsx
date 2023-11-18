@@ -15,7 +15,7 @@ const AllEducationVariant = () => {
           Add New
         </Link>
       </div>
-      <div className="overflow-x-auto border-x rounded">
+      <div className="overflow-x-auto border-x rounded  bg-white">
         <table className="w-full min-w-max table-auto text-left">
           {/* head */}
           <thead>

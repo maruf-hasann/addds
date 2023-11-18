@@ -13,25 +13,25 @@ const AllTutoringInfo = () => {
         <h1 className="font-bold text-gray-800">All Tutoring Info</h1>
         <Link
           to={"/add-tutor-info"}
-          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
+          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
         >
           Add New
         </Link>
       </div>
-      <div className="overflow-x-auto max-w-5xl border-x rounded">
-        <table className="table">
+      <div className="overflow-x-auto w-full bg-white rounded">
+        <table className="w-full min-w-max table-auto text-left overflow-x-auto">
           {/* head */}
           <thead>
             <tr>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Sl</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Type</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Class</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Subject</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Meet Link</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Interview Time</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Emergency Contact Number</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap">Home Address</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap w-[120px] text-center">Actions</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Sl</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Type</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Class</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Subject</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Meet Link</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Interview Time</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Emergency Contact Number</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Home Address</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -39,7 +39,7 @@ const AllTutoringInfo = () => {
             {tutorInfos.map((info, idx) => {
               const classes = "p-4 border-b border-blue-gray-50 text-base text-gray-800 font-normal";
               return (
-                <tr key={info.id} className={` ${idx % 2 !== 0 && 'bg-gray-50'}`}>
+                <tr key={info.id} className={` text-center ${idx % 2 !== 0 && 'bg-gray-50'}`}>
                   <th className={classes}>{idx + 1}</th>
                   <td className={classes}>
                     {

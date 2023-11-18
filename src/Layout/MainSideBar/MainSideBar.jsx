@@ -2,6 +2,8 @@ import React from "react";
 import { Accordion, AccordionBody, Typography } from "@material-tailwind/react";
 import { Link, NavLink } from "react-router-dom";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import Schooling from "../../../public/logo.png"
+
 
 const MainSideBar = () => {
   const [open, setOpen] = React.useState(0);
@@ -131,7 +133,10 @@ const MainSideBar = () => {
   ]
 
   return (
-    <aside className="flex flex-col h-full overflow-hidden">
+    <aside className="flex flex-col h-full w-80 fixed bg-dark" style={{
+      msOverflowStyle: "none",
+      scrollbarWidth: "none",
+    }}>
       {/* <div className="flex-none border-b-2 py-4">Header</div> */}
       <div
         className="flex-1 overflow-y-auto"
@@ -142,24 +147,27 @@ const MainSideBar = () => {
           scrollMarginRight: "15px", // Adjust as needed
         }}
       >
-        <div className="">
+        <div className="px-4 overflow-y-auto">
+          <div>
+            <img src={Schooling} className="w-40 py-10" alt="" />
+          </div>
 
           {
-            menus?.map(menu => (<NavLink key={menu?.id} to={menu?.url} className={({ isActive }) => (isActive ? ' block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-blue-700 capitalize py-1 bg-gray-200 px-2' : 'block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-gray-800 hover:text-gray-700 capitalize py-1 px-2 border border-b-0')}>{menu?.name}</NavLink>))
+            menus?.map(menu => (<NavLink key={menu?.id} to={menu?.url} className={({ isActive }) => (isActive ? ' block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-gray-300 capitalize py-1 bg-blue-gray-800 px-2' : 'block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-white hover:text-white capitalize py-1 px-2')}>{menu?.name}</NavLink>))
           }
           {withSubmenu?.map((menu) => (
             <Accordion open={open === menu?.id} key={menu?.id}>
               <div
                 onClick={() => handleOpen(menu?.id)}
-                className="flex items-center justify-between border p-2 cursor-pointer"
+                className="flex items-center justify-between p-3 cursor-pointer"
               >
-                <Typography variant="h6" className={`text-gray-800 font-medium capitalize ${open === menu?.id && 'text-purple-500'}`}>
+                <Typography variant="h6" className={`text-gray-800 font-medium capitalize ${open === menu?.id ? 'text-gray-300' : 'text-white'}`}>
                   {menu?.name}
                 </Typography>
                 {open === menu?.id ? (
-                  <IoIosArrowUp className="text-gray-600" />
+                  <IoIosArrowUp className="text-white" />
                 ) : (
-                  <IoIosArrowDown className="text-gray-600" />
+                  <IoIosArrowDown className="text-white" />
                 )}
               </div>
               <AccordionBody className="py-0">
@@ -169,7 +177,7 @@ const MainSideBar = () => {
                       key={idx}
                       to={`${sMenu?.url}`}
                       // className="py-1 hover:bg-blue-gray-50 px-3 capitalize"
-                      className={({ isActive }) => (isActive ? ' block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-blue-700 capitalize py-1 pl-3 border border-t-0' : 'block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-gray-800 hover:text-gray-700 capitalize py-1 pl-3 border border-t-0')}
+                      className={({ isActive }) => (isActive ? ' block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-gray-300 capitalize py-1 bg-blue-gray-800 px-2' : 'block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-white hover:text-white capitalize py-1 px-2')}
                     >
                       {sMenu?.name}
                     </NavLink>

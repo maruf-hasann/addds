@@ -11,7 +11,7 @@ const AllCollege = () => {
         <h1 className="font-bold">All College</h1>
         <Link
           to={"/add-college"}
-          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
+          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
         >
           Add New
         </Link>

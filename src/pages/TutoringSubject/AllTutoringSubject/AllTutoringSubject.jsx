@@ -11,7 +11,7 @@ const AllTutoringSubject = () => {
         <h1 className="font-bold">All Tutoring Subject</h1>
         <Link
           to={"/add-tutoring-subject"}
-          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
+          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
         >
           Add New
         </Link>

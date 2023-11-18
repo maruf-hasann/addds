@@ -41,7 +41,7 @@ const AddCurriculumBoard = () => {
         <h1 className="font-bold">Add Curriculum Board</h1>
         <Link
           to={"/all-curriculum-board"}
-          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
+          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
         >
           See All
         </Link>

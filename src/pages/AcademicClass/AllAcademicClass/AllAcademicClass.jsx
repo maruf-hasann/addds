@@ -12,7 +12,7 @@ const AllAcademicClass = () => {
         <h1 className="font-bold">All Academic Class</h1>
         <Link
           to={"/add-academic-class"}
-          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700"
+          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
         >
           Add New
         </Link>
