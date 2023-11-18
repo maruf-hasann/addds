@@ -33,42 +33,47 @@ const MainSideBar = () => {
     },
     {
       id: 5,
+      name: "Academic Class",
+      url: "./all-academic-classes",
+    },
+    {
+      id: 6,
       name: "Student Variant",
       url: "./all-student-variants",
     },
     {
-      id: 6,
+      id: 7,
       name: "Extra Subject",
       url: "./all-extra-subjects",
     },
     {
-      id: 7,
+      id: 8,
       name: "Subject",
       url: "./all-board-wise-subjects",
     },
     {
-      id: 8,
+      id: 9,
       name: "Current Affair",
       url: "./all-current-affairs",
     },
     {
-      id: 9,
+      id: 10,
       name: "University",
       url: "./all-universities",
     },
     {
-      id: 10,
+      id: 11,
       name: "Semester",
       url: "./all-semesters",
     },
     {
-      id: 11,
+      id: 12,
       name: "Tutoring Class",
       url: "./all-tutoring-classes",
     },
 
     {
-      id: 12,
+      id: 13,
       name: "Tutor Info",
       url: "./all-tutor-infos",
     },
@@ -95,6 +100,10 @@ const MainSideBar = () => {
         {
           name: "Add Tutoring Program",
           url: "./add-tutoring-program",
+        },
+        {
+          name: "Add Academic Class",
+          url: "./add-academic-class",
         },
         {
           name: "Add Student Variant",
@@ -144,9 +153,9 @@ const MainSideBar = () => {
           scrollMarginRight: "15px", // Adjust as needed
         }}
       >
-        <div className="px-4 pt-40">
+        <div className="px-4 pt-32">
           <div className="fixed top-0 left-0 pl-4 bg-dark w-80">
-            <img src={Schooling} className="w-40 py-10" alt="" />
+            <img src={Schooling} className="w-40 pt-10 pb-3" alt="" />
           </div>
 
           {
