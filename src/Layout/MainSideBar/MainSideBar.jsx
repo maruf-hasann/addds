@@ -153,7 +153,7 @@ const MainSideBar = () => {
                 onClick={() => handleOpen(menu?.id)}
                 className="flex items-center justify-between border p-2 cursor-pointer"
               >
-                <Typography variant="h6" className="text-gray-800 font-medium capitalize">
+                <Typography variant="h6" className={`text-gray-800 font-medium capitalize ${open === menu?.id && 'text-purple-500'}`}>
                   {menu?.name}
                 </Typography>
                 {open === menu?.id ? (
@@ -163,13 +163,13 @@ const MainSideBar = () => {
                 )}
               </div>
               <AccordionBody className="py-0">
-                <div className="grid grid-cols-1 border">
+                <div className="grid grid-cols-1 ">
                   {menu?.subMenus?.map((sMenu, idx) => (
                     <NavLink
                       key={idx}
                       to={`${sMenu?.url}`}
                       // className="py-1 hover:bg-blue-gray-50 px-3 capitalize"
-                      className={({ isActive }) => (isActive ? ' block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-blue-700 capitalize py-1 pl-3' : 'block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-gray-800 hover:text-gray-700 capitalize py-1 pl-3')}
+                      className={({ isActive }) => (isActive ? ' block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-blue-700 capitalize py-1 pl-3 border border-t-0' : 'block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-gray-800 hover:text-gray-700 capitalize py-1 pl-3 border border-t-0')}
                     >
                       {sMenu?.name}
                     </NavLink>

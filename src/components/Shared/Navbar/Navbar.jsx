@@ -22,8 +22,8 @@ export function Header() {
 
   return (
     <>
-      <Navbar className="mx-auto max-w-screen-2xl pt-2 px-4 lg:px-8 lg:pt-4 shadow-none pb-0">
-        <div className="container mx-auto flex items-center justify-between text-blue-gray-900 border-b-2 pb-2 lg:pb-4">
+      <Navbar className="pt-2 w-full max-w-full fixed px-4 lg:px-8 lg:pt-4 shadow-none pb-0">
+        <div className=" flex items-center justify-between text-blue-gray-900 border-b-2 mb-2 pb-2 lg:pb-4">
           <div className="flex items-center gap-5 lg:hidden">
             {/* open drawer icon */}
             <IconButton
