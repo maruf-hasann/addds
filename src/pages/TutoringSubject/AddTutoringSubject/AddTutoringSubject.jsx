@@ -44,7 +44,7 @@ const AddTutoringSubject = () => {
           See All
         </Link>
       </div>
-      <form className="max-w-md mx-auto p-4 border rounded-md mt-5">
+      <form className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white">
         <div>
           <label
             htmlFor="name"
