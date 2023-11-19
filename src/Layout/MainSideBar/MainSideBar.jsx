@@ -54,48 +54,53 @@ const MainSideBar = () => {
     },
     {
       id: 5,
+      name: "Academic Class",
+      url: "./all-academic-classes",
+    },
+    {
+      id: 6,
       name: "Student Variant",
       url: "./all-student-variants",
       icon: <MdPerson />,
     },
     {
-      id: 6,
+      id: 7,
       name: "Extra Subject",
       url: "./all-extra-subjects",
       icon: <MdSubject />,
     },
     {
-      id: 7,
+      id: 8,
       name: "Subject",
       url: "./all-board-wise-subjects",
       icon: <MdLibraryBooks />,
     },
     {
-      id: 8,
+      id: 9,
       name: "Current Affair",
       url: "./all-current-affairs",
       icon: <MdToday />,
     },
     {
-      id: 9,
+      id: 10,
       name: "University",
       url: "./all-universities",
       icon: <MdAccountBalance />,
     },
     {
-      id: 10,
+      id: 11,
       name: "Semester",
       url: "./all-semesters",
       icon: <MdClass />,
     },
     {
-      id: 11,
+      id: 12,
       name: "Tutoring Class",
       url: "./all-tutoring-classes",
       icon: <MdClass />,
     },
     {
-      id: 12,
+      id: 13,
       name: "Tutor Info",
       url: "./all-tutor-infos",
       icon: <MdAccountBox />,
@@ -127,6 +132,10 @@ const MainSideBar = () => {
           name: "Add Tutoring Program",
           url: "./add-tutoring-program",
           icon: <span>📋</span>,
+        },
+        {
+          name: "Add Academic Class",
+          url: "./add-academic-class",
         },
         {
           name: "Add Student Variant",
@@ -202,7 +211,7 @@ const MainSideBar = () => {
       }}
     >
       <div
-        className="flex-1 overflow-y-auto"
+        className="flex-1"
         style={{
           scrollbarWidth: "thin",
           scrollbarColor: "#888 #f1f1f1",
