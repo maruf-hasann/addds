@@ -1,12 +1,17 @@
 import { Link } from "react-router-dom";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
 
 import moment from "moment";
 import { educationVariants } from "../../../data/educationVariant";
 import { tutorInfos } from "../../../data/tutorInfo";
+import { useState } from "react";
+import AllTutorInfoModal from "./AllTutorInfoModal/AllTutorInfoModal";
 
 const AllTutoringInfo = () => {
+  const [viewTutorInfos, setViewTutorInfos] = useState(null);
+  const [openTutorInfoModal, setOpenTutorInfoModal] = useState(false);
+
   return (
     <div className="py-10">
       <div className="flex justify-between items-center pb-3">
@@ -58,6 +63,13 @@ const AllTutoringInfo = () => {
                   <td className={classes}>{info.homeAddress}</td>
                   <td className={`${classes} w-[120px]`}>
                     <div className="flex justify-evenly items-center">
+                      <FaEye
+                        onClick={() => {
+                          setOpenTutorInfoModal(true),
+                            setViewTutorInfos(tutorInfos);
+                        }}
+                        className="cursor-pointer"
+                      />{" "}
                       <FaTrash
                         onClick={() =>
                           toast.success("College deleted successfully")
@@ -78,6 +90,14 @@ const AllTutoringInfo = () => {
           </tbody>
         </table>
       </div>
+      {openTutorInfoModal && viewTutorInfos && (
+        <AllTutorInfoModal
+          viewTutorInfos={tutorInfos}
+          openTutorInfoModal={openTutorInfoModal}
+          setViewTutorInfos={setViewTutorInfos}
+          setOpenTutorInfoModal={setOpenTutorInfoModal}
+        />
+      )}
     </div>
   );
 };
