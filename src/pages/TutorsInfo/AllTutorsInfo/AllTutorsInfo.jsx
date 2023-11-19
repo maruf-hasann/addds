@@ -23,21 +23,21 @@ const AllTutoringInfo = () => {
           {/* head */}
           <thead>
             <tr>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Sl</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Type</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Class</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Subject</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Meet Link</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Interview Time</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Emergency Contact Number</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Home Address</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center">Actions</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Sl</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Type</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Class</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Subject</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Meet Link</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Interview Time</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Emergency Contact Number</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Home Address</th>
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Actions</th>
             </tr>
           </thead>
           <tbody>
             {/* row 1 */}
             {tutorInfos.map((info, idx) => {
-              const classes = "p-4 border-b border-blue-gray-50 text-base text-gray-800 font-normal";
+              const classes = "p-4 py-8 border-b border-blue-gray-50 text-base text-gray-800 font-normal";
               return (
                 <tr key={info.id} className={` text-center ${idx % 2 !== 0 && 'bg-gray-50'}`}>
                   <th className={classes}>{idx + 1}</th>
