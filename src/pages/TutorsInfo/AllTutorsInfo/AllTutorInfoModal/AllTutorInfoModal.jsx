@@ -46,7 +46,7 @@ const AllTutorInfoModal = ({
                     <>
                         <div className="py-10">
                             <div className="flex justify-between items-center pb-3">
-                                <h1 className="font-bold">
+                                <h1 className="font-bold text-blue-gray-800">
                                     All TutorInfo
                                 </h1>
 
@@ -54,20 +54,20 @@ const AllTutorInfoModal = ({
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                 <div>
-                                    <label htmlFor="" className="p-2">Meet Link</label>
-                                    <input readOnly className="bg-gray-50 outline-none border  text-gray-900 text-sm rounded-lg  focus:ring-0 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" defaultValue={meetLink} />
+                                    <label htmlFor="" className="font-semibold text-blue-gray-800 p-2">Meet Link</label>
+                                    <input readOnly className=" outline-none border-2 border-blue-500  text-gray-900 text-sm rounded-lg  focus:ring-0 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0" type="text" defaultValue={meetLink} />
                                 </div>
                                 <div>
-                                    <label htmlFor="" className="p-2">Ineterview Time</label>
-                                    <input readOnly className="bg-gray-50 outline-none border  text-gray-900 text-sm rounded-lg  focus:ring-0 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" defaultValue={moment(interviewTime).format("DD MMM YYYY hh:mm A")} />
+                                    <label htmlFor="" className="font-semibold text-blue-gray-800 p-2">Ineterview Time</label>
+                                    <input readOnly className=" outline-none border-2 border-blue-500  text-gray-900 text-sm rounded-lg  focus:ring-0 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0" type="text" defaultValue={moment(interviewTime).format("DD MMM YYYY hh:mm A")} />
                                 </div>
                                 <div>
-                                    <label htmlFor="" className="p-2">Home Address</label>
-                                    <input readOnly className="bg-gray-50 outline-none border  text-gray-900 text-sm rounded-lg  focus:ring-0 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" defaultValue={homeAddress} />
+                                    <label htmlFor="" className="font-semibold text-blue-gray-800 p-2">Home Address</label>
+                                    <input readOnly className=" outline-none border-2 border-blue-500  text-gray-900 text-sm rounded-lg  focus:ring-0 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0" type="text" defaultValue={homeAddress} />
                                 </div>
                                 <div>
-                                    <label htmlFor="" className="p-2">Contact Number</label>
-                                    <input readOnly className="bg-gray-50 outline-none border  text-gray-900 text-sm rounded-lg  focus:ring-0 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" defaultValue={emergencyContactNumber} />
+                                    <label htmlFor="" className="font-semibold text-blue-gray-800 p-2">Contact Number</label>
+                                    <input readOnly className=" outline-none border-2 border-blue-500  text-gray-900 text-sm rounded-lg  focus:ring-0 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-0" type="text" defaultValue={emergencyContactNumber} />
                                 </div>
                             </div>
 
