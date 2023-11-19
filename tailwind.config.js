@@ -7,7 +7,7 @@ export default withMT({
       colors: {
         primary: {
           50: "#F2F5F9",
-          // 100: "#ce93d8",
+          100: "#4764A8",
         },
         dark: "#1F2333",
       },

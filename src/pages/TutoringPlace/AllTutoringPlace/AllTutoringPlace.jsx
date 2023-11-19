@@ -26,7 +26,7 @@ const AllTutoringPlace = () => {
           <h1 className="font-bold text-gray-800">All Tutoring Place</h1>
           <Link
             to={"/add-tutoring-place"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-800"
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white"
           >
             Add New
           </Link>
