@@ -3,9 +3,7 @@ import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAddEducationVariantMutation } from "../../../store/service/educationVariant/educationVariantApiService";
-
-
-
+ 
 
 const AddEducationVariant = () => {
   const [addEducationVariant, { isLoading }] = useAddEducationVariantMutation();
@@ -35,7 +33,7 @@ const AddEducationVariant = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white"
+        className="max-w-md mx-auto p-4 border rounded-md mt-20 bg-white"
       >
         <label
           htmlFor="name"
