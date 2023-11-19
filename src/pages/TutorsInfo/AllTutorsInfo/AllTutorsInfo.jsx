@@ -9,7 +9,7 @@ import { useState } from "react";
 import AllTutorInfoModal from "./AllTutorInfoModal/AllTutorInfoModal";
 
 const AllTutoringInfo = () => {
-  const [viewTutorInfos, setViewTutorInfos] = useState(null);
+  const [viewTutorInfo, setViewTutorInfo] = useState(null);
   const [openTutorInfoModal, setOpenTutorInfoModal] = useState(false);
 
   return (
@@ -34,7 +34,7 @@ const AllTutoringInfo = () => {
               <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Subject</th>
               {/* <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Meet Link</th> */}
               {/* <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Interview Time</th> */}
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Contact Number</th>
+              {/* <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Contact Number</th> */}
               {/* <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Home Address</th> */}
               <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Actions</th>
             </tr>
@@ -59,7 +59,7 @@ const AllTutoringInfo = () => {
                   {/* <td className={classes}>
                     {moment(info.interviewTime).format("DD MMM YYYY hh:mm A")}
                   </td> */}
-                  <td className={classes}>{info.emergencyContactNumber}</td>
+                  {/* <td className={classes}>{info.emergencyContactNumber}</td> */}
                   {/* <td className={classes}>{info.homeAddress}</td> */}
                   <td className={`${classes} w-[120px]`}>
                     <div className="flex justify-evenly items-center">
@@ -67,7 +67,7 @@ const AllTutoringInfo = () => {
                         title="All Info"
                         onClick={() => {
                           setOpenTutorInfoModal(true),
-                            setViewTutorInfos(tutorInfos);
+                            setViewTutorInfo(info);
                         }}
                         className="cursor-pointer"
                       />{" "}
@@ -91,11 +91,11 @@ const AllTutoringInfo = () => {
           </tbody>
         </table>
       </div>
-      {openTutorInfoModal && viewTutorInfos && (
+      {openTutorInfoModal && viewTutorInfo && (
         <AllTutorInfoModal
-          viewTutorInfos={tutorInfos}
+          viewTutorInfo={viewTutorInfo}
           openTutorInfoModal={openTutorInfoModal}
-          setViewTutorInfos={setViewTutorInfos}
+          setViewTutorInfo={setViewTutorInfo}
           setOpenTutorInfoModal={setOpenTutorInfoModal}
         />
       )}
