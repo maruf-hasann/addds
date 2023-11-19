@@ -3,9 +3,7 @@ import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAddEducationVariantMutation } from "../../../store/service/educationVariant/educationVariantApiService";
-
-
-
+ 
 
 const AddEducationVariant = () => {
   const [addEducationVariant, { isLoading }] = useAddEducationVariantMutation();
