@@ -22,7 +22,7 @@ const AllTutoringClass = () => {
             Add New
           </Link>
         </div>
-        <div className="overflow-x-auto border-x rounded  bg-white bg-white">
+        <div className="overflow-x-auto border-x rounded bg-white">
           <table className="w-full min-w-max table-auto text-left">
             {/* head */}
             <thead>
