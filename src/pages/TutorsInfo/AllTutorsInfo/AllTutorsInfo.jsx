@@ -32,10 +32,10 @@ const AllTutoringInfo = () => {
               <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Type</th>
               <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Class</th>
               <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Subject</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Meet Link</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Interview Time</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Emergency Contact Number</th>
-              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Home Address</th>
+              {/* <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Meet Link</th> */}
+              {/* <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Interview Time</th> */}
+              <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Contact Number</th>
+              {/* <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Home Address</th> */}
               <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold whitespace-nowrap text-center py-8">Actions</th>
             </tr>
           </thead>
@@ -55,15 +55,16 @@ const AllTutoringInfo = () => {
                   </td>
                   <td className={classes}>{info.tutoringClass}</td>
                   <td className={classes}>{info.tutoringSubject}</td>
-                  <td className={classes}>{info.meetLink}</td>
-                  <td className={classes}>
+                  {/* <td className={classes}>{info.meetLink}</td> */}
+                  {/* <td className={classes}>
                     {moment(info.interviewTime).format("DD MMM YYYY hh:mm A")}
-                  </td>
+                  </td> */}
                   <td className={classes}>{info.emergencyContactNumber}</td>
-                  <td className={classes}>{info.homeAddress}</td>
+                  {/* <td className={classes}>{info.homeAddress}</td> */}
                   <td className={`${classes} w-[120px]`}>
                     <div className="flex justify-evenly items-center">
                       <FaEye
+                        title="All Info"
                         onClick={() => {
                           setOpenTutorInfoModal(true),
                             setViewTutorInfos(tutorInfos);
