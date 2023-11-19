@@ -22,7 +22,7 @@ const AllEducationVariant = () => {
           <h1 className="font-bold text-gray-800">All Education Variant</h1>
           <div
             // to={"/add-education-variant"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white"
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
             onClick={()=> setOpenAddEducationVariantModal(true)}
           >
             Add New
