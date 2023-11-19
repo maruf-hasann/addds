@@ -3,13 +3,14 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { useState } from "react";
 import DeleteEducationVariantModal from "./DeleteEducationVariant/DeleteEducationVariantModal";
 import { useGetEducationVariantsQuery } from "../../../store/service/educationVariant/educationVariantApiService";
+import AddEducationVariantModal from "./AddEducationVariantModal/AddEducationVariantModal";
 
 
 const AllEducationVariant = () => {
-  const [deleteEducationVariantData, setDeleteEducationVariantData] =
-    useState(null);
-  const [openDeleteEducationVariantModal, setOpenDeleteEducationVariantModal] =
-    useState(false);
+  const [openAddEducationVariantModal, setOpenAddEducationVariantModal] = useState(false);
+
+  const [deleteEducationVariantData, setDeleteEducationVariantData] = useState(null);
+  const [openDeleteEducationVariantModal, setOpenDeleteEducationVariantModal] = useState(false);
 
   const { data: educationVariantsData } = useGetEducationVariantsQuery();
   const educationVariants = educationVariantsData?.data;
@@ -19,12 +20,13 @@ const AllEducationVariant = () => {
       <div className="py-10">
         <div className="flex justify-between items-center pb-3">
           <h1 className="font-bold text-gray-800">All Education Variant</h1>
-          <Link
-            to={"/add-education-variant"}
+          <div
+            // to={"/add-education-variant"}
             className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white"
+            onClick={()=> setOpenAddEducationVariantModal(true)}
           >
             Add New
-          </Link>
+          </div>
         </div>
         <div className="overflow-x-auto border-x rounded bg-white">
           <table className="w-full min-w-max table-auto text-left">
@@ -79,6 +81,14 @@ const AllEducationVariant = () => {
           setOpenDeleteEducationVariantModal={setOpenDeleteEducationVariantModal}
         />
       )}
+
+      {openAddEducationVariantModal && (
+        <AddEducationVariantModal
+          openAddEducationVariantModal={openAddEducationVariantModal}
+          setOpenAddEducationVariantModal={setOpenAddEducationVariantModal}
+        />
+      )}
+
     </>
   );
 };
