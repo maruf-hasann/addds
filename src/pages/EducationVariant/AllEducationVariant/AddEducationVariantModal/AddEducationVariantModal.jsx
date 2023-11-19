@@ -42,7 +42,7 @@ const AddEducationVariantModal = ({
             >
 
             </div>
-            <div className="relative z-50 w-full max-w-5xl  max-h-full mt-20 mx-auto px-2 lg:w-1/3 md:px-0">
+            <div className="relative z-50 w-full max-w-5xl  max-h-full mt-[30vh] mx-auto px-2 lg:w-1/3 md:px-0">
                 <div
                     className={`relative  rounded-lg shadow text-primary px-10 bg-white`}
                 >
@@ -79,7 +79,7 @@ const AddEducationVariantModal = ({
                                     name="name"
                                     required
                                     placeholder="One to One"
-                                    className="w-full p-2 mb-5 border rounded-md"
+                                    className="w-full p-2 mb-5 border rounded-md outline-blue-500"
                                 />
                                 <div className="flex justify-end">
                                     {isLoading ? (
