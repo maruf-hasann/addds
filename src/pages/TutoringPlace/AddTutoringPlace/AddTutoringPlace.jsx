@@ -32,7 +32,7 @@ const AddTutoringPlace = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="max-w-md mx-auto p-4 border rounded-md mt-5"
+        className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white"
       >
         <label
           htmlFor="name"

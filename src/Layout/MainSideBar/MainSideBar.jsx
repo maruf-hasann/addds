@@ -165,7 +165,7 @@ const MainSideBar = () => {
             <Accordion open={open === menu?.id} key={menu?.id}>
               <div
                 onClick={() => handleOpen(menu?.id)}
-                className="flex items-center justify-between p-3 cursor-pointer"
+                className={`flex items-center justify-between p-3 cursor-pointer ${open === menu?.id && 'bg-blue-gray-900'}`}
               >
                 <Typography variant="h6" className={`text-gray-800 font-medium capitalize ${open === menu?.id ? 'text-gray-300' : 'text-white'}`}>
                   {menu?.name}
