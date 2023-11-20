@@ -105,6 +105,12 @@ const MainSideBar = () => {
       url: "./all-tutor-infos",
       icon: <MdAccountBox />,
     },
+    {
+      id: 14,
+      name: "Tutoring Subject",
+      url: "./all-tutoring-subjects",
+      icon: <MdAccountBox />,
+    },
   ];
 
   const withSubmenu = [
