@@ -98,7 +98,7 @@ export const menus = [
 export const withSubmenu = [
   {
     id: 1,
-    name: "Settings",
+    name: "Tutor Settings",
     icon: <MdSettings />,
     subMenus: [
       {
