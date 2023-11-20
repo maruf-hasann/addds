@@ -33,7 +33,7 @@ const AddEducationVariantModal = ({
 
     return (
         <div
-            className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-lg bg-primary ${openAddEducationVariantModal ? "block" : "hidden"
+            className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${openAddEducationVariantModal ? "block" : "hidden"
                 }`}
         >
             <div
@@ -79,7 +79,7 @@ const AddEducationVariantModal = ({
                                     name="name"
                                     required
                                     placeholder="One to One"
-                                    className="w-full p-2 mb-5 border rounded-md outline-blue-500"
+                                    className="w-full p-2 mb-5 border rounded-md outline-none focus:outline-primaryAlfa-50"
                                 />
                                 <div className="flex justify-end">
                                     {isLoading ? (

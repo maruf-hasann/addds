@@ -61,7 +61,7 @@ const AddSchool = () => {
             onChange={(e) => setName(e.target.value)}
             required
             placeholder="School Name"
-            className="w-full p-2 mb-4 border rounded-md"
+            className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
           />
         </div>
         <div>
@@ -79,7 +79,7 @@ const AddSchool = () => {
             onChange={(e) => setLocation(e.target.value)}
             required
             placeholder="City D"
-            className="w-full p-2 mb-4 border rounded-md"
+            className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
           />
         </div>
         <div>
@@ -96,7 +96,7 @@ const AddSchool = () => {
             onChange={(e) => setEducationVariant(e.target.value)}
             required
             defaultValue={""}
-            className="w-full p-2 mb-4 border rounded-md"
+            className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
           >
             <option value="" disabled>
               Select Education Variant
