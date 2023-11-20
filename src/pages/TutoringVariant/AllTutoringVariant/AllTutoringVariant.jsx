@@ -10,15 +10,10 @@ import AddTutoringVariantModal from "./AddTutoringVariantModal/AddTutoringVarian
 const AllTutoringVariant = () => {
 
   const [openTutoringVariantModal, setOpenTutoringVariantModal] = useState(false);
-
-  const [deleteTutoringVariantData, setDeleteTutoringVariantData] =
-    useState(null);
-  const [openDeleteTutoringVariantModal, setOpenDeleteTutoringVariantModal] =
-    useState(false);
-
+  const [deleteTutoringVariantData, setDeleteTutoringVariantData] = useState(null);
+  const [openDeleteTutoringVariantModal, setOpenDeleteTutoringVariantModal] = useState(false);
   const [editTutoringVariantData, setEditTutoringVariantData] = useState(null);
-  const [openEditTutoringVariantModal, setOpenEditTutoringVariantModal] =
-    useState(false);
+  const [openEditTutoringVariantModal, setOpenEditTutoringVariantModal] = useState(false);
 
   const { data: tutoringVariantsData } = useGetTutoringVariantsQuery();
   const tutoringVariants = tutoringVariantsData?.data;

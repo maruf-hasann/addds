@@ -4,8 +4,11 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useGetUniversitiesQuery } from "../../../store/service/university/universityApiService";
 import DeleteUniversityModal from "./DeleteUniversity/DeleteUniversityModal";
+import AddUniversityModal from "./AddUniversityModal/AddUniversityModal";
 
 const AllUniversity = () => {
+
+  const [openUniversityModal, setOpenUniversityModal] = useState(false);
   const [deleteUniversityData, setDeleteUniversityData] = useState(null);
   const [openDeleteUniversityModal, setOpenDeleteUniversityModal] =
     useState(false);
@@ -18,12 +21,12 @@ const AllUniversity = () => {
       <div className="py-10">
         <div className="flex justify-between items-center  pb-3">
           <h1 className="font-bold text-gray-800">All University</h1>
-          <Link
-            to={"/add-university"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
+          <div
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+            onClick={() => setOpenUniversityModal(true)}
           >
             Add New
-          </Link>
+          </div>
         </div>
         <div className="overflow-x-auto border-x rounded  bg-white">
           <table className="w-full min-w-max table-auto text-left">
@@ -79,6 +82,12 @@ const AllUniversity = () => {
           openDeleteUniversityModal={openDeleteUniversityModal}
           setDeleteUniversityData={setDeleteUniversityData}
           setOpenDeleteUniversityModal={setOpenDeleteUniversityModal}
+        />
+      )}
+      {openUniversityModal && (
+        <AddUniversityModal
+          openAddUniversityModal={openUniversityModal}
+          setOpenAddUniversityModal={setOpenUniversityModal}
         />
       )}
     </>
