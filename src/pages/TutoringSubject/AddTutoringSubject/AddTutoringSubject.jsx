@@ -60,7 +60,7 @@ const AddTutoringSubject = () => {
             onChange={(e) => setName(e.target.value)}
             required
             placeholder="Tutoring Subject Name"
-            className="w-full p-2 mb-4 border rounded-md"
+            className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
           />
         </div>
         <div>
@@ -77,7 +77,7 @@ const AddTutoringSubject = () => {
             onChange={(e) => setEducationVariant(e.target.value)}
             required
             defaultValue={""}
-            className="w-full p-2 mb-4 border rounded-md"
+            className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
           >
             <option value="" disabled>
               Select Education Variant

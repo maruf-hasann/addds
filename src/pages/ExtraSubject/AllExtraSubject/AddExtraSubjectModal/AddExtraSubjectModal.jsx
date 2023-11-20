@@ -33,7 +33,7 @@ const AddExtraSubjectModal = ({
 
     return (
         <div
-            className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-lg bg-primary ${openAddExtraSubjectModal ? "block" : "hidden"
+            className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${openAddExtraSubjectModal ? "block" : "hidden"
                 }`}
         >
             <div
@@ -82,7 +82,7 @@ const AddExtraSubjectModal = ({
                                             required
 
                                             placeholder="Type Name"
-                                            className="w-full p-2 mb-4 border rounded-md outline-blue-500"
+                                            className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                                         />
                                     </div>
                                     <div>
@@ -99,7 +99,7 @@ const AddExtraSubjectModal = ({
                                             required
 
                                             placeholder="Subject Name"
-                                            className="w-full p-2 mb-4 border rounded-md outline-blue-500"
+                                            className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50 outline-none focus:outline-primaryAlfa-50"
                                         />
                                     </div>
                                 </div>

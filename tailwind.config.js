@@ -5,9 +5,9 @@ export default withMT({
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: "#F2F5F9",
-          100: "#4764A8",
+        primary: "#1B6BAF",
+        primaryAlfa: {
+          50: "#1b6aafc3",
         },
         dark: "#1F2333",
       },

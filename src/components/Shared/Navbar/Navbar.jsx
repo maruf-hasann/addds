@@ -24,9 +24,9 @@ export function Header() {
   return (
     <>
       <div className="flex fixed w-full right-0 z-50">
-      <div className="w-80 hidden lg:block"></div>  
-      <Navbar className="flex-1 pt-2 w-full max-w-full fixe right-0 px-4 lg:px-8 lg:py-4 rounded-none shadow-none pb-0">
-        <div className=" flex items-center justify-between text-blue-gray-900">
+      {/* <div className="w-80 hidden lg:block"></div>   */}
+      <Navbar className="flex-1 pt-2 w-full max-w-full fixed right-0 px-4 lg:px-8 lg:py-4 rounded-none shadow-none pb-0">
+        <div className=" flex items-center justify-between text-blue-gray-900 container mx-auto">
           <div className="flex items-center gap-5 lg:hidden">
             {/* open drawer icon */}
             <IconButton

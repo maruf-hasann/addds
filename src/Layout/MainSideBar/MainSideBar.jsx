@@ -1,35 +1,56 @@
 import React from "react";
-import { Accordion, AccordionBody, Typography } from "@material-tailwind/react";
-import { Link, NavLink } from "react-router-dom";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import Schooling from "../../../public/logo.png"
-
+import {
+  Accordion,
+  AccordionBody,
+  AccordionHeader,
+} from "@material-tailwind/react";
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  MdSchool,
+  MdBusiness,
+  MdPlaylistAddCheck,
+  MdPerson,
+  MdSubject,
+  MdToday,
+  MdAccountBalance,
+  MdClass,
+  MdAccountBox,
+  MdSettings,
+  MdLibraryBooks,
+} from "react-icons/md";
 
 const MainSideBar = () => {
-  const [open, setOpen] = React.useState(0);
-
+  const [open, setOpen] = useState(false);
   const handleOpen = (value) => setOpen(open === value ? 0 : value);
+  const location = useLocation();
+  const { pathname } = location;
+  console.log(pathname);
 
   const menus = [
     {
       id: 1,
       name: "Education Variant",
       url: "./all-education-variants",
+      icon: <MdSchool />,
     },
     {
       id: 2,
       name: "Tutoring Variant",
       url: "./all-tutoring-variants",
+      icon: <MdBusiness />,
     },
     {
       id: 3,
       name: "Tutoring Place",
       url: "./all-tutoring-places",
+      icon: <MdPlaylistAddCheck />,
     },
     {
       id: 4,
       name: "Tutoring Program",
       url: "./all-tutoring-programs",
+      icon: <MdSettings />,
     },
     {
       id: 5,
@@ -40,66 +61,77 @@ const MainSideBar = () => {
       id: 6,
       name: "Student Variant",
       url: "./all-student-variants",
+      icon: <MdPerson />,
     },
     {
       id: 7,
       name: "Extra Subject",
       url: "./all-extra-subjects",
+      icon: <MdSubject />,
     },
     {
       id: 8,
       name: "Subject",
       url: "./all-board-wise-subjects",
+      icon: <MdLibraryBooks />,
     },
     {
       id: 9,
       name: "Current Affair",
       url: "./all-current-affairs",
+      icon: <MdToday />,
     },
     {
       id: 10,
       name: "University",
       url: "./all-universities",
+      icon: <MdAccountBalance />,
     },
     {
       id: 11,
       name: "Semester",
       url: "./all-semesters",
+      icon: <MdClass />,
     },
     {
       id: 12,
       name: "Tutoring Class",
       url: "./all-tutoring-classes",
+      icon: <MdClass />,
     },
-
     {
       id: 13,
       name: "Tutor Info",
       url: "./all-tutor-infos",
+      icon: <MdAccountBox />,
     },
-
   ];
 
   const withSubmenu = [
     {
       id: 1,
       name: "Settings",
+      icon: <MdSettings />,
       subMenus: [
         {
           name: "Add Education Variant",
           url: "./add-education-variant",
+          icon: <span>📚</span>,
         },
         {
           name: "Add Tutoring Variant",
           url: "./add-tutoring-variant",
+          icon: <span>🏫</span>,
         },
         {
           name: "Add Tutoring Place",
           url: "./add-tutoring-place",
+          icon: <span>🏢</span>,
         },
         {
           name: "Add Tutoring Program",
           url: "./add-tutoring-program",
+          icon: <span>📋</span>,
         },
         {
           name: "Add Academic Class",
@@ -108,42 +140,76 @@ const MainSideBar = () => {
         {
           name: "Add Student Variant",
           url: "./add-student-variant",
+          icon: <span>👩‍🎓</span>,
         },
         {
           name: "Add Extra Subject",
           url: "./add-extra-subject",
+          icon: <span>📖</span>,
         },
         {
           name: "Add Subject",
           url: "./add-board-wise-subject",
+          icon: <span>📘</span>,
         },
         {
           name: "Add Current Affair",
           url: "./add-current-affair",
+          icon: <span>🗞️</span>,
         },
         {
           name: "Add University",
           url: "./add-university",
+          icon: <span>🏛️</span>,
         },
         {
           name: "Add Semester",
           url: "./add-semester",
+          icon: <span>🎓</span>,
         },
         {
           name: "Add Tutoring Class",
           url: "./add-tutoring-class",
+          icon: <span>📚</span>,
         },
         {
           name: "Add Tutor Info",
           url: "./add-tutor-info",
+          icon: <span>👤</span>,
         },
       ],
     },
-  ]
+  ];
+
+  function Icon({ id, open }) {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={2}
+        stroke="currentColor"
+        className={`${
+          id === open ? "rotate-180" : ""
+        } h-5 w-5 transition-transform`}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+        />
+      </svg>
+    );
+  }
 
   return (
-    <aside className="flex flex-col h-full w-80 fixed bg-dark">
-      {/* <div className="flex-none border-b-2 py-4">Header</div> */}
+    <div
+      className="flex flex-col h-full w-60 fixed  pb-20"
+      style={{
+        msOverflowStyle: "none",
+        scrollbarWidth: "none",
+      }}
+    >
       <div
         className="flex-1"
         style={{
@@ -153,40 +219,53 @@ const MainSideBar = () => {
           scrollMarginRight: "15px", // Adjust as needed
         }}
       >
-        <div className="px-4 pt-32">
-          <div className="fixed top-0 left-0 pl-4 bg-dark w-80">
-            <img src={Schooling} className="w-40 pt-10 pb-3" alt="" />
-          </div>
-
-          {
-            menus?.map(menu => (<NavLink key={menu?.id} to={menu?.url} className={({ isActive }) => (isActive ? ' block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-gray-300 capitalize py-1 bg-blue-gray-800 px-2' : 'block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-white hover:text-white capitalize py-1 px-2')}>{menu?.name}</NavLink>))
-          }
-          {withSubmenu?.map((menu) => (
-            <Accordion open={open === menu?.id} key={menu?.id}>
-              <div
-                onClick={() => handleOpen(menu?.id)}
-                className={`flex items-center justify-between p-3 cursor-pointer ${open === menu?.id && 'bg-blue-gray-900'}`}
+        <div className="grid grid-cols-1 text-gray-700">
+          {menus.map((menu, idx) => (
+            <Link
+              to={menu.url}
+              key={idx}
+              className={`${
+                menu.url.slice(1) === pathname &&
+                "border-l-4 border-primary bg-blue-100 ps-5"
+              }  py-2 px-2 cursor-pointer flex items-center gap-3`}
+            >
+              {menu.icon} {menu.name}
+            </Link>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 text-gray-700">
+          {withSubmenu.map((menuItem) => (
+            <Accordion
+              open={open === menuItem.id}
+              icon={<Icon id={menuItem.id} open={open} />}
+            >
+              <AccordionHeader
+                onClick={() => handleOpen(menuItem.id)}
+                className={`border-b-0 ${
+                  menuItem?.subMenus.some((subMenu) =>
+                    subMenu.url.slice(1).includes(pathname)
+                  ) && "border-l-4 border-primary bg-blue-200 mb-1 py-2"
+                }`}
               >
-                <Typography variant="h6" className={`text-gray-800 font-medium capitalize ${open === menu?.id ? 'text-gray-300' : 'text-white'}`}>
-                  {menu?.name}
-                </Typography>
-                {open === menu?.id ? (
-                  <IoIosArrowUp className="text-white" />
-                ) : (
-                  <IoIosArrowDown className="text-white" />
-                )}
-              </div>
-              <AccordionBody className="py-0">
-                <div className="grid grid-cols-1 ">
-                  {menu?.subMenus?.map((sMenu, idx) => (
-                    <NavLink
+                <div className="font-normal text-base px-2 flex items-center gap-3 text-gray-700">
+                  {menuItem.icon} {menuItem.name}
+                </div>
+              </AccordionHeader>
+              <AccordionBody className="pt-0">
+                <div className="grid grid-cols-1 text-gray-700">
+                  {menuItem.subMenus.map((menu, idx) => (
+                    <Link
+                      to={menu.url}
                       key={idx}
-                      to={`${sMenu?.url}`}
-                      // className="py-1 hover:bg-blue-gray-50 px-3 capitalize"
-                      className={({ isActive }) => (isActive ? ' block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-gray-300 capitalize py-1 bg-blue-gray-800 px-2' : 'block antialiased tracking-normal font-sans text-base font-medium leading-relaxed text-white hover:text-white capitalize py-1 px-2')}
+                      className={`${
+                        menu.url.slice(1) === pathname &&
+                        "border-l-4 border-primary bg-blue-100 ps-5"
+                      } ${
+                        menu.url.slice(1) !== pathname && "hover:text-primary"
+                      } py-2 px-2 cursor-pointer font-normal text-base ms-3`}
                     >
-                      {sMenu?.name}
-                    </NavLink>
+                      {menu.icon} {menu.name}
+                    </Link>
                   ))}
                 </div>
               </AccordionBody>
@@ -194,7 +273,7 @@ const MainSideBar = () => {
           ))}
         </div>
       </div>
-    </aside>
+    </div>
   );
 };
 

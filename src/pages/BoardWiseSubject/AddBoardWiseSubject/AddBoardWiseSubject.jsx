@@ -50,7 +50,7 @@ const AddBoardWiseSubject = () => {
               name="board"
               required
               placeholder="board Name"
-              className="w-full p-2 mb-4 border rounded-md"
+              className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
             />
           </div>
           <div>
@@ -66,7 +66,7 @@ const AddBoardWiseSubject = () => {
               name="type"
               required
               placeholder="Type Name"
-              className="w-full p-2 mb-4 border rounded-md"
+              className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
             />
           </div>
           <div>
@@ -82,7 +82,7 @@ const AddBoardWiseSubject = () => {
               name="subject"
               required
               placeholder="Subject Name"
-              className="w-full p-2 mb-4 border rounded-md"
+              className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
             />
           </div>
         </div>

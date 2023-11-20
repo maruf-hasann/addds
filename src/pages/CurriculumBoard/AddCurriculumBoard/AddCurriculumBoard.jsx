@@ -62,7 +62,7 @@ const AddCurriculumBoard = () => {
             onChange={(e) => setName(e.target.value)}
             required
             placeholder="Curriculum Board Name"
-            className="w-full p-2 mb-4 border rounded-md"
+            className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
           />
         </div>
         <div>
@@ -79,7 +79,7 @@ const AddCurriculumBoard = () => {
             onChange={(e) => setEducationVariant(e.target.value)}
             required
             defaultValue={""}
-            className="w-full p-2 mb-4 border rounded-md"
+            className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
           >
             <option value="" disabled>
               Select Education Variant

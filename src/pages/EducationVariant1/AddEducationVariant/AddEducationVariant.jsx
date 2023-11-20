@@ -49,7 +49,7 @@ const AddEducationVariant = () => {
           onChange={(e) => setName(e.target.value)}
           required
           placeholder="English Medium"
-          className="w-full p-2 mb-4 border rounded-md"
+          className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
         />
         <div className="flex justify-end">
           {isLoading ? (

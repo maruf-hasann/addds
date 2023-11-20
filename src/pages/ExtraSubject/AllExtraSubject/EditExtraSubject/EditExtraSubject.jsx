@@ -71,7 +71,7 @@ const EditExtraSubjectModal = ({
                   required
                   defaultValue={editExtraSubjectData?.type}
                   placeholder="Type Name"
-                  className="w-full p-2 mb-4 border rounded-md"
+                  className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                 />
               </div>
               <div>
@@ -88,7 +88,7 @@ const EditExtraSubjectModal = ({
                   required
                   defaultValue={editExtraSubjectData?.subject}
                   placeholder="Subject Name"
-                  className="w-full p-2 mb-4 border rounded-md"
+                  className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                 />
               </div>
             </div>
