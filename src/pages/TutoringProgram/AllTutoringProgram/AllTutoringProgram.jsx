@@ -4,9 +4,12 @@ import { useState } from "react";
 import DeleteTutoringProgramModal from "./DeleteTutoringProgram/DeleteTutoringProgramModal";
 import EditTutoringProgramModal from "./EditTutoringProgram/EditTutoringProgram";
 import { useGetTutoringProgramsQuery } from "../../../store/service/tutoringProgram/tutoringProgramApiService";
+import AddTutoringProgramModal from "./AddTutoringProgramModal/AddTutoringProgramModal";
 
 
 const AllTutoringProgram = () => {
+  const [openTutoringProgramModal, setOpenTutoringProgramModal] = useState(false);
+
   const [deleteTutoringProgramData, setDeleteTutoringProgramData] =
     useState(null);
   const [openDeleteTutoringProgramModal, setOpenDeleteTutoringProgramModal] =
@@ -24,12 +27,12 @@ const AllTutoringProgram = () => {
       <div className="py-10">
         <div className="flex justify-between items-center pb-3">
           <h1 className="font-bold text-gray-800">All Tutoring Program</h1>
-          <Link
-            to={"/add-tutoring-program"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white"
+          <div
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+            onClick={() => setOpenTutoringProgramModal(true)}
           >
             Add New
-          </Link>
+          </div>
         </div>
         <div className="overflow-x-auto border-x rounded bg-white">
           <table className="w-full min-w-max table-auto text-left">
@@ -94,6 +97,12 @@ const AllTutoringProgram = () => {
           openEditTutoringProgramModal={openEditTutoringProgramModal}
           setEditTutoringProgramData={setOpenEditTutoringProgramModal}
           setOpenEditTutoringProgramModal={setOpenEditTutoringProgramModal}
+        />
+      )}
+      {openTutoringProgramModal && (
+        <AddTutoringProgramModal
+          openAddTutoringProgramModal={openTutoringProgramModal}
+          setOpenAddTutoringProgramModal={setOpenTutoringProgramModal}
         />
       )}
     </>
