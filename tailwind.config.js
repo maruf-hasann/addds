@@ -6,6 +6,9 @@ export default withMT({
     extend: {
       colors: {
         primary: "#1B6BAF",
+        primaryAlfa: {
+          50: "#1b6aafc3",
+        },
         dark: "#1F2333",
       },
     },
