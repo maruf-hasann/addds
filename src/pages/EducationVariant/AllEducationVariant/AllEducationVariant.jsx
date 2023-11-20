@@ -17,7 +17,7 @@ const AllEducationVariant = () => {
 
   return (
     <>
-      <div className="py-10">
+      <div className="py-10 ">
         <div className="flex justify-between items-center pb-3">
           <h1 className="font-bold text-gray-800">All Education Variant</h1>
           <div

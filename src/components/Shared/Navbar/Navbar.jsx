@@ -5,7 +5,7 @@ import {
   IconButton,
   Button,
 } from "@material-tailwind/react";
-import { IoLogoMastodon } from "react-icons/io5";
+import { IoMenuSharp } from "react-icons/io5";
 import MenuDrawer from "../Drawer/MenuDrawer";
 import { Link } from "react-router-dom";
 import useAuthData from "../../../hooks/useAuthData";
@@ -30,7 +30,7 @@ export function Header() {
           <div className="flex items-center gap-5 lg:hidden">
             {/* open drawer icon */}
             <IconButton
-              className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent "
+              className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent bg-white shadow-none hover:shadow-none"
               ripple={false}
               onClick={() => {
                 setOpenDrawer(!openDrawer);
