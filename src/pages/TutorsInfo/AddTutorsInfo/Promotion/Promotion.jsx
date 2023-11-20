@@ -1,9 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 
 import { useState } from "react";
-import {
-  useUploadPromotionInfoMutation,
-} from "../../../../store/service/tutorInfo/promotion/promotionApiService";
+import { useUploadPromotionInfoMutation } from "../../../../store/service/tutorInfo/promotion/promotionApiService";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { ImSpinner9 } from "react-icons/im";
@@ -11,10 +9,9 @@ import { MdCloudUpload } from "react-icons/md";
 import { BsTrash } from "react-icons/bs";
 import toast from "react-hot-toast";
 
-
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import "./Promotion.css"
+import "./Promotion.css";
 
 const Promotion = () => {
   const [number, setNumber] = useState(null);
@@ -29,12 +26,14 @@ const Promotion = () => {
 
   const { handleSubmit } = useForm();
 
+  // handle check valid number or not
   useEffect(() => {
     if (number && !isValidPhoneNumber(number) && number?.length < 14) {
       setNumberError(true);
     }
   }, [number]);
 
+  // handle submit function
   const onSubmit = async () => {
     if (!number || numberError) {
       toast.error("Please add a valid phone number");
@@ -65,6 +64,7 @@ const Promotion = () => {
     }
   };
 
+  // handle add image
   const handleAddImage = async (e) => {
     e.preventDefault();
     let files;
@@ -85,6 +85,7 @@ const Promotion = () => {
     }
   };
 
+  // handle add video
   const handleAddVideo = async (e) => {
     e.preventDefault();
     let files;
@@ -101,7 +102,6 @@ const Promotion = () => {
       setVideoPreview(videoUrl);
     }
   };
-
 
   return (
     <div className="p-10">
@@ -129,7 +129,7 @@ const Promotion = () => {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Image Preview */}
+        {/* Image */}
         <div className="mb-10">
           {imagePreview ? (
             <div>
@@ -190,7 +190,7 @@ const Promotion = () => {
           )}
         </div>
 
-        {/* Video Preview */}
+        {/* Video */}
         <div>
           <div className="mb-10">
             {videoPreview ? (
