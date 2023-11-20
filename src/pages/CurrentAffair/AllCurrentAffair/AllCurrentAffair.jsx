@@ -5,12 +5,13 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import DeleteCurrentAffairModal from "./DeleteCurrentAffair/DeleteCurrentAffairModal";
 import { useGetCurrentAffairsQuery } from "../../../store/service/currentAffair/currentAffairApiService";
+import AddCurrentAffairModal from "./AddCurrentAffairModal/AddCurrentAffairModal";
 
 const AllCurrentAffair = () => {
-  const [deleteCurrentAffairData, setDeleteCurrentAffairData] =
-    useState(null);
-  const [openDeleteCurrentAffairModal, setOpenDeleteCurrentAffairModal] =
-    useState(false);
+
+  const [openAddCurrentAffairModal, setOpenAddCurrentAffairModal] = useState(false);
+  const [deleteCurrentAffairData, setDeleteCurrentAffairData] = useState(null);
+  const [openDeleteCurrentAffairModal, setOpenDeleteCurrentAffairModal] = useState(false);
 
   const { data: currentAffairsData } = useGetCurrentAffairsQuery();
   const currentAffairs = currentAffairsData?.data;
@@ -20,12 +21,12 @@ const AllCurrentAffair = () => {
       <div className="py-10">
         <div className="flex justify-between items-center pb-3">
           <h1 className="font-bold text-gray-800">All Current Affairs</h1>
-          <Link
-            to={"/add-current-affair"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
+          <div
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+            onClick={() => setOpenAddCurrentAffairModal(true)}
           >
             Add New
-          </Link>
+          </div>
         </div>
         <div className="overflow-x-auto border-x rounded bg-white">
           <table className="w-full min-w-max table-auto text-left">
@@ -81,6 +82,12 @@ const AllCurrentAffair = () => {
           openDeleteCurrentAffairModal={openDeleteCurrentAffairModal}
           setDeleteCurrentAffairData={setDeleteCurrentAffairData}
           setOpenDeleteCurrentAffairModal={setOpenDeleteCurrentAffairModal}
+        />
+      )}
+      {openAddCurrentAffairModal && (
+        <AddCurrentAffairModal
+          openAddCurrentAffairModal={openAddCurrentAffairModal}
+          setOpenAddCurrentAffairModal={setOpenAddCurrentAffairModal}
         />
       )}
     </>
