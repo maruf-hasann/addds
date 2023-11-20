@@ -1,20 +1,23 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { educationVariants } from "../../../data/educationVariant";
 import { tutoringSubjects } from "../../../data/tutoringSubjects";
+import AddTutoringSubjectModal from "./AddTutoringSubjectModal/AddTutoringSubjectModal";
 
 const AllTutoringSubject = () => {
+  const [openTutoringSubjectModal, setOpenTutoringSubjectModal] = useState(false);
+
   return (
     <div className="py-10">
       <div className="flex justify-between items-center border-b pb-3">
         <h1 className="font-bold">All Tutoring Subject</h1>
-        <Link
-          to={"/add-tutoring-subject"}
-          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
+        <div
+          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+          onClick={() => setOpenTutoringSubjectModal(true)}
         >
           Add New
-        </Link>
+        </div>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full min-w-max table-auto text-left">
@@ -73,6 +76,12 @@ const AllTutoringSubject = () => {
           </tbody>
         </table>
       </div>
+      {openTutoringSubjectModal && (
+        <AddTutoringSubjectModal
+          openAddTutoringSubjectModal={openTutoringSubjectModal}
+          setOpenAddTutoringSubjectModal={setOpenTutoringSubjectModal}
+        />
+      )}
     </div>
   );
 };
