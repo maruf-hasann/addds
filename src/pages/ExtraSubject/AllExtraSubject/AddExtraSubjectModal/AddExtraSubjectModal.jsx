@@ -2,20 +2,20 @@ import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
-import { useAddEducationVariantMutation } from "../../../../store/service/educationVariant/educationVariantApiService";
+import { useAddExtraSubjectMutation } from "../../../../store/service/extraSubject/extraSubjectApiService";
 
-const AddEducationVariantModal = ({
-    openAddEducationVariantModal,
-    setOpenAddEducationVariantModal,
+const AddExtraSubjectModal = ({
+    openAddExtraSubjectModal,
+    setOpenAddExtraSubjectModal,
 }) => {
 
-
-    const [addEducationVariant, { isLoading }] = useAddEducationVariantMutation();
+    const [addExtraSubject, { isLoading }] = useAddExtraSubjectMutation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const variantName = e.target.name.value;
-        const result = await addEducationVariant({ variantName });
+        const type = e.target.type.value;
+        const subject = e.target.subject.value;
+        const result = await addExtraSubject({ type, subject });
         if (result?.data?.success) {
             toast.success(result?.data?.message);
             e.target.reset();
@@ -27,13 +27,13 @@ const AddEducationVariantModal = ({
 
     // handle close modal
     const handleClose = () => {
-        setOpenAddEducationVariantModal(!openAddEducationVariantModal);
+        setOpenAddExtraSubjectModal(!openAddExtraSubjectModal);
     };
 
 
     return (
         <div
-            className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-lg bg-primary ${openAddEducationVariantModal ? "block" : "hidden"
+            className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-lg bg-primary ${openAddExtraSubjectModal ? "block" : "hidden"
                 }`}
         >
             <div
@@ -42,7 +42,7 @@ const AddEducationVariantModal = ({
             >
 
             </div>
-            <div className="relative z-50 w-full max-w-5xl  max-h-full mt-[30vh] mx-auto px-2 md:w-1/2 lg:w-1/3 md:px-0">
+            <div className="relative z-50 w-full max-w-5xl  max-h-full mt-[20vh] mx-auto px-2 md:w-1/2 md:px-0">
                 <div
                     className={`relative  rounded-lg shadow text-primary px-10 bg-white`}
                 >
@@ -65,22 +65,44 @@ const AddEducationVariantModal = ({
 
                             <form
                                 onSubmit={handleSubmit}
-                                className=" mx-auto p-4 border rounded-md bg-white"
+                                className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white"
                             >
-                                <label
-                                    htmlFor="name"
-                                    className="block mb-5 font-semibold text-sm text-gray-500"
-                                >
-                                    Name
-                                </label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    name="name"
-                                    required
-                                    placeholder="One to One"
-                                    className="w-full p-2 mb-5 border rounded-md outline-blue-500"
-                                />
+                                <div className=" grid grid-cols-1 gap-5">
+                                    <div>
+                                        <label
+                                            htmlFor="type"
+                                            className="block mb-2 font-semibold text-sm text-gray-500"
+                                        >
+                                            Type
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="type"
+                                            name="type"
+                                            required
+
+                                            placeholder="Type Name"
+                                            className="w-full p-2 mb-4 border rounded-md outline-blue-500"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label
+                                            htmlFor="subject"
+                                            className="block mb-2 font-semibold text-sm text-gray-500"
+                                        >
+                                            Subject
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="subject"
+                                            name="subject"
+                                            required
+
+                                            placeholder="Subject Name"
+                                            className="w-full p-2 mb-4 border rounded-md outline-blue-500"
+                                        />
+                                    </div>
+                                </div>
                                 <div className="flex justify-end">
                                     {isLoading ? (
                                         <Button
@@ -109,4 +131,4 @@ const AddEducationVariantModal = ({
     );
 };
 
-export default AddEducationVariantModal;
+export default AddExtraSubjectModal;
