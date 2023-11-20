@@ -37,7 +37,7 @@ const AddEducationVariantModal = ({
         className="w-full h-full z-0 absolute top-0 left-0"
         onClick={handleClose}
       ></div>
-      <div className="relative z-50 w-full max-w-5xl  max-h-full mt-[30vh] mx-auto px-2 md:w-1/2 lg:w-1/3 md:px-0">
+      <div className="relative z-50 w-full max-w-5xl  max-h-full mt-[20vh] mx-auto px-2 md:w-1/2 lg:w-1/3 md:px-0">
         <div
           className={`relative  rounded-lg shadow text-primary px-10 bg-white`}
         >
