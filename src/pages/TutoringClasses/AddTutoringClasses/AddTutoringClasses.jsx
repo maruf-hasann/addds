@@ -48,7 +48,7 @@ const AddTutoringClass = () => {
             name="className"
             required
             placeholder="9th"
-            className="w-full p-2 mb-4 border rounded-md"
+            className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
           />
         </div>
         <div>
@@ -64,7 +64,7 @@ const AddTutoringClass = () => {
             name="subject"
             required
             placeholder="9th"
-            className="w-full p-2 mb-4 border rounded-md"
+            className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
           />
         </div>
         <div className="flex justify-end">

@@ -40,8 +40,8 @@ export const menus = [
   },
   {
     id: 5,
-    name: "Academic Class",
-    url: "./all-academic-classes",
+    name: "Tutoring Class",
+    url: "./all-tutoring-classes",
     icon: <MdClass />,
   },
   {
@@ -80,14 +80,9 @@ export const menus = [
     url: "./all-semesters",
     icon: <MdClass />,
   },
+
   {
     id: 12,
-    name: "Tutoring Class",
-    url: "./all-tutoring-classes",
-    icon: <MdClass />,
-  },
-  {
-    id: 13,
     name: "Tutor Info",
     url: "./all-tutor-infos",
     icon: <MdAccountBox />,
@@ -120,11 +115,6 @@ export const withSubmenu = [
         name: "Add Tutoring Program",
         url: "./add-tutoring-program",
         icon: <span>📋</span>,
-      },
-      {
-        name: "Add Academic Class",
-        url: "./add-academic-class",
-        icon: <span>📘</span>,
       },
       {
         name: "Add Student Variant",

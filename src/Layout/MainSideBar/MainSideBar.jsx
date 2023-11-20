@@ -37,6 +37,7 @@ const MainSideBar = () => {
             <Link
               to={menu.url}
               key={idx}
+              onClick={()=>setOpen(false)}
               className={`${
                 menu.url.slice(1) === pathname &&
                 "border-l-4 border-primary bg-blue-100 ps-5"

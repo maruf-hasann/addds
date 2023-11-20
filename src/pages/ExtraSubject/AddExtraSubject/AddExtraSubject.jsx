@@ -51,7 +51,7 @@ const AddExtraSubject = () => {
               required
    
               placeholder="Type Name"
-              className="w-full p-2 mb-4 border rounded-md"
+              className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
             />
           </div>
           <div>
@@ -68,7 +68,7 @@ const AddExtraSubject = () => {
               required
 
               placeholder="Subject Name"
-              className="w-full p-2 mb-4 border rounded-md"
+              className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
             />
           </div>
         </div>
