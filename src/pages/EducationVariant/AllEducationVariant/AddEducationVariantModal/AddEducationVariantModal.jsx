@@ -33,7 +33,7 @@ const AddEducationVariantModal = ({
 
     return (
         <div
-            className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm bg-primary ${openAddEducationVariantModal ? "block" : "hidden"
+            className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-lg bg-primary ${openAddEducationVariantModal ? "block" : "hidden"
                 }`}
         >
             <div
@@ -42,7 +42,7 @@ const AddEducationVariantModal = ({
             >
 
             </div>
-            <div className="relative z-50 w-full max-w-5xl  max-h-full mt-[30vh] mx-auto px-2 lg:w-1/3 md:px-0">
+            <div className="relative z-50 w-full max-w-5xl  max-h-full mt-[30vh] mx-auto px-2 md:w-1/2 lg:w-1/3 md:px-0">
                 <div
                     className={`relative  rounded-lg shadow text-primary px-10 bg-white`}
                 >
