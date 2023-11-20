@@ -4,8 +4,11 @@ import { useState } from "react";
 import DeleteStudentVariantModal from "./DeleteStudentVariant/DeleteStudentVariantModal";
 import EditStudentVariantModal from "./EditStudentVariant/EditStudentVariant";
 import { useGetStudentVariantsQuery } from "../../../store/service/studentVariant/studentVariantApiService";
+import AddStudentVariantModal from "./AddStudentVariantModal/AddStudentVariantModal";
 
 const AllStudentVariant = () => {
+  const [openStudentVariantModal, setOpenStudentVariantModal] = useState(false);
+
   const [deleteStudentVariantData, setDeleteStudentVariantData] =
     useState(null);
   const [openDeleteStudentVariantModal, setOpenDeleteStudentVariantModal] =
@@ -23,12 +26,13 @@ const AllStudentVariant = () => {
       <div className="py-10">
         <div className="flex justify-between items-center pb-3">
           <h1 className="font-bold text-gray-800">All Student Variant</h1>
-          <Link
-            to={"/add-student-variant"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white bg-white"
+          <div
+            // to={"/add-student-variant"}
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white"
+            onClick={() => setOpenStudentVariantModal(true)}
           >
             Add New
-          </Link>
+          </div>
         </div>
         <div className="overflow-x-auto border-x rounded bg-white">
           <table className="w-full min-w-max table-auto text-left">
@@ -93,6 +97,12 @@ const AllStudentVariant = () => {
           openEditStudentVariantModal={openEditStudentVariantModal}
           setEditStudentVariantData={setOpenEditStudentVariantModal}
           setOpenEditStudentVariantModal={setOpenEditStudentVariantModal}
+        />
+      )}
+      {openStudentVariantModal && (
+        <AddStudentVariantModal
+          openAddStudentVariantModal={openStudentVariantModal}
+          setOpenAddStudentVariantModal={setOpenStudentVariantModal}
         />
       )}
     </>
