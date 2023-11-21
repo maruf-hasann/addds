@@ -1,9 +1,94 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+/* eslint-disable react/no-unescaped-entities */
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import "react-phone-number-input/style.css";
+import PhoneInput, {
+  formatPhoneNumber,
+  formatPhoneNumberIntl,
+  isValidPhoneNumber,
+} from "react-phone-number-input";
+import { useEffect } from "react";
+import { PiEyeClosedLight, PiEyeLight } from "react-icons/pi";
+import { FaArrowRight } from "react-icons/fa";
+import toast from "react-hot-toast";
 
-import { PhoneNumberInput } from "../PhoneNumberInput";
+import { useSavePersonalInfoMutation } from "../../../../store/service/personalInfo/personalInfoApiService";
+import axios from "axios";
+import { useLazySendOtpQuery } from "../../../../store/service/sendOTP/sendOTPApiService";
+import { ImSpinner10, ImSpinner9 } from "react-icons/im";
 
-const PersonalInfo = ({ setActiveTab }) => {
+const PersonalInfo = ({setActiveTab}) => {
+  const [number, setNumber] = useState(null);
+  const [numberError, setNumberError] = useState(false);
+
+  const [countries, setCountries] = useState([]);
+  const [states, setStates] = useState([]);
+
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+  const [otpSendLoading, setOtpSendLoading] = useState(false);
+
+  const [tutorRegistration, { isLoading }] = useSavePersonalInfoMutation();
+  const [sendOTP] = useLazySendOtpQuery();
+
+  // get country, state, city header
+  const headers = {
+    "X-CSCAPI-KEY": "OHJGV1poUEN5TzhYT3B2SU1yRHNIUGxHczl1SXVjYUd3Q3RTS1Q3UQ==",
+  };
+
+  // fetch all countries
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.countrystatecity.in/v1/countries",
+          {
+            headers,
+          }
+        );
+        setCountries(response.data);
+        setSelectedCountry(
+          response.data?.find((country) => country?.iso2 === "BD")
+        );
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+
+    return () => {};
+  }, []);
+
+  // fetch all states
+  useEffect(() => {
+    if (selectedCountry) {
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `https://api.countrystatecity.in/v1/countries/${selectedCountry?.iso2}/states`,
+            {
+              headers,
+            }
+          );
+          setStates(response.data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+
+      fetchData();
+
+      return () => {};
+    }
+  }, [selectedCountry]);
+
+  // handle select country
+  const handleSelectCountry = (id) => {
+    setSelectedState(null);
+    setSelectedCountry(countries.find((country) => country.id === Number(id)));
+  };
+
   const {
     control,
     register,
@@ -13,96 +98,166 @@ const PersonalInfo = ({ setActiveTab }) => {
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    setActiveTab(2);
-    console.log(data);
+  // handle check valid number or not
+  useEffect(() => {
+    if (number && !isValidPhoneNumber(number) && number?.length < 14) {
+      setNumberError(true);
+    } else {
+      setNumberError(false);
+    }
+  }, [number]);
+
+  // handle register tutor
+  const onSubmit = async (data) => {
+    if (!number) {
+      return toast.error("please enter a number");
+    }
+    if (numberError) {
+      return toast.error("please enter a valid number");
+    }
+
+    if (!selectedCountry) {
+      return toast.error("Please select a country");
+    }
+    if (!selectedState) {
+      return toast.error("Please select a City");
+    }
+
+    const registrationData = {
+      phoneNumber: number.substring(1),
+      fullName: data.fullName,
+      email: data.email,
+      country: selectedCountry?.name,
+      city: selectedState,
+      gender: data.gender,
+      role: data.role,
+      otp: Number(data.otp),
+      homeAddress: data.homeAddress,
+      area: data.area
+    };
+
+    const result = await tutorRegistration(registrationData);
+    if (result.data) {
+      toast.success(result.data.message);
+      localStorage.setItem('tutor-number', number)
+      reset();
+      setActiveTab(2)
+    } else {
+      toast.error(result.error.data.message);
+    }
+  };
+
+  // handle send otp
+  const handelOtpSend = async () => {
+    if (!number) {
+      return toast.error("please enter a number");
+    }
+    if (numberError) {
+      return toast.error("please enter a valid number");
+    }
+
+    setOtpSendLoading(true);
+    const result = await sendOTP({ number: number?.substring(1) });
+    if (result.data) {
+      toast.success(result.data.message);
+      setOtpSendLoading(false);
+    } else {
+      toast.error(result.error.data.message);
+      setOtpSendLoading(false);
+    }
   };
 
   return (
-    <div className="p-10">
-      <div className="text-2xl font-medium mb-3">Personal Information</div>
-
+    <div className="p-2 lg:p-10">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="lg:w-1/2"></div>
+        {/* number and otp */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-5">
+          {/* number */}
+          <div className="relative">
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Number
+            </label>
+            <div className="relative">
+              <PhoneInput
+                className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 w-full ps-2 flex items-center gap-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light number-with-button"
+                international
+                countryCallingCodeEditable={true}
+                defaultCountry="BD"
+                value={number}
+                onChange={setNumber}
+              />
+              <span
+                onClick={handelOtpSend}
+                className="hidden md:block lg:hidden xl:block text-xs bg-primary text-white font-semibold px-4 py-2 rounded-sm absolute top-[5px] right-[5px] cursor-pointer"
+              >
+                {otpSendLoading ? (
+                  <ImSpinner10 className="animate-spin text-[16px]" />
+                ) : (
+                  "Send OTP"
+                )}
+              </span>
+              <span
+                onClick={handelOtpSend}
+                className="md:hidden lg:block xl:hidden text-xs bg-primary text-white font-semibold px-3 py-2 rounded-sm absolute top-[6px] right-[5px] cursor-pointer"
+              >
+                {otpSendLoading ? (
+                  <ImSpinner10 className="animate-spin" />
+                ) : (
+                  <FaArrowRight />
+                )}
+              </span>
+            </div>
 
-        <div className="lg:flex gap-5">
+            {number && isValidPhoneNumber(number) ? (
+              ""
+            ) : (
+              <p className={`text-red-500 ${!numberError && "hidden"}`}>
+                Please enter a valid number
+              </p>
+            )}
+          </div>
+
+          {/* otp */}
+          <div className="w-full">
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              OTP
+            </label>
+            <input
+              type="text"
+              {...register("otp", { required: "OTP is required" })}
+              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              placeholder="******"
+            />
+            {errors.otp && <p className="text-red-500">{errors.otp.message}</p>}
+          </div>
+        </div>
+        {/* full name and email */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
+          {/* full name */}
           <div className="w-full">
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
               Full Name
             </label>
             <input
-              defaultValue={"Full name"}
               type="text"
-              {...register("name", { required: "Name is required" })}
+              {...register("fullName", { required: "Full Name is required" })}
               className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-              placeholder="Full Name"
+              placeholder="John Doe"
             />
-            {errors.name && (
-              <p className="text-red-500">{errors.name.message}</p>
+            {errors.fullName && (
+              <p className="text-red-500">{errors.fullName.message}</p>
             )}
           </div>
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Gender Selection
-            </label>
-            <select
-              {...register("gender")}
-              className="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-        </div>
-        <div className="lg:flex gap-5 my-10">
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Select Country
-            </label>
-            <select
-              className="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register("country")}
-            >
-              <option value="bangladesh">Bangladesh</option>
-              <option value="canada">Canada</option>
-              <option value="usa">USA</option>
-            </select>
-          </div>
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Select City
-            </label>
-            <select
-              className="bg-gray-50 mb-6 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register("city")}
-            >
-              <option value="dhaka">Dhaka</option>
-              <option value="sylhet">Sylhet</option>
-              <option value="khulna">Khulna</option>
-            </select>
-          </div>
-        </div>
-        <div className="lg:flex gap-5 my-10">
-          <div className="w-full relative">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Phone Number
-            </label>
-
-            <PhoneNumberInput />
-          </div>
+          {/* email */}
           <div className="w-full">
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
               Email
             </label>
             <input
               type="email"
-              readOnly
-              title="Email can't be changed"
-              defaultValue={"info@gmail.com"}
               {...register("email", { required: "Email is required" })}
               className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-              placeholder="info@gmail.com"
+              placeholder="example@mail.com"
             />
             {errors.email && (
               <p className="text-red-500">{errors.email.message}</p>
@@ -110,28 +265,140 @@ const PersonalInfo = ({ setActiveTab }) => {
           </div>
         </div>
 
-        <div className="w-full">
-          <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-            Home Address
-          </label>
-          <input
-            type="text"
-            defaultValue={"address 1"}
-            {...register("address", { required: "Address is required" })}
-            className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-            placeholder="Home Address"
-          />
-          {errors.address && (
-            <p className="text-red-500">{errors.address.message}</p>
-          )}
+        {/* account type and gender */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
+          {/* account type */}
+          <div className="w-full">
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Account Type
+            </label>
+            <select
+              {...register("role", { required: "Account type is required" })}
+              defaultValue={""}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value="" disabled>
+                Select your account type
+              </option>
+              <option value="tutor">Tutor</option>
+              <option value="student">Student</option>
+              <option value="parent">Parent</option>
+              <option value="school">School</option>
+            </select>
+            {errors.role && (
+              <p className="text-red-500">{errors.role.message}</p>
+            )}
+          </div>
+          {/* gender */}
+          <div className="w-full">
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Gender Selection
+            </label>
+            <select
+              {...register("gender", { required: "Gender is required" })}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value="">Select your gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+            {errors.gender && (
+              <p className="text-red-500">{errors.gender.message}</p>
+            )}
+          </div>
         </div>
 
-        <button
-          className="bg-blue-500 text-white py-2 mt-5 px-5 rounded-full"
-          type="submit"
-        >
-          Save
-        </button>
+        {/*country city */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
+          {/* country */}
+          <div className={`w-full`}>
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Select Country
+            </label>
+            <select
+              {...register("country")}
+              defaultValue=""
+              className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={(event) => handleSelectCountry(event.target.value)}
+            >
+              <option value="" disabled>
+                Choose Country
+              </option>
+              {countries?.map((country, idx) => (
+                <option
+                  selected={country?.iso2 === "BD"}
+                  key={idx}
+                  value={country.id}
+                >
+                  {country?.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* city */}
+          <div className={`w-full`}>
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Select City
+            </label>
+            <select
+              {...register("city")}
+              defaultValue=""
+              className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              onChange={(event) => setSelectedState(event.target.value)}
+            >
+              <option value="" disabled>
+                Choose City
+              </option>
+              {states?.map((state, idx) => (
+                <option key={idx} value={state?.name}>
+                  {state?.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* home address and area */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
+          {/* home address */}
+          <div className="w-full">
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Home Address
+            </label>
+            <textarea
+              {...register("homeAddress")}
+              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              placeholder="Uttara 10"
+            />
+          </div>
+          {/* area */}
+          <div className="w-full">
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Area
+            </label>
+            <textarea
+              {...register("area")}
+              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              placeholder="Uttara"
+            />
+          </div>
+        </div>
+
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+          >
+            {isLoading ? (
+              <ImSpinner9 className="animate-spin my-1 mx-4" />
+            ) : (
+              "Submit"
+            )}
+          </button>
+        </div>
       </form>
     </div>
   );
