@@ -23,6 +23,19 @@ const boardWiseSubjectApiService = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["BoardSubject"],
     }),
+
+    getAllOLevelSubjects: build.query({
+      query: () => ({
+        url: "board-wise-subjects/type/o-level",
+      }),
+      invalidatesTags: ["BoardSubject"],
+    }),
+    getAllALevelSubjects: build.query({
+      query: () => ({
+        url: "board-wise-subjects/type/a-level",
+      }),
+      invalidatesTags: ["BoardSubject"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -31,4 +44,6 @@ export const {
   useAddBoardAndSubjectMutation,
   useDeleteSubjectMutation,
   useGetSubjectsQuery,
+  useGetAllALevelSubjectsQuery,
+  useGetAllOLevelSubjectsQuery
 } = boardWiseSubjectApiService;
