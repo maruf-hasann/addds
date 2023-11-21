@@ -4,9 +4,12 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useGetSemestersQuery } from "../../../store/service/semester/semesterApiService";
 import DeleteSemesterModal from "./DeleteSemester/DeleteSemesterModal";
+import AddSemesterModal from "./AddSemesterModal/AddSemesterModal";
 
 
 const AllSemester = () => {
+  const [openSemesterModal, setOpenSemesterModal] = useState(false);
+
   const [deleteSemesterData, setDeleteSemesterData] =
     useState(null);
   const [openDeleteSemesterModal, setOpenDeleteSemesterModal] =
@@ -20,12 +23,12 @@ const AllSemester = () => {
       <div className="py-10">
         <div className="flex justify-between items-center pb-3">
           <h1 className="font-bold to-gray-800">All Semesters</h1>
-          <Link
-            to={"/add-semester"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
+          <div
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+            onClick={() => setOpenSemesterModal(true)}
           >
             Add New
-          </Link>
+          </div>
         </div>
         <div className="overflow-x-auto border-x rounded  bg-white">
           <table className="w-full min-w-max table-auto text-left">
@@ -79,6 +82,12 @@ const AllSemester = () => {
           openDeleteSemesterModal={openDeleteSemesterModal}
           setDeleteSemesterData={setDeleteSemesterData}
           setOpenDeleteSemesterModal={setOpenDeleteSemesterModal}
+        />
+      )}
+      {openSemesterModal && (
+        <AddSemesterModal
+          openAddSemesterModal={openSemesterModal}
+          setOpenAddSemesterModal={setOpenSemesterModal}
         />
       )}
     </>

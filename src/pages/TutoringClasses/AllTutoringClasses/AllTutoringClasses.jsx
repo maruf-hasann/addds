@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useGetClassesQuery } from "../../../store/service/tutoringClasses/tutoringClassesApiService";
 import ViewSubjectModal from "./ViewSubjectModal/ViewSubjectModal";
+import AddTutoringClassModal from "./AddTutoringClassModal/AddTutoringClassModal";
 
 const AllTutoringClass = () => {
+  const [openTutoringClassModal, setOpenTutoringClassModal] = useState(false);
+
   const [viewSubjectData, setViewSubjectData] = useState(null);
   const [openViewSubjectModal, setOpenViewSubjectModal] = useState(false);
 
@@ -15,12 +18,12 @@ const AllTutoringClass = () => {
       <div className="py-10">
         <div className="flex justify-between items-center pb-3">
           <h1 className="font-bold to-gray-800">All Class</h1>
-          <Link
-            to={"/add-tutoring-class"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
+          <div
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+            onClick={() => setOpenTutoringClassModal(true)}
           >
             Add New
-          </Link>
+          </div>
         </div>
         <div className="overflow-x-auto border-x rounded bg-white">
           <table className="w-full min-w-max table-auto text-left">
@@ -68,6 +71,12 @@ const AllTutoringClass = () => {
           openViewSubjectModal={openViewSubjectModal}
           setViewSubjectData={setViewSubjectData}
           setOpenViewSubjectModal={setOpenViewSubjectModal}
+        />
+      )}
+      {openTutoringClassModal && (
+        <AddTutoringClassModal
+          openAddTutoringClassModal={openTutoringClassModal}
+          setOpenAddTutoringClassModal={setOpenTutoringClassModal}
         />
       )}
     </>

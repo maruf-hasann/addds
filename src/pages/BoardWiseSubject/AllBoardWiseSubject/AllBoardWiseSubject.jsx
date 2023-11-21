@@ -5,17 +5,14 @@ import { useState } from "react";
 import { useGetSubjectsQuery } from "../../../store/service/boardWiseSubject/boardWiseSubjectApiService";
 import DeleteBoardWiseSubjectModal from "./DeleteBoardWiseSubject/DeleteBoardWiseSubjectModal";
 import EditBoardWiseSubjectModal from "./EditBoardWiseSubject/EditBoardWiseSubject";
+import AddBoardWiseSubjectModal from "./AddBoardWiseSubjectModal/AddBoardWiseSubjectModal";
 
 const AllBoardWiseSubject = () => {
-  const [deleteBoardWiseSubjectData, setDeleteBoardWiseSubjectData] =
-    useState(null);
-  const [openDeleteBoardWiseSubjectModal, setOpenDeleteBoardWiseSubjectModal] =
-    useState(false);
-
-  const [editBoardWiseSubjectData, setEditBoardWiseSubjectData] =
-    useState(null);
-  const [openEditBoardWiseSubjectModal, setOpenEditBoardWiseSubjectModal] =
-    useState(false);
+  const [openAddBoardWiseSubjectModal, setOpenAddBoardWiseSubjectModal] = useState(false);
+  const [deleteBoardWiseSubjectData, setDeleteBoardWiseSubjectData] = useState(null);
+  const [openDeleteBoardWiseSubjectModal, setOpenDeleteBoardWiseSubjectModal] = useState(false);
+  const [editBoardWiseSubjectData, setEditBoardWiseSubjectData] = useState(null);
+  const [openEditBoardWiseSubjectModal, setOpenEditBoardWiseSubjectModal] = useState(false);
 
   const { data: boardWiseSubjectsData } = useGetSubjectsQuery();
   const boardWiseSubjects = boardWiseSubjectsData?.data;
@@ -25,12 +22,12 @@ const AllBoardWiseSubject = () => {
       <div className="py-10">
         <div className="flex justify-between items-center pb-3">
           <h1 className="font-bold text-gray-800">All Subjects</h1>
-          <Link
-            to={"/add-board-wise-subject"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
+          <div
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+            onClick={() => setOpenAddBoardWiseSubjectModal(true)}
           >
             Add New
-          </Link>
+          </div>
         </div>
         <div className="overflow-x-auto border-x rounded bg-white">
           <table className="w-full min-w-max table-auto text-left">
@@ -107,6 +104,13 @@ const AllBoardWiseSubject = () => {
           setOpenEditBoardWiseSubjectModal={setOpenEditBoardWiseSubjectModal}
         />
       )}
+      {openAddBoardWiseSubjectModal && (
+        <AddBoardWiseSubjectModal
+          openAddBoardWiseSubjectModal={openAddBoardWiseSubjectModal}
+          setOpenAddBoardWiseSubjectModal={setOpenAddBoardWiseSubjectModal}
+        />
+      )}
+
     </>
   );
 };

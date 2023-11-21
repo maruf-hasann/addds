@@ -5,16 +5,15 @@ import { useState } from "react";
 import DeleteTutoringVariantModal from "./DeleteTutoringVariant/DeleteTutoringVariantModal";
 import EditTutoringVariantModal from "./EditTutoringVariant/EditTutoringVariant";
 import { useGetTutoringVariantsQuery } from "../../../store/service/tutoringVariant/tutoringVariantApiService";
+import AddTutoringVariantModal from "./AddTutoringVariantModal/AddTutoringVariantModal";
 
 const AllTutoringVariant = () => {
-  const [deleteTutoringVariantData, setDeleteTutoringVariantData] =
-    useState(null);
-  const [openDeleteTutoringVariantModal, setOpenDeleteTutoringVariantModal] =
-    useState(false);
 
+  const [openTutoringVariantModal, setOpenTutoringVariantModal] = useState(false);
+  const [deleteTutoringVariantData, setDeleteTutoringVariantData] = useState(null);
+  const [openDeleteTutoringVariantModal, setOpenDeleteTutoringVariantModal] = useState(false);
   const [editTutoringVariantData, setEditTutoringVariantData] = useState(null);
-  const [openEditTutoringVariantModal, setOpenEditTutoringVariantModal] =
-    useState(false);
+  const [openEditTutoringVariantModal, setOpenEditTutoringVariantModal] = useState(false);
 
   const { data: tutoringVariantsData } = useGetTutoringVariantsQuery();
   const tutoringVariants = tutoringVariantsData?.data;
@@ -24,12 +23,12 @@ const AllTutoringVariant = () => {
       <div className="py-10">
         <div className="flex justify-between items-center pb-3">
           <h1 className="font-bold text-gray-800">All Tutoring Variant</h1>
-          <Link
-            to={"/add-tutoring-variant"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-blue-700 bg-white"
+          <div
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+            onClick={() => setOpenTutoringVariantModal(true)}
           >
             Add New
-          </Link>
+          </div>
         </div>
         <div className="overflow-x-auto border-x rounded  bg-white">
           <table className="w-full min-w-max table-auto text-left">
@@ -94,6 +93,12 @@ const AllTutoringVariant = () => {
           openEditTutoringVariantModal={openEditTutoringVariantModal}
           setEditTutoringVariantData={setOpenEditTutoringVariantModal}
           setOpenEditTutoringVariantModal={setOpenEditTutoringVariantModal}
+        />
+      )}
+      {openTutoringVariantModal && (
+        <AddTutoringVariantModal
+          openAddTutoringVariantModal={openTutoringVariantModal}
+          setOpenAddTutoringVariantModal={setOpenTutoringVariantModal}
         />
       )}
     </>

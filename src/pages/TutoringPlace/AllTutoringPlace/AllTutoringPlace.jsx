@@ -4,9 +4,12 @@ import { useState } from "react";
 import DeleteTutoringPlaceModal from "./DeleteTutoringPlace/DeleteTutoringPlaceModal";
 import EditTutoringPlaceModal from "./EditTutoringPlace/EditTutoringPlace";
 import { useGetTutoringPlacesQuery } from "../../../store/service/tutoringPlace/tutoringPlaceApiService";
+import AddTutoringPlaceModal from "./AddTutoringPlaceModal/AddTutoringPlaceModal";
 
 
 const AllTutoringPlace = () => {
+  const [openTutoringPlaceModal, setOpenTutoringPlaceModal] = useState(false);
+
   const [deleteTutoringPlaceData, setDeleteTutoringPlaceData] =
     useState(null);
   const [openDeleteTutoringPlaceModal, setOpenDeleteTutoringPlaceModal] =
@@ -24,12 +27,12 @@ const AllTutoringPlace = () => {
       <div className="py-10">
         <div className="flex justify-between items-center pb-3">
           <h1 className="font-bold text-gray-800">All Tutoring Place</h1>
-          <Link
-            to={"/add-tutoring-place"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white"
+          <div
+            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+            onClick={() => setOpenTutoringPlaceModal(true)}
           >
             Add New
-          </Link>
+          </div>
         </div>
         <div className="overflow-x-auto border-x rounded bg-white">
           <table className="w-full min-w-max table-auto text-left">
@@ -94,6 +97,12 @@ const AllTutoringPlace = () => {
           openEditTutoringPlaceModal={openEditTutoringPlaceModal}
           setEditTutoringPlaceData={setOpenEditTutoringPlaceModal}
           setOpenEditTutoringPlaceModal={setOpenEditTutoringPlaceModal}
+        />
+      )}
+      {openTutoringPlaceModal && (
+        <AddTutoringPlaceModal
+          openAddTutoringPlaceModal={openTutoringPlaceModal}
+          setOpenAddTutoringPlaceModal={setOpenTutoringPlaceModal}
         />
       )}
     </>

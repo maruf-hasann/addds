@@ -40,9 +40,9 @@ export const menus = [
   },
   {
     id: 5,
-    name: "Tutoring Class",
-    url: "./all-tutoring-classes",
-    icon: <MdClass />,
+    name: "Tutoring Subject",
+    url: "./all-tutoring-subjects",
+    icon: <MdAccountBox />,
   },
   {
     id: 6,
@@ -80,9 +80,14 @@ export const menus = [
     url: "./all-semesters",
     icon: <MdClass />,
   },
-
   {
     id: 12,
+    name: "Tutoring Class",
+    url: "./all-tutoring-classes",
+    icon: <MdClass />,
+  },
+  {
+    id: 13,
     name: "Tutor Info",
     url: "./all-tutor-infos",
     icon: <MdAccountBox />,
@@ -93,7 +98,7 @@ export const menus = [
 export const withSubmenu = [
   {
     id: 1,
-    name: "Settings",
+    name: "Tutor Settings",
     icon: <MdSettings />,
     subMenus: [
       {

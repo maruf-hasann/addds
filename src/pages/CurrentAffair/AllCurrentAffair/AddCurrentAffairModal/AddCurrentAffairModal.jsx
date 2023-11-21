@@ -2,18 +2,18 @@ import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
-import { useAddEducationVariantMutation } from "../../../../store/service/educationVariant/educationVariantApiService";
+import { useAddCurrentAffairMutation } from "../../../../store/service/currentAffair/currentAffairApiService";
 
-const AddEducationVariantModal = ({
-  openAddEducationVariantModal,
-  setOpenAddEducationVariantModal,
+const AddCurrentAffairModal = ({
+  openAddCurrentAffairModal,
+  setOpenAddCurrentAffairModal,
 }) => {
-  const [addEducationVariant, { isLoading }] = useAddEducationVariantMutation();
+  const [addCurrentAffair, { isLoading }] = useAddCurrentAffairMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const variantName = e.target.name.value;
-    const result = await addEducationVariant({ variantName });
+    const affair = e.target.affair.value;
+    const result = await addCurrentAffair({ affair });
     if (result?.data?.success) {
       toast.success(result?.data?.message);
       e.target.reset();
@@ -24,13 +24,13 @@ const AddEducationVariantModal = ({
 
   // handle close modal
   const handleClose = () => {
-    setOpenAddEducationVariantModal(!openAddEducationVariantModal);
+    setOpenAddCurrentAffairModal(!openAddCurrentAffairModal);
   };
 
   return (
     <div
       className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${
-        openAddEducationVariantModal ? "block" : "hidden"
+        openAddCurrentAffairModal ? "block" : "hidden"
       }`}
     >
       <div
@@ -53,27 +53,27 @@ const AddEducationVariantModal = ({
             <div className="py-10">
               <div className="flex justify-between items-center pb-3">
                 <h1 className="font-bold text-blue-gray-800">
-                  Add Education Variant
+                  Add Current Affair
                 </h1>
               </div>
 
               <form
                 onSubmit={handleSubmit}
-                className=" mx-auto p-4 border rounded-md bg-white"
+                className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white"
               >
                 <label
                   htmlFor="name"
-                  className="block mb-5 font-semibold text-sm text-gray-500"
+                  className="block mb-2 font-semibold text-sm text-gray-500"
                 >
                   Name
                 </label>
                 <input
                   type="text"
-                  id="name"
-                  name="name"
+                  id="affair"
+                  name="affair"
                   required
-                  placeholder="One to One"
-                  className="w-full p-2 mb-5 border rounded-md outline-none focus:outline-primaryAlfa-50"
+                  placeholder="affair"
+                  className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                 />
                 <div className="flex justify-end">
                   {isLoading ? (
@@ -101,4 +101,4 @@ const AddEducationVariantModal = ({
   );
 };
 
-export default AddEducationVariantModal;
+export default AddCurrentAffairModal;
