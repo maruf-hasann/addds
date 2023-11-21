@@ -10,6 +10,7 @@ import { useGetCurrentAffairsQuery } from "../../../../store/service/currentAffa
 import { useGetUniversitiesQuery } from "../../../../store/service/university/universityApiService";
 import { useGetSemestersQuery } from "../../../../store/service/semester/semesterApiService";
 import { useSaveAcademicInfoMutation } from "../../../../store/service/tutorInfo/academicInfo/academicInfoApiService";
+import { useEffect } from "react";
 
 const AcademicInfo = () => {
   const [number, setNumber] = useState(null);
@@ -28,6 +29,13 @@ const AcademicInfo = () => {
   const semesters = allSemesterData?.data;
 
   const [saveAcademicInfo, { isLoading }] = useSaveAcademicInfoMutation();
+
+    // handle check valid number or not
+    useEffect(() => {
+      if (number && !isValidPhoneNumber(number) && number?.length < 14) {
+        setNumberError(true);
+      }
+    }, [number]);
 
   const {
     register,

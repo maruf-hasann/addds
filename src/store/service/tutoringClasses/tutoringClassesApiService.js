@@ -37,5 +37,6 @@ export const {
   useAddClassMutation,
   useDeleteClassMutation,
   useGetClassesQuery,
-  useGetSubjectsByClassQuery
+  useGetSubjectsByClassQuery, 
+  useLazyGetSubjectsByClassQuery
 } = tutoringClassesApiService;
