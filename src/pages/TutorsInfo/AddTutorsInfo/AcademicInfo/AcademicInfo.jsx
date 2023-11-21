@@ -12,7 +12,7 @@ import { useGetSemestersQuery } from "../../../../store/service/semester/semeste
 import { useSaveAcademicInfoMutation } from "../../../../store/service/tutorInfo/academicInfo/academicInfoApiService";
 import { useEffect } from "react";
 
-const AcademicInfo = () => {
+const AcademicInfo = ({setActiveTab}) => {
   const [number, setNumber] = useState(null);
   const [numberError, setNumberError] = useState(false);
 
@@ -29,6 +29,12 @@ const AcademicInfo = () => {
   const semesters = allSemesterData?.data;
 
   const [saveAcademicInfo, { isLoading }] = useSaveAcademicInfoMutation();
+
+    // get previous tab number
+    useEffect(()=>{
+      const number = localStorage.getItem('tutor-number')
+      setNumber(number)
+    }, [])
 
     // handle check valid number or not
     useEffect(() => {
@@ -53,15 +59,17 @@ const AcademicInfo = () => {
 
     if (result.data) {
       toast.success(result.data.message);
+      localStorage.setItem('tutor-number', number)
       setNumber(null)
       reset()
+      setActiveTab(4);
     } else {
       toast.error(result.error?.data?.message);
     }
   };
 
   return (
-    <div className="p-10">
+    <div className="p-2 lg:p-10">
       {/* number */}
       <div className="w-full relative mt-5 lg:mt-0 mb-10">
         <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">

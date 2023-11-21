@@ -18,7 +18,7 @@ import {
 } from "../../../../store/service/tutoringClasses/tutoringClassesApiService";
 import { useSaveTutoringInfoMutation } from "../../../../store/service/tutorInfo/tutoringInfo/tutoringInfoApiService";
 
-const TutoringInfo = () => {
+const TutoringInfo = ({ setActiveTab }) => {
   const [number, setNumber] = useState(null);
   const [numberError, setNumberError] = useState(false);
 
@@ -58,6 +58,12 @@ const TutoringInfo = () => {
 
   const [getSubject] = useLazyGetSubjectsByClassQuery();
   const [saveTutoringInfo, { isLoading }] = useSaveTutoringInfoMutation();
+
+  // get previous tab number
+  useEffect(() => {
+    const number = localStorage.getItem("tutor-number");
+    setNumber(number);
+  }, []);
 
   // handle check valid number or not
   useEffect(() => {
@@ -147,6 +153,7 @@ const TutoringInfo = () => {
     console.log(result);
     if (result.data) {
       toast.success(result.data?.message);
+      localStorage.setItem("tutor-number", number);
       reset();
       setSubjects([]);
       setClassWiseSubjects([]);
@@ -156,6 +163,7 @@ const TutoringInfo = () => {
       setALevelSubjects([]);
       setOLevelSubjects([]);
       setTutoringVariants([]);
+      setActiveTab(5);
     } else {
       toast.error(result?.error?.data?.message);
     }
@@ -163,7 +171,7 @@ const TutoringInfo = () => {
 
   return (
     <>
-      <div className="max-w-2xl mx-auto mt-8">
+      <div className="p-2 lg:p-10">
         {/* number */}
         <div className="w-full relative mt-5 lg:mt-0 mb-10">
           <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">

@@ -13,7 +13,7 @@ import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import "./Promotion.css";
 
-const Promotion = () => {
+const Promotion = ({setActiveTab}) => {
   const [number, setNumber] = useState(null);
   const [numberError, setNumberError] = useState(false);
 
@@ -25,6 +25,12 @@ const Promotion = () => {
   const [addPromotionVideo, { isLoading }] = useUploadPromotionInfoMutation();
 
   const { handleSubmit } = useForm();
+
+    // get previous tab number
+    useEffect(()=>{
+      const number = localStorage.getItem('tutor-number')
+      setNumber(number)
+    }, [])
 
   // handle check valid number or not
   useEffect(() => {
@@ -55,10 +61,12 @@ const Promotion = () => {
     const result = await addPromotionVideo(formData);
     if (result.data) {
       toast.success(result.data?.message);
+      localStorage.removeItem('tutor-number')
       setImage(null);
       setVideo(null);
       setImagePreview(null);
       setVideoPreview(null);
+      setActiveTab(1);
     } else {
       toast.error(result.error?.data?.message);
     }
@@ -104,7 +112,7 @@ const Promotion = () => {
   };
 
   return (
-    <div className="p-10">
+    <div className="p-2 lg:p-10">
       {/* number */}
       <div className="w-full relative mt-5 lg:mt-0 mb-10">
         <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">

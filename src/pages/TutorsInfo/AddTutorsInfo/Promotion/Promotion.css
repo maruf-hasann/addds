@@ -2,3 +2,7 @@
   padding: 10px;
   background-color: transparent;
 }
+.number-with-button + .PhoneInputInput {
+  paddinng: 100px ;
+  background-color: transparent;
+}

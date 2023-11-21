@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { ImSpinner9 } from "react-icons/im";
 import { useSaveContactInfoMutation } from "../../../../store/service/tutorInfo/contactInfo/contactInfoApiService";
 
-const ContactInfo = () => {
+const ContactInfo = ({setActiveTab}) => {
   const [number, setNumber] = useState(null);
   const [numberError, setNumberError] = useState(false);
   const [emergencyNumber, setEmergencyNumber] = useState(null);
@@ -19,6 +19,12 @@ const ContactInfo = () => {
   const [submit, setSubmit] = useState(false);
 
   const [saveContactInfo, { isLoading }] = useSaveContactInfoMutation();
+
+  // get previous tab number
+  useEffect(()=>{
+    const number = localStorage.getItem('tutor-number')
+    setNumber(number)
+  }, [])
 
   // handle check valid number or not
   useEffect(() => {
@@ -72,10 +78,12 @@ const ContactInfo = () => {
 
     if (result.data) {
       toast.success(result.data.message);
+      localStorage.setItem('tutor-number', number)
       setNumber(null);
       setWhatsappNumber(null);
       setEmergencyNumber(null);
       reset();
+      setActiveTab(3);
     } else {
       toast.error(result.error?.data?.message);
     }
@@ -83,7 +91,7 @@ const ContactInfo = () => {
 
   return (
     <>
-      <div className="p-10">
+      <div className="p-2 lg:p-10">
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* phone number & whatsapp number */}
           <div className="lg:flex gap-5">
