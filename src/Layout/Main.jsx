@@ -30,7 +30,7 @@ const Main = () => {
             <MainSideBar />
           </div>
         )}
-        <div className="flex-1 px-10 pt-14 overflow-x-auto ">
+        <div className="flex-1 pl-10 pt-14 overflow-x-auto ">
           <Outlet />
         </div>
       </div>
