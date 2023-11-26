@@ -92,6 +92,49 @@ export const menus = [
     url: "./all-tutor-infos",
     icon: <MdAccountBox />,
   },
+  {
+    id: 14,
+    name: "School PM",
+    url: "./all-school-pm",
+    icon: <MdLibraryBooks />,
+  },
+  {
+    id: 15,
+    name: "Collage HC",
+    url: "./all-collage-hc",
+    icon: <MdToday />,
+  },
+  {
+    id: 16,
+    name: "Tutoring Class PM",
+    url: "./all-tutoring-class-pm",
+    icon: <MdClass />,
+  },
+  {
+    id: 17,
+    name: "Tutoring Class HC",
+    url: "./all-tutoring-class-hc",
+    icon: <MdSubject />,
+  },
+
+  {
+    id: 18,
+    name: "Curriculum Board",
+    url: "./all-curriculum-board",
+    icon: <MdAccountBalance />,
+  },
+  {
+    id: 19,
+    name: "Main Subject",
+    url: "./all-main-subject",
+    icon: <MdClass />,
+  },
+  {
+    id: 20,
+    name: "Sub Subject",
+    url: "./all-sub-subject",
+    icon: <MdClass />,
+  },
 ];
 
 // setting menu
