@@ -4,7 +4,6 @@ import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
 
 import { useState } from "react";
-import { useGetEducationVariantsQuery } from "../../../../store/service/educationVariant/educationVariantApiService";
 import { useAddTutoringClassHCMutation } from "../../../../store/service/tutoringClassHC/tutoringClassHCApiService";
 import { useGetCurriculumBoardsQuery } from "../../../../store/service/curriculumBoard/curriculumBoardApiService";
 
@@ -13,13 +12,9 @@ const AddTutoringClassHCModal = ({
   setOpenAddTutoringClassHCModal,
 }) => {
   const [className, setClassName] = useState("");
-  const [educationVariant, setEducationVariant] = useState("");
   const [curriculumBoard, setCurriculumBoard] = useState("");
 
   const [addClass, { isLoading }] = useAddTutoringClassHCMutation();
-
-  const { data: educationVariantsData } = useGetEducationVariantsQuery();
-  const educationVariants = educationVariantsData?.data;
 
   const { data: allCurriculumBoardData } = useGetCurriculumBoardsQuery();
   const allCurriculumBoard = allCurriculumBoardData?.data;
@@ -28,25 +23,25 @@ const AddTutoringClassHCModal = ({
     e.preventDefault();
 
     if (!className) return toast.error("Please add Class Name");
-    if (!educationVariant) return toast.error("Please Add a education variant");
     if (!curriculumBoard) return toast.error("Please Add Curriculum Board");
 
     const result = await addClass({
       className,
-      educationVariant,
-      curriculumBoard,
+      educationVariant: curriculumBoard?.educationVariant,
+      curriculumBoard: curriculumBoard?.boardName,
     });
     console.log(result);
     if (result?.data?.success) {
       toast.success(result?.data?.message);
       setClassName("");
-      setEducationVariant("");
       setCurriculumBoard("");
       setOpenAddTutoringClassHCModal(!openAddTutoringClassHCModal);
     } else {
       toast.error(result?.error?.data?.message);
     }
   };
+
+  console.log(curriculumBoard);
 
   // handle close modal
   const handleClose = () => {
@@ -102,32 +97,7 @@ const AddTutoringClassHCModal = ({
                     className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                   />
                 </div>
-                <div>
-                  <label
-                    htmlFor="educationVariant"
-                    className="block mb-2 font-semibold text-sm text-gray-500"
-                  >
-                    Education Variant
-                  </label>
-                  <select
-                    type="text"
-                    id="educationVariant"
-                    name="educationVariant"
-                    onChange={(e) => setEducationVariant(e.target.value)}
-                    required
-                    defaultValue={""}
-                    className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
-                  >
-                    <option value="" disabled>
-                      Select Education Variant
-                    </option>
-                    {educationVariants?.map((variant, idx) => (
-                      <option key={idx} value={variant?.variantName}>
-                        {variant?.variantName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+
                 <div>
                   <label
                     htmlFor="curriculumBoard"
@@ -139,7 +109,9 @@ const AddTutoringClassHCModal = ({
                     type="text"
                     id="curriculumBoard"
                     name="curriculumBoard"
-                    onChange={(e) => setCurriculumBoard(e.target.value)}
+                    onChange={(e) =>
+                      setCurriculumBoard(JSON.parse(e.target.value))
+                    }
                     required
                     defaultValue={""}
                     className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
@@ -148,12 +120,27 @@ const AddTutoringClassHCModal = ({
                       Select Curriculum Board
                     </option>
                     {allCurriculumBoard?.map((curriculumBoard, idx) => (
-                      <option key={idx} value={curriculumBoard?.boardName}>
+                      <option key={idx} value={JSON.stringify(curriculumBoard)}>
                         {curriculumBoard?.boardName}
                       </option>
                     ))}
                   </select>
                 </div>
+                {curriculumBoard ? (
+                  <div>
+                    <label className="block mb-2 font-semibold text-sm text-gray-500">
+                      Education Variant
+                    </label>
+                    <input
+                      type="text"
+                      value={curriculumBoard?.educationVariant}
+                      readOnly
+                      className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
+                    />
+                  </div>
+                ) : (
+                  ""
+                )}
 
                 <div className="flex justify-end">
                   {isLoading ? (
