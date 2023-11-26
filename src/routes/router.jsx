@@ -14,8 +14,6 @@ import AddAcademicGrade from "../pages/AcademicGrade/AddAcademicGrade/AddAcademi
 import AllAcademicGrade from "../pages/AcademicGrade/AllAcademicGrade/AllAcademicGrade";
 import AddTutoringSubject from "../pages/TutoringSubject/AddTutoringSubject/AddTutoringSubject";
 import AllTutoringSubject from "../pages/TutoringSubject/AllTutoringSubject/AllTutoringSubject";
-import AddCurriculumBoard from "../pages/CurriculumBoard/AddCurriculumBoard/AddCurriculumBoard";
-import AllCurriculumBoard from "../pages/CurriculumBoard/AllCurriculumBoard/AllCurriculumBoard";
 import AddTutorsInfo from "../pages/TutorsInfo/AddTutorsInfo/AddTutorsInfo";
 import AllTutoringInfo from "../pages/TutorsInfo/AllTutorsInfo/AllTutorsInfo";
 import AddTutoringVariant from "../pages/TutoringVariant/AddTutoringVariant/AddTutoringVariant";
@@ -38,6 +36,13 @@ import AddUniversity from "../pages/University/AddUniversity/AddUniversity";
 import AllUniversity from "../pages/University/AllUniversity/AllUniversity";
 import AddTutoringClass from "../pages/TutoringClasses/AddTutoringClasses/AddTutoringClasses";
 import AllTutoringClass from "../pages/TutoringClasses/AllTutoringClasses/AllTutoringClasses";
+import AllTutoringClassPM from "../pages/TutoringClassPM/AllTutoringClassPM/AllTutoringClassPM";
+import AllSchoolPM from "../pages/SchoolPM/AllSchoolPM/AllSchoolPM";
+import AllCollageHC from "../pages/CollageHC/AllCollageHC/AllCollageHC";
+import AllTutoringClassHC from "../pages/TutoringClassHC/AllTutoringClassHC/AllTutoringClassHC";
+import AllCurriculumBoard from "../pages/CurriculumBoard/AllCurriculumBoard/AllCurriculumBoard";
+import AllMainSubject from "../pages/MainSubject/AllMainSubject/AllMainSubject";
+import AllSubSubject from "../pages/SubSubject/AllSubSubject/AllSubSubject";
 
 export const router = createBrowserRouter([
   {
@@ -129,14 +134,6 @@ export const router = createBrowserRouter([
         element: <AllTutoringSubject />,
       },
       {
-        path: "/add-curriculum-board",
-        element: <AddCurriculumBoard />,
-      },
-      {
-        path: "/all-curriculum-boards",
-        element: <AllCurriculumBoard />,
-      },
-      {
         path: "/add-tutor-info",
         element: <AddTutorsInfo />,
       },
@@ -191,6 +188,34 @@ export const router = createBrowserRouter([
       {
         path: "/all-tutoring-classes",
         element: <AllTutoringClass />,
+      },
+      {
+        path: "/all-school-pm",
+        element: <AllSchoolPM />,
+      },
+      {
+        path: "/all-collage-hc",
+        element: <AllCollageHC />,
+      },
+      {
+        path: "/all-tutoring-class-pm",
+        element: <AllTutoringClassPM />,
+      },
+      {
+        path: "/all-tutoring-class-hc",
+        element: <AllTutoringClassHC />,
+      },
+      {
+        path: "/all-curriculum-board",
+        element: <AllCurriculumBoard />,
+      },
+      {
+        path: "/all-main-subject",
+        element: <AllMainSubject />,
+      },
+      {
+        path: "/all-sub-subject",
+        element: <AllSubSubject />,
       },
     ],
   },

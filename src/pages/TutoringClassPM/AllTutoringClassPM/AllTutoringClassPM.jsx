@@ -1,34 +1,34 @@
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 
-import AddCurriculumBoardModal from "./AddCurriculumBoardModal/AddCurriculumBoardModal";
+import AddTutoringClassPMModal from "./AddTutoringClassPMModal/AddTutoringClassPMModal";
 import {
-  useDeleteCurriculumBoardMutation,
-  useGetCurriculumBoardsQuery,
-} from "../../../store/service/curriculumBoard/curriculumBoardApiService";
+  useDeleteTutoringClassPMMutation,
+  useGetTutoringClassPMQuery,
+} from "../../../store/service/tutoringClassPM/tutoringClassPMApiService";
 import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
 
-const AllCurriculumBoard = () => {
-  const [openCurriculumBoardModal, setOpenCurriculumBoardModal] =
+const AllTutoringClassPM = () => {
+  const [openTutoringClassPMModal, setOpenTutoringClassPMModal] =
     useState(false);
 
-  const [deleteCurriculumBoardData, setDeleteCurriculumBoardData] =
+  const [deleteTutoringClassPMData, setDeleteTutoringClassPMData] =
     useState(null);
-  const [openDeleteCurriculumBoardModal, setOpenDeleteCurriculumBoardModal] =
+  const [openDeleteTutoringClassPMModal, setOpenDeleteTutoringClassPMModal] =
     useState(false);
 
-  const [deleteCurriculumBoard] = useDeleteCurriculumBoardMutation();
+  const [deleteTutoringClassPM] = useDeleteTutoringClassPMMutation();
 
-  const { data: allCurriculumBoardData } = useGetCurriculumBoardsQuery();
-  const allCurriculumBoard = allCurriculumBoardData?.data;
+  const { data: allTutoringClassPMData } = useGetTutoringClassPMQuery();
+  const allTutoringClassPM = allTutoringClassPMData?.data;
 
   return (
     <div className="py-10">
       <div className="flex justify-between items-center border-b pb-3">
-        <h1 className="font-bold">All Curriculum Board</h1>
+        <h1 className="font-bold">All Tutoring Class PM</h1>
         <div
           className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
-          onClick={() => setOpenCurriculumBoardModal(true)}
+          onClick={() => setOpenTutoringClassPMModal(true)}
         >
           Add New
         </div>
@@ -55,21 +55,22 @@ const AllCurriculumBoard = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {allCurriculumBoard?.map((curriculumBoard, idx) => {
+            {/* row 1 */}
+            {allTutoringClassPM?.map((tutoringClassPM, idx) => {
               const classes = "p-4 border-b border-blue-gray-50";
               return (
-                <tr className={classes} key={curriculumBoard?._id}>
+                <tr className={classes} key={tutoringClassPM?._id}>
                   <th className={classes}>{idx + 1}</th>
-                  <td className={classes}>{curriculumBoard.boardName}</td>
+                  <td className={classes}>{tutoringClassPM.className}</td>
                   <td className={classes}>
-                    {curriculumBoard?.educationVariant}
+                    {tutoringClassPM?.educationVariant}
                   </td>
                   <td className={`${classes} w-[120px]`}>
                     <div className="flex justify-evenly items-center">
                       <FaTrash
                         onClick={() => {
-                          setDeleteCurriculumBoardData(curriculumBoard),
-                            setOpenDeleteCurriculumBoardModal(true);
+                          setDeleteTutoringClassPMData(tutoringClassPM),
+                            setOpenDeleteTutoringClassPMModal(true);
                         }}
                         className="cursor-pointer hover:text-red-500"
                       />{" "}
@@ -81,25 +82,25 @@ const AllCurriculumBoard = () => {
           </tbody>
         </table>
       </div>
-      {openCurriculumBoardModal && (
-        <AddCurriculumBoardModal
-          openAddCurriculumBoardModal={openCurriculumBoardModal}
-          setOpenAddCurriculumBoardModal={setOpenCurriculumBoardModal}
+      {openTutoringClassPMModal && (
+        <AddTutoringClassPMModal
+          openAddTutoringClassPMModal={openTutoringClassPMModal}
+          setOpenAddTutoringClassPMModal={setOpenTutoringClassPMModal}
         />
       )}
 
-      {openDeleteCurriculumBoardModal && (
+      {openDeleteTutoringClassPMModal && (
         <DeleteModal
-          id={deleteCurriculumBoardData?._id}
-          name={deleteCurriculumBoardData?.boardName}
-          setDeleteData={setDeleteCurriculumBoardData}
-          openDeleteModal={openDeleteCurriculumBoardModal}
-          setOpenDeleteModal={setOpenDeleteCurriculumBoardModal}
-          deleteFunction={deleteCurriculumBoard}
+          id={deleteTutoringClassPMData?._id}
+          name={deleteTutoringClassPMData?.className}
+          setDeleteData={setDeleteTutoringClassPMData}
+          openDeleteModal={openDeleteTutoringClassPMModal}
+          setOpenDeleteModal={setOpenDeleteTutoringClassPMModal}
+          deleteFunction={deleteTutoringClassPM}
         />
       )}
     </div>
   );
 };
 
-export default AllCurriculumBoard;
+export default AllTutoringClassPM;
