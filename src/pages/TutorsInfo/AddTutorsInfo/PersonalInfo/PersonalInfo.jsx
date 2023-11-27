@@ -14,7 +14,7 @@ import toast from "react-hot-toast";
 
 import { useSavePersonalInfoMutation } from "../../../../store/service/personalInfo/personalInfoApiService";
 import axios from "axios";
-import { useLazySendOtpQuery } from "../../../../store/service/sendOTP/sendOTPApiService";
+import { useLazySendOtpQuery } from "../../../../store/service/sendOtp/sendOtpApiService";
 import { ImSpinner10, ImSpinner9 } from "react-icons/im";
 
 const PersonalInfo = ({setActiveTab}) => {
