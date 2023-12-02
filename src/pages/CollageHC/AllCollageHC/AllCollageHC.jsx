@@ -1,34 +1,31 @@
 import { useState } from "react";
 import { FaTrash } from "react-icons/fa";
-
-import AddCurriculumBoardModal from "./AddCurriculumBoardModal/AddCurriculumBoardModal";
+import AddCollageHCModal from "./AddCollageHCModal/AddCollageHCModal";
 import {
-  useDeleteCurriculumBoardMutation,
-  useGetCurriculumBoardsQuery,
-} from "../../../store/service/curriculumBoard/curriculumBoardApiService";
+  useDeleteCollageHCMutation,
+  useGetCollageHCQuery,
+} from "../../../store/service/collageHC/collageHCApiService";
 import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
 
-const AllCurriculumBoard = () => {
-  const [openCurriculumBoardModal, setOpenCurriculumBoardModal] =
+const AllCollageHC = () => {
+  const [openCollageHCModal, setOpenCollageHCModal] = useState(false);
+
+  const [deleteCollageHCData, setDeleteCollageHCData] = useState(null);
+  const [openDeleteCollageHCModal, setOpenDeleteCollageHCModal] =
     useState(false);
 
-  const [deleteCurriculumBoardData, setDeleteCurriculumBoardData] =
-    useState(null);
-  const [openDeleteCurriculumBoardModal, setOpenDeleteCurriculumBoardModal] =
-    useState(false);
+  const [deleteCollageHC] = useDeleteCollageHCMutation();
 
-  const [deleteCurriculumBoard] = useDeleteCurriculumBoardMutation();
-
-  const { data: allCurriculumBoardData } = useGetCurriculumBoardsQuery();
-  const allCurriculumBoard = allCurriculumBoardData?.data;
+  const { data: allCollageHCData } = useGetCollageHCQuery();
+  const allCollageHC = allCollageHCData?.data;
 
   return (
     <div className="py-10">
       <div className="flex justify-between items-center border-b pb-3">
-        <h1 className="font-bold">All Curriculum Board</h1>
+        <h1 className="font-bold">All Collage HC</h1>
         <div
           className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
-          onClick={() => setOpenCurriculumBoardModal(true)}
+          onClick={() => setOpenCollageHCModal(true)}
         >
           Add New
         </div>
@@ -55,21 +52,19 @@ const AllCurriculumBoard = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {allCurriculumBoard?.map((curriculumBoard, idx) => {
+            {allCollageHC?.map((collageHC, idx) => {
               const classes = "p-4 border-b border-blue-gray-50";
               return (
-                <tr className={classes} key={curriculumBoard?._id}>
+                <tr className={classes} key={collageHC?._id}>
                   <th className={classes}>{idx + 1}</th>
-                  <td className={classes}>{curriculumBoard.boardName}</td>
-                  <td className={classes}>
-                    {curriculumBoard?.educationVariant}
-                  </td>
+                  <td className={classes}>{collageHC.collageName}</td>
+                  <td className={classes}>{collageHC?.educationVariant}</td>
                   <td className={`${classes} w-[120px]`}>
                     <div className="flex justify-evenly items-center">
                       <FaTrash
                         onClick={() => {
-                          setDeleteCurriculumBoardData(curriculumBoard),
-                            setOpenDeleteCurriculumBoardModal(true);
+                          setDeleteCollageHCData(collageHC),
+                            setOpenDeleteCollageHCModal(true);
                         }}
                         className="cursor-pointer hover:text-red-500"
                       />{" "}
@@ -81,25 +76,25 @@ const AllCurriculumBoard = () => {
           </tbody>
         </table>
       </div>
-      {openCurriculumBoardModal && (
-        <AddCurriculumBoardModal
-          openAddCurriculumBoardModal={openCurriculumBoardModal}
-          setOpenAddCurriculumBoardModal={setOpenCurriculumBoardModal}
+      {openCollageHCModal && (
+        <AddCollageHCModal
+          openAddCollageHCModal={openCollageHCModal}
+          setOpenAddCollageHCModal={setOpenCollageHCModal}
         />
       )}
 
-      {openDeleteCurriculumBoardModal && (
+      {openDeleteCollageHCModal && (
         <DeleteModal
-          id={deleteCurriculumBoardData?._id}
-          name={deleteCurriculumBoardData?.boardName}
-          setDeleteData={setDeleteCurriculumBoardData}
-          openDeleteModal={openDeleteCurriculumBoardModal}
-          setOpenDeleteModal={setOpenDeleteCurriculumBoardModal}
-          deleteFunction={deleteCurriculumBoard}
+          id={deleteCollageHCData?._id}
+          name={deleteCollageHCData?.collageName}
+          setDeleteData={setDeleteCollageHCData}
+          openDeleteModal={openDeleteCollageHCModal}
+          setOpenDeleteModal={setOpenDeleteCollageHCModal}
+          deleteFunction={deleteCollageHC}
         />
       )}
     </div>
   );
 };
 
-export default AllCurriculumBoard;
+export default AllCollageHC;
