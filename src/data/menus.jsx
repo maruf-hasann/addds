@@ -50,18 +50,18 @@ export const menus = [
     url: "./all-student-variants",
     icon: <MdPerson />,
   },
-  {
-    id: 7,
-    name: "Extra Subject",
-    url: "./all-extra-subjects",
-    icon: <MdSubject />,
-  },
-  {
-    id: 8,
-    name: "Subject",
-    url: "./all-board-wise-subjects",
-    icon: <MdLibraryBooks />,
-  },
+  // {
+  //   id: 7,
+  //   name: "Extra Subject",
+  //   url: "./all-extra-subjects",
+  //   icon: <MdSubject />,
+  // },
+  // {
+  //   id: 8,
+  //   name: "Subject",
+  //   url: "./all-board-wise-subjects",
+  //   icon: <MdLibraryBooks />,
+  // },
   {
     id: 9,
     name: "Current Affair",
