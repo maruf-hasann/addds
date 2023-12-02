@@ -2,37 +2,62 @@ import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
-import { useAddUniversityMutation } from "../../../../store/service/university/universityApiService";
-import { useLazyGetCountryDistrictQuery } from "../../../../store/service/country/countryApiService";
-import { useEffect, useState } from "react";
 
-const AddUniversityModal = ({
-    openAddUniversityModal,
-    setOpenAddUniversityModal,
+import { useState, useEffect } from "react";
+import { useEditSchoolPMMutation } from "../../../../store/service/schoolPM/schoolPMApiService";
+import { useGetEducationVariantsQuery } from "../../../../store/service/educationVariant/educationVariantApiService";
+import { useLazyGetCountryDistrictQuery } from "../../../../store/service/country/countryApiService";
+import { useForm } from "react-hook-form";
+
+const EditSchoolPMModal = ({
+    openEditSchoolPMModal,
+    setOpenEditSchoolPMModal,
+    editData,
 }) => {
     /* Set all the states data state */
     const [states, setStates] = useState([]);
-    const [name, setName] = useState("");
-    const [division, setDivision] = useState("");
+    const [editSchoolPM, { isLoading }] = useEditSchoolPMMutation();
 
-    const [addUniversity, { isLoading }] = useAddUniversityMutation();
+    const { data: educationVariantsData } = useGetEducationVariantsQuery();
+    const educationVariants = educationVariantsData?.data;
+
     /* Get whole country district */
     const [getCountryDistrict] = useLazyGetCountryDistrictQuery();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!name) return toast.error("Please add a name");
-        if (!division) return toast.error("Please add a division");
-        const result = await addUniversity({ name, division });
+    /* Set default values */
+    const { register, handleSubmit, reset } = useForm({
+        defaultValues: {
+            division: "",
+            educationVariant: "",
+            schoolName: "",
+        },
+    });
+
+    const handleEditSubmit = async (data) => {
+        const editModifyData = {
+            id: editData?._id,
+            data: {
+                ...data,
+            },
+        };
+        const result = await editSchoolPM(editModifyData);
         if (result?.data?.success) {
-            setName("");
-            setDivision("");
             toast.success(result?.data?.message);
-            setOpenAddUniversityModal(!openAddUniversityModal);
+            reset();
+            setOpenEditSchoolPMModal(!openEditSchoolPMModal);
         } else {
             toast.error(result?.error?.data?.message);
         }
     };
+
+    /* Set updated values */
+    useEffect(() => {
+        reset({
+            division: editData?.division,
+            educationVariant: editData?.educationVariant,
+            schoolName: editData?.schoolName,
+        });
+    }, [editData, reset]);
 
     // fetch all states
     useEffect(() => {
@@ -50,13 +75,13 @@ const AddUniversityModal = ({
 
     // handle close modal
     const handleClose = () => {
-        setOpenAddUniversityModal(!openAddUniversityModal);
+        setOpenEditSchoolPMModal(!openEditSchoolPMModal);
     };
 
     return (
         <div
             className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${
-                openAddUniversityModal ? "block" : "hidden"
+                openEditSchoolPMModal ? "block" : "hidden"
             }`}
         >
             <div
@@ -79,12 +104,12 @@ const AddUniversityModal = ({
                         <div className="py-10">
                             <div className="flex justify-between items-center pb-3">
                                 <h1 className="font-bold text-blue-gray-800">
-                                    Add University
+                                    Edit School PM
                                 </h1>
                             </div>
 
                             <form
-                                onSubmit={handleSubmit}
+                                onSubmit={handleSubmit(handleEditSubmit)}
                                 className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white"
                             >
                                 {/* city */}
@@ -93,13 +118,13 @@ const AddUniversityModal = ({
                                         Select Division
                                     </label>
                                     <select
-                                        onChange={(e) =>
-                                            setDivision(e.target.value)
-                                        }
+                                        {...register("division", {
+                                            required: "Division is required!",
+                                        })}
                                         className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                                     >
-                                        <option value={""} disabled>
-                                            Please Select Division
+                                        <option value={editData?.division}>
+                                            {editData?.division}
                                         </option>
                                         {states
                                             ?.filter(
@@ -121,6 +146,11 @@ const AddUniversityModal = ({
                                                     state.name ===
                                                         "Sylhet Division"
                                             )
+                                            ?.filter(
+                                                (state) =>
+                                                    state.name !==
+                                                    editData?.division
+                                            )
                                             ?.map((state, idx) => (
                                                 <option
                                                     key={idx}
@@ -133,27 +163,64 @@ const AddUniversityModal = ({
                                 </div>
                                 <div>
                                     <label
-                                        htmlFor="name"
+                                        htmlFor="educationVariant"
                                         className="block mb-2 font-semibold text-sm text-gray-500"
                                     >
-                                        Name
+                                        Education Variant
+                                    </label>
+                                    <select
+                                        {...register("educationVariant", {
+                                            required:
+                                                "Education Variant is required!",
+                                        })}
+                                        className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
+                                    >
+                                        <option
+                                            value={editData?.educationVariant}
+                                        >
+                                            {editData?.educationVariant}
+                                        </option>
+                                        {educationVariants
+                                            ?.filter(
+                                                (variant) =>
+                                                    variant?.variantName !==
+                                                    editData?.educationVariant
+                                            )
+                                            ?.map((variant, idx) => (
+                                                <option
+                                                    key={idx}
+                                                    value={variant?.variantName}
+                                                >
+                                                    {variant?.variantName}
+                                                </option>
+                                            ))}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label
+                                        htmlFor="schoolName"
+                                        className="block mb-2 font-semibold text-sm text-gray-500"
+                                    >
+                                        School Name
                                     </label>
                                     <input
                                         type="text"
-                                        id="name"
-                                        name="name"
-                                        required
-                                        onChange={(e) =>
-                                            setName(e.target.value)
-                                        }
-                                        placeholder="Dhaka University"
+                                        id="schoolName"
+                                        name="schoolName"
+                                        {...register("schoolName", {
+                                            required:
+                                                "School Name is required!",
+                                        })}
+                                        placeholder="School Name"
                                         className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                                     />
                                 </div>
+
                                 <div className="flex justify-end">
                                     {isLoading ? (
                                         <Button
                                             disabled
+                                            type="submit"
                                             className="bg-white text-blue-gray-700 border py-2 px-[39px] rounded-sm font-semibold cursor-wait "
                                         >
                                             <FaSpinner className="animate-spin" />
@@ -163,7 +230,7 @@ const AddUniversityModal = ({
                                             type="submit"
                                             className="bg-white text-blue-gray-700 border py-2 px-8 rounded-sm font-semibold cursor-pointer"
                                         >
-                                            Add
+                                            Edit
                                         </Button>
                                     )}
                                 </div>
@@ -176,4 +243,4 @@ const AddUniversityModal = ({
     );
 };
 
-export default AddUniversityModal;
+export default EditSchoolPMModal;

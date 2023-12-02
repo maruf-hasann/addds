@@ -135,6 +135,18 @@ export const menus = [
     url: "./all-sub-subject",
     icon: <MdClass />,
   },
+  {
+    id: 21,
+    name: "Tutoring Curriculum",
+    url: "./tutoring-curriculum",
+    icon: <MdClass />,
+  },
+  {
+    id: 22,
+    name: "Subject Class Variant",
+    url: "./subject-class-variant",
+    icon: <MdClass />,
+  },
 ];
 
 // setting menu

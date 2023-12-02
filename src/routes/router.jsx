@@ -43,190 +43,200 @@ import AllTutoringClassHC from "../pages/TutoringClassHC/AllTutoringClassHC/AllT
 import AllCurriculumBoard from "../pages/CurriculumBoard/AllCurriculumBoard/AllCurriculumBoard";
 import AllMainSubject from "../pages/MainSubject/AllMainSubject/AllMainSubject";
 import AllSubSubject from "../pages/SubSubject/AllSubSubject/AllSubSubject";
+import AllTutoringCurriculum from "../pages/TutoringCurriculum/AllTutoringCurriculum/AllTutoringCurriculum";
+import AllSubjectClassVariantModal from "../pages/SubjectClassVariant/AllSubjectClassVariant/AllSubjectClassVariantModal";
 
 export const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Main />,
-    children: [
-      {
+    {
         path: "/",
-        element: <AddEducationVariant />,
-      },
-      {
-        path: "/add-education-variant",
-        element: <AddEducationVariant />,
-      },
-      {
-        path: "/all-education-variants",
-        element: <AllEducationVariant />,
-      },
-      {
-        path: "/add-tutoring-variant",
-        element: <AddTutoringVariant />,
-      },
-      {
-        path: "/all-tutoring-variants",
-        element: <AllTutoringVariant />,
-      },
-      {
-        path: "/add-tutoring-program",
-        element: <AddTutoringProgram />,
-      },
-      {
-        path: "/all-tutoring-programs",
-        element: <AllTutoringProgram />,
-      },
-      {
-        path: "/add-tutoring-place",
-        element: <AddTutoringPlace />,
-      },
-      {
-        path: "/all-tutoring-places",
-        element: <AllTutoringPlace />,
-      },
-      {
-        path: "/add-student-variant",
-        element: <AddStudentVariant />,
-      },
-      {
-        path: "/all-student-variants",
-        element: <AllStudentVariant />,
-      },
-      {
-        path: "/add-college",
-        element: <AddCollege />,
-      },
-      {
-        path: "/all-colleges",
-        element: <AllCollege />,
-      },
-      {
-        path: "/add-school",
-        element: <AddSchool />,
-      },
-      {
-        path: "/all-schools",
-        element: <AllSchool />,
-      },
-      {
-        path: "/add-academic-class",
-        element: <AddAcademicClass />,
-      },
-      {
-        path: "/all-academic-classes",
-        element: <AllAcademicClass />,
-      },
-      {
-        path: "/add-academic-grade",
-        element: <AddAcademicGrade />,
-      },
-      {
-        path: "/all-academic-grades",
-        element: <AllAcademicGrade />,
-      },
-      {
-        path: "/add-tutoring-subject",
-        element: <AddTutoringSubject />,
-      },
-      {
-        path: "/all-tutoring-subjects",
-        element: <AllTutoringSubject />,
-      },
-      {
-        path: "/add-tutor-info",
-        element: <AddTutorsInfo />,
-      },
-      {
-        path: "/all-tutor-infos",
-        element: <AllTutoringInfo />,
-      },
-      {
-        path: "/add-extra-subject",
-        element: <AddExtraSubject />,
-      },
-      {
-        path: "/all-extra-subjects",
-        element: <AllExtraSubject />,
-      },
-      {
-        path: "/add-board-wise-subject",
-        element: <AddBoardWiseSubject />,
-      },
-      {
-        path: "/all-board-wise-subjects",
-        element: <AllBoardWiseSubject />,
-      },
-      {
-        path: "/add-current-affair",
-        element: <AddCurrentAffair />,
-      },
-      {
-        path: "/all-current-affairs",
-        element: <AllCurrentAffair />,
-      },
-      {
-        path: "/add-university",
-        element: <AddUniversity />,
-      },
-      {
-        path: "/all-universities",
-        element: <AllUniversity />,
-      },
-      {
-        path: "/add-semester",
-        element: <AddSemester />,
-      },
-      {
-        path: "/all-semesters",
-        element: <AllSemester />,
-      },
-      {
-        path: "/add-tutoring-class",
-        element: <AddTutoringClass />,
-      },
-      {
-        path: "/all-tutoring-classes",
-        element: <AllTutoringClass />,
-      },
-      {
-        path: "/all-school-pm",
-        element: <AllSchoolPM />,
-      },
-      {
-        path: "/all-collage-hc",
-        element: <AllCollageHC />,
-      },
-      {
-        path: "/all-tutoring-class-pm",
-        element: <AllTutoringClassPM />,
-      },
-      {
-        path: "/all-tutoring-class-hc",
-        element: <AllTutoringClassHC />,
-      },
-      {
-        path: "/all-curriculum-board",
-        element: <AllCurriculumBoard />,
-      },
-      {
-        path: "/all-main-subject",
-        element: <AllMainSubject />,
-      },
-      {
-        path: "/all-sub-subject",
-        element: <AllSubSubject />,
-      },
-    ],
-  },
-  {
-    path: "/login",
-    element: <SecondLayout />,
-    children: [
-      {
+        element: <Main />,
+        children: [
+            {
+                path: "/",
+                element: <AddEducationVariant />,
+            },
+            {
+                path: "/add-education-variant",
+                element: <AddEducationVariant />,
+            },
+            {
+                path: "/all-education-variants",
+                element: <AllEducationVariant />,
+            },
+            {
+                path: "/add-tutoring-variant",
+                element: <AddTutoringVariant />,
+            },
+            {
+                path: "/all-tutoring-variants",
+                element: <AllTutoringVariant />,
+            },
+            {
+                path: "/add-tutoring-program",
+                element: <AddTutoringProgram />,
+            },
+            {
+                path: "/all-tutoring-programs",
+                element: <AllTutoringProgram />,
+            },
+            {
+                path: "/tutoring-curriculum",
+                element: <AllTutoringCurriculum />,
+            },
+            {
+                path: "/add-tutoring-place",
+                element: <AddTutoringPlace />,
+            },
+            {
+                path: "/all-tutoring-places",
+                element: <AllTutoringPlace />,
+            },
+            {
+                path: "/add-student-variant",
+                element: <AddStudentVariant />,
+            },
+            {
+                path: "/all-student-variants",
+                element: <AllStudentVariant />,
+            },
+            {
+                path: "/add-college",
+                element: <AddCollege />,
+            },
+            {
+                path: "/all-colleges",
+                element: <AllCollege />,
+            },
+            {
+                path: "/add-school",
+                element: <AddSchool />,
+            },
+            {
+                path: "/all-schools",
+                element: <AllSchool />,
+            },
+            {
+                path: "/add-academic-class",
+                element: <AddAcademicClass />,
+            },
+            {
+                path: "/all-academic-classes",
+                element: <AllAcademicClass />,
+            },
+            {
+                path: "/add-academic-grade",
+                element: <AddAcademicGrade />,
+            },
+            {
+                path: "/all-academic-grades",
+                element: <AllAcademicGrade />,
+            },
+            {
+                path: "/add-tutoring-subject",
+                element: <AddTutoringSubject />,
+            },
+            {
+                path: "/all-tutoring-subjects",
+                element: <AllTutoringSubject />,
+            },
+            {
+                path: "/add-tutor-info",
+                element: <AddTutorsInfo />,
+            },
+            {
+                path: "/all-tutor-infos",
+                element: <AllTutoringInfo />,
+            },
+            {
+                path: "/add-extra-subject",
+                element: <AddExtraSubject />,
+            },
+            {
+                path: "/all-extra-subjects",
+                element: <AllExtraSubject />,
+            },
+            {
+                path: "/add-board-wise-subject",
+                element: <AddBoardWiseSubject />,
+            },
+            {
+                path: "/all-board-wise-subjects",
+                element: <AllBoardWiseSubject />,
+            },
+            {
+                path: "/add-current-affair",
+                element: <AddCurrentAffair />,
+            },
+            {
+                path: "/all-current-affairs",
+                element: <AllCurrentAffair />,
+            },
+            {
+                path: "/add-university",
+                element: <AddUniversity />,
+            },
+            {
+                path: "/all-universities",
+                element: <AllUniversity />,
+            },
+            {
+                path: "/add-semester",
+                element: <AddSemester />,
+            },
+            {
+                path: "/all-semesters",
+                element: <AllSemester />,
+            },
+            {
+                path: "/add-tutoring-class",
+                element: <AddTutoringClass />,
+            },
+            {
+                path: "/all-tutoring-classes",
+                element: <AllTutoringClass />,
+            },
+            {
+                path: "/all-school-pm",
+                element: <AllSchoolPM />,
+            },
+            {
+                path: "/all-collage-hc",
+                element: <AllCollageHC />,
+            },
+            {
+                path: "/all-tutoring-class-pm",
+                element: <AllTutoringClassPM />,
+            },
+            {
+                path: "/all-tutoring-class-hc",
+                element: <AllTutoringClassHC />,
+            },
+            {
+                path: "/all-curriculum-board",
+                element: <AllCurriculumBoard />,
+            },
+            {
+                path: "/all-main-subject",
+                element: <AllMainSubject />,
+            },
+            {
+                path: "/all-sub-subject",
+                element: <AllSubSubject />,
+            },
+            {
+                path: "/subject-class-variant",
+                element: <AllSubjectClassVariantModal />,
+            },
+        ],
+    },
+    {
         path: "/login",
-        element: <LoginPage />,
-      },
-    ],
-  },
+        element: <SecondLayout />,
+        children: [
+            {
+                path: "/login",
+                element: <LoginPage />,
+            },
+        ],
+    },
 ]);

@@ -16,6 +16,14 @@ const schoolPMApiService = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["SchoolPM"],
     }),
+    editSchoolPM: build.mutation({
+      query: (payload) => ({
+        url: `school-pm/update/${payload?.id}`,
+        method: "PATCH",
+        body: payload?.data,
+      }),
+      invalidatesTags: ["SchoolPM"],
+    }),
     deleteSchoolPM: build.mutation({
       query: (id) => ({
         url: `school-pm/delete/${id}`,
@@ -31,4 +39,5 @@ export const {
   useAddSchoolPMMutation,
   useDeleteSchoolPMMutation,
   useGetSchoolPMQuery,
+  useEditSchoolPMMutation
 } = schoolPMApiService;
