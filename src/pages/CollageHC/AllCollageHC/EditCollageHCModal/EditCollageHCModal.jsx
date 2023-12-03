@@ -1,13 +1,13 @@
-import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
+import { useState, useEffect } from "react";
+import { Button } from "@material-tailwind/react";
+import { useForm } from "react-hook-form";
 import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
 
-import { useState, useEffect } from "react";
 import { useEditCollageHCMutation } from "../../../../store/service/collageHC/collageHCApiService";
 import { useGetEducationVariantsQuery } from "../../../../store/service/educationVariant/educationVariantApiService";
 import { useLazyGetCountryDistrictQuery } from "../../../../store/service/country/countryApiService";
-import { useForm } from "react-hook-form";
 
 const EditCollageHCModal = ({
     openEditCollageHCModal,
@@ -18,6 +18,7 @@ const EditCollageHCModal = ({
     const [states, setStates] = useState([]);
     const [editCollageHC, { isLoading }] = useEditCollageHCMutation();
 
+    /* redux api call */
     const { data: educationVariantsData } = useGetEducationVariantsQuery();
     const educationVariants = educationVariantsData?.data;
 
@@ -33,6 +34,7 @@ const EditCollageHCModal = ({
         },
     });
 
+    /* handle edit submit data */
     const handleEditSubmit = async (data) => {
         const editModifyData = {
             id: editData?._id,
@@ -129,26 +131,26 @@ const EditCollageHCModal = ({
                                         {states
                                             ?.filter(
                                                 (state) =>
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Dhaka Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Chittagong Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Khulna Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Rajshahi Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Barisal Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Rangpur Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Mymensingh Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Sylhet Division"
                                             )
                                             ?.filter(
                                                 (state) =>
-                                                    state.name !==
+                                                    state?.name !==
                                                     editData?.division
                                             )
                                             ?.map((state, idx) => (

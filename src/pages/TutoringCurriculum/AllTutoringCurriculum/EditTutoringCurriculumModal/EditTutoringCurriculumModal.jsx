@@ -1,13 +1,11 @@
-import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Button } from "@material-tailwind/react";
 import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
 
-import { useEffect } from "react";
-
 import { useGetEducationVariantsQuery } from "../../../../store/service/educationVariant/educationVariantApiService";
-
-import { useForm } from "react-hook-form";
 import { useEditTutoringCurriculumMutation } from "../../../../store/service/tutoringCurriculum/tutoringCurriculumApiService";
 
 const EditTutoringCurriculumModal = ({
@@ -15,13 +13,13 @@ const EditTutoringCurriculumModal = ({
     setOpenEditTutoringCurriculumBoard,
     editData,
 }) => {
+    /* redux call api */
     const [editTutoringCurriculum, { isLoading }] =
         useEditTutoringCurriculumMutation();
-
     const { data: educationVariantsData } = useGetEducationVariantsQuery();
     const educationVariants = educationVariantsData?.data;
 
-    /* Set default values */
+    /* react hook form */
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             educationVariant: "",
@@ -29,6 +27,7 @@ const EditTutoringCurriculumModal = ({
         },
     });
 
+    /* handle edit submit data */
     const handleEditSubmit = async (data) => {
         const editModifyData = {
             id: editData?._id,
@@ -40,7 +39,9 @@ const EditTutoringCurriculumModal = ({
         if (result?.data?.success) {
             toast.success(result?.data?.message);
             reset();
-            setOpenEditTutoringCurriculumBoard(!openEditTutoringCurriculumModal);
+            setOpenEditTutoringCurriculumBoard(
+                !openEditTutoringCurriculumModal
+            );
         } else {
             toast.error(result?.error?.data?.message);
         }
@@ -85,7 +86,7 @@ const EditTutoringCurriculumModal = ({
                         <div className="py-10">
                             <div className="flex justify-between items-center pb-3">
                                 <h1 className="font-bold text-blue-gray-800">
-                                    Edit Collage HC
+                                    Edit TutoringCurriculum
                                 </h1>
                             </div>
 
@@ -133,7 +134,7 @@ const EditTutoringCurriculumModal = ({
                                         htmlFor="curriculumName"
                                         className="block mb-2 font-semibold text-sm text-gray-500"
                                     >
-                                        Board Name
+                                        Curriculum Name
                                     </label>
                                     <input
                                         type="text"

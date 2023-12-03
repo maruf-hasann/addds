@@ -8,6 +8,7 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { toast } from "react-hot-toast";
+
 import { useDeleteSubjectClassVariantMutation } from "../../../../store/service/subjectClassVariant/subjectClassVariantApiService";
 
 const DeleteSubjectClassVariant = ({
@@ -16,14 +17,17 @@ const DeleteSubjectClassVariant = ({
     setOpenDeleteSubjectClassVariantModal,
     openDeleteSubjectClassVariantModal,
 }) => {
+    /* redux api call */
     const [deleteSubjectClassVariant] = useDeleteSubjectClassVariantMutation();
 
+    /* handle close modal */
     const handleClose = () => {
         setDeleteSubjectClassVariantData(null);
         setOpenDeleteSubjectClassVariantModal(
             !openDeleteSubjectClassVariantModal
         );
     };
+    /* handle open modal */
     const handleOpen = () => {
         setDeleteSubjectClassVariantData(null);
         setOpenDeleteSubjectClassVariantModal(
@@ -41,7 +45,6 @@ const DeleteSubjectClassVariant = ({
                 !openDeleteSubjectClassVariantModal
             );
         } else {
-        
             toast.error(result?.error?.data?.message);
             setDeleteSubjectClassVariantData(null);
             setOpenDeleteSubjectClassVariantModal(
@@ -84,9 +87,7 @@ const DeleteSubjectClassVariant = ({
                         variant="gradient"
                         color="green"
                         onClick={() =>
-                            handleDelete(
-                                deleteSubjectClassVariantData?.variant
-                            )
+                            handleDelete(deleteSubjectClassVariantData?.variant)
                         }
                     >
                         <span>Confirm</span>

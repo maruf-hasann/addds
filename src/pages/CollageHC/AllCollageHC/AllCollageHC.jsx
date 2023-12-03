@@ -66,7 +66,7 @@ const AllCollageHC = () => {
                                 <tr className={classes} key={collageHC?._id}>
                                     <th className={classes}>{idx + 1}</th>
                                     <td className={classes}>
-                                        {collageHC.collageName}
+                                        {collageHC?.collageName}
                                     </td>
                                     <td className={classes}>
                                         {collageHC?.educationVariant}
@@ -75,7 +75,7 @@ const AllCollageHC = () => {
                                         {collageHC?.division}
                                     </td>
                                     <td
-                                        className={`${classes} w-[120px] flex gap-5`}
+                                        className={`${classes} w-[120px] flex gap-3`}
                                     >
                                         <span className="flex justify-evenly items-center">
                                             <FaEdit

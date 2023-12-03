@@ -1,13 +1,13 @@
-import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
+import { useState, useEffect } from "react";
+import { Button } from "@material-tailwind/react";
 import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
+import { useForm } from "react-hook-form";
 
-import { useState, useEffect } from "react";
 import { useEditSchoolPMMutation } from "../../../../store/service/schoolPM/schoolPMApiService";
 import { useGetEducationVariantsQuery } from "../../../../store/service/educationVariant/educationVariantApiService";
 import { useLazyGetCountryDistrictQuery } from "../../../../store/service/country/countryApiService";
-import { useForm } from "react-hook-form";
 
 const EditSchoolPMModal = ({
     openEditSchoolPMModal,
@@ -18,13 +18,14 @@ const EditSchoolPMModal = ({
     const [states, setStates] = useState([]);
     const [editSchoolPM, { isLoading }] = useEditSchoolPMMutation();
 
+    /* redux call api */
     const { data: educationVariantsData } = useGetEducationVariantsQuery();
     const educationVariants = educationVariantsData?.data;
 
     /* Get whole country district */
     const [getCountryDistrict] = useLazyGetCountryDistrictQuery();
 
-    /* Set default values */
+    /* react hook form */
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             division: "",
@@ -33,6 +34,7 @@ const EditSchoolPMModal = ({
         },
     });
 
+    /* handle submit data */
     const handleEditSubmit = async (data) => {
         const editModifyData = {
             id: editData?._id,
@@ -129,26 +131,26 @@ const EditSchoolPMModal = ({
                                         {states
                                             ?.filter(
                                                 (state) =>
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Dhaka Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Chittagong Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Khulna Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Rajshahi Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Barisal Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Rangpur Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Mymensingh Division" ||
-                                                    state.name ===
+                                                    state?.name ===
                                                         "Sylhet Division"
                                             )
                                             ?.filter(
                                                 (state) =>
-                                                    state.name !==
+                                                    state?.name !==
                                                     editData?.division
                                             )
                                             ?.map((state, idx) => (

@@ -66,7 +66,7 @@ const AllSchoolPM = () => {
                                 <tr className={classes} key={schoolPM?._id}>
                                     <th className={classes}>{idx + 1}</th>
                                     <td className={classes}>
-                                        {schoolPM.schoolName}
+                                        {schoolPM?.schoolName}
                                     </td>
                                     <td className={classes}>
                                         {schoolPM?.educationVariant}
@@ -75,7 +75,7 @@ const AllSchoolPM = () => {
                                         {schoolPM?.division}
                                     </td>
                                     <td
-                                        className={`${classes} w-[120px] flex gap-5`}
+                                        className={`${classes} w-[120px] flex gap-3`}
                                     >
                                         <span className="flex justify-evenly items-center">
                                             <FaEdit

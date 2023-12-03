@@ -49,7 +49,7 @@ const DeleteModal = ({
           unmount: { scale: 0.9, y: -100 },
         }}
       >
-        <DialogHeader>Are you want to sure delete this School PM?</DialogHeader>
+        <DialogHeader>Are you want to sure delete?</DialogHeader>
         <DialogBody divider>
           <div>
             <Typography>
