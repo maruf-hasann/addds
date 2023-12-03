@@ -43,6 +43,9 @@ import AllTutoringClassHC from "../pages/TutoringClassHC/AllTutoringClassHC/AllT
 import AllCurriculumBoard from "../pages/CurriculumBoard/AllCurriculumBoard/AllCurriculumBoard";
 import AllMainSubject from "../pages/MainSubject/AllMainSubject/AllMainSubject";
 import AllSubSubject from "../pages/SubSubject/AllSubSubject/AllSubSubject";
+import AllTutoringCurriculum from "../pages/TutoringCurriculum/AllTutoringCurriculum/AllTutoringCurriculum";
+import AllSubjectClassVariantModal from "../pages/SubjectClassVariant/AllSubjectClassVariant/AllSubjectClassVariantModal";
+import AllSubjectVariant from "../pages/SubjectVariant/AllSubjectVariant/AllSubjectVariant";
 
 export const router = createBrowserRouter([
   {

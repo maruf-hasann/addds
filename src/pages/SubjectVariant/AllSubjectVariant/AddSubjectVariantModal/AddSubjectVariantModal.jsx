@@ -2,37 +2,41 @@ import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
-import { useState } from "react";
-import { useAddMainSubjectMutation } from "../../../../store/service/mainSubject/mainSubjectApiService";
-import { useGetSubjectVariantQuery } from "../../../../store/service/subjectVariant/subjectVariantApiService";
 
-const AddMainSubjectModal = ({
-    openAddMainSubjectModal,
-    setOpenAddMainSubjectModal,
+import { useState } from "react";
+import { useAddSubjectVariantMutation } from "../../../../store/service/subjectVariant/subjectVariantApiService";
+import { useGetSubjectClassVariantsQuery } from "../../../../store/service/subjectClassVariant/subjectClassVariantApiService";
+
+const AddSubjectVariantModal = ({
+    openAddSubjectVariantModal,
+    setOpenAddSubjectVariantModal,
 }) => {
-    const [subjectName, setSubjectName] = useState("");
-    const [subjectVariant, setSubjectVariant] = useState("");
+    /* state */
+    const [variant, setVariant] = useState("");
+    const [subjectClassVariant, setSubjectClassVariant] = useState("");
 
     /* redux api call */
-    const { data: subjectVariantsData } = useGetSubjectVariantQuery();
+    const [addSubjectVariant, { isLoading }] = useAddSubjectVariantMutation();
+    const { data: subjectVariantsData } = useGetSubjectClassVariantsQuery();
     const subjectVariants = subjectVariantsData?.data;
-    const [addMainSubject, { isLoading }] = useAddMainSubjectMutation();
 
     /* handle submit data */
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!subjectName) return toast.error("Please add a Subject");
-        if (!subjectVariant) return toast.error("Please add a subject variant");
+        if (!variant) return toast.error("Please add a variant");
+        if (!subjectClassVariant)
+            return toast.error("Please Add a subject class variant");
 
-        const result = await addMainSubject({
-            name: subjectName,
-            subjectVariant,
+        const result = await addSubjectVariant({
+            subjectClassVariant,
+            variant,
         });
         if (result?.data?.success) {
             toast.success(result?.data?.message);
-            setSubjectName("");
-            setOpenAddMainSubjectModal(!openAddMainSubjectModal);
+            setVariant("");
+            setSubjectClassVariant("");
+            setOpenAddSubjectVariantModal(!openAddSubjectVariantModal);
         } else {
             toast.error(result?.error?.data?.message);
         }
@@ -40,13 +44,13 @@ const AddMainSubjectModal = ({
 
     // handle close modal
     const handleClose = () => {
-        setOpenAddMainSubjectModal(!openAddMainSubjectModal);
+        setOpenAddSubjectVariantModal(!openAddSubjectVariantModal);
     };
 
     return (
         <div
             className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${
-                openAddMainSubjectModal ? "block" : "hidden"
+                openAddSubjectVariantModal ? "block" : "hidden"
             }`}
         >
             <div
@@ -69,31 +73,33 @@ const AddMainSubjectModal = ({
                         <div className="py-10">
                             <div className="flex justify-between items-center pb-3">
                                 <h1 className="font-bold text-blue-gray-800">
-                                    Add Main Subject
+                                    Add Subject Variant
                                 </h1>
                             </div>
 
                             <form className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white">
                                 <div>
                                     <label
-                                        htmlFor="subjectVariant"
+                                        htmlFor="educationVariant"
                                         className="block mb-2 font-semibold text-sm text-gray-500"
                                     >
-                                        Subject Variant
+                                        Subject Class Variant
                                     </label>
                                     <select
                                         type="text"
-                                        id="subjectVariant"
-                                        name="subjectVariant"
+                                        id="educationVariant"
+                                        name="educationVariant"
                                         onChange={(e) =>
-                                            setSubjectVariant(e.target.value)
+                                            setSubjectClassVariant(
+                                                e.target.value
+                                            )
                                         }
                                         required
                                         defaultValue={""}
                                         className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                                     >
                                         <option value="" disabled>
-                                            Select Subject Variant
+                                            Select Subject Class Variant
                                         </option>
                                         {subjectVariants?.map(
                                             (subVariant, idx) => (
@@ -109,21 +115,21 @@ const AddMainSubjectModal = ({
                                 </div>
                                 <div>
                                     <label
-                                        htmlFor="subjectName"
+                                        htmlFor="curriculumName"
                                         className="block mb-2 font-semibold text-sm text-gray-500"
                                     >
-                                        Name
+                                        Variant
                                     </label>
                                     <input
                                         type="text"
-                                        id="subjectName"
-                                        name="subjectName"
-                                        value={subjectName}
+                                        id="variant"
+                                        name="variant"
+                                        value={variant}
                                         onChange={(e) =>
-                                            setSubjectName(e.target.value)
+                                            setVariant(e.target.value)
                                         }
                                         required
-                                        placeholder="Main Subject Name"
+                                        placeholder="variant"
                                         className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                                     />
                                 </div>
@@ -156,4 +162,4 @@ const AddMainSubjectModal = ({
     );
 };
 
-export default AddMainSubjectModal;
+export default AddSubjectVariantModal;

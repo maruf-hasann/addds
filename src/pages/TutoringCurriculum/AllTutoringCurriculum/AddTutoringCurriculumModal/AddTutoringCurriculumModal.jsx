@@ -2,37 +2,43 @@ import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
-import { useState } from "react";
-import { useAddMainSubjectMutation } from "../../../../store/service/mainSubject/mainSubjectApiService";
-import { useGetSubjectVariantQuery } from "../../../../store/service/subjectVariant/subjectVariantApiService";
 
-const AddMainSubjectModal = ({
-    openAddMainSubjectModal,
-    setOpenAddMainSubjectModal,
+import { useState } from "react";
+import { useGetEducationVariantsQuery } from "../../../../store/service/educationVariant/educationVariantApiService";
+import { useAddTutoringCurriculumMutation } from "../../../../store/service/tutoringCurriculum/tutoringCurriculumApiService";
+
+const AddTutoringCurriculumModal = ({
+    openAddTutoringCurriculumModal,
+    setOpenAddTutoringCurriculumModal,
 }) => {
-    const [subjectName, setSubjectName] = useState("");
-    const [subjectVariant, setSubjectVariant] = useState("");
+    /* state handle */
+    const [curriculumName, setCurriculumName] = useState("");
+    const [educationVariant, setEducationVariant] = useState("");
 
     /* redux api call */
-    const { data: subjectVariantsData } = useGetSubjectVariantQuery();
-    const subjectVariants = subjectVariantsData?.data;
-    const [addMainSubject, { isLoading }] = useAddMainSubjectMutation();
+    const [addTutoringCurriculum, { isLoading }] =
+        useAddTutoringCurriculumMutation();
+    const { data: educationVariantsData } = useGetEducationVariantsQuery();
+    const educationVariants = educationVariantsData?.data;
 
     /* handle submit data */
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!subjectName) return toast.error("Please add a Subject");
-        if (!subjectVariant) return toast.error("Please add a subject variant");
+        if (!curriculumName) return toast.error("Please add a curriculum name");
+        if (!educationVariant)
+            return toast.error("Please Add a education variant");
 
-        const result = await addMainSubject({
-            name: subjectName,
-            subjectVariant,
+        const result = await addTutoringCurriculum({
+            educationVariant,
+            curriculumName,
         });
+        
         if (result?.data?.success) {
             toast.success(result?.data?.message);
-            setSubjectName("");
-            setOpenAddMainSubjectModal(!openAddMainSubjectModal);
+            setCurriculumName("");
+            setEducationVariant("");
+            setOpenAddTutoringCurriculumModal(!openAddTutoringCurriculumModal);
         } else {
             toast.error(result?.error?.data?.message);
         }
@@ -40,13 +46,13 @@ const AddMainSubjectModal = ({
 
     // handle close modal
     const handleClose = () => {
-        setOpenAddMainSubjectModal(!openAddMainSubjectModal);
+        setOpenAddTutoringCurriculumModal(!openAddTutoringCurriculumModal);
     };
 
     return (
         <div
             className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${
-                openAddMainSubjectModal ? "block" : "hidden"
+                openAddTutoringCurriculumModal ? "block" : "hidden"
             }`}
         >
             <div
@@ -69,39 +75,39 @@ const AddMainSubjectModal = ({
                         <div className="py-10">
                             <div className="flex justify-between items-center pb-3">
                                 <h1 className="font-bold text-blue-gray-800">
-                                    Add Main Subject
+                                    Add Tutoring Curriculum
                                 </h1>
                             </div>
 
                             <form className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white">
                                 <div>
                                     <label
-                                        htmlFor="subjectVariant"
+                                        htmlFor="educationVariant"
                                         className="block mb-2 font-semibold text-sm text-gray-500"
                                     >
-                                        Subject Variant
+                                        Education Variant
                                     </label>
                                     <select
                                         type="text"
-                                        id="subjectVariant"
-                                        name="subjectVariant"
+                                        id="educationVariant"
+                                        name="educationVariant"
                                         onChange={(e) =>
-                                            setSubjectVariant(e.target.value)
+                                            setEducationVariant(e.target.value)
                                         }
                                         required
                                         defaultValue={""}
                                         className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                                     >
                                         <option value="" disabled>
-                                            Select Subject Variant
+                                            Select Education Variant
                                         </option>
-                                        {subjectVariants?.map(
-                                            (subVariant, idx) => (
+                                        {educationVariants?.map(
+                                            (variant, idx) => (
                                                 <option
                                                     key={idx}
-                                                    value={subVariant?.variant}
+                                                    value={variant?.variantName}
                                                 >
-                                                    {subVariant?.variant}
+                                                    {variant?.variantName}
                                                 </option>
                                             )
                                         )}
@@ -109,21 +115,21 @@ const AddMainSubjectModal = ({
                                 </div>
                                 <div>
                                     <label
-                                        htmlFor="subjectName"
+                                        htmlFor="curriculumName"
                                         className="block mb-2 font-semibold text-sm text-gray-500"
                                     >
-                                        Name
+                                        Curriculum Name
                                     </label>
                                     <input
                                         type="text"
-                                        id="subjectName"
-                                        name="subjectName"
-                                        value={subjectName}
+                                        id="curriculumName"
+                                        name="curriculumName"
+                                        value={curriculumName}
                                         onChange={(e) =>
-                                            setSubjectName(e.target.value)
+                                            setCurriculumName(e.target.value)
                                         }
                                         required
-                                        placeholder="Main Subject Name"
+                                        placeholder="Collage Name"
                                         className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                                     />
                                 </div>
@@ -156,4 +162,4 @@ const AddMainSubjectModal = ({
     );
 };
 
-export default AddMainSubjectModal;
+export default AddTutoringCurriculumModal;

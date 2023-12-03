@@ -1,15 +1,15 @@
 import {
-  MdSchool,
-  MdBusiness,
-  MdPlaylistAddCheck,
-  MdPerson,
-  MdSubject,
-  MdToday,
-  MdAccountBalance,
-  MdClass,
-  MdAccountBox,
-  MdSettings,
-  MdLibraryBooks,
+    MdSchool,
+    MdBusiness,
+    MdPlaylistAddCheck,
+    MdPerson,
+    MdSubject,
+    MdToday,
+    MdAccountBalance,
+    MdClass,
+    MdAccountBox,
+    MdSettings,
+    MdLibraryBooks,
 } from "react-icons/md";
 
 // menu
@@ -117,114 +117,132 @@ export const menus = [
     icon: <MdSubject />,
   },
 
-  {
-    id: 18,
-    name: "Curriculum Board",
-    url: "./all-curriculum-board",
-    icon: <MdAccountBalance />,
-  },
-  {
-    id: 19,
-    name: "Main Subject",
-    url: "./all-main-subject",
-    icon: <MdClass />,
-  },
-  {
-    id: 20,
-    name: "Sub Subject",
-    url: "./all-sub-subject",
-    icon: <MdClass />,
-  },
+    {
+        id: 18,
+        name: "Curriculum Board",
+        url: "./all-curriculum-board",
+        icon: <MdAccountBalance />,
+    },
+    {
+        id: 19,
+        name: "Main Subject",
+        url: "./all-main-subject",
+        icon: <MdClass />,
+    },
+    {
+        id: 20,
+        name: "Sub Subject",
+        url: "./all-sub-subject",
+        icon: <MdClass />,
+    },
+    {
+        id: 21,
+        name: "Tutoring Curriculum",
+        url: "./tutoring-curriculum",
+        icon: <MdClass />,
+    },
+    {
+        id: 22,
+        name: "Subject Class Variant",
+        url: "./subject-class-variant",
+        icon: <MdClass />,
+    },
+    {
+        id: 23,
+        name: "Subject Variant",
+        url: "./subject-variant",
+        icon: <MdClass />,
+    },
 ];
 
 // setting menu
 export const withSubmenu = [
-  {
-    id: 1,
-    name: "Tutor Settings",
-    icon: <MdSettings />,
-    subMenus: [
-      {
-        name: "Add Education Variant",
-        url: "./add-education-variant",
-        icon: <span>📚</span>,
-      },
-      {
-        name: "Add Tutoring Variant",
-        url: "./add-tutoring-variant",
-        icon: <span>🏫</span>,
-      },
-      {
-        name: "Add Tutoring Place",
-        url: "./add-tutoring-place",
-        icon: <span>🏢</span>,
-      },
-      {
-        name: "Add Tutoring Program",
-        url: "./add-tutoring-program",
-        icon: <span>📋</span>,
-      },
-      {
-        name: "Add Student Variant",
-        url: "./add-student-variant",
-        icon: <span>👩‍🎓</span>,
-      },
-      {
-        name: "Add Extra Subject",
-        url: "./add-extra-subject",
-        icon: <span>📖</span>,
-      },
-      {
-        name: "Add Subject",
-        url: "./add-board-wise-subject",
-        icon: <span>📘</span>,
-      },
-      {
-        name: "Add Current Affair",
-        url: "./add-current-affair",
-        icon: <span>🗞️</span>,
-      },
-      {
-        name: "Add University",
-        url: "./add-university",
-        icon: <span>🏛️</span>,
-      },
-      {
-        name: "Add Semester",
-        url: "./add-semester",
-        icon: <span>🎓</span>,
-      },
-      {
-        name: "Add Tutoring Class",
-        url: "./add-tutoring-class",
-        icon: <span>📚</span>,
-      },
-      {
-        name: "Add Tutor Info",
-        url: "./add-tutor-info",
-        icon: <span>👤</span>,
-      },
-    ],
-  },
+    {
+        id: 1,
+        name: "Tutor Settings",
+        icon: <MdSettings />,
+        subMenus: [
+            {
+                name: "Add Education Variant",
+                url: "./add-education-variant",
+                icon: <span>📚</span>,
+            },
+            {
+                name: "Add Tutoring Variant",
+                url: "./add-tutoring-variant",
+                icon: <span>🏫</span>,
+            },
+            {
+                name: "Add Tutoring Place",
+                url: "./add-tutoring-place",
+                icon: <span>🏢</span>,
+            },
+            {
+                name: "Add Tutoring Program",
+                url: "./add-tutoring-program",
+                icon: <span>📋</span>,
+            },
+            {
+                name: "Add Student Variant",
+                url: "./add-student-variant",
+                icon: <span>👩‍🎓</span>,
+            },
+            {
+                name: "Add Extra Subject",
+                url: "./add-extra-subject",
+                icon: <span>📖</span>,
+            },
+            {
+                name: "Add Subject",
+                url: "./add-board-wise-subject",
+                icon: <span>📘</span>,
+            },
+            {
+                name: "Add Current Affair",
+                url: "./add-current-affair",
+                icon: <span>🗞️</span>,
+            },
+            {
+                name: "Add University",
+                url: "./add-university",
+                icon: <span>🏛️</span>,
+            },
+            {
+                name: "Add Semester",
+                url: "./add-semester",
+                icon: <span>🎓</span>,
+            },
+            {
+                name: "Add Tutoring Class",
+                url: "./add-tutoring-class",
+                icon: <span>📚</span>,
+            },
+            {
+                name: "Add Tutor Info",
+                url: "./add-tutor-info",
+                icon: <span>👤</span>,
+            },
+        ],
+    },
 ];
 
 export function SettingIcon({ id, open }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={2}
-      stroke="currentColor"
-      className={`${
-        id === open ? "rotate-180" : ""
-      } h-5 w-5 transition-transform`}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-      />
-    </svg>
-  );
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={2}
+            stroke="currentColor"
+            className={`${
+                id === open ? "rotate-180" : ""
+            } h-5 w-5 transition-transform`}
+        >
+            <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+            />
+        </svg>
+    );
 }

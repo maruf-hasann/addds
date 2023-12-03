@@ -1,52 +1,68 @@
-import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
+import { Button } from "@material-tailwind/react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
-import { useState } from "react";
-import { useAddMainSubjectMutation } from "../../../../store/service/mainSubject/mainSubjectApiService";
-import { useGetSubjectVariantQuery } from "../../../../store/service/subjectVariant/subjectVariantApiService";
 
-const AddMainSubjectModal = ({
-    openAddMainSubjectModal,
-    setOpenAddMainSubjectModal,
+import { useEditSubjectVariantMutation } from "../../../../store/service/subjectVariant/subjectVariantApiService";
+import { useGetSubjectClassVariantsQuery } from "../../../../store/service/subjectClassVariant/subjectClassVariantApiService";
+
+const EditSubjectVariantModal = ({
+    openEditSubjectVariantModal,
+    setOpenEditSubjectVariantBoard,
+    editData,
 }) => {
-    const [subjectName, setSubjectName] = useState("");
-    const [subjectVariant, setSubjectVariant] = useState("");
-
     /* redux api call */
-    const { data: subjectVariantsData } = useGetSubjectVariantQuery();
-    const subjectVariants = subjectVariantsData?.data;
-    const [addMainSubject, { isLoading }] = useAddMainSubjectMutation();
+    const [editSubjectClassVariant, { isLoading }] =
+        useEditSubjectVariantMutation();
+    const { data: subjectClassVariantsData } =
+        useGetSubjectClassVariantsQuery();
+    const subjectClassVariants = subjectClassVariantsData?.data;
 
-    /* handle submit data */
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    /* react hook form */
+    const { register, handleSubmit, reset } = useForm({
+        defaultValues: {
+            subjectClassVariant: "",
+            variant: "",
+        },
+    });
 
-        if (!subjectName) return toast.error("Please add a Subject");
-        if (!subjectVariant) return toast.error("Please add a subject variant");
-
-        const result = await addMainSubject({
-            name: subjectName,
-            subjectVariant,
-        });
+    /* handle edit submit */
+    const handleEditSubmit = async (data) => {
+        const editModifyData = {
+            id: editData?._id,
+            data: {
+                ...data,
+            },
+        };
+        const result = await editSubjectClassVariant(editModifyData);
         if (result?.data?.success) {
             toast.success(result?.data?.message);
-            setSubjectName("");
-            setOpenAddMainSubjectModal(!openAddMainSubjectModal);
+            reset();
+            setOpenEditSubjectVariantBoard(!openEditSubjectVariantModal);
         } else {
             toast.error(result?.error?.data?.message);
         }
     };
 
+    /* Set updated values */
+    useEffect(() => {
+        reset({
+            subjectClassVariant: editData?.subjectClassVariant,
+            variant: editData?.variant,
+        });
+    }, [editData, reset]);
+
     // handle close modal
     const handleClose = () => {
-        setOpenAddMainSubjectModal(!openAddMainSubjectModal);
+        setOpenEditSubjectVariantBoard(!openEditSubjectVariantModal);
     };
 
     return (
         <div
             className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${
-                openAddMainSubjectModal ? "block" : "hidden"
+                openEditSubjectVariantModal ? "block" : "hidden"
             }`}
         >
             <div
@@ -69,61 +85,68 @@ const AddMainSubjectModal = ({
                         <div className="py-10">
                             <div className="flex justify-between items-center pb-3">
                                 <h1 className="font-bold text-blue-gray-800">
-                                    Add Main Subject
+                                    Edit Subject Variant
                                 </h1>
                             </div>
 
-                            <form className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white">
+                            <form
+                                onSubmit={handleSubmit(handleEditSubmit)}
+                                className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white"
+                            >
                                 <div>
                                     <label
-                                        htmlFor="subjectVariant"
+                                        htmlFor="subjectClassVariant"
                                         className="block mb-2 font-semibold text-sm text-gray-500"
                                     >
-                                        Subject Variant
+                                        Subject Class Variant
                                     </label>
                                     <select
-                                        type="text"
-                                        id="subjectVariant"
-                                        name="subjectVariant"
-                                        onChange={(e) =>
-                                            setSubjectVariant(e.target.value)
-                                        }
-                                        required
-                                        defaultValue={""}
+                                        {...register("subjectClassVariant", {
+                                            required:
+                                                "Subject Class Variant is required!",
+                                        })}
                                         className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                                     >
-                                        <option value="" disabled>
-                                            Select Subject Variant
+                                        <option
+                                            value={
+                                                editData?.subjectClassVariant
+                                            }
+                                        >
+                                            {editData?.subjectClassVariant}
                                         </option>
-                                        {subjectVariants?.map(
-                                            (subVariant, idx) => (
+                                        {subjectClassVariants
+                                            ?.filter(
+                                                (subClassVariant) =>
+                                                    subClassVariant?.variant !==
+                                                    editData?.subjectClassVariant
+                                            )
+                                            ?.map((subClassVariant, idx) => (
                                                 <option
                                                     key={idx}
-                                                    value={subVariant?.variant}
+                                                    value={
+                                                        subClassVariant?.variant
+                                                    }
                                                 >
-                                                    {subVariant?.variant}
+                                                    {subClassVariant?.variant}
                                                 </option>
-                                            )
-                                        )}
+                                            ))}
                                     </select>
                                 </div>
                                 <div>
                                     <label
-                                        htmlFor="subjectName"
+                                        htmlFor="variant"
                                         className="block mb-2 font-semibold text-sm text-gray-500"
                                     >
-                                        Name
+                                        Variant
                                     </label>
                                     <input
                                         type="text"
-                                        id="subjectName"
-                                        name="subjectName"
-                                        value={subjectName}
-                                        onChange={(e) =>
-                                            setSubjectName(e.target.value)
-                                        }
-                                        required
-                                        placeholder="Main Subject Name"
+                                        id="variant"
+                                        name="variant"
+                                        {...register("variant", {
+                                            required: "Variant is required!",
+                                        })}
+                                        placeholder="Variant"
                                         className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                                     />
                                 </div>
@@ -132,8 +155,8 @@ const AddMainSubjectModal = ({
                                     {isLoading ? (
                                         <Button
                                             disabled
+                                            type="submit"
                                             className="bg-white text-blue-gray-700 border py-2 px-[39px] rounded-sm font-semibold cursor-wait "
-                                            onClick={handleSubmit}
                                         >
                                             <FaSpinner className="animate-spin" />
                                         </Button>
@@ -141,9 +164,8 @@ const AddMainSubjectModal = ({
                                         <Button
                                             type="submit"
                                             className="bg-white text-blue-gray-700 border py-2 px-8 rounded-sm font-semibold cursor-pointer"
-                                            onClick={handleSubmit}
                                         >
-                                            Add
+                                            Edit
                                         </Button>
                                     )}
                                 </div>
@@ -156,4 +178,4 @@ const AddMainSubjectModal = ({
     );
 };
 
-export default AddMainSubjectModal;
+export default EditSubjectVariantModal;
