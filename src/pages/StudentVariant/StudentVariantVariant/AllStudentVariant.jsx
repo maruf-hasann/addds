@@ -25,7 +25,7 @@ const AllStudentVariant = () => {
     <>
       <div className="py-10">
         <div className="flex justify-between items-center pb-3">
-          <h1 className="font-bold text-gray-800">All Student Variant</h1>
+          <h1 className="font-bold text-gray-800">All Tutoring Category</h1>
           <div
             // to={"/add-student-variant"}
             className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
@@ -53,9 +53,13 @@ const AllStudentVariant = () => {
             <tbody>
               {/* row 1 */}
               {studentVariants?.map((variant, idx) => {
-                const classes = "p-4 border-b border-blue-gray-50 text-base text-gray-800 font-normal";
+                const classes =
+                  "p-4 border-b border-blue-gray-50 text-base text-gray-800 font-normal";
                 return (
-                  <tr key={variant._id} className={` ${idx % 2 !== 0 && 'bg-gray-50'}`}>
+                  <tr
+                    key={variant._id}
+                    className={` ${idx % 2 !== 0 && "bg-gray-50"}`}
+                  >
                     <th className={classes}>{idx + 1}</th>
                     <td className={classes}>{variant?.variantName}</td>
                     <td className={`${classes} w-[120px]`}>

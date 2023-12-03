@@ -90,7 +90,7 @@ export const router = createBrowserRouter([
         element: <AddStudentVariant />,
       },
       {
-        path: "/all-student-variants",
+        path: "/all-tutoring-categories",
         element: <AllStudentVariant />,
       },
       {

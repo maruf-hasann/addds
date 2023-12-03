@@ -46,8 +46,8 @@ export const menus = [
   },
   {
     id: 6,
-    name: "Student Variant",
-    url: "./all-student-variants",
+    name: "Tutoring Category",
+    url: "./all-tutoring-categories",
     icon: <MdPerson />,
   },
   // {
