@@ -1,28 +1,29 @@
-import { Button } from "@material-tailwind/react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { Button } from "@material-tailwind/react";
 import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
 
-import { useEffect } from "react";
 import { useEditSubjectClassVariantMutation } from "../../../../store/service/subjectClassVariant/subjectClassVariantApiService";
-
-import { useForm } from "react-hook-form";
 
 const EditTutoringVariantModal = ({
     openEditSubjectClassVariantModal,
     setOpenEditSubjectClassVariantModal,
     editData,
 }) => {
+    /* Redux Api Call */
     const [editSubjectClassVariant, { isLoading }] =
         useEditSubjectClassVariantMutation();
 
-    /* Set default values */
+    /* react hook form */
     const { register, handleSubmit, reset } = useForm({
         defaultValues: {
             variant: "",
         },
     });
 
+    /* handle submit */
     const handleEditSubmit = async (data) => {
         const editModifyData = {
             data: {

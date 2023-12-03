@@ -1,37 +1,40 @@
 import { useState } from "react";
 import { FaTrash, FaEdit } from "react-icons/fa";
-import AddMainSubjectModal from "./AddMainSubjectModal/AddMainSubjectModal";
-import {
-    useDeleteMainSubjectMutation,
-    useGetMainSubjectQuery,
-} from "../../../store/service/mainSubject/mainSubjectApiService";
+import AddSubjectVariantModal from "./AddSubjectVariantModal/AddSubjectVariantModal";
+
 import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
-import EditMainSubjectModal from "./EditMainSubjectModal/EditMainSubjectModal";
+import EditSubjectVariantModal from "./EditSubjectVariantModal/EditSubjectVariantModal";
+import {
+    useDeleteSubjectVariantMutation,
+    useGetSubjectVariantQuery,
+} from "../../../store/service/subjectVariant/subjectVariantApiService";
 
-const AllMainSubject = () => {
+const AllSubjectVariant = () => {
     /* for delete state */
-    const [openMainSubjectModal, setOpenMainSubjectModal] = useState(false);
-    const [deleteMainSubjectData, setDeleteMainSubjectData] = useState(null);
-    const [openDeleteMainSubjectModal, setOpenDeleteMainSubjectModal] =
+    const [openSubjectVariantModal, setOpenSubjectVariantModal] =
+        useState(false);
+    const [deleteSubjectVariantData, setDeleteSubjectVariantData] =
+        useState(null);
+    const [openDeleteSubjectVariantModal, setOpenDeleteSubjectVariantModal] =
         useState(false);
 
-    /* Edit state */
-    const [editMainSubjectData, setEditMainSubjectData] = useState(null);
-    const [openEditMainSubjectModal, setOpenEditMainSubjectModal] =
+    /* Edit State */
+    const [editSubjectVariantData, setEditSubjectVariantData] = useState(null);
+    const [openEditSubjectVariantModal, setOpenEditSubjectVariantModal] =
         useState(false);
 
-    /* redux api call */
-    const [deleteMainSubject] = useDeleteMainSubjectMutation();
-    const { data: allMainSubjectData } = useGetMainSubjectQuery();
-    const allMainSubject = allMainSubjectData?.data;
+    /* Subject Variant Redux */
+    const [deleteSubjectVariant] = useDeleteSubjectVariantMutation();
+    const { data: allSubjectVariantData } = useGetSubjectVariantQuery();
+    const allSubjectVariant = allSubjectVariantData?.data;
 
     return (
         <div className="py-10">
             <div className="flex justify-between items-center border-b pb-3">
-                <h1 className="font-bold">All Main Subject</h1>
+                <h1 className="font-bold">All Subject Variant</h1>
                 <div
                     className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
-                    onClick={() => setOpenMainSubjectModal(true)}
+                    onClick={() => setOpenSubjectVariantModal(true)}
                 >
                     Add New
                 </div>
@@ -45,10 +48,11 @@ const AllMainSubject = () => {
                                 Sl
                             </th>
                             <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                                Name
+                                Variant
                             </th>
+
                             <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                                Subject Variant
+                                Subject Class Variant
                             </th>
 
                             <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 w-[120px]">
@@ -57,28 +61,32 @@ const AllMainSubject = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* row 1 */}
-                        {allMainSubject?.map((mainSubject, idx) => {
+                        {/* body */}
+                        {allSubjectVariant?.map((subjectVariant, idx) => {
                             const classes = "p-4 border-b border-blue-gray-50";
                             return (
-                                <tr className={classes} key={mainSubject?._id}>
+                                <tr
+                                    className={classes}
+                                    key={subjectVariant?._id}
+                                >
                                     <th className={classes}>{idx + 1}</th>
                                     <td className={classes}>
-                                        {mainSubject?.name}
+                                        {subjectVariant?.variant}
                                     </td>
                                     <td className={classes}>
-                                        {mainSubject?.subjectVariant}
+                                        {subjectVariant?.subjectClassVariant}
                                     </td>
+
                                     <td
-                                        className={`${classes} w-[120px] flex gap-3`}
+                                        className={`${classes} w-[120px] flex gap-4`}
                                     >
                                         <span className="flex justify-evenly items-center">
                                             <FaEdit
                                                 onClick={() => {
-                                                    setEditMainSubjectData(
-                                                        mainSubject
+                                                    setEditSubjectVariantData(
+                                                        subjectVariant
                                                     ),
-                                                        setOpenEditMainSubjectModal(
+                                                        setOpenEditSubjectVariantModal(
                                                             true
                                                         );
                                                 }}
@@ -88,10 +96,10 @@ const AllMainSubject = () => {
                                         <span className="flex justify-evenly items-center">
                                             <FaTrash
                                                 onClick={() => {
-                                                    setDeleteMainSubjectData(
-                                                        mainSubject
+                                                    setDeleteSubjectVariantData(
+                                                        subjectVariant
                                                     ),
-                                                        setOpenDeleteMainSubjectModal(
+                                                        setOpenDeleteSubjectVariantModal(
                                                             true
                                                         );
                                                 }}
@@ -105,37 +113,36 @@ const AllMainSubject = () => {
                     </tbody>
                 </table>
             </div>
-
-            {/* Open Add Main Subject Modal  */}
-            {openMainSubjectModal && (
-                <AddMainSubjectModal
-                    openAddMainSubjectModal={openMainSubjectModal}
-                    setOpenAddMainSubjectModal={setOpenMainSubjectModal}
+            {/* Open Subject Variant Modal  */}
+            {openSubjectVariantModal && (
+                <AddSubjectVariantModal
+                    openAddSubjectVariantModal={openSubjectVariantModal}
+                    setOpenAddSubjectVariantModal={setOpenSubjectVariantModal}
                 />
             )}
-
-            {/* Open Edit Main Subject Modal  */}
-            {openEditMainSubjectModal && (
-                <EditMainSubjectModal
-                    editData={editMainSubjectData}
-                    openEditMainSubjectModal={openEditMainSubjectModal}
-                    setOpenEditMainSubjectModal={setOpenEditMainSubjectModal}
+            {/* Open Edit Subject Variant Modal  */}
+            {openEditSubjectVariantModal && (
+                <EditSubjectVariantModal
+                    editData={editSubjectVariantData}
+                    openEditSubjectVariantModal={openEditSubjectVariantModal}
+                    setOpenEditSubjectVariantBoard={
+                        setOpenEditSubjectVariantModal
+                    }
                 />
             )}
-
-            {/* Open Delete Main Subject Modal  */}
-            {openDeleteMainSubjectModal && (
+            {/* Open Delete Subject Variant Modal  */}
+            {openDeleteSubjectVariantModal && (
                 <DeleteModal
-                    id={deleteMainSubjectData?._id}
-                    name={deleteMainSubjectData?.name}
-                    setDeleteData={setDeleteMainSubjectData}
-                    openDeleteModal={openDeleteMainSubjectModal}
-                    setOpenDeleteModal={setOpenDeleteMainSubjectModal}
-                    deleteFunction={deleteMainSubject}
+                    id={deleteSubjectVariantData?._id}
+                    name={deleteSubjectVariantData?.variant}
+                    setDeleteData={setDeleteSubjectVariantData}
+                    openDeleteModal={openDeleteSubjectVariantModal}
+                    setOpenDeleteModal={setOpenDeleteSubjectVariantModal}
+                    deleteFunction={deleteSubjectVariant}
                 />
             )}
         </div>
     );
 };
 
-export default AllMainSubject;
+export default AllSubjectVariant;

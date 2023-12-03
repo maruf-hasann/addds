@@ -10,18 +10,17 @@ import {
 } from "../../../store/service/tutoringCurriculum/tutoringCurriculumApiService";
 
 const AllTutoringCurriculum = () => {
+    /* handle delete state handle */
     const [openTutoringCurriculumModal, setOpenTutoringCurriculumModal] =
         useState(false);
-
     const [deleteTutoringCurriculumData, setDeleteTutoringCurriculumData] =
         useState(null);
-
     const [
         openDeleteTutoringCurriculumModal,
         setOpenDeleteTutoringCurriculumModal,
     ] = useState(false);
 
-    /* Edit */
+    /* Edit state handle */
     const [editTutoringCurriculumData, setEditTutoringCurriculumData] =
         useState(null);
     const [
@@ -29,8 +28,8 @@ const AllTutoringCurriculum = () => {
         setOpenEditTutoringCurriculumModal,
     ] = useState(false);
 
+    /* redux api call */
     const [deleteTutoringCurriculum] = useDeleteTutoringCurriculumMutation();
-
     const { data: allTutoringCurriculumData } = useGetTutoringCurriculumQuery();
     const allTutoringCurriculum = allTutoringCurriculumData?.data;
 
@@ -69,32 +68,32 @@ const AllTutoringCurriculum = () => {
                     <tbody>
                         {/* row 1 */}
                         {allTutoringCurriculum?.map(
-                            (TutoringCurriculum, idx) => {
+                            (tutoringCurriculum, idx) => {
                                 const classes =
                                     "p-4 border-b border-blue-gray-50";
                                 return (
                                     <tr
                                         className={classes}
-                                        key={TutoringCurriculum?._id}
+                                        key={tutoringCurriculum?._id}
                                     >
                                         <th className={classes}>{idx + 1}</th>
                                         <td className={classes}>
-                                            {TutoringCurriculum?.curriculumName}
+                                            {tutoringCurriculum?.curriculumName}
                                         </td>
                                         <td className={classes}>
                                             {
-                                                TutoringCurriculum?.educationVariant
+                                                tutoringCurriculum?.educationVariant
                                             }
                                         </td>
 
                                         <td
-                                            className={`${classes} w-[120px] flex gap-4`}
+                                            className={`${classes} w-[120px] flex gap-3`}
                                         >
                                             <span className="flex justify-evenly items-center">
                                                 <FaEdit
                                                     onClick={() => {
                                                         setEditTutoringCurriculumData(
-                                                            TutoringCurriculum
+                                                            tutoringCurriculum
                                                         ),
                                                             setOpenEditTutoringCurriculumModal(
                                                                 true
@@ -107,7 +106,7 @@ const AllTutoringCurriculum = () => {
                                                 <FaTrash
                                                     onClick={() => {
                                                         setDeleteTutoringCurriculumData(
-                                                            TutoringCurriculum
+                                                            tutoringCurriculum
                                                         ),
                                                             setOpenDeleteTutoringCurriculumModal(
                                                                 true
@@ -124,6 +123,8 @@ const AllTutoringCurriculum = () => {
                     </tbody>
                 </table>
             </div>
+
+            {/* open add tutoring curriculum Modal */}
             {openTutoringCurriculumModal && (
                 <AddTutoringCurriculumModal
                     openAddTutoringCurriculumModal={openTutoringCurriculumModal}
@@ -133,6 +134,7 @@ const AllTutoringCurriculum = () => {
                 />
             )}
 
+            {/* open edit tutoring curriculum Modal */}
             {openEditTutoringCurriculumModal && (
                 <EditTutoringCurriculumModal
                     editData={editTutoringCurriculumData}
@@ -144,7 +146,7 @@ const AllTutoringCurriculum = () => {
                     }
                 />
             )}
-
+            {/* open delete tutoring curriculum Modal */}
             {openDeleteTutoringCurriculumModal && (
                 <DeleteModal
                     id={deleteTutoringCurriculumData?._id}

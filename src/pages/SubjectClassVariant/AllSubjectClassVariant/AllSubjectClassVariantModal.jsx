@@ -8,6 +8,7 @@ import AddSubjectClassVariantModal from "./AddSubjectClassVariantModal/AddSubjec
 import DeleteSubjectClassVariant from "./DeleteSubjectClassVariant/DeleteSubjectClassVariant";
 
 const AllSubjectClassVariantModal = () => {
+    /* delete state handling  */
     const [openSubjectClassVariantModal, setOpenSubjectClassVariantModal] =
         useState(false);
     const [deleteSubjectClassVariantData, setDeleteSubjectClassVariantData] =
@@ -16,6 +17,7 @@ const AllSubjectClassVariantModal = () => {
         openDeleteSubjectClassVariantModal,
         setOpenDeleteSubjectClassVariantModal,
     ] = useState(false);
+    /* edit state handling*/
     const [editSubjectClassVariantData, setEditSubjectClassVariantData] =
         useState(null);
     const [
@@ -23,9 +25,10 @@ const AllSubjectClassVariantModal = () => {
         setOpenEditSubjectClassVariantModal,
     ] = useState(false);
 
-    const { data: SubjectClassVariantsData } =
+    /* redux api call */
+    const { data: subjectClassVariantsData } =
         useGetSubjectClassVariantsQuery();
-    const SubjectClassVariants = SubjectClassVariantsData?.data;
+    const SubjectClassVariants = subjectClassVariantsData?.data;
 
     return (
         <>
@@ -58,7 +61,7 @@ const AllSubjectClassVariantModal = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* row 1 */}
+                            {/* body */}
                             {SubjectClassVariants?.map((variant, idx) => {
                                 const classes =
                                     "p-4 border-b border-blue-gray-50 text-base text-gray-800 font-normal";
@@ -74,7 +77,7 @@ const AllSubjectClassVariantModal = () => {
                                             {variant?.variant}
                                         </td>
                                         <td className={`${classes} w-[120px]`}>
-                                            <div className="flex justify-evenly items-center">
+                                            <span className="flex justify-center gap-3 items-center">
                                                 <FaTrash
                                                     onClick={() => {
                                                         setDeleteSubjectClassVariantData(
@@ -97,7 +100,7 @@ const AllSubjectClassVariantModal = () => {
                                                     }}
                                                     className="cursor-pointer hover:text-sky-500"
                                                 />
-                                            </div>
+                                            </span>
                                         </td>
                                     </tr>
                                 );
@@ -106,6 +109,8 @@ const AllSubjectClassVariantModal = () => {
                     </table>
                 </div>
             </div>
+
+            {/* Open Delete Subject Class Variant Modal */}
             {openDeleteSubjectClassVariantModal &&
                 deleteSubjectClassVariantData && (
                     <DeleteSubjectClassVariant
@@ -123,6 +128,8 @@ const AllSubjectClassVariantModal = () => {
                         }
                     />
                 )}
+
+            {/* Open Edit Subject Class Variant Modal */}
             {openEditSubjectClassVariantModal &&
                 editSubjectClassVariantData && (
                     <EditSubjectClassVariantModal
@@ -135,6 +142,8 @@ const AllSubjectClassVariantModal = () => {
                         }
                     />
                 )}
+
+            {/* Open Add Subject Class Variant Modal */}
             {openSubjectClassVariantModal && (
                 <AddSubjectClassVariantModal
                     openAddSubjectClassVariantModal={

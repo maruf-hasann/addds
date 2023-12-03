@@ -8,9 +8,11 @@ const AddSubjectClassVariantModal = ({
     openAddSubjectClassVariantModal,
     setOpenAddSubjectClassVariantModal,
 }) => {
+    /* redux api call */
     const [addSubjectClassVariant, { isLoading }] =
         useAddSubjectClassVariantMutation();
 
+    /* handle submit  */
     const handleSubmit = async (e) => {
         e.preventDefault();
         const variant = e.target.name.value;

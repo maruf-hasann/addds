@@ -3,14 +3,17 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useAddTutoringVariantMutation } from "../../../store/service/tutoringVariant/tutoringVariantApiService";
+import { useAddSubjectClassVariantMutation } from "../../../store/service/subjectClassVariant/subjectClassVariantApiService";
 
 const AddSubjectClassVariant = () => {
-    const [addTutoringVariant, { isLoading }] = useAddTutoringVariantMutation();
+    /* redux api call */
+    const [addSubjectClassVariant, { isLoading }] =
+        useAddSubjectClassVariantMutation();
 
+    /* handle submit  */
     const handleSubmit = async (e) => {
         const variantName = e.target.name.value;
-        const result = await addTutoringVariant({ variantName });
+        const result = await addSubjectClassVariant({ variantName });
         if (result?.data?.success) {
             toast.success(result?.data?.message);
             e.target.reset();

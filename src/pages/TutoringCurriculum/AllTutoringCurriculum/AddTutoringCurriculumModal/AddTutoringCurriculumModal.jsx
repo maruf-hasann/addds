@@ -11,29 +11,32 @@ const AddTutoringCurriculumModal = ({
     openAddTutoringCurriculumModal,
     setOpenAddTutoringCurriculumModal,
 }) => {
-    const [name, setName] = useState("");
+    /* state handle */
+    const [curriculumName, setCurriculumName] = useState("");
     const [educationVariant, setEducationVariant] = useState("");
 
+    /* redux api call */
     const [addTutoringCurriculum, { isLoading }] =
         useAddTutoringCurriculumMutation();
-
     const { data: educationVariantsData } = useGetEducationVariantsQuery();
     const educationVariants = educationVariantsData?.data;
 
+    /* handle submit data */
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!name) return toast.error("Please add a collage name");
+        if (!curriculumName) return toast.error("Please add a curriculum name");
         if (!educationVariant)
             return toast.error("Please Add a education variant");
 
         const result = await addTutoringCurriculum({
             educationVariant,
-            curriculumName: name,
+            curriculumName,
         });
+        
         if (result?.data?.success) {
             toast.success(result?.data?.message);
-            setName("");
+            setCurriculumName("");
             setEducationVariant("");
             setOpenAddTutoringCurriculumModal(!openAddTutoringCurriculumModal);
         } else {
@@ -115,15 +118,15 @@ const AddTutoringCurriculumModal = ({
                                         htmlFor="curriculumName"
                                         className="block mb-2 font-semibold text-sm text-gray-500"
                                     >
-                                        Name
+                                        Curriculum Name
                                     </label>
                                     <input
                                         type="text"
                                         id="curriculumName"
                                         name="curriculumName"
-                                        value={name}
+                                        value={curriculumName}
                                         onChange={(e) =>
-                                            setName(e.target.value)
+                                            setCurriculumName(e.target.value)
                                         }
                                         required
                                         placeholder="Collage Name"
