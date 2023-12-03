@@ -220,6 +220,18 @@ export const router = createBrowserRouter([
         path: "/all-sub-subject",
         element: <AllSubSubject />,
       },
+      {
+        path: "/tutoring-curriculum",
+        element: <AllTutoringCurriculum />,
+      },
+      {
+        path: "/subject-class-variant",
+        element: <AllSubjectClassVariantModal />,
+      },
+      {
+        path: "/subject-variant",
+        element: <AllSubjectVariant />,
+      },
     ],
   },
   {
