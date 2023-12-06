@@ -12,7 +12,7 @@ const tutoringLocationApiService = baseApi.injectEndpoints({
     }),
     updateTutoringLocationById: build.mutation({
       query: (payload) => ({
-        url: `tutoring-location/update/${payload.id}`,
+        url: `tutoring-location/${payload.id}`,
         body: payload?.data,
         method: "PATCH",
       }),
@@ -20,7 +20,7 @@ const tutoringLocationApiService = baseApi.injectEndpoints({
     }),
     deleteTutoringLocationById: build.mutation({
       query: (id) => ({
-        url: `tutoring-location/delete/${id}`,
+        url: `tutoring-location/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["TutoringLocation"],
