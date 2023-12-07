@@ -46,6 +46,7 @@ import AllSubSubject from "../pages/SubSubject/AllSubSubject/AllSubSubject";
 import AllTutoringCurriculum from "../pages/TutoringCurriculum/AllTutoringCurriculum/AllTutoringCurriculum";
 import AllSubjectClassVariantModal from "../pages/SubjectClassVariant/AllSubjectClassVariant/AllSubjectClassVariantModal";
 import AllSubjectVariant from "../pages/SubjectVariant/AllSubjectVariant/AllSubjectVariant";
+import AllTutoringLocation from "../pages/TutoringLocation/AllTutoringLocation/AllTutoringLocation";
 
 export const router = createBrowserRouter([
   {
@@ -231,6 +232,10 @@ export const router = createBrowserRouter([
       {
         path: "/subject-variant",
         element: <AllSubjectVariant />,
+      },
+      {
+        path: "/all-tutoring-location",
+        element: <AllTutoringLocation />,
       },
     ],
   },

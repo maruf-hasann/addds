@@ -110,11 +110,17 @@ export const menus = [
     url: "./all-tutoring-class-pm",
     icon: <MdClass />,
   },
+  // {
+  //   id: 17,
+  //   name: "Tutoring Class HC",
+  //   url: "./all-tutoring-class-hc",
+  //   icon: <MdSubject />,
+  // },
   {
-    id: 17,
-    name: "Tutoring Class HC",
-    url: "./all-tutoring-class-hc",
-    icon: <MdSubject />,
+    id: 18,
+    name: "Tutoring Location",
+    url: "./all-tutoring-location",
+    icon: <MdLibraryBooks />,
   },
 
     {
