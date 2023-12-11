@@ -49,6 +49,7 @@ import AllSubjectVariant from "../pages/SubjectVariant/AllSubjectVariant/AllSubj
 import AllTutoringLocation from "../pages/TutoringLocation/AllTutoringLocation/AllTutoringLocation";
 import Tutors from "../pages/Tutors/Tutors";
 import TutorProfile from "../pages/TutorProfile/TutorProfile";
+import AllMockPricing from '../pages/MockPricing/AllMockPricing/AllMockPricing';
 
 export const router = createBrowserRouter([
   {
@@ -246,6 +247,8 @@ export const router = createBrowserRouter([
       {
         path: "/tutor-profile/:number",
         element: <TutorProfile />,
+        path: "/mock-pricing",
+        element: <AllMockPricing />,
       },
     ],
   },

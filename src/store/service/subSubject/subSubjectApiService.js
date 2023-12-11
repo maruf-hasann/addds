@@ -8,6 +8,12 @@ const subSubjectApiService = baseApi.injectEndpoints({
             }),
             providesTags: ["SubSubject"],
         }),
+        getSubSubjectByMainSubject: build.query({
+            query: (payload) => ({
+                url: `main-subject/find-by-main-to-sub/${payload}`,
+            }),
+            providesTags: ["SubSubject"],
+        }),
         addSubSubject: build.mutation({
             query: (payload) => ({
                 url: "sub-subject/save",
@@ -40,4 +46,5 @@ export const {
     useDeleteSubSubjectMutation,
     useGetSubSubjectQuery,
     useEditSubSubjectMutation,
+    useLazyGetSubSubjectByMainSubjectQuery,
 } = subSubjectApiService;

@@ -130,6 +130,7 @@ export const menus = [
     icon: <FaUserGraduate />,
   },
 
+<<<<<<< HEAD
   {
     id: 20,
     name: "Curriculum Board",
@@ -166,6 +167,50 @@ export const menus = [
     url: "./subject-variant",
     icon: <MdClass />,
   },
+=======
+    {
+        id: 18,
+        name: "Curriculum Board",
+        url: "./all-curriculum-board",
+        icon: <MdAccountBalance />,
+    },
+    {
+        id: 19,
+        name: "Main Subject",
+        url: "./all-main-subject",
+        icon: <MdClass />,
+    },
+    {
+        id: 20,
+        name: "Sub Subject",
+        url: "./all-sub-subject",
+        icon: <MdClass />,
+    },
+    {
+        id: 21,
+        name: "Tutoring Curriculum",
+        url: "./tutoring-curriculum",
+        icon: <MdClass />,
+    },
+    {
+        id: 22,
+        name: "Subject Class Variant",
+        url: "./subject-class-variant",
+        icon: <MdClass />,
+    },
+    {
+        id: 23,
+        name: "Subject Variant",
+        url: "./subject-variant",
+        icon: <MdClass />,
+    },
+    {
+        id: 24,
+        name: "Mock Pricing",
+        url: "./mock-pricing",
+        icon: <MdClass />,
+    },
+>>>>>>> 95977aa5cd9b0bff625ee61c93be0eb487ace179
 ];
 
 // setting menu
