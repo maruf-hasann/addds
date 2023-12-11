@@ -159,6 +159,12 @@ export const menus = [
         url: "./subject-variant",
         icon: <MdClass />,
     },
+    {
+        id: 24,
+        name: "Mock Pricing",
+        url: "./mock-pricing",
+        icon: <MdClass />,
+    },
 ];
 
 // setting menu
