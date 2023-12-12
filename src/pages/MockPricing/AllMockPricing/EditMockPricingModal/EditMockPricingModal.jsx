@@ -45,7 +45,6 @@ const EditMockPricingModal = ({
         defaultValues: {
             educationVariant: "",
             grade: "",
-            subSubject: "",
             mainSubject: "",
             price: "",
         },
@@ -74,19 +73,37 @@ const EditMockPricingModal = ({
     // get sub subject from api
     useEffect(() => {
         const fetch = async () => {
-            const data = await getSubSubjectByMainSubject(selectedSubject);
-            setSelectedSubSubjects(data?.data?.data);
+            if (selectedSubject) {
+                const data = await getSubSubjectByMainSubject(selectedSubject);
+                setSelectedSubSubjects(data?.data?.data);
+            }
         };
         setSelectedSubject("");
         fetch();
-    }, [selectedSubject, getSubSubjectByMainSubject]);
+    }, [selectedSubject, getSubSubjectByMainSubject, reset]);
+
+    // get sub subject from api
+    useEffect(() => {
+        const fetch = async () => {
+            if (!selectedSubSubjects?.length) {
+                reset({
+                    subSubject: "",
+                });
+            }
+        };
+        fetch();
+    }, [selectedSubSubjects, reset]);
 
     /* handle edit submit data */
     const handleEditSubmit = async (data) => {
         const editModifyData = {
             id: editData?.mockId,
             data: {
-                ...data,
+                educationVariant: data?.educationVariant,
+                grade: data?.grade,
+                mainSubject: data?.mainSubject,
+                subSubject: data?.subSubject || "",
+                price: data?.price,
             },
         };
         const result = await editMockPricing(editModifyData);
@@ -104,8 +121,7 @@ const EditMockPricingModal = ({
         reset({
             price: editData?.price,
             educationVariant: editData?.educationVariant,
-            grade: "",
-            subSubject: "",
+            grade: editData?.grade,
             mainSubject: editData?.mainSubject,
         });
     }, [editData, reset]);
@@ -272,11 +288,18 @@ const EditMockPricingModal = ({
                                             })}
                                             className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                                         >
-                                            <option
-                                                value={editData?.subSubject}
-                                            >
-                                                {editData?.subSubject}
-                                            </option>
+                                            {editData?.subSubject ? (
+                                                <option
+                                                    value={editData?.subSubject}
+                                                >
+                                                    {editData?.subSubject}
+                                                </option>
+                                            ) : (
+                                                <option value={""}>
+                                                    Please select sub subject
+                                                </option>
+                                            )}
+
                                             {selectedSubSubjects
                                                 ?.filter(
                                                     (mainSubject) =>
