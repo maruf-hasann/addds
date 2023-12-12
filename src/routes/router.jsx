@@ -247,9 +247,12 @@ export const router = createBrowserRouter([
       {
         path: "/tutor-profile/:number",
         element: <TutorProfile />,
+        
+      },
+      {
         path: "/mock-pricing",
         element: <AllMockPricing />,
-      },
+      }
     ],
   },
   {

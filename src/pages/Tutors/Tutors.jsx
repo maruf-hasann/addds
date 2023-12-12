@@ -18,7 +18,7 @@ const Tutors = () => {
         </div>
       </div>
       <div>
-        <table className="text-left overflow-x-scroll">
+        <table className="w-full text-left overflow-x-scroll">
           {/* head */}
           <thead>
             <tr>
@@ -35,12 +35,12 @@ const Tutors = () => {
               <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                 Email
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              {/* <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                 Gender
               </th>
               <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                 Country
-              </th>
+              </th> */}
               <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
                 City
               </th>
@@ -60,14 +60,17 @@ const Tutors = () => {
                 <td className={classes}>{personalInfo?.fullName}</td>
                 <td className={classes}>{personalInfo?.phoneNumber}</td>
                 <td className={classes}>{personalInfo?.email}</td>
-                <td className={`capitalize ${classes}`}>
+                {/* <td className={`capitalize ${classes}`}>
                   {personalInfo?.gender}
                 </td>
-                <td className={classes}>{personalInfo?.country}</td>
+                <td className={classes}>{personalInfo?.country}</td> */}
                 <td className={classes}>{personalInfo?.city}</td>
                 <td className={classes}>{personalInfo?.area}</td>
                 <td className={`${classes} w-[120px] flex gap-3 border-b-0`}>
-                  <Link to={`/tutor-profile/${personalInfo?.phoneNumber}`} className="text-center flex justify-center mx-auto">
+                  <Link
+                    to={`/tutor-profile/${personalInfo?.phoneNumber}`}
+                    className="text-center flex justify-center mx-auto"
+                  >
                     <FaStreetView
                       title="View Profile"
                       className="text-center mx-auto cursor-pointer hover:text-blue-500"
