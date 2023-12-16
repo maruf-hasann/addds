@@ -2,13 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-body, scrolly {
-msOverflowStyle: none;
-overflow-y: auto;
--ms-overflow-style: none;
-scrollbar-width: none;
+body,
+scrolly {
+  msoverflowstyle: none;
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-::-webkit-scrollbar {
+.hidden-scrollbar ::-webkit-scrollbar {
   display: none;
 }
 ::-moz-scrollbar {

@@ -11,4 +11,4 @@ const tutorInfoFilterApiService = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useLazyGetTutorInfoFilterDataQuery } = tutorInfoFilterApiService;
+export const { useLazyGetTutorInfoFilterDataQuery, useGetTutorInfoFilterDataQuery } = tutorInfoFilterApiService;
