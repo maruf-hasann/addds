@@ -3,7 +3,6 @@ import toast from "react-hot-toast";
 import { FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAddEducationVariantMutation } from "../../../store/service/educationVariant/educationVariantApiService";
- 
 
 const AddEducationVariant = () => {
   const [addEducationVariant, { isLoading }] = useAddEducationVariantMutation();
@@ -22,11 +21,11 @@ const AddEducationVariant = () => {
 
   return (
     <div className="py-10">
-      <div className="flex justify-between items-center border-b pb-3">
-        <h1 className="font-bold">Add Education Variant</h1>
+      <div className="flex justify-between items-center pb-3">
+        <h1 className="font-bold text-2xl text-white">Add Education Variant</h1>
         <Link
           to={"/all-education-variants"}
-          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
+          className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
         >
           See All
         </Link>

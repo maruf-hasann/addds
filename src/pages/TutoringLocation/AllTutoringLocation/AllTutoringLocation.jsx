@@ -29,31 +29,31 @@ const AllTutoringLocation = () => {
 
   return (
     <div className="py-10">
-      <div className="flex justify-between items-center border-b pb-3">
-        <h1 className="font-bold">All Sub Subject</h1>
+      <div className="flex justify-between items-center pb-3">
+        <h1 className="font-bold text-2xl text-white">All Sub Subject</h1>
         <div
-          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+          className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
           onClick={() => setOpenTutoringLocationModal(true)}
         >
           Add New
         </div>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-max table-auto text-left">
+      <div className="overflow-x-auto rounded bg-white">
+        <table className="w-full min-w-max table-auto text-left border">
           {/* head */}
           <thead>
             <tr>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
                 Sl
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 City
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Location Name
               </th>
 
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 w-[120px]">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
                 Actions
               </th>
             </tr>
@@ -61,10 +61,11 @@ const AllTutoringLocation = () => {
           <tbody>
             {/* row 1 */}
             {allTutoringLocation?.map((tutoringLocation, idx) => {
-              const classes = "p-4 border-b border-blue-gray-50";
+              const classes =
+                "p-4 text-base text-gray-800 font-normal border-b";
               return (
-                <tr className={classes} key={tutoringLocation?._id}>
-                  <th className={classes}>{idx + 1}</th>
+                <tr className={`hover:bg-blue-50`} key={tutoringLocation?._id}>
+                  <th className={`${classes} w-[120px]`}>{idx + 1}</th>
                   <td className={classes}>{tutoringLocation?.city}</td>
                   <td className={classes}>{tutoringLocation?.locationName}</td>
                   <td className={`${classes} w-[120px] flex gap-3`}>

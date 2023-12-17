@@ -8,16 +8,17 @@ const TutorAccount = () => {
   const tutorsInfo = tutorsInfoData?.data[0];
   console.log(tutorsInfo);
 
-  const tableDataClasses = "p-4 border-b border-blue-gray-50 whitespace-nowrap";
+  const tableDataClasses =
+    "p-4 text-base text-gray-800 font-normal border-b whitespace-nowrap";
   const tableHeadClasses =
-    "border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap";
+    "text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold whitespace-nowrap";
 
   return (
     <div className="py-10 w-full">
-      <div className="flex justify-between items-center border-b pb-3">
-        <h1 className="font-bold mb-3">All Tutor Account</h1>
+      <div className="flex justify-between items-center pb-3">
+        <h1 className="font-bold text-2xl text-white">All Tutor Account</h1>
       </div>
-      <div className="overflow-x-scroll">
+      <div className="overflow-x-scroll rounded bg-white">
         <table className="w-full text-left h-auto">
           {/* head */}
           <thead>
@@ -56,14 +57,14 @@ const TutorAccount = () => {
               <th className={`${tableHeadClasses}`}>University Running Year</th>
               <th className={`${tableHeadClasses}`}>Current Affair</th>
 
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 w-[120px] text-center">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
             {[tutorsInfo, tutorsInfo]?.map((info, idx) => (
-              <tr className={tableDataClasses} key={idx}>
+              <tr className={`hover:bg-blue-50`} key={idx}>
                 <th className={tableDataClasses}>{idx + 1}</th>
                 <td className={tableDataClasses}>
                   {tutorsInfo?.personalInfo?.fullName}

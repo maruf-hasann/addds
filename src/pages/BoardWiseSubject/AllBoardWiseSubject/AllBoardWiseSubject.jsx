@@ -8,11 +8,16 @@ import EditBoardWiseSubjectModal from "./EditBoardWiseSubject/EditBoardWiseSubje
 import AddBoardWiseSubjectModal from "./AddBoardWiseSubjectModal/AddBoardWiseSubjectModal";
 
 const AllBoardWiseSubject = () => {
-  const [openAddBoardWiseSubjectModal, setOpenAddBoardWiseSubjectModal] = useState(false);
-  const [deleteBoardWiseSubjectData, setDeleteBoardWiseSubjectData] = useState(null);
-  const [openDeleteBoardWiseSubjectModal, setOpenDeleteBoardWiseSubjectModal] = useState(false);
-  const [editBoardWiseSubjectData, setEditBoardWiseSubjectData] = useState(null);
-  const [openEditBoardWiseSubjectModal, setOpenEditBoardWiseSubjectModal] = useState(false);
+  const [openAddBoardWiseSubjectModal, setOpenAddBoardWiseSubjectModal] =
+    useState(false);
+  const [deleteBoardWiseSubjectData, setDeleteBoardWiseSubjectData] =
+    useState(null);
+  const [openDeleteBoardWiseSubjectModal, setOpenDeleteBoardWiseSubjectModal] =
+    useState(false);
+  const [editBoardWiseSubjectData, setEditBoardWiseSubjectData] =
+    useState(null);
+  const [openEditBoardWiseSubjectModal, setOpenEditBoardWiseSubjectModal] =
+    useState(false);
 
   const { data: boardWiseSubjectsData } = useGetSubjectsQuery();
   const boardWiseSubjects = boardWiseSubjectsData?.data;
@@ -21,32 +26,32 @@ const AllBoardWiseSubject = () => {
     <>
       <div className="py-10">
         <div className="flex justify-between items-center pb-3">
-          <h1 className="font-bold text-gray-800">All Subjects</h1>
+          <h1 className="font-bold text-2xl text-white">All Subjects</h1>
           <div
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+            className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
             onClick={() => setOpenAddBoardWiseSubjectModal(true)}
           >
             Add New
           </div>
         </div>
         <div className="overflow-x-auto border-x rounded bg-white">
-          <table className="w-full min-w-max table-auto text-left">
+          <table className="w-full min-w-max table-auto text-left border">
             {/* head */}
             <thead>
               <tr>
-                <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold">
+                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
                   Sl
                 </th>
-                <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold">
+                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                   Board
                 </th>
-                <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold">
+                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                   Type
                 </th>
-                <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold">
+                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                   Name
                 </th>
-                <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold w-[120px] text-center">
+                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
                   Actions
                 </th>
               </tr>
@@ -54,10 +59,11 @@ const AllBoardWiseSubject = () => {
             <tbody>
               {/* row 1 */}
               {boardWiseSubjects?.map((subject, idx) => {
-                const classes = "p-4 border-b border-blue-gray-50 text-base text-gray-800 font-normal";
+                const classes =
+                  "p-4 text-base text-gray-800 font-normal border-b";
                 return (
-                  <tr key={subject._id} className={` ${idx % 2 !== 0 && 'bg-gray-50'}`}>
-                    <th className={classes}>{idx + 1}</th>
+                  <tr key={subject._id} className={` hover:bg-blue-50`}>
+                    <th className={`${classes} w-[120px]`}>{idx + 1}</th>
                     <td className={classes}>{subject?.board}</td>
                     <td className={classes}>{subject?.type}</td>
                     <td className={classes}>{subject?.subject}</td>
@@ -110,7 +116,6 @@ const AllBoardWiseSubject = () => {
           setOpenAddBoardWiseSubjectModal={setOpenAddBoardWiseSubjectModal}
         />
       )}
-
     </>
   );
 };
