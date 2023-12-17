@@ -24,29 +24,36 @@ const AcademicTutoring = () => {
           {/* head */}
           <thead>
             <tr>
-              <th className={`${tableHeadClasses}`}>Sl</th>
-              <th className={`${tableHeadClasses}`}>Name</th>
-              <th className={`${tableHeadClasses}`}>Number</th>
-              <th className={`${tableHeadClasses}`}>Tutoring Variant</th>
-              <th className={`${tableHeadClasses}`}>Tutoring Grade</th>
-              <th className={`${tableHeadClasses}`}>Tutoring Curriculum</th>
-              <th className={`${tableHeadClasses}`}>Tutoring Subjects</th>
-              <th className={`${tableHeadClasses}`}>Teach Test Papers</th>
-              <th className={`${tableHeadClasses}`}>Test Paper Subjects</th>
-              <th className={`${tableHeadClasses}`}>Teach Admission Test</th>
-              <th className={`${tableHeadClasses}`}>Admission Test Subjects</th>
-              <th className={`${tableHeadClasses}`}>Grow Tutoring Program</th>
-              <th className={`${tableHeadClasses}`}>Tutoring Programs</th>
-              <th className={`${tableHeadClasses}`}>Tutoring Training</th>
-              <th className={`${tableHeadClasses}`}>Teaching Experience</th>
-              <th className={`${tableHeadClasses}`}>Years of Experience</th>
-              <th className={`${tableHeadClasses}`}>Teaching History</th>
-              <th className={`${tableHeadClasses}`}>Tutoring Place</th>
-              <th className={`${tableHeadClasses}`}>Student Variant</th>
-              <th className={`${tableHeadClasses}`}>Min. Exp. Salary</th>
-              <th className={`${tableHeadClasses}`}>Max. Exp. Salary</th>
-              <th className={`${tableHeadClasses}`}>Tutoring Location</th>
-              <th className={`${tableHeadClasses}`}>Personal Statement</th>
+              <th className={tableHeadClasses}>Sl</th>
+              <th className={tableHeadClasses}>Name</th>
+              <th className={tableHeadClasses}>Number</th>
+              <th className={tableHeadClasses}>Tutoring Variant</th>
+              <th className={tableHeadClasses}>Tutoring Grade</th>
+              <th className={tableHeadClasses}>Tutoring Curriculum</th>
+              <th className={tableHeadClasses}>Tutoring Subjects</th>
+              <th className={tableHeadClasses}>Teach Test Papers</th>
+              <th className={tableHeadClasses}>Test Paper Subjects</th>
+              <th className={tableHeadClasses}>Teach Admission Test</th>
+              <th className={tableHeadClasses}>Admission Test Subjects</th>
+              <th className={tableHeadClasses}>Grow Tutoring Program</th>
+              <th className={tableHeadClasses}>Tutoring Programs</th>
+              <th className={tableHeadClasses}>Tutoring Training</th>
+              <th className={tableHeadClasses}>Teaching Experience</th>
+              <th className={tableHeadClasses}>Years of Experience</th>
+              <th className={tableHeadClasses}>Teaching History</th>
+              <th className={tableHeadClasses}>Tutoring Place</th>
+              <th className={tableHeadClasses}>Student Variant</th>
+              <th className={tableHeadClasses}>Min. Exp. Salary</th>
+              <th className={tableHeadClasses}>Max. Exp. Salary</th>
+              <th className={tableHeadClasses}>Tutoring Location</th>
+              <th className={tableHeadClasses}>Personal Statement</th>
+              <th className={`${tableHeadClasses} text-center`}>
+                <h2>Promotion</h2>
+                <div className="flex justify-between border-t-2 border-white">
+                  <p className="border-r border-white w-full">Image</p>
+                  <p className="border-l border-white w-full">Video</p>
+                </div>
+              </th>
               <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 w-[120px] text-center">
                 Actions
               </th>
@@ -89,7 +96,7 @@ const AcademicTutoring = () => {
                     )
                   )}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   <div className="flex gap-2">
                     <div>
                       <div className="border-b font-semibold">Main Subject</div>
@@ -113,10 +120,10 @@ const AcademicTutoring = () => {
                     </div>
                   </div>
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.tutoringInfo?.isTeachTestPapers ? "Yes" : "No"}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.tutoringInfo?.isTeachTestPapers ? (
                     <div className="flex gap-2">
                       <div>
@@ -146,12 +153,12 @@ const AcademicTutoring = () => {
                     "Empty"
                   )}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.tutoringInfo?.isTeachAdmissionTest
                     ? "Yes"
                     : "No"}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.tutoringInfo?.isTeachAdmissionTest ? (
                     <div className="flex gap-2">
                       <div>
@@ -181,7 +188,7 @@ const AcademicTutoring = () => {
                     "Empty"
                   )}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.additionalInfo?.isGrowTutoringProgram
                     ? "Yes"
                     : "No"}
@@ -195,23 +202,22 @@ const AcademicTutoring = () => {
                     )
                   )}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.additionalInfo?.isTutoringTraining
                     ? "Yes"
                     : "No"}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.additionalInfo?.isTeachingExperience
                     ? "Yes"
                     : "No"}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.additionalInfo?.yearsOfExperience}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.additionalInfo?.teachingHistory}
                 </td>
-
                 <td className={tableDataClasses}>
                   {tutorsInfo?.additionalInfo?.tutoringPlace?.map(
                     (place, idx) => (
@@ -230,10 +236,10 @@ const AcademicTutoring = () => {
                     )
                   )}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.additionalInfo?.minExpectedSalary}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.additionalInfo?.maxExpectedSalary}
                 </td>
 
@@ -246,8 +252,14 @@ const AcademicTutoring = () => {
                     )
                   )}
                 </td>
-                <td className={`${tableDataClasses}`}>
+                <td className={tableDataClasses}>
                   {tutorsInfo?.additionalInfo?.personalStatement}
+                </td>
+                <td className={tableDataClasses}>
+                  <div className="flex justify-between">
+                    <p className="border-r  w-full">Image</p>
+                    <p className="border-l  w-full">Video</p>
+                  </div>
                 </td>
 
                 <td
