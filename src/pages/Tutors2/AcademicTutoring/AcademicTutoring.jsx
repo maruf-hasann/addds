@@ -126,7 +126,7 @@ const AcademicTutoring = () => {
                         <div className="font-semibold">Sub Subject</div>
                       </div>
                       <div className="flex">
-                        {tutorsInfo?.tutoringInfo?.tutoringSubjects?.map(
+                        {tutorsInfo?.tutoringInfo?.teachTestPapers?.map(
                           (subject, idx) => (
                             <div key={idx} className="px-5">
                               <div className="border-b">
