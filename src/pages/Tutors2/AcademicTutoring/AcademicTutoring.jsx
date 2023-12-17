@@ -36,9 +36,9 @@ const AcademicTutoring = () => {
   const tableDataClasses =
     "px-4 py-3 border-b border-blue-gray-50 whitespace-nowrap";
   const tableDataArrayClasses =
-    "bg-gray-200 mx-1 px-2 py-1 hover:text-[#1C6AAF] hover:bg-light-blue-50";
+    "bg-gray-200 mx-1 px-2 py-1 hover:text-[#1C6AAF] hover:bg-light-blue-100";
   const tableHeadClasses =
-    "border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap";
+    "text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold whitespace-nowrap";
 
   const transformSubjectArray = (inputArray) => {
     // Check if the input is an array
@@ -88,10 +88,10 @@ const AcademicTutoring = () => {
 
   return (
     <div className="py-10 w-full">
-      <div className="flex justify-between items-center border-b pb-3">
-        <h1 className="font-bold mb-3">All Tutor Account</h1>
+      <div className="flex justify-between items-center pb-3">
+        <h1 className="font-bold text-2xl text-white">All Academic Tutoring</h1>
       </div>
-      <div className="overflow-x-scroll">
+      <div className="overflow-x-scroll rounded bg-white">
         <table className="w-full text-left h-auto">
           {/* head */}
           <thead>
@@ -120,14 +120,14 @@ const AcademicTutoring = () => {
               <th className={tableHeadClasses}>Tutoring Location</th>
               <th className={tableHeadClasses}>Personal Statement</th>
               <th className={`${tableHeadClasses} text-center`}>Promotion</th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 w-[120px] text-center">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
             {[tutorsInfo, tutorsInfo]?.map((info, idx) => (
-              <tr className={tableDataClasses} key={idx}>
+              <tr className={`hover:bg-blue-50`} key={idx}>
                 <th className={tableDataClasses}>{idx + 1}</th>
                 <td className={tableDataClasses}>
                   {tutorsInfo?.personalInfo?.fullName}

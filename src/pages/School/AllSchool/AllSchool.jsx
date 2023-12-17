@@ -4,37 +4,36 @@ import toast from "react-hot-toast";
 import { schools } from "../../../data/school";
 import { educationVariants } from "../../../data/educationVariant";
 
-
 const AllSchool = () => {
   return (
     <div className="py-10">
-      <div className="flex justify-between items-center border-b pb-3">
-        <h1 className="font-bold">All School</h1>
+      <div className="flex justify-between items-center pb-3">
+        <h1 className="font-bold text-2xl text-white">All School</h1>
         <Link
           to={"/add-school"}
-          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 hover:text-sky-700 bg-white"
+          className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
         >
           Add New
         </Link>
       </div>
-      <div className="overflow-x-auto">
-      <table className="w-full min-w-max table-auto text-left">
+      <div className="overflow-x-auto rounded bg-white">
+        <table className="w-full min-w-max table-auto text-left border">
           {/* head */}
           <thead>
             <tr>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Sl
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Name
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Location
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Variant
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 w-[120px] text-center">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
                 Actions
               </th>
             </tr>
@@ -42,7 +41,8 @@ const AllSchool = () => {
           <tbody>
             {/* row 1 */}
             {schools.map((college, idx) => {
-              const classes = "p-4 border-b border-blue-gray-50";
+              const classes =
+                "p-4 text-base text-gray-800 font-normal border-b";
               return (
                 <tr key={college.id} className="hover">
                   <th className={classes}>{idx + 1}</th>

@@ -34,7 +34,7 @@ const MainSideBar = () => {
         }}
       >
         {/* menu */}
-        <div className="grid grid-cols-1 text-gray-700 ">
+        <div className="grid grid-cols-1 text-gray-700 ps-1">
           {menus.map((menu, idx) => (
             <Link
               to={menu?.url}

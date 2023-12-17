@@ -7,13 +7,14 @@ const Tutors = () => {
   const personalInfo = personalInfoData?.data;
   console.log(personalInfo);
 
-  const classes = "p-4 border-b border-blue-gray-50 whitespace-nowrap";
+  const classes =
+    "p-4 text-base text-gray-800 font-normal border-b whitespace-nowrap";
 
   return (
     <div className="py-10">
-      <div className="flex justify-between items-center border-b pb-3">
-        <h1 className="font-bold">All School PM</h1>
-        <div className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer">
+      <div className="flex justify-between items-center pb-3">
+        <h1 className="font-bold text-2xl text-white">All School PM</h1>
+        <div className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer">
           Add New
         </div>
       </div>
@@ -22,48 +23,40 @@ const Tutors = () => {
           {/* head */}
           <thead>
             <tr>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
                 Sl
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Name
               </th>
 
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Number
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Email
               </th>
-              {/* <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                Gender
-              </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
-                Country
-              </th> */}
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 City
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Area
               </th>
 
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 w-[120px] text-center">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
                 Actions
               </th>
             </tr>
           </thead>
           <tbody>
             {[personalInfo, personalInfo]?.map((info, idx) => (
-              <tr className={classes} key={idx}>
-                <th className={classes}>{idx + 1}</th>
+              <tr className={`hover:bg-blue-50`} key={idx}>
+                <th className={`${classes} w-[120px]`}>{idx + 1}</th>
                 <td className={classes}>{personalInfo?.fullName}</td>
                 <td className={classes}>{personalInfo?.phoneNumber}</td>
                 <td className={classes}>{personalInfo?.email}</td>
-                {/* <td className={`capitalize ${classes}`}>
-                  {personalInfo?.gender}
-                </td>
-                <td className={classes}>{personalInfo?.country}</td> */}
+
                 <td className={classes}>{personalInfo?.city}</td>
                 <td className={classes}>{personalInfo?.area}</td>
                 <td className={`${classes} w-[120px] flex gap-3 border-b-0`}>

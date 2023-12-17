@@ -48,25 +48,24 @@ const ViewSubjectModal = ({
           </button>
           <>
             <div className="py-10">
-              <div className="flex justify-between items-center border-b pb-3">
-                <h1 className="font-bold">
+              <div className="flex justify-between items-center pb-3">
+                <h1 className="font-bold text-2xl text-white">
                   All Subjects ({viewSubjectData?.className})
                 </h1>
-
               </div>
-              <div className="overflow-x-auto">
-                <table className="w-full min-w-max table-auto text-left">
+              <div className="overflow-x-auto rounded bg-white">
+                <table className="w-full min-w-max table-auto text-left border">
                   {/* head */}
                   <thead>
                     <tr>
-                      <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                      <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
                         Sl
                       </th>
 
-                      <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+                      <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                         Name
                       </th>
-                      <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 w-[120px] text-center">
+                      <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
                         Actions
                       </th>
                     </tr>
@@ -74,10 +73,11 @@ const ViewSubjectModal = ({
                   <tbody>
                     {/* row 1 */}
                     {subjects?.map((subject, idx) => {
-                      const classes = "p-4 border-b border-blue-gray-50";
+                      const classes =
+                        "p-4 text-base text-gray-800 font-normal border-b";
                       return (
                         <tr key={subject._id} className="hover">
-                          <th className={classes}>{idx + 1}</th>
+                          <th className={`${classes} w-[120px]`}>{idx + 1}</th>
                           <td className={classes}>{subject}</td>
 
                           <td className={`${classes} w-[120px]`}>

@@ -5,7 +5,10 @@ import { educationVariants } from "../../../data/educationVariant";
 import { tutoringSubjects } from "../../../data/tutoringSubjects";
 import AddTutoringClassHCModal from "./AddTutoringClassHCModal/AddTutoringClassHCModal";
 import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
-import { useDeleteTutoringClassHCMutation, useGetTutoringClassHCQuery } from "../../../store/service/tutoringClassHC/tutoringClassHCApiService";
+import {
+  useDeleteTutoringClassHCMutation,
+  useGetTutoringClassHCQuery,
+} from "../../../store/service/tutoringClassHC/tutoringClassHCApiService";
 
 const AllTutoringClassHC = () => {
   const [openTutoringClassHCModal, setOpenTutoringClassHCModal] =
@@ -23,34 +26,34 @@ const AllTutoringClassHC = () => {
 
   return (
     <div className="py-10">
-      <div className="flex justify-between items-center border-b pb-3">
-        <h1 className="font-bold">All Tutoring Class HC</h1>
+      <div className="flex justify-between items-center pb-3">
+        <h1 className="font-bold text-2xl text-white">All Tutoring Class HC</h1>
         <div
-          className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
+          className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
           onClick={() => setOpenTutoringClassHCModal(true)}
         >
           Add New
         </div>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-max table-auto text-left">
+      <div className="overflow-x-auto rounded bg-white">
+        <table className="w-full min-w-max table-auto text-left border">
           {/* head */}
           <thead>
             <tr>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
                 Sl
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Name
               </th>
 
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Education Variant
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                 Curriculum Board
               </th>
-              <th className="border-b border-blue-gray-100 bg-blue-gray-50 p-4 w-[120px]">
+              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
                 Actions
               </th>
             </tr>
@@ -58,10 +61,11 @@ const AllTutoringClassHC = () => {
           <tbody>
             {/* row 1 */}
             {allTutoringClassHC?.map((tutoringClassHC, idx) => {
-              const classes = "p-4 border-b border-blue-gray-50";
+              const classes =
+                "p-4 text-base text-gray-800 font-normal border-b";
               return (
-                <tr className={classes} key={tutoringClassHC?._id}>
-                  <th className={classes}>{idx + 1}</th>
+                <tr className={`hover:bg-blue-50`} key={tutoringClassHC?._id}>
+                  <th className={`${classes} w-[120px]`}>{idx + 1}</th>
                   <td className={classes}>{tutoringClassHC.className}</td>
                   <td className={classes}>
                     {tutoringClassHC?.educationVariant}
