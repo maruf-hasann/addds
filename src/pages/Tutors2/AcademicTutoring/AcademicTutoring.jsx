@@ -6,16 +6,32 @@ import { CiCircleRemove } from "react-icons/ci";
 import { useState } from "react";
 
 const AcademicTutoring = () => {
-  const [open, setOpen] = useState(false);
+  const [openTextForModal, setOpenTextForModal] = useState(false);
   const [textForModal, setTextForModal] = useState(null);
+  const [openPromoImagesModal, setOpenPromoImagesModal] = useState(false);
+  const [promoImages, setPromoImages] = useState([]);
+  const [openPromoVideosModal, setOpenPromoVideosModal] = useState(false);
+  const [promoVideos, setPromoVideos] = useState([]);
 
-  const handleOpen = () => {
-    setOpen(!open);
+  const handleOpenTextModal = () => {
+    setOpenTextForModal(!openTextForModal);
     setTextForModal(null);
   };
+
+  const handleOpenPromoImagesModal = () => {
+    setOpenPromoImagesModal(!openPromoImagesModal);
+    setPromoImages([]);
+  };
+
+  const handleOpenPromoVideosModal = () => {
+    setOpenPromoVideosModal(!openPromoVideosModal);
+    setPromoVideos([]);
+  };
+
   const { data: tutorsInfoData } =
     useGetTutorInfoFilterDataQuery("8801708666342");
   const tutorsInfo = tutorsInfoData?.data[0];
+  console.log(tutorsInfo);
 
   const tableDataClasses =
     "px-4 py-3 border-b border-blue-gray-50 whitespace-nowrap";
@@ -27,7 +43,6 @@ const AcademicTutoring = () => {
   const transformSubjectArray = (inputArray) => {
     // Check if the input is an array
     if (!Array.isArray(inputArray)) {
-      console.error("Input is not an array");
       return;
     }
 
@@ -47,6 +62,17 @@ const AcademicTutoring = () => {
 
       return acc;
     }, []);
+  };
+
+  const handlePromoImageClick = (index) => {
+    // Move the clicked image to the front of the order
+    console.log(index)
+    const newOrder = [
+      promoImages.find((img, idx) => idx === index),
+      ...promoImages.filter((img, idx) => idx !== index),
+    ];
+    console.log(newOrder)
+    setPromoImages(newOrder);
   };
 
   return (
@@ -228,7 +254,7 @@ const AcademicTutoring = () => {
                         )}
                         <span
                           onClick={() => {
-                            setOpen(!open);
+                            setOpenTextForModal(!openTextForModal);
                             setTextForModal(
                               tutorsInfo?.additionalInfo?.teachingHistory
                             );
@@ -287,7 +313,7 @@ const AcademicTutoring = () => {
                         )}
                         <span
                           onClick={() => {
-                            setOpen(!open);
+                            setOpenTextForModal(!openTextForModal);
                             setTextForModal(
                               tutorsInfo?.additionalInfo?.personalStatement
                             );
@@ -304,12 +330,33 @@ const AcademicTutoring = () => {
                 </td>
                 <td className={tableDataClasses}>
                   <div className="flex justify-between">
-                    <p className="border-r  w-full px-5 cursor-pointer hover:text-[#1D6AAF]">
-                      Show Images
-                    </p>
-                    <p className="border-l  w-full px-5 cursor-pointer hover:text-[#1D6AAF]">
-                      Show Videos
-                    </p>
+                    {tutorsInfo?.promoInfo?.mediaGallery?.length ? (
+                      <p
+                        onClick={() => {
+                          setOpenPromoImagesModal(!openPromoImagesModal);
+                          setPromoImages(tutorsInfo?.promoInfo?.mediaGallery);
+                        }}
+                        className="border-r  w-full px-5 cursor-pointer hover:text-[#1D6AAF]"
+                      >
+                        Show Images
+                      </p>
+                    ) : (
+                      <p className="border-r  w-full px-5 ">No Image</p>
+                    )}
+
+                    {tutorsInfo?.promoInfo?.mediaGallery?.length ? (
+                      <p
+                        onClick={() => {
+                          setOpenPromoVideosModal(!openPromoVideosModal);
+                          setPromoVideos(tutorsInfo?.promoInfo?.videoGallery);
+                        }}
+                        className="border-l  w-full px-5 cursor-pointer hover:text-[#1D6AAF]"
+                      >
+                        Show Videos
+                      </p>
+                    ) : (
+                      <p className="border-l  w-full px-5 ">No Video</p>
+                    )}
                   </div>
                 </td>
                 <td
@@ -331,11 +378,66 @@ const AcademicTutoring = () => {
         </table>
       </div>
 
-      {textForModal && open ? (
-        <Dialog open={open} handler={handleOpen}>
+      {/* show large text modal */}
+      {textForModal && openTextForModal ? (
+        <Dialog open={openTextForModal} handler={handleOpenTextModal}>
           <DialogBody className="relative p-5 pr-10">
             <CiCircleRemove
-              onClick={handleOpen}
+              onClick={handleOpenTextModal}
+              className="cursor-pointer text-4xl text-red-500 absolute top-0 right-0"
+            />
+            {textForModal}
+          </DialogBody>
+        </Dialog>
+      ) : (
+        ""
+      )}
+
+      {/* Show all promotion media */}
+      {promoImages?.length && openPromoImagesModal ? (
+        <Dialog
+          size={"lg"}
+          open={openPromoImagesModal}
+          handler={handleOpenPromoImagesModal}
+        >
+          <DialogBody className="relative p-10">
+            <div className="overflow-y-auto max-h-[600px]">
+              <CiCircleRemove
+                onClick={handleOpenPromoImagesModal}
+                className="cursor-pointer text-4xl text-red-500 absolute top-0 right-0"
+              />
+              <div
+                className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5`}
+              >
+                {promoImages?.map((image, idx) => (
+                  <img
+                    key={idx}
+                    onClick={() => handlePromoImageClick(idx)}
+                    src={image?.imgUrl}
+                    className={`${
+                      idx === 0
+                        ? "col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5 w-auto mx-auto h-full h-96"
+                        : "h-40 w-full"
+                    } object-cover cursor-pointer`}
+                  />
+                ))}
+              </div>
+            </div>
+          </DialogBody>
+        </Dialog>
+      ) : (
+        ""
+      )}
+      {/* Show all promotion video */}
+      {promoVideos && openPromoVideosModal ? (
+        <Dialog
+          size={"lg"}
+          open={openPromoVideosModal}
+          handler={handleOpenPromoVideosModal}
+        >
+          <DialogBody className="relative p-5 pr-10">
+            <CiCircleRemove
+              onClick={handleOpenPromoVideosModal}
               className="cursor-pointer text-4xl text-red-500 absolute top-0 right-0"
             />
             {textForModal}
