@@ -14,6 +14,31 @@ const AcademicTutoring = () => {
   const tableHeadClasses =
     "border-b border-blue-gray-100 bg-blue-gray-50 p-4 whitespace-nowrap";
 
+  const transformSubjectArray = (inputArray) => {
+    // Check if the input is an array
+    if (!Array.isArray(inputArray)) {
+      console.error("Input is not an array");
+      return;
+    }
+
+    return inputArray.reduce((acc, item) => {
+      const existingItem = acc.find((i) => i.mainSubject === item.mainSubject);
+
+      if (existingItem) {
+        if (item.subSubject) {
+          existingItem.subSubjects.push(item.subSubject);
+        }
+      } else {
+        acc.push({
+          mainSubject: item.mainSubject,
+          subSubjects: item.subSubject ? [item.subSubject] : [],
+        });
+      }
+
+      return acc;
+    }, []);
+  };
+
   return (
     <div className="py-10 w-full">
       <div className="flex justify-between items-center border-b pb-3">
@@ -97,27 +122,18 @@ const AcademicTutoring = () => {
                   )}
                 </td>
                 <td className={tableDataClasses}>
-                  <div className="flex gap-2">
-                    <div>
-                      <div className="border-b font-semibold">Main Subject</div>
-                      <div className="font-semibold">Sub Subject</div>
-                    </div>
-                    <div className="flex">
-                      {tutorsInfo?.tutoringInfo?.tutoringSubjects?.map(
-                        (subject, idx) => (
-                          <div key={idx} className="px-5">
-                            <div className="border-b">
-                              {subject?.mainSubject}
-                            </div>
-                            <div>
-                              {subject?.subSubject
-                                ? subject?.subSubject
-                                : "Empty"}
-                            </div>
-                          </div>
-                        )
-                      )}
-                    </div>
+                  <div className="flex">
+                    {transformSubjectArray(
+                      tutorsInfo?.tutoringInfo?.tutoringSubjects
+                    )?.map((subject, idx) => (
+                      <span key={idx} className={tableDataArrayClasses}>
+                        {subject.subSubjects?.length
+                          ? `${subject.mainSubject}(${subject?.subSubjects?.map(
+                              (subSub) => subSub
+                            )})`
+                          : subject?.mainSubject}
+                      </span>
+                    ))}
                   </div>
                 </td>
                 <td className={tableDataClasses}>
@@ -125,29 +141,20 @@ const AcademicTutoring = () => {
                 </td>
                 <td className={tableDataClasses}>
                   {tutorsInfo?.tutoringInfo?.isTeachTestPapers ? (
-                    <div className="flex gap-2">
-                      <div>
-                        <div className="border-b font-semibold">
-                          Main Subject
-                        </div>
-                        <div className="font-semibold">Sub Subject</div>
-                      </div>
-                      <div className="flex">
-                        {tutorsInfo?.tutoringInfo?.teachTestPapers?.map(
-                          (subject, idx) => (
-                            <div key={idx} className="px-5">
-                              <div className="border-b">
-                                {subject?.mainSubject}
-                              </div>
-                              <div>
-                                {subject?.subSubject
-                                  ? subject?.subSubject
-                                  : "Empty"}
-                              </div>
-                            </div>
-                          )
-                        )}
-                      </div>
+                    <div className="flex">
+                      {transformSubjectArray(
+                        tutorsInfo?.tutoringInfo?.teachTestPapers
+                      )?.map((subject, idx) => (
+                        <span key={idx} className={tableDataArrayClasses}>
+                          {subject.subSubjects?.length
+                            ? `${
+                                subject.mainSubject
+                              }(${subject?.subSubjects?.map(
+                                (subSub) => subSub
+                              )})`
+                            : subject?.mainSubject}
+                        </span>
+                      ))}
                     </div>
                   ) : (
                     "Empty"
@@ -160,29 +167,20 @@ const AcademicTutoring = () => {
                 </td>
                 <td className={tableDataClasses}>
                   {tutorsInfo?.tutoringInfo?.isTeachAdmissionTest ? (
-                    <div className="flex gap-2">
-                      <div>
-                        <div className="border-b font-semibold">
-                          Main Subject
-                        </div>
-                        <div className="font-semibold">Sub Subject</div>
-                      </div>
-                      <div className="flex">
-                        {tutorsInfo?.tutoringInfo?.teachAdmissionTest?.map(
-                          (subject, idx) => (
-                            <div key={idx} className="px-5">
-                              <div className="border-b">
-                                {subject?.mainSubject}
-                              </div>
-                              <div>
-                                {subject?.subSubject
-                                  ? subject?.subSubject
-                                  : "Empty"}
-                              </div>
-                            </div>
-                          )
-                        )}
-                      </div>
+                    <div className="flex">
+                      {transformSubjectArray(
+                        tutorsInfo?.tutoringInfo?.teachAdmissionTest
+                      )?.map((subject, idx) => (
+                        <span key={idx} className={tableDataArrayClasses}>
+                          {subject.subSubjects?.length
+                            ? `${
+                                subject.mainSubject
+                              }(${subject?.subSubjects?.map(
+                                (subSub) => subSub
+                              )})`
+                            : subject?.mainSubject}
+                        </span>
+                      ))}
                     </div>
                   ) : (
                     "Empty"
