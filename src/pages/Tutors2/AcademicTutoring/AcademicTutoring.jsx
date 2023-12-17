@@ -66,13 +66,24 @@ const AcademicTutoring = () => {
 
   const handlePromoImageClick = (index) => {
     // Move the clicked image to the front of the order
-    console.log(index)
+
     const newOrder = [
       promoImages.find((img, idx) => idx === index),
       ...promoImages.filter((img, idx) => idx !== index),
     ];
-    console.log(newOrder)
     setPromoImages(newOrder);
+  };
+
+  const handlePromoVideoClick = (index) => {
+    console.log(index);
+
+    // Move the clicked image to the front of the order
+    const newOrder = [
+      promoVideos.find((video, idx) => idx === index),
+      ...promoVideos.filter((video, idx) => idx !== index),
+    ];
+    console.log(newOrder);
+    setPromoVideos(newOrder);
   };
 
   return (
@@ -416,7 +427,7 @@ const AcademicTutoring = () => {
                     src={image?.imgUrl}
                     className={`${
                       idx === 0
-                        ? "col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5 w-auto mx-auto h-full h-96"
+                        ? "col-span-2 md:col-span-3 lg:col-span-4 xl:col-span-5 w-auto mx-auto h-96"
                         : "h-40 w-full"
                     } object-cover cursor-pointer`}
                   />
@@ -435,12 +446,21 @@ const AcademicTutoring = () => {
           open={openPromoVideosModal}
           handler={handleOpenPromoVideosModal}
         >
-          <DialogBody className="relative p-5 pr-10">
-            <CiCircleRemove
-              onClick={handleOpenPromoVideosModal}
-              className="cursor-pointer text-4xl text-red-500 absolute top-0 right-0"
-            />
-            {textForModal}
+          <DialogBody className="relative p-10">
+            <div className="overflow-y-auto max-h-[600px]">
+              <CiCircleRemove
+                onClick={handleOpenPromoVideosModal}
+                className="cursor-pointer text-4xl text-red-500 absolute top-0 right-0"
+              />
+              <div className={`grid grid-cols-1 lg:grid-cols-2 gap-5`}>
+                {promoVideos?.map((video, idx) => (
+                  <video key={idx} controls width="100%" className={``}>
+                    <source src={video?.videoUrl} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                ))}
+              </div>
+            </div>
           </DialogBody>
         </Dialog>
       ) : (
