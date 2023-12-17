@@ -203,6 +203,30 @@ export const withSubmenu = [
       },
     ],
   },
+  {
+    id: 2,
+    name: "Parents",
+    icon: <FaUsers />,
+    subMenus: [
+      {
+        name: "All Parent Account",
+        url: "./all-parent-account",
+        icon: <span>🧾</span>,
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "Students",
+    icon: <FaUsers />,
+    subMenus: [
+      {
+        name: "All Student Account",
+        url: "./all-student-account",
+        icon: <span>🧾</span>,
+      },
+    ],
+  },
   // {
   //   id: 2,
   //   name: "Tutor Settings",
