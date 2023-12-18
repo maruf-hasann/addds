@@ -5,12 +5,14 @@ import DeleteEducationVariantModal from "./DeleteEducationVariant/DeleteEducatio
 import { useGetEducationVariantsQuery } from "../../../store/service/educationVariant/educationVariantApiService";
 import AddEducationVariantModal from "./AddEducationVariantModal/AddEducationVariantModal";
 
-
 const AllEducationVariant = () => {
-  const [openAddEducationVariantModal, setOpenAddEducationVariantModal] = useState(false);
+  const [openAddEducationVariantModal, setOpenAddEducationVariantModal] =
+    useState(false);
 
-  const [deleteEducationVariantData, setDeleteEducationVariantData] = useState(null);
-  const [openDeleteEducationVariantModal, setOpenDeleteEducationVariantModal] = useState(false);
+  const [deleteEducationVariantData, setDeleteEducationVariantData] =
+    useState(null);
+  const [openDeleteEducationVariantModal, setOpenDeleteEducationVariantModal] =
+    useState(false);
 
   const { data: educationVariantsData } = useGetEducationVariantsQuery();
   const educationVariants = educationVariantsData?.data;
@@ -19,27 +21,28 @@ const AllEducationVariant = () => {
     <>
       <div className="py-10 ">
         <div className="flex justify-between items-center pb-3">
-          <h1 className="font-bold text-gray-800">All Education Variant</h1>
+          <h1 className="font-bold text-2xl text-white">
+            All Education Variant
+          </h1>
           <div
-            // to={"/add-education-variant"}
-            className="font-bold border px-4 py-2 text-gray-600 rounded-sm border-sky-200 bg-white cursor-pointer"
-            onClick={()=> setOpenAddEducationVariantModal(true)}
+            className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
+            onClick={() => setOpenAddEducationVariantModal(true)}
           >
             Add New
           </div>
         </div>
-        <div className="overflow-x-auto border-x rounded bg-white">
-          <table className="w-full min-w-max table-auto text-left">
+        <div className="overflow-x-auto rounded bg-white">
+          <table className="w-full min-w-max table-auto text-left border">
             {/* head */}
             <thead>
               <tr>
-                <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold">
+                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
                   Sl
                 </th>
-                <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold">
+                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
                   Name
                 </th>
-                <th className="text-gray-800 border-blue-100 bg-blue-50 p-4 font-semibold w-[120px] text-center">
+                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
                   Actions
                 </th>
               </tr>
@@ -47,10 +50,11 @@ const AllEducationVariant = () => {
             <tbody>
               {/* row 1 */}
               {educationVariants?.map((variant, idx) => {
-                const classes = "p-4 border-b border-blue-gray-50 text-base text-gray-800 font-normal";
+                const classes =
+                  "p-4 text-base text-gray-800 font-normal border-b";
                 return (
-                  <tr key={variant._id} className={` ${idx % 2 !== 0 && 'bg-gray-50'}`}>
-                    <th className={classes}>{idx + 1}</th>
+                  <tr key={variant._id} className={`hover:bg-blue-50`}>
+                    <th className={`${classes} w-[120px]`}>{idx + 1}</th>
                     <td className={classes}>{variant?.variantName}</td>
                     <td className={`${classes} w-[120px]`}>
                       <div className="flex justify-evenly items-center">
@@ -78,7 +82,9 @@ const AllEducationVariant = () => {
           deleteEducationVariantData={deleteEducationVariantData}
           openDeleteEducationVariantModal={openDeleteEducationVariantModal}
           setDeleteEducationVariantData={setDeleteEducationVariantData}
-          setOpenDeleteEducationVariantModal={setOpenDeleteEducationVariantModal}
+          setOpenDeleteEducationVariantModal={
+            setOpenDeleteEducationVariantModal
+          }
         />
       )}
 
@@ -88,7 +94,6 @@ const AllEducationVariant = () => {
           setOpenAddEducationVariantModal={setOpenAddEducationVariantModal}
         />
       )}
-
     </>
   );
 };
