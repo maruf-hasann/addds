@@ -1,33 +1,31 @@
-import { Button } from "@material-tailwind/react";
 import toast from "react-hot-toast";
+import { Button } from "@material-tailwind/react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { FaSpinner } from "react-icons/fa";
 import { FaRegCircleXmark } from "react-icons/fa6";
+import { useEditSubSubjectMutation } from "../../../store/service/subSubject/subSubjectApiService";
+import { useGetMainSubjectQuery } from "../../../store/service/mainSubject/mainSubjectApiService";
 
-import { useState, useEffect } from "react";
-import { useLazyGetCountryDistrictQuery } from "../../../../store/service/country/countryApiService";
-import { useForm } from "react-hook-form";
-import { useEditUniversityMutation } from "../../../../store/service/university/universityApiService";
-
-const EditUniversityModal = ({
-  openUniversityModal,
-  setOpenUniversityModal,
+const EditSubSubjectModal = ({
+  openEditSubSubjectModal,
+  setOpenEditSubSubject,
   editData,
 }) => {
-  /* Set all the states data state */
-  const [states, setStates] = useState([]);
-  const [editUniversity, { isLoading }] = useEditUniversityMutation();
+  /* redux api call */
+  const [editSubSubject, { isLoading }] = useEditSubSubjectMutation();
+  const { data: mainSubjectsData } = useGetMainSubjectQuery();
+  const mainSubjects = mainSubjectsData?.data;
 
-  /* Get whole country district */
-  const [getCountryDistrict] = useLazyGetCountryDistrictQuery();
-
-  /* Set default values */
+  /* react hook form */
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
-      division: "",
-      name: "",
+      mainSubject: "",
+      subSubject: "",
     },
   });
 
+  /* handle edit submit */
   const handleEditSubmit = async (data) => {
     const editModifyData = {
       id: editData?._id,
@@ -35,11 +33,11 @@ const EditUniversityModal = ({
         ...data,
       },
     };
-    const result = await editUniversity(editModifyData);
+    const result = await editSubSubject(editModifyData);
     if (result?.data?.success) {
       toast.success(result?.data?.message);
       reset();
-      setOpenUniversityModal(!openUniversityModal);
+      setOpenEditSubSubject(!openEditSubSubjectModal);
     } else {
       toast.error(result?.error?.data?.message);
     }
@@ -48,34 +46,20 @@ const EditUniversityModal = ({
   /* Set updated values */
   useEffect(() => {
     reset({
-      division: editData?.division,
-      name: editData?.name,
+      mainSubject: editData?.mainSubject,
+      subSubject: editData?.subSubject,
     });
   }, [editData, reset]);
 
-  // fetch all states
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getCountryDistrict("BD");
-        setStates(response.data);
-      } catch (error) {
-        toast.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-    return () => {};
-  }, [getCountryDistrict]);
-
   // handle close modal
   const handleClose = () => {
-    setOpenUniversityModal(!openUniversityModal);
+    setOpenEditSubSubject(!openEditSubSubjectModal);
   };
 
   return (
     <div
       className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${
-        openUniversityModal ? "block" : "hidden"
+        openEditSubSubjectModal ? "block" : "hidden"
       }`}
     >
       <div
@@ -98,7 +82,7 @@ const EditUniversityModal = ({
             <div className="py-10">
               <div className="flex justify-between items-center mb-5">
                 <h1 className="font-bold text-blue-gray-800">
-                  Edit University
+                  Edit Sub Subject
                 </h1>
               </div>
 
@@ -106,56 +90,48 @@ const EditUniversityModal = ({
                 onSubmit={handleSubmit(handleEditSubmit)}
                 className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white"
               >
-                {/* city */}
-                <div className={`w-full`}>
-                  <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-                    Select Division
+                <div>
+                  <label
+                    htmlFor="mainSubject"
+                    className="block mb-2 font-semibold text-sm text-gray-500"
+                  >
+                    Main Subject
                   </label>
                   <select
-                    {...register("division", {
-                      required: "Division is required!",
+                    {...register("mainSubject", {
+                      required: "Main Subject is required!",
                     })}
                     className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                   >
-                    <option value={editData?.division}>
-                      {editData?.division}
+                    <option value={editData?.mainSubject}>
+                      {editData?.mainSubject}
                     </option>
-                    {states
+                    {mainSubjects
                       ?.filter(
-                        (state) =>
-                          state.name === "Dhaka Division" ||
-                          state.name === "Chittagong Division" ||
-                          state.name === "Khulna Division" ||
-                          state.name === "Rajshahi Division" ||
-                          state.name === "Barisal Division" ||
-                          state.name === "Rangpur Division" ||
-                          state.name === "Mymensingh Division" ||
-                          state.name === "Sylhet Division"
+                        (mainSub) => mainSub?.name !== editData?.mainSubject
                       )
-                      ?.filter((state) => state.name !== editData?.division)
-                      ?.map((state, idx) => (
-                        <option key={idx} value={state?.name}>
-                          {state?.name}
+                      ?.map((mainSub, idx) => (
+                        <option key={idx} value={mainSub?.name}>
+                          {mainSub?.name}
                         </option>
                       ))}
                   </select>
                 </div>
-
                 <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="subSubject"
                     className="block mb-2 font-semibold text-sm text-gray-500"
                   >
-                    Name
+                    Sub Subject
                   </label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    {...register("name", {
-                      required: "Name is required!",
+                    id="subSubject"
+                    name="subSubject"
+                    {...register("subSubject", {
+                      required: "Sub Subject is required!",
                     })}
-                    placeholder="Name"
+                    placeholder="Sub Subject"
                     className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
                   />
                 </div>
@@ -187,4 +163,4 @@ const EditUniversityModal = ({
   );
 };
 
-export default EditUniversityModal;
+export default EditSubSubjectModal;

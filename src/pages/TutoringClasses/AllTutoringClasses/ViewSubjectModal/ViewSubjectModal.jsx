@@ -48,8 +48,8 @@ const ViewSubjectModal = ({
           </button>
           <>
             <div className="py-10">
-              <div className="flex justify-between items-center pb-3">
-                <h1 className="font-bold text-2xl text-white">
+              <div className="flex justify-between items-center mb-5">
+                <h1 className="font-bold text-xl md:text-2xl text-white">
                   All Subjects ({viewSubjectData?.className})
                 </h1>
               </div>

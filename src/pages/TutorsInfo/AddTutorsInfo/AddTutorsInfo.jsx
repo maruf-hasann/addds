@@ -1,12 +1,5 @@
 import { Link } from "react-router-dom";
-import {
-  Button,
-  Tab,
-  TabPanel,
-  Tabs,
-  TabsBody,
-  TabsHeader,
-} from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 import PersonalInfo from "./PersonalInfo/PersonalInfo";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import AcademicInfo from "./AcademicInfo/AcademicInfo";
@@ -67,8 +60,10 @@ const AddTutorsInfo = () => {
 
   return (
     <div className="py-10">
-      <div className="flex justify-between items-center pb-3 mb-5">
-        <h1 className="font-bold text-2xl text-white">Add Tutoring Info</h1>
+      <div className="flex justify-between items-center mb-5">
+        <h1 className="font-bold text-xl md:text-2xl text-white">
+          Add Tutoring Info
+        </h1>
         <Link
           to={"/all-tutor-infos"}
           className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
@@ -76,7 +71,7 @@ const AddTutorsInfo = () => {
           See All
         </Link>
       </div>
-      <div className="grid grid-cols-5 bg-gray-100 p-1 rounded-md">
+      <div className="grid grid-cols-5 bg-blue-50 p-1 rounded-t-md">
         {tabHeaders.map(({ label, id }) => {
           return (
             <Button
@@ -94,7 +89,7 @@ const AddTutorsInfo = () => {
           );
         })}
       </div>
-      <div>
+      <div className="bg-white border">
         {data?.map((form) => (
           <section
             id={form.id}
