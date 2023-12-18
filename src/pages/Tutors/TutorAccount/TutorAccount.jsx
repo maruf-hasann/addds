@@ -1,12 +1,13 @@
 import { FaStreetView } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useGetTutorInfoFilterDataQuery } from "../../../store/service/tutorInfoFilter/tutorInfoFilterApiService";
+import {
+  useGetListOfTutorWithAcademicInfoQuery,
+  useGetTutorInfoFilterDataQuery,
+} from "../../../store/service/tutorInfoFilter/tutorInfoFilterApiService";
 
 const TutorAccount = () => {
-  const { data: tutorsInfoData } =
-    useGetTutorInfoFilterDataQuery("8801708666342");
-  const tutorsInfo = tutorsInfoData?.data[0];
-  console.log(tutorsInfo);
+  const { data: tutorsInfoData } = useGetListOfTutorWithAcademicInfoQuery();
+  const tutorsInfo = tutorsInfoData?.data;
 
   const tableDataClasses =
     "p-4 text-base text-gray-800 font-normal border-b whitespace-nowrap";
@@ -63,89 +64,149 @@ const TutorAccount = () => {
             </tr>
           </thead>
           <tbody>
-            {[tutorsInfo, tutorsInfo]?.map((info, idx) => (
+            {tutorsInfo?.map((info, idx) => (
               <tr className={`hover:bg-blue-50`} key={idx}>
                 <th className={tableDataClasses}>{idx + 1}</th>
+                {/* name */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.personalInfo?.fullName}
+                  {info?.personalInfo?.fullName
+                    ? info?.personalInfo?.fullName
+                    : "N/A"}
                 </td>
+                {/* phone number */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.personalInfo?.phoneNumber}
+                  {info?.personalInfo?.phoneNumber
+                    ? info?.personalInfo?.phoneNumber
+                    : "N/A"}
                 </td>
+                {/* email */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.personalInfo?.email}
+                  {info?.personalInfo?.email
+                    ? info?.personalInfo?.email
+                    : "N/A"}
                 </td>
+                {/* gender */}
                 <td className={`capitalize ${tableDataClasses}`}>
-                  {tutorsInfo?.personalInfo?.gender}
+                  {info?.personalInfo?.gender
+                    ? info?.personalInfo?.gender
+                    : "N/A"}
+                </td>
+                {/* country */}
+                <td className={tableDataClasses}>
+                  {info?.personalInfo?.country
+                    ? info?.personalInfo?.country
+                    : "N/A"}
+                </td>
+                {/* city */}
+                <td className={tableDataClasses}>
+                  {info?.personalInfo?.city ? info?.personalInfo?.city : "N/A"}
+                </td>
+                {/* area */}
+                <td className={tableDataClasses}>
+                  {info?.personalInfo?.area ? info?.personalInfo?.area : "N/A"}
+                </td>
+                {/* whatsapp number */}
+                <td className={tableDataClasses}>
+                  {info?.contactInfo?.whatsappNumber
+                    ? info?.contactInfo?.whatsappNumber
+                    : "N/A"}
+                </td>
+                {/* facebook url */}
+                <td className={tableDataClasses}>
+                  {info?.contactInfo?.facebookUrl
+                    ? info?.contactInfo?.facebookUrl
+                    : "N/A"}
+                </td>
+                {/* google meet */}
+                <td className={tableDataClasses}>
+                  {info?.contactInfo?.googleMeetUrl
+                    ? info?.contactInfo?.googleMeetUrl
+                    : "N/A"}
+                </td>
+                {/* emergency contact name */}
+                <td className={tableDataClasses}>
+                  {info?.contactInfo?.emergencyContactName
+                    ? info?.contactInfo?.emergencyContactName
+                    : "N/A"}
+                </td>
+                {/* emergency contact number */}
+                <td className={tableDataClasses}>
+                  {info?.contactInfo?.emergencyContactNumber
+                    ? info?.contactInfo?.emergencyContactNumber
+                    : "N/A"}
+                </td>
+                {/* emergency contact relation */}
+                <td className={tableDataClasses}>
+                  {info?.contactInfo?.emergencyContactRelation
+                    ? info?.contactInfo?.emergencyContactRelation
+                    : "N/A"}
+                </td>
+                {/* interview convenient time */}
+                <td className={tableDataClasses}>
+                  {info?.contactInfo?.interviewConvenientTime
+                    ? info?.contactInfo?.interviewConvenientTime
+                    : "N/A"}
                 </td>
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.personalInfo?.country}
+                  {info?.academicInfo?.educationVariant
+                    ? info?.academicInfo?.educationVariant
+                    : "N/A"}
                 </td>
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.personalInfo?.city}
+                  {info?.academicInfo?.schoolName
+                    ? info?.academicInfo?.schoolName
+                    : "N/A"}
                 </td>
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.personalInfo?.area}
+                  {info?.academicInfo?.highSchoolBoard
+                    ? info?.academicInfo?.highSchoolBoard
+                    : "N/A"}
                 </td>
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.contactInfo?.whatsappNumber}
+                  {info?.academicInfo?.highSchoolResult
+                    ? info?.academicInfo?.highSchoolResult
+                    : "N/A"}
                 </td>
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.contactInfo?.facebookUrl}
+                  {info?.academicInfo?.collageName
+                    ? info?.academicInfo?.collageName
+                    : "N/A"}
                 </td>
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.contactInfo?.googleMeetUrl}
+                  {info?.academicInfo?.collageBoard
+                    ? info?.academicInfo?.collageBoard
+                    : "N/A"}
                 </td>
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.contactInfo?.emergencyContactName}
+                  {info?.academicInfo?.collageResult
+                    ? info?.academicInfo?.collageResult
+                    : "N/A"}
                 </td>
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.contactInfo?.emergencyContactNumber}
+                  {info?.academicInfo?.universityName
+                    ? info?.academicInfo?.universityName
+                    : "N/A"}
                 </td>
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.contactInfo?.emergencyContactRelation}
+                  {info?.academicInfo?.subjectsName
+                    ? info?.academicInfo?.subjectsName
+                    : "N/A"}
                 </td>
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.contactInfo?.interviewConvenientTime}
+                  {info?.academicInfo?.universityRunningYear
+                    ? info?.academicInfo?.universityRunningYear
+                    : "N/A"}
                 </td>
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.academicInfo?.educationVariant}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.academicInfo?.schoolName}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.academicInfo?.highSchoolBoard}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.academicInfo?.highSchoolResult}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.academicInfo?.collageName}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.academicInfo?.collageBoard}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.academicInfo?.collageResult}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.academicInfo?.universityName}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.academicInfo?.subjectsName}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.academicInfo?.universityRunningYear}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.academicInfo?.currentAffair}
+                  {info?.academicInfo?.currentAffair
+                    ? info?.academicInfo?.currentAffair
+                    : "N/A"}
                 </td>
                 <td
-                  className={`${tableDataClasses} w-[120px] flex gap-3 border-b-0`}
+                  className={`${tableDataClasses} w-[120px]`}
                 >
                   <Link
-                    to={`/tutor-profile/${tutorsInfo?.personalInfo?.phoneNumber}`}
+                    to={`/tutor-profile/${info?.personalInfo?.phoneNumber}`}
                     className="text-center flex justify-center mx-auto"
                   >
                     <FaStreetView

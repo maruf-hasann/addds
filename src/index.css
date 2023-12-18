@@ -9,9 +9,25 @@ scrolly {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-/* .hidden-scrollbar ::-webkit-scrollbar {
-  display: none;
-} */
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar:horizontal{
+  height: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #1C6BAD;
+}
+
 ::-moz-scrollbar {
   display: none;
 }

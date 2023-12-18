@@ -39,12 +39,6 @@ export const menus = [
     icon: <MdSettings />,
   },
   {
-    id: 5,
-    name: "Tutoring Subject",
-    url: "./all-tutoring-subjects",
-    icon: <MdAccountBox />,
-  },
-  {
     id: 6,
     name: "Tutoring Category",
     url: "./all-tutoring-categories",
@@ -86,12 +80,7 @@ export const menus = [
     url: "./all-tutoring-classes",
     icon: <MdClass />,
   },
-  {
-    id: 13,
-    name: "Tutor Info",
-    url: "./all-tutor-infos",
-    icon: <MdAccountBox />,
-  },
+
   {
     id: 14,
     name: "School PM",
@@ -189,16 +178,10 @@ export const withSubmenu = [
       {
         name: "Tutor Account",
         url: "./tutor-account",
-        icon: <span>🧾</span>,
       },
       {
         name: "Academic Tutoring",
         url: "./academic-tutoring",
-        icon: (
-          <span>
-            <MdAccountBox />
-          </span>
-        ),
       },
     ],
   },

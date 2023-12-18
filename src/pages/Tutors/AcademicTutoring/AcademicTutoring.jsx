@@ -74,17 +74,6 @@ const AcademicTutoring = () => {
     setPromoImages(newOrder);
   };
 
-  const handlePromoVideoClick = (index) => {
-    console.log(index);
-
-    // Move the clicked image to the front of the order
-    const newOrder = [
-      promoVideos.find((video, idx) => idx === index),
-      ...promoVideos.filter((video, idx) => idx !== index),
-    ];
-    console.log(newOrder);
-    setPromoVideos(newOrder);
-  };
 
   return (
     <div className="py-10 w-full">
