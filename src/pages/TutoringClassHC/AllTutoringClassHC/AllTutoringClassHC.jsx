@@ -1,8 +1,5 @@
 import { useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import toast from "react-hot-toast";
-import { educationVariants } from "../../../data/educationVariant";
-import { tutoringSubjects } from "../../../data/tutoringSubjects";
+import { FaTrash } from "react-icons/fa";
 import AddTutoringClassHCModal from "./AddTutoringClassHCModal/AddTutoringClassHCModal";
 import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
 import {

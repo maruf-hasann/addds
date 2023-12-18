@@ -21,14 +21,14 @@ const MainSideBar = () => {
       className="flex flex-col h-full w-60 fixed  pb-20 hidden-scrollbar"
       style={{
         msOverflowStyle: "none",
-        scrollbarWidth: "none",
+        scrollbarWidth: "thin",
+          scrollbarColor: "#888 #f1f1f1",
       }}
     >
       <div
         className="flex-1"
         style={{
-          scrollbarWidth: "thin",
-          scrollbarColor: "#888 #f1f1f1",
+          
           overflowX: "hidden",
           scrollMarginRight: "15px", // Adjust as needed
         }}

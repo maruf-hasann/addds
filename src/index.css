@@ -9,9 +9,9 @@ scrolly {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-.hidden-scrollbar ::-webkit-scrollbar {
+/* .hidden-scrollbar ::-webkit-scrollbar {
   display: none;
-}
+} */
 ::-moz-scrollbar {
   display: none;
 }

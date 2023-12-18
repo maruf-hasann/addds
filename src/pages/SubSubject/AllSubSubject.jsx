@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import toast from "react-hot-toast";
-import { educationVariants } from "../../../data/educationVariant";
-import { tutoringSubjects } from "../../../data/tutoringSubjects";
-import AddSubSubjectModal from "./AddSubSubjectModal/AddSubSubjectModal";
 import {
   useDeleteSubSubjectMutation,
   useGetSubSubjectQuery,
-} from "../../../store/service/subSubject/subSubjectApiService";
-import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
+} from "../../store/service/subSubject/subSubjectApiService";
+import AddSubSubjectModal from "./AddSubSubjectModal/AddSubSubjectModal";
 import EditSubSubjectModal from "./EditSubSubjectModal/EditSubSubjectModal";
+import DeleteModal from "../../components/Shared/DeleteModal/DeleteModal";
 
 const AllSubSubject = () => {
   const [openSubSubjectModal, setOpenSubSubjectModal] = useState(false);
