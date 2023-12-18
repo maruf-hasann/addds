@@ -1,9 +1,6 @@
 import { FaStreetView } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import {
-  useGetListOfTutorWithAcademicInfoQuery,
-  useGetTutorInfoFilterDataQuery,
-} from "../../../store/service/tutorInfoFilter/tutorInfoFilterApiService";
+import { useGetListOfTutorWithAcademicInfoQuery } from "../../../store/service/tutorInfoFilter/tutorInfoFilterApiService";
 
 const TutorAccount = () => {
   const { data: tutorsInfoData } = useGetListOfTutorWithAcademicInfoQuery();
@@ -21,7 +18,11 @@ const TutorAccount = () => {
           All Tutor Account
         </h1>
       </div>
-      <div className="overflow-x-scroll rounded bg-white">
+      <div
+        className={`${
+          tutorsInfo?.length && "overflow-x-scroll "
+        } bg-white rounded`}
+      >
         <table className="w-full text-left h-auto">
           {/* head */}
           <thead>

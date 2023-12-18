@@ -1,29 +1,37 @@
 import React from "react";
+import { TbSquareRoundedCheckFilled } from "react-icons/tb";
 
 const PersonalInfo = ({ personalInfo }) => {
   return (
     <div>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Name: <span className="font-semibold"> {personalInfo?.fullName}</span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Name: </span> {personalInfo?.fullName}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Email: <span className="font-semibold"> {personalInfo?.email}</span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />
+        <span className="font-semibold">Email: </span> {personalInfo?.email}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Gender: <span className="font-semibold"> {personalInfo?.gender}</span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />
+        <span className="font-semibold">Gender: </span> {personalInfo?.gender}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Country: <span className="font-semibold"> {personalInfo?.country}</span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />
+        <span className="font-semibold">Country: </span> {personalInfo?.country}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        City: <span className="font-semibold"> {personalInfo?.city}</span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />
+        <span className="font-semibold">City: </span> {personalInfo?.city}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Area: <span className="font-semibold"> {personalInfo?.area}</span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />
+        <span className="font-semibold">Area: </span> {personalInfo?.area}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Home Address:{" "}
-        <span className="font-semibold"> {personalInfo?.homeAddress}</span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />
+        <span className="font-semibold">Home Address: </span>
+        {personalInfo?.homeAddress}
       </p>
     </div>
   );

@@ -1,9 +1,6 @@
 import { FaStreetView } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import {
-  useGetListOfTutorWithTutoringInfoQuery,
-  useGetTutorInfoFilterDataQuery,
-} from "../../../store/service/tutorInfoFilter/tutorInfoFilterApiService";
+import { useGetListOfTutorWithTutoringInfoQuery } from "../../../store/service/tutorInfoFilter/tutorInfoFilterApiService";
 import { Dialog, DialogBody } from "@material-tailwind/react";
 import { CiCircleRemove } from "react-icons/ci";
 import { useState } from "react";
@@ -30,11 +27,6 @@ const AcademicTutoring = () => {
     setOpenPromoVideosModal(!openPromoVideosModal);
     setPromoVideos([]);
   };
-
-  // const { data: tutorsInfoData } =
-  //   useGetTutorInfoFilterDataQuery("8801708666342");
-  // const tutorsInfo = tutorsInfoData?.data[0];
-  // console.log(tutorsInfo);
 
   const { data: tutorsInfoData } = useGetListOfTutorWithTutoringInfoQuery();
   const tutorsInfo = tutorsInfoData?.data;
@@ -89,7 +81,11 @@ const AcademicTutoring = () => {
           All Academic Tutoring
         </h1>
       </div>
-      <div className="overflow-x-scroll rounded bg-white">
+      <div
+        className={`${
+          tutorsInfo?.length && "overflow-x-scroll "
+        } bg-white rounded`}
+      >
         <table className="w-full text-left h-auto">
           {/* head */}
           <thead>
