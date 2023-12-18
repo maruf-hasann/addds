@@ -1,67 +1,53 @@
 import React from "react";
+import { TbSquareRoundedCheckFilled } from "react-icons/tb";
 
 const AdditionalTutoringInfo = ({ additionalTutoringInfo }) => {
   return (
     <div>
       {/* is grow tutoring Program */}
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Grow Tutoring Program:{" "}
-        <span className="font-semibold">
-          {" "}
-          {additionalTutoringInfo?.isGrowTutoringProgram ? "Yes" : "No"}
-        </span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Grow Tutoring Program: </span>{" "}
+        {additionalTutoringInfo?.isGrowTutoringProgram ? "Yes" : "No"}
       </p>
+
       {/* tutoring Program */}
-      {additionalTutoringInfo?.isGrowTutoringProgram ? (
-        <div className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer flex gap-2">
-          Tutoring Program:{" "}
-          <div className="font-semibold flex gap-3">
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Tutoring Programs: </span>{" "}
+        {additionalTutoringInfo?.tutoringProgram?.map((program, idx) => (
+          <p key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
             {" "}
-            {additionalTutoringInfo?.tutoringProgram?.map((program, idx) => (
-              <p key={idx} className="bg-gray-300 px-3 hover:bg-blue-100">
-                {" "}
-                {program?.programName}
-              </p>
-            ))}
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
+            {program?.programName}
+          </p>
+        ))}
+      </p>
 
       {/* Have tutoring training */}
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Have Tutoring Training:{" "}
-        <span className="font-semibold">
-          {" "}
-          {additionalTutoringInfo?.isTutoringTraining ? "Yes" : "No"}
-        </span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Have Tutoring Training: </span>{" "}
+        {additionalTutoringInfo?.isTutoringTraining ? "Yes" : "No"}
       </p>
 
       {/* have teaching experience */}
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Have Teaching Experience:{" "}
-        <span className="font-semibold">
-          {" "}
-          {additionalTutoringInfo?.isTeachingExperience ? "Yes" : "No"}
-        </span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Have Teaching Experience: </span>{" "}
+        {additionalTutoringInfo?.isTeachingExperience ? "Yes" : "No"}
       </p>
-      {/* tutoring Program */}
+      {/* teaching experience */}
       {additionalTutoringInfo?.isTeachingExperience ? (
         <>
-          <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-            Years Of Experience:{" "}
-            <span className="font-semibold">
-              {" "}
-              {additionalTutoringInfo?.yearsOfExperience}
-            </span>
+          <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+            <TbSquareRoundedCheckFilled />{" "}
+            <span className="font-semibold">Years Of Experience: </span>
+            {additionalTutoringInfo?.yearsOfExperience}
           </p>
-          <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-            Teaching History:{" "}
-            <span className="font-semibold">
-              {" "}
-              {additionalTutoringInfo?.teachingHistory}
-            </span>
+          <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+            <TbSquareRoundedCheckFilled />{" "}
+            <span className="font-semibold">Teaching History: </span>
+            {additionalTutoringInfo?.teachingHistory}
           </p>
         </>
       ) : (
@@ -69,69 +55,62 @@ const AdditionalTutoringInfo = ({ additionalTutoringInfo }) => {
       )}
 
       {/* tutoring place */}
-      <div className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer flex gap-2">
-        Tutoring Place:{" "}
-        <div className="font-semibold flex gap-3">
-          {" "}
-          {additionalTutoringInfo?.tutoringPlace?.map((place, idx) => (
-            <p key={idx} className="bg-gray-300 px-3 hover:bg-blue-100">
-              {" "}
-              {place?.placeName}
-            </p>
-          ))}
-        </div>
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Tutoring Place: </span>{" "}
+        {additionalTutoringInfo?.tutoringPlace?.map((place, idx) => (
+          <p key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
+            {" "}
+            {place?.placeName}
+          </p>
+        ))}
       </div>
 
       {/* student variant */}
-      <div className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer flex gap-2">
-        Student Variant:{" "}
-        <div className="font-semibold flex gap-3">
-          {" "}
-          {additionalTutoringInfo?.studentVariant?.map((variant, idx) => (
-            <p key={idx} className="bg-gray-300 px-3 hover:bg-blue-100">
-              {" "}
-              {variant?.variantName}
-            </p>
-          ))}
-        </div>
+
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Student Variant: </span>{" "}
+        {additionalTutoringInfo?.studentVariant?.map((variant, idx) => (
+          <p key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
+            {variant?.variantName}
+          </p>
+        ))}
       </div>
 
       {/* min expected salary*/}
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Min Expected Salary:{" "}
-        <span className="font-semibold">
-          {" "}
-          {additionalTutoringInfo?.minExpectedSalary}
-        </span>
+
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Min Expected Salary: </span>
+        {additionalTutoringInfo?.minExpectedSalary}
       </p>
+
       {/* max expected salary*/}
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Max Expected Salary:{" "}
-        <span className="font-semibold">
-          {" "}
-          {additionalTutoringInfo?.maxExpectedSalary}
-        </span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Max Expected Salary: </span>
+        {additionalTutoringInfo?.maxExpectedSalary}
       </p>
+
       {/* tutoring location */}
-      <div className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer flex gap-2">
-        Tutoring Location:{" "}
-        <div className="font-semibold flex gap-3">
-          {" "}
-          {additionalTutoringInfo?.tutoringLocation?.map((location, idx) => (
-            <p key={idx} className="bg-gray-300 px-3 hover:bg-blue-100">
-              {" "}
-              {location?.locationName}
-            </p>
-          ))}
-        </div>
+
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Tutoring Location: </span>{" "}
+        {additionalTutoringInfo?.tutoringLocation?.map((location, idx) => (
+          <p key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
+            {location?.locationName}
+          </p>
+        ))}
       </div>
-      {/* max expected salary*/}
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Personal Statement:{" "}
-        <span className="font-semibold">
-          {" "}
-          {additionalTutoringInfo?.personalStatement}
-        </span>
+
+      {/* personal statement*/}
+
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Personal Statement: </span>
+        {additionalTutoringInfo?.personalStatement}
       </p>
     </div>
   );

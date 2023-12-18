@@ -1,115 +1,126 @@
 import React from "react";
+import { TbSquareRoundedCheckFilled } from "react-icons/tb";
 
 const TutoringInfo = ({ tutoringInfo }) => {
+  const transformSubjectArray = (inputArray) => {
+    // Check if the input is an array
+    if (!Array.isArray(inputArray)) {
+      return;
+    }
+
+    return inputArray.reduce((acc, item) => {
+      const existingItem = acc.find((i) => i.mainSubject === item.mainSubject);
+
+      if (existingItem) {
+        if (item.subSubject) {
+          existingItem.subSubjects.push(item.subSubject);
+        }
+      } else {
+        acc.push({
+          mainSubject: item.mainSubject,
+          subSubjects: item.subSubject ? [item.subSubject] : [],
+        });
+      }
+
+      return acc;
+    }, []);
+  };
+
   return (
     <div>
       {/* tutoring variant */}
-      <div className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer flex gap-2">
-        Tutoring Variant:{" "}
-        <div className="font-semibold flex gap-3">
-          {" "}
-          {tutoringInfo?.tutoringVariant?.map((variant, idx) => (
-            <p key={idx} className="bg-gray-300 px-3 hover:bg-blue-100">
-              {" "}
-              {variant?.variantName}
-            </p>
-          ))}
-        </div>
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Tutoring Variant: </span>{" "}
+        {tutoringInfo?.tutoringVariant?.map((variant, idx) => (
+          <p key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
+            {" "}
+            {variant?.variantName}
+          </p>
+        ))}
       </div>
       {/* tutoring grade */}
-      <div className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer flex gap-2">
-        Tutoring Grade:{" "}
-        <div className="font-semibold flex gap-3">
-          {" "}
-          {tutoringInfo?.tutoringGrade?.map((grade, idx) => (
-            <p key={idx} className="bg-gray-300 px-3 hover:bg-blue-100">
-              {" "}
-              {grade?.gradeName}
-            </p>
-          ))}
-        </div>
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Tutoring Grade: </span>{" "}
+        {tutoringInfo?.tutoringGrade?.map((grade, idx) => (
+          <p key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
+            {" "}
+            {grade?.gradeName}
+          </p>
+        ))}
       </div>
       {/* tutoring subject */}
-      <div className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer flex gap-2">
-        Tutoring Subject:{" "}
-        <div className="font-semibold flex gap-3">
-          {" "}
-          {tutoringInfo?.tutoringSubjects?.map((subject, idx) => (
-            <p key={idx} className="bg-gray-300 px-3 hover:bg-blue-100">
-              {" "}
-              {subject?.subSubject ? subject?.subSubject : subject?.mainSubject}
-            </p>
-          ))}
-        </div>
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Tutoring Subjects: </span>{" "}
+        {transformSubjectArray(tutoringInfo?.tutoringSubjects)?.map(
+          (subject, idx) => (
+            <span key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
+              {subject.subSubjects?.length
+                ? `${subject.mainSubject}(${subject?.subSubjects?.map(
+                    (subSub) => subSub
+                  )})`
+                : subject?.mainSubject}
+            </span>
+          )
+        )}
       </div>
       {/* tutoring curriculum */}
-      <div className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer flex gap-2">
-        Tutoring Curriculum:{" "}
-        <div className="font-semibold flex gap-3">
-          {" "}
-          {tutoringInfo?.tutoringCurriculum?.map((curriculum, idx) => (
-            <p key={idx} className="bg-gray-300 px-3 hover:bg-blue-100">
-              {" "}
-              {curriculum?.curriculumBoard}
-            </p>
-          ))}
-        </div>
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Tutoring Curriculum: </span>{" "}
+        {tutoringInfo?.tutoringCurriculum?.map((curriculum, idx) => (
+          <p key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
+            {" "}
+            {curriculum?.curriculumBoard}
+          </p>
+        ))}
       </div>
       {/* is teach admission test */}
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Teach Admission Test:{" "}
-        <span className="font-semibold">
-          {" "}
-          {tutoringInfo?.isTeachAdmissionTest ? "Yes" : "No"}
-        </span>
-      </p>
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Teach Admission Test: </span>{" "}
+        {tutoringInfo?.isTeachAdmissionTest ? "Yes" : "No"}
+      </div>
       {/* admission test subject */}
-      {tutoringInfo?.isTeachAdmissionTest ? (
-        <div className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer flex gap-2">
-          Teach Admission Test Subject:{" "}
-          <div className="font-semibold flex gap-3">
-            {" "}
-            {tutoringInfo?.teachAdmissionTest?.map((subject, idx) => (
-              <p key={idx} className="bg-gray-300 px-3 hover:bg-blue-100">
-                {" "}
-                {subject?.subSubject
-                  ? subject?.subSubject
-                  : subject?.mainSubject}
-              </p>
-            ))}
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
-
-      {/* is teach test paper*/}
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Teach Test Paper:{" "}
-        <span className="font-semibold">
-          {" "}
-          {tutoringInfo?.isTeachTestPapers ? "Yes" : "No"}
-        </span>
-      </p>
-      {/* admission test subject */}
-      {tutoringInfo?.isTeachTestPapers ? (
-        <div className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer flex gap-2">
-          Teach Test Paper Subject:{" "}
-          <div className="font-semibold flex gap-3">
-            {" "}
-            {tutoringInfo?.teachTestPapers?.map((subject, idx) => (
-              <p key={idx} className="bg-gray-300 px-3 hover:bg-blue-100">
-                {" "}
-                {subject?.subSubject
-                  ? subject?.subSubject
-                  : subject?.mainSubject}
-              </p>
-            ))}
-          </div>
-        </div>
-      ) : (
-        ""
-      )}
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Admission Test Subjects: </span>{" "}
+        {transformSubjectArray(tutoringInfo?.teachAdmissionTest)?.map(
+          (subject, idx) => (
+            <span key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
+              {subject.subSubjects?.length
+                ? `${subject.mainSubject}(${subject?.subSubjects?.map(
+                    (subSub) => subSub
+                  )})`
+                : subject?.mainSubject}
+            </span>
+          )
+        )}
+      </div>
+      {/* teach test paper */}
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Teach Test Paper: </span>{" "}
+        {tutoringInfo?.isTeachTestPapers ? "Yes" : "No"}
+      </div>
+      {/* Test paper subjects */}
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Test Paper Subjects: </span>{" "}
+        {transformSubjectArray(tutoringInfo?.teachTestPapers)?.map(
+          (subject, idx) => (
+            <span key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
+              {subject.subSubjects?.length
+                ? `${subject.mainSubject}(${subject?.subSubjects?.map(
+                    (subSub) => subSub
+                  )})`
+                : subject?.mainSubject}
+            </span>
+          )
+        )}
+      </div>
     </div>
   );
 };

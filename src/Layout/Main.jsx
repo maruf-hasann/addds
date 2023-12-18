@@ -32,6 +32,7 @@ const Main = () => {
         )}
         <div className="flex-1 pt-14 overflow-x-auto relative">
           <div className="w-full h-60 bg-[#1C6BAD] absolute inset-0 mt-[75px] -z-10"></div>
+          {/* <div className="bg-gray-200 fixed inset-0 mt-[75px] -z-20"></div> */}
           <div className="z-10 pt-20 px-5 md:px-10">
             <Outlet />
           </div>

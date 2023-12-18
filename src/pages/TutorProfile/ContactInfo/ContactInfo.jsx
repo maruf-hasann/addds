@@ -1,47 +1,43 @@
 import React from "react";
+import { TbSquareRoundedCheckFilled } from "react-icons/tb";
 
 const ContactInfo = ({ contactInfo }) => {
   return (
     <div>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Whatsapp Number:{" "}
-        <span className="font-semibold"> {contactInfo?.whatsappNumber}</span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Whatsapp Number: </span>{" "}
+        {contactInfo?.whatsappNumber}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Facebook URL:{" "}
-        <span className="font-semibold"> {contactInfo?.facebookUrl}</span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Facebook URL:: </span>{" "}
+        {contactInfo?.facebookUrl}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Google Meet URL:{" "}
-        <span className="font-semibold"> {contactInfo?.googleMeetUrl}</span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Google Meet URL: </span>{" "}
+        {contactInfo?.googleMeetUrl}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Interview Convenient Time:{" "}
-        <span className="font-semibold">
-          {" "}
-          {contactInfo?.interviewConvenientTime}
-        </span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Interview Convenient Time: </span>{" "}
+        {contactInfo?.interviewConvenientTime}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Emergency Contact Name:{" "}
-        <span className="font-semibold">
-          {" "}
-          {contactInfo?.emergencyContactName}
-        </span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Emergency Contact Name: </span>{" "}
+        {contactInfo?.emergencyContactName}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Emergency Contact Number:{" "}
-        <span className="font-semibold">
-          {" "}
-          {contactInfo?.emergencyContactNumber}
-        </span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Emergency Contact Number: </span>{" "}
+        {contactInfo?.emergencyContactNumber}
       </p>
-      <p className="text-lg mb-3 hover:text-[#1E6CB3] cursor-pointer">
-        Emergency Contact Relation
-        <span className="font-semibold">
-          {" "}
-          {contactInfo?.emergencyContactRelation}
-        </span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+        <TbSquareRoundedCheckFilled />{" "}
+        <span className="font-semibold">Emergency Contact Relation: </span>{" "}
+        {contactInfo?.emergencyContactRelation}
       </p>
     </div>
   );

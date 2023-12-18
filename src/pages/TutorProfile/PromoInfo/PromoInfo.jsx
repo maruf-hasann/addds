@@ -1,23 +1,30 @@
 import React from "react";
+import { TbSquareRoundedCheckFilled } from "react-icons/tb";
 
 const PromoInfo = ({ promoInfo }) => {
   console.log(promoInfo);
   return (
     <div>
       <div>
-        <p className="font-semibold text-lg mb-3">Media</p>
-        <div className="flex gap-5 flex-wrap">
+        <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+          <TbSquareRoundedCheckFilled />{" "}
+          <span className="font-semibold">Media: </span>{" "}
+        </p>
+        <div className="flex gap-5 flex-wrap justify-center">
           {promoInfo?.mediaGallery?.map((media, idx) => (
             <img
               key={idx}
               src={media?.imgUrl}
-              className="max-w-[200px] w-full h-auto"
+              className="max-w-[250px] w-full h-[150px] object-cover"
             />
           ))}
         </div>
       </div>
       <div className="mt-10">
-        <p className="font-semibold text-lg mb-3">Video</p>
+        <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
+          <TbSquareRoundedCheckFilled />{" "}
+          <span className="font-semibold">Video: </span>{" "}
+        </p>
         <div className="flex gap-5 flex-wrap">
           {promoInfo?.videoGallery?.map((video, idx) => (
             <video
