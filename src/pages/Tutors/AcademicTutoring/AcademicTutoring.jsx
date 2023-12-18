@@ -1,6 +1,9 @@
 import { FaStreetView } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useGetTutorInfoFilterDataQuery } from "../../../store/service/tutorInfoFilter/tutorInfoFilterApiService";
+import {
+  useGetListOfTutorWithTutoringInfoQuery,
+  useGetTutorInfoFilterDataQuery,
+} from "../../../store/service/tutorInfoFilter/tutorInfoFilterApiService";
 import { Dialog, DialogBody } from "@material-tailwind/react";
 import { CiCircleRemove } from "react-icons/ci";
 import { useState } from "react";
@@ -28,9 +31,14 @@ const AcademicTutoring = () => {
     setPromoVideos([]);
   };
 
-  const { data: tutorsInfoData } =
-    useGetTutorInfoFilterDataQuery("8801708666342");
-  const tutorsInfo = tutorsInfoData?.data[0];
+  // const { data: tutorsInfoData } =
+  //   useGetTutorInfoFilterDataQuery("8801708666342");
+  // const tutorsInfo = tutorsInfoData?.data[0];
+  // console.log(tutorsInfo);
+
+  const { data: tutorsInfoData } = useGetListOfTutorWithTutoringInfoQuery();
+  const tutorsInfo = tutorsInfoData?.data;
+
   console.log(tutorsInfo);
 
   const tableDataClasses =
@@ -74,10 +82,9 @@ const AcademicTutoring = () => {
     setPromoImages(newOrder);
   };
 
-
   return (
     <div className="py-10 w-full">
-      <div className="flex justify-between items-center pb-3">
+      <div className="flex justify-between items-center mb-5">
         <h1 className="font-bold text-2xl text-white">All Academic Tutoring</h1>
       </div>
       <div className="overflow-x-scroll rounded bg-white">
@@ -86,6 +93,8 @@ const AcademicTutoring = () => {
           <thead>
             <tr>
               <th className={tableHeadClasses}>Sl</th>
+
+              <th className={tableHeadClasses}>Profile</th>
               <th className={tableHeadClasses}>Name</th>
               <th className={tableHeadClasses}>Number</th>
               <th className={tableHeadClasses}>Tutoring Variant</th>
@@ -115,65 +124,99 @@ const AcademicTutoring = () => {
             </tr>
           </thead>
           <tbody>
-            {[tutorsInfo, tutorsInfo]?.map((info, idx) => (
+            {tutorsInfo?.map((info, idx) => (
               <tr className={`hover:bg-blue-50`} key={idx}>
                 <th className={tableDataClasses}>{idx + 1}</th>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.personalInfo?.fullName}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.personalInfo?.phoneNumber}
-                </td>
-                <td className={tableDataClasses}>
-                  {tutorsInfo?.tutoringInfo?.tutoringVariant?.map(
-                    (variant, idx) => (
-                      <span key={idx} className={tableDataArrayClasses}>
-                        {variant?.variantName}
-                      </span>
-                    )
+                {/* profile */}
+                <td
+                  className={`${tableDataClasses} mx-auto text-center`}
+                >
+                  {info?.identityInfo?.personalPhoto ? (
+                    <img
+                      src={info?.identityInfo?.personalPhoto}
+                      alt=""
+                      className="h-12 w-12 object-cover rounded-full"
+                    />
+                  ) : (
+                    "N/A"
                   )}
                 </td>
+                {/* name */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.tutoringInfo?.tutoringGrade?.map(
-                    (grade, idx) => (
-                      <span key={idx} className={tableDataArrayClasses}>
-                        {grade?.gradeName}
-                      </span>
-                    )
-                  )}
+                  {info?.personalInfo?.fullName
+                    ? info.personalInfo.fullName
+                    : "N/A"}
                 </td>
+                {/* phone number */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.tutoringInfo?.tutoringCurriculum?.map(
-                    (curriculum, idx) => (
-                      <span key={idx} className={tableDataArrayClasses}>
-                        {curriculum?.curriculumBoard}
-                      </span>
-                    )
-                  )}
+                  {info?.personalInfo?.phoneNumber
+                    ? info.personalInfo.phoneNumber
+                    : "N/A"}
                 </td>
+                {/* tutoring variant */}
+                <td className={tableDataClasses}>
+                  {info?.tutoringInfo?.tutoringVariant?.length
+                    ? info?.tutoringInfo?.tutoringVariant?.map(
+                        (variant, idx) => (
+                          <span key={idx} className={tableDataArrayClasses}>
+                            {variant?.variantName}
+                          </span>
+                        )
+                      )
+                    : "N/A"}
+                </td>
+                {/* tutoring grade */}
+                <td className={tableDataClasses}>
+                  {info?.tutoringInfo?.tutoringGrade?.length
+                    ? info?.tutoringInfo?.tutoringGrade?.map((grade, idx) => (
+                        <span key={idx} className={tableDataArrayClasses}>
+                          {grade?.gradeName}
+                        </span>
+                      ))
+                    : "N/A"}
+                </td>
+                {/* tutoring curriculum */}
+                <td className={tableDataClasses}>
+                  {info?.tutoringInfo?.tutoringCurriculum?.length
+                    ? info?.tutoringInfo?.tutoringCurriculum?.map(
+                        (curriculum, idx) => (
+                          <span key={idx} className={tableDataArrayClasses}>
+                            {curriculum?.curriculumBoard}
+                          </span>
+                        )
+                      )
+                    : "N/A"}
+                </td>
+                {/* tutoring subjects */}
                 <td className={tableDataClasses}>
                   <div className="flex">
-                    {transformSubjectArray(
-                      tutorsInfo?.tutoringInfo?.tutoringSubjects
-                    )?.map((subject, idx) => (
-                      <span key={idx} className={tableDataArrayClasses}>
-                        {subject.subSubjects?.length
-                          ? `${subject.mainSubject}(${subject?.subSubjects?.map(
-                              (subSub) => subSub
-                            )})`
-                          : subject?.mainSubject}
-                      </span>
-                    ))}
+                    {info?.tutoringInfo?.tutoringSubjects?.length
+                      ? transformSubjectArray(
+                          info?.tutoringInfo?.tutoringSubjects
+                        )?.map((subject, idx) => (
+                          <span key={idx} className={tableDataArrayClasses}>
+                            {subject.subSubjects?.length
+                              ? `${
+                                  subject.mainSubject
+                                }(${subject?.subSubjects?.map(
+                                  (subSub) => subSub
+                                )})`
+                              : subject?.mainSubject}
+                          </span>
+                        ))
+                      : "N/A"}
                   </div>
                 </td>
+                {/* is teach test papers */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.tutoringInfo?.isTeachTestPapers ? "Yes" : "No"}
+                  {info?.tutoringInfo?.isTeachTestPapers ? "Yes" : "No"}
                 </td>
+                {/* test papers subjects */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.tutoringInfo?.isTeachTestPapers ? (
+                  {info?.tutoringInfo?.isTeachTestPapers ? (
                     <div className="flex">
                       {transformSubjectArray(
-                        tutorsInfo?.tutoringInfo?.teachTestPapers
+                        info?.tutoringInfo?.teachTestPapers
                       )?.map((subject, idx) => (
                         <span key={idx} className={tableDataArrayClasses}>
                           {subject.subSubjects?.length
@@ -187,19 +230,19 @@ const AcademicTutoring = () => {
                       ))}
                     </div>
                   ) : (
-                    "Empty"
+                    "N/A"
                   )}
                 </td>
+                {/* is teach admission test */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.tutoringInfo?.isTeachAdmissionTest
-                    ? "Yes"
-                    : "No"}
+                  {info?.tutoringInfo?.isTeachAdmissionTest ? "Yes" : "No"}
                 </td>
+                {/* admission test subjects */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.tutoringInfo?.isTeachAdmissionTest ? (
+                  {info?.tutoringInfo?.isTeachAdmissionTest ? (
                     <div className="flex">
                       {transformSubjectArray(
-                        tutorsInfo?.tutoringInfo?.teachAdmissionTest
+                        info?.tutoringInfo?.teachAdmissionTest
                       )?.map((subject, idx) => (
                         <span key={idx} className={tableDataArrayClasses}>
                           {subject.subSubjects?.length
@@ -213,149 +256,185 @@ const AcademicTutoring = () => {
                       ))}
                     </div>
                   ) : (
-                    "Empty"
+                    "N/A"
                   )}
                 </td>
+                {/* is grow tutoring program */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.additionalInfo?.isGrowTutoringProgram
+                  {info?.additionalTutoringInfo?.isGrowTutoringProgram
                     ? "Yes"
                     : "No"}
                 </td>
+                {/* tutoring program */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.additionalInfo?.tutoringProgram?.map(
-                    (program, idx) => (
-                      <span key={idx} className={tableDataArrayClasses}>
-                        {program?.programName}
-                      </span>
-                    )
-                  )}
+                  {info?.additionalTutoringInfo?.tutoringProgram?.length
+                    ? info?.additionalTutoringInfo?.tutoringProgram?.map(
+                        (program, idx) => (
+                          <span key={idx} className={tableDataArrayClasses}>
+                            {program?.programName}
+                          </span>
+                        )
+                      )
+                    : "N/A"}
                 </td>
+                {/* is tutoring training */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.additionalInfo?.isTutoringTraining
+                  {info?.additionalTutoringInfo?.isTutoringTraining
                     ? "Yes"
                     : "No"}
                 </td>
+                {/* is teaching experience */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.additionalInfo?.isTeachingExperience
+                  {info?.additionalTutoringInfo?.isTeachingExperience
                     ? "Yes"
                     : "No"}
                 </td>
+                {/* years of experience */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.additionalInfo?.yearsOfExperience}
+                  {info?.additionalTutoringInfo?.yearsOfExperience
+                    ? info?.additionalTutoringInfo?.yearsOfExperience
+                    : "N/A"}
                 </td>
+                {/* teaching history */}
                 <td className={tableDataClasses}>
                   <div>
-                    {tutorsInfo?.additionalInfo?.teachingHistory?.length >
-                    30 ? (
-                      <p>
-                        {tutorsInfo?.additionalInfo?.teachingHistory?.slice(
-                          0,
-                          30
-                        )}
-                        <span
-                          onClick={() => {
-                            setOpenTextForModal(!openTextForModal);
-                            setTextForModal(
-                              tutorsInfo?.additionalInfo?.teachingHistory
-                            );
-                          }}
-                          className="cursor-pointer text-[#1D6AAF]"
-                        >
-                          ...See More
-                        </span>
-                      </p>
+                    {info?.additionalTutoringInfo?.teachingHistory ? (
+                      info?.additionalTutoringInfo?.teachingHistory?.length >
+                      30 ? (
+                        <p>
+                          {info?.additionalTutoringInfo?.teachingHistory?.slice(
+                            0,
+                            30
+                          )}
+                          <span
+                            onClick={() => {
+                              setOpenTextForModal(!openTextForModal);
+                              setTextForModal(
+                                info?.additionalTutoringInfo?.teachingHistory
+                              );
+                            }}
+                            className="cursor-pointer text-[#1D6AAF]"
+                          >
+                            ...See More
+                          </span>
+                        </p>
+                      ) : (
+                        info?.additionalTutoringInfo?.teachingHistory
+                      )
                     ) : (
-                      tutorsInfo?.additionalInfo?.teachingHistory
+                      "N/A"
                     )}
                   </div>
                 </td>
+                {/* tutoring places */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.additionalInfo?.tutoringPlace?.map(
-                    (place, idx) => (
-                      <span key={idx} className={tableDataArrayClasses}>
-                        {place?.placeName}
-                      </span>
-                    )
-                  )}
+                  {info?.additionalTutoringInfo?.tutoringPlace?.length
+                    ? info?.additionalTutoringInfo?.tutoringPlace?.map(
+                        (place, idx) => (
+                          <span key={idx} className={tableDataArrayClasses}>
+                            {place?.placeName}
+                          </span>
+                        )
+                      )
+                    : "N/A"}
                 </td>
+                {/* student variant */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.additionalInfo?.studentVariant?.map(
-                    (variant, idx) => (
-                      <span key={idx} className={tableDataArrayClasses}>
-                        {variant?.variantName}
-                      </span>
-                    )
-                  )}
+                  {info?.additionalTutoringInfo?.studentVariant?.length
+                    ? info?.additionalTutoringInfo?.studentVariant?.map(
+                        (variant, idx) => (
+                          <span key={idx} className={tableDataArrayClasses}>
+                            {variant?.variantName}
+                          </span>
+                        )
+                      )
+                    : "N/A"}
                 </td>
+                {/* min exp. salary */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.additionalInfo?.minExpectedSalary}
+                  {info?.additionalTutoringInfo?.minExpectedSalary
+                    ? info.additionalTutoringInfo.minExpectedSalary
+                    : "N/A"}
                 </td>
+                {/* max exp. salary */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.additionalInfo?.maxExpectedSalary}
+                  {info?.additionalTutoringInfo?.maxExpectedSalary
+                    ? info.additionalTutoringInfo.maxExpectedSalary
+                    : "N/A"}
                 </td>
+                {/* tutoring locations */}
                 <td className={tableDataClasses}>
-                  {tutorsInfo?.additionalInfo?.tutoringLocation?.map(
-                    (location, idx) => (
-                      <span key={idx} className={tableDataArrayClasses}>
-                        {location?.locationName}
-                      </span>
-                    )
-                  )}
+                  {info?.additionalTutoringInfo?.tutoringLocation?.length
+                    ? info?.additionalTutoringInfo?.tutoringLocation?.map(
+                        (location, idx) => (
+                          <span key={idx} className={tableDataArrayClasses}>
+                            {location?.locationName}
+                          </span>
+                        )
+                      )
+                    : "N/A"}
                 </td>
+                {/* personal statement */}
                 <td className={tableDataClasses}>
                   <div>
-                    {tutorsInfo?.additionalInfo?.personalStatement?.length >
-                    30 ? (
-                      <p>
-                        {tutorsInfo?.additionalInfo?.personalStatement?.slice(
-                          0,
-                          30
-                        )}
-                        <span
-                          onClick={() => {
-                            setOpenTextForModal(!openTextForModal);
-                            setTextForModal(
-                              tutorsInfo?.additionalInfo?.personalStatement
-                            );
-                          }}
-                          className="cursor-pointer text-[#1D6AAF]"
-                        >
-                          ...See More
-                        </span>
-                      </p>
+                    {info?.additionalTutoringInfo?.personalStatement?.length ? (
+                      info?.additionalTutoringInfo?.personalStatement?.length >
+                      30 ? (
+                        <p>
+                          {info?.additionalTutoringInfo?.personalStatement?.slice(
+                            0,
+                            30
+                          )}
+                          <span
+                            onClick={() => {
+                              setOpenTextForModal(!openTextForModal);
+                              setTextForModal(
+                                info?.additionalTutoringInfo?.personalStatement
+                              );
+                            }}
+                            className="cursor-pointer text-[#1D6AAF]"
+                          >
+                            ...See More
+                          </span>
+                        </p>
+                      ) : (
+                        info?.additionalTutoringInfo?.personalStatement
+                      )
                     ) : (
-                      tutorsInfo?.additionalInfo?.personalStatement
+                      "N/A"
                     )}
                   </div>
                 </td>
+                {/* gallery */}
                 <td className={tableDataClasses}>
                   <div className="flex justify-between">
-                    {tutorsInfo?.promoInfo?.mediaGallery?.length ? (
+                    {/* media gallery */}
+                    {info?.promoInfo?.mediaGallery?.length ? (
                       <p
                         onClick={() => {
                           setOpenPromoImagesModal(!openPromoImagesModal);
-                          setPromoImages(tutorsInfo?.promoInfo?.mediaGallery);
+                          setPromoImages(info?.promoInfo?.mediaGallery);
                         }}
                         className="border-r  w-full px-5 cursor-pointer hover:text-[#1D6AAF]"
                       >
                         Show Images
                       </p>
                     ) : (
-                      <p className="border-r  w-full px-5 ">No Image</p>
+                      <p className="border-r  w-full px-5 ">N/A</p>
                     )}
-
-                    {tutorsInfo?.promoInfo?.mediaGallery?.length ? (
+                    {/* video gallery */}
+                    {info?.promoInfo?.videoGallery?.length ? (
                       <p
                         onClick={() => {
                           setOpenPromoVideosModal(!openPromoVideosModal);
-                          setPromoVideos(tutorsInfo?.promoInfo?.videoGallery);
+                          setPromoVideos(info?.promoInfo?.videoGallery);
                         }}
                         className="border-l  w-full px-5 cursor-pointer hover:text-[#1D6AAF]"
                       >
                         Show Videos
                       </p>
                     ) : (
-                      <p className="border-l  w-full px-5 ">No Video</p>
+                      <p className="border-l  w-full px-5 ">N/A</p>
                     )}
                   </div>
                 </td>
@@ -363,7 +442,7 @@ const AcademicTutoring = () => {
                   className={`${tableDataClasses} w-[120px] flex gap-3 border-b-0`}
                 >
                   <Link
-                    to={`/tutor-profile/${tutorsInfo?.personalInfo?.phoneNumber}`}
+                    to={`/tutor-profile/${info?.personalInfo?.phoneNumber}`}
                     className="text-center flex justify-center mx-auto"
                   >
                     <FaStreetView

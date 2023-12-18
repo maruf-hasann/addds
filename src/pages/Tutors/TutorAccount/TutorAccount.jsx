@@ -16,7 +16,7 @@ const TutorAccount = () => {
 
   return (
     <div className="py-10 w-full">
-      <div className="flex justify-between items-center pb-3">
+      <div className="flex justify-between items-center mb-5">
         <h1 className="font-bold text-2xl text-white">All Tutor Account</h1>
       </div>
       <div className="overflow-x-scroll rounded bg-white">
@@ -25,6 +25,8 @@ const TutorAccount = () => {
           <thead>
             <tr>
               <th className={`${tableHeadClasses}`}>Sl</th>
+
+              <th className={`${tableHeadClasses}`}>Profile</th>
               <th className={`${tableHeadClasses}`}>Name</th>
 
               <th className={`${tableHeadClasses}`}>Number</th>
@@ -67,6 +69,18 @@ const TutorAccount = () => {
             {tutorsInfo?.map((info, idx) => (
               <tr className={`hover:bg-blue-50`} key={idx}>
                 <th className={tableDataClasses}>{idx + 1}</th>
+                {/* profile */}
+                <td className={`${tableDataClasses} mx-auto text-center`}>
+                  {info?.identityInfo?.personalPhoto ? (
+                    <img
+                      src={info?.identityInfo?.personalPhoto}
+                      alt=""
+                      className="h-12 w-12 object-cover rounded-full"
+                    />
+                  ) : (
+                    "N/A"
+                  )}
+                </td>
                 {/* name */}
                 <td className={tableDataClasses}>
                   {info?.personalInfo?.fullName
@@ -147,64 +161,73 @@ const TutorAccount = () => {
                     ? info?.contactInfo?.interviewConvenientTime
                     : "N/A"}
                 </td>
+                {/* education variant */}
                 <td className={tableDataClasses}>
                   {info?.academicInfo?.educationVariant
                     ? info?.academicInfo?.educationVariant
                     : "N/A"}
                 </td>
+                {/* school name */}
                 <td className={tableDataClasses}>
                   {info?.academicInfo?.schoolName
                     ? info?.academicInfo?.schoolName
                     : "N/A"}
                 </td>
+                {/* highschool board */}
                 <td className={tableDataClasses}>
                   {info?.academicInfo?.highSchoolBoard
                     ? info?.academicInfo?.highSchoolBoard
                     : "N/A"}
                 </td>
+                {/* high school result */}
                 <td className={tableDataClasses}>
                   {info?.academicInfo?.highSchoolResult
                     ? info?.academicInfo?.highSchoolResult
                     : "N/A"}
                 </td>
+                {/* collage name */}
                 <td className={tableDataClasses}>
                   {info?.academicInfo?.collageName
                     ? info?.academicInfo?.collageName
                     : "N/A"}
                 </td>
+                {/* collage board */}
                 <td className={tableDataClasses}>
                   {info?.academicInfo?.collageBoard
                     ? info?.academicInfo?.collageBoard
                     : "N/A"}
                 </td>
+                {/* collage result */}
                 <td className={tableDataClasses}>
                   {info?.academicInfo?.collageResult
                     ? info?.academicInfo?.collageResult
                     : "N/A"}
                 </td>
+                {/* university name */}
                 <td className={tableDataClasses}>
                   {info?.academicInfo?.universityName
                     ? info?.academicInfo?.universityName
                     : "N/A"}
                 </td>
+                {/* subject name */}
                 <td className={tableDataClasses}>
                   {info?.academicInfo?.subjectsName
                     ? info?.academicInfo?.subjectsName
                     : "N/A"}
                 </td>
+                {/* university running year */}
                 <td className={tableDataClasses}>
                   {info?.academicInfo?.universityRunningYear
                     ? info?.academicInfo?.universityRunningYear
                     : "N/A"}
                 </td>
+                {/* current affair */}
                 <td className={tableDataClasses}>
                   {info?.academicInfo?.currentAffair
                     ? info?.academicInfo?.currentAffair
                     : "N/A"}
                 </td>
-                <td
-                  className={`${tableDataClasses} w-[120px]`}
-                >
+                <td className={`${tableDataClasses} w-[120px]`}>
                   <Link
                     to={`/tutor-profile/${info?.personalInfo?.phoneNumber}`}
                     className="text-center flex justify-center mx-auto"
