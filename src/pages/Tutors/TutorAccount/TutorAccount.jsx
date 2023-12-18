@@ -17,7 +17,9 @@ const TutorAccount = () => {
   return (
     <div className="py-10 w-full">
       <div className="flex justify-between items-center mb-5">
-        <h1 className="font-bold text-2xl text-white">All Tutor Account</h1>
+        <h1 className="font-bold text-xl md:text-2xl text-white">
+          All Tutor Account
+        </h1>
       </div>
       <div className="overflow-x-scroll rounded bg-white">
         <table className="w-full text-left h-auto">

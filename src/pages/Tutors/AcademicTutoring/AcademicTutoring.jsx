@@ -85,7 +85,9 @@ const AcademicTutoring = () => {
   return (
     <div className="py-10 w-full">
       <div className="flex justify-between items-center mb-5">
-        <h1 className="font-bold text-2xl text-white">All Academic Tutoring</h1>
+        <h1 className="font-bold text-xl md:text-2xl text-white">
+          All Academic Tutoring
+        </h1>
       </div>
       <div className="overflow-x-scroll rounded bg-white">
         <table className="w-full text-left h-auto">
@@ -128,9 +130,7 @@ const AcademicTutoring = () => {
               <tr className={`hover:bg-blue-50`} key={idx}>
                 <th className={tableDataClasses}>{idx + 1}</th>
                 {/* profile */}
-                <td
-                  className={`${tableDataClasses} mx-auto text-center`}
-                >
+                <td className={`${tableDataClasses} mx-auto text-center`}>
                   {info?.identityInfo?.personalPhoto ? (
                     <img
                       src={info?.identityInfo?.personalPhoto}

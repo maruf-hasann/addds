@@ -61,7 +61,9 @@ const AddTutorsInfo = () => {
   return (
     <div className="py-10">
       <div className="flex justify-between items-center mb-5">
-        <h1 className="font-bold text-2xl text-white">Add Tutoring Info</h1>
+        <h1 className="font-bold text-xl md:text-2xl text-white">
+          Add Tutoring Info
+        </h1>
         <Link
           to={"/all-tutor-infos"}
           className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
