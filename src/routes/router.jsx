@@ -34,11 +34,14 @@ import AllSubjectClassVariantModal from "../pages/SubjectClassVariant/AllSubject
 import AllSubjectVariant from "../pages/SubjectVariant/AllSubjectVariant/AllSubjectVariant";
 import AllTutoringLocation from "../pages/TutoringLocation/AllTutoringLocation/AllTutoringLocation";
 import TutorProfile from "../pages/TutorProfile/TutorProfile";
+import TutorAccount from "../pages/Tutors/TutorAccount/TutorAccount";
+import AcademicTutoring from "../pages/Tutors/AcademicTutoring/AcademicTutoring";
+import ParentAccount from "../pages/Parents/ParentAccount/ParentAccount";
+import StudentAccount from "../pages/StudentAccount/StudentAccount/StudentAccount";
+import ParentDetails from "../pages/Parents/ParentDetails/ParentDetails";
 import AllMockPricing from "../pages/MockPricing/AllMockPricing/AllMockPricing";
 
 import AllSubSubject from "../pages/SubSubject/AllSubSubject";
-import TutorAccount from "../pages/Tutors/TutorAccount/TutorAccount";
-import AcademicTutoring from "../pages/Tutors/AcademicTutoring/AcademicTutoring";
 
 export const router = createBrowserRouter([
   {
@@ -167,6 +170,19 @@ export const router = createBrowserRouter([
         path: "/academic-tutoring",
         element: <AcademicTutoring />,
       },
+      {
+        path: "/all-parent-account",
+        element: <ParentAccount />,
+      },
+      {
+        path: "/parent-profile/:number",
+        element: <ParentDetails />,
+        
+      },
+      {
+        path: "/all-student-account",
+        element: <StudentAccount />,
+      }
     ],
   },
   {
