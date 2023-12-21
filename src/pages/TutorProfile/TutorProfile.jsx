@@ -16,7 +16,10 @@ import AcademicInfo from "./AcademicInfo/AcademicInfo";
 import TutoringInfo from "./TutoringInfo/TutoringInfo";
 import AdditionalTutoringInfo from "./AdditionalTutoringInfo/AdditionalTutoringInfo";
 import PromoInfo from "./PromoInfo/PromoInfo";
-import { ImSpinner10, ImSpinner11 } from "react-icons/im";
+import { ImSpinner10 } from "react-icons/im";
+import { FaLocationPin, FaPhone } from "react-icons/fa6";
+import { IoMdMail } from "react-icons/io";
+import { CiMail } from "react-icons/ci";
 
 const TutorProfile = () => {
   const { number } = useParams();
@@ -58,6 +61,8 @@ const TutorProfile = () => {
     }
   }, [number]);
 
+  console.log(allInfo);
+
   return (
     <div className="py-10">
       {isLoading ? (
@@ -66,117 +71,107 @@ const TutorProfile = () => {
         </div>
       ) : (
         <div>
-          <div>
-            <img
-              src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG.png"
-              alt="profile-picture"
-              className="mx-auto rounded-full w-60 h-60"
-            />
-            <p className="text-center my-5 font-semibold text-xl">
-              {allInfo?.personalInfo?.fullName}
-            </p>
+          <div className="flex justify-between items-center mb-5">
+            <h1 className="font-bold text-xl md:text-2xl text-white">
+              Tutor Profile
+            </h1>
           </div>
-          <div>
-            {/* Personal Info */}
-            <Accordion open={openAcc1}>
-              <AccordionHeader onClick={handleOpenAcc1}>
-                <div className="flex items-center justify-between w-full">
-                  <p className={openAcc1 && "text-[#1E6CB3]"}>Personal Info</p>
-                  {openAcc1 ? (
-                    <MdOutlineKeyboardArrowUp className="text-4xl text-[#1E6CB3]" />
-                  ) : (
-                    <MdOutlineKeyboardArrowDown className="text-4xl" />
-                  )}
+          <div className="bg-white border rounded-md p-2 sm:p-5 md:p-10">
+            <div>
+              {/* hero */}
+              <div className="md:flex justify-between items-center ">
+                <div>
+                  <h2 className="font-bold uppercase text-lg text-[#1E6CB3] mb-2">
+                    {allInfo?.personalInfo?.fullName}
+                  </h2>
+                  <div className="grid grid-cols-1 gap-1">
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <FaLocationPin />{" "}
+                      <p>
+                        {allInfo?.personalInfo?.homeAddress},{" "}
+                        {allInfo?.personalInfo?.area},{" "}
+                        {allInfo?.personalInfo?.city}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <FaPhone />
+                      <p>{allInfo?.phoneNumber}</p>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <IoMdMail />
+                      <p>{allInfo?.personalInfo?.email}</p>
+                    </div>
+                  </div>
                 </div>
-              </AccordionHeader>
-              <AccordionBody>
-                <PersonalInfo personalInfo={allInfo?.personalInfo} />
-              </AccordionBody>
-            </Accordion>
-            {/* Contact Info */}
-            <Accordion open={openAcc2}>
-              <AccordionHeader onClick={handleOpenAcc2}>
-                <div className="flex items-center justify-between w-full">
-                  <p className={openAcc2 && "text-[#1E6CB3]"}>Contact Info</p>
-                  {openAcc2 ? (
-                    <MdOutlineKeyboardArrowUp className="text-4xl text-[#1E6CB3]" />
-                  ) : (
-                    <MdOutlineKeyboardArrowDown className="text-4xl" />
-                  )}
+                <div>
+                  <img
+                    src={allInfo?.identitiesInfo?.personalPhoto}
+                    alt="Profile Photo"
+                    className="h-36 w-[120px] object-cover"
+                  />
                 </div>
-              </AccordionHeader>
-              <AccordionBody>
-                <ContactInfo contactInfo={allInfo?.contactInfo} />
-              </AccordionBody>
-            </Accordion>
-            {/* Academic Info */}
-            <Accordion open={openAcc3}>
-              <AccordionHeader onClick={handleOpenAcc3}>
-                <div className="flex items-center justify-between w-full">
-                  <p className={openAcc3 && "text-[#1E6CB3]"}>Academic Info</p>
-                  {openAcc3 ? (
-                    <MdOutlineKeyboardArrowUp className="text-4xl text-[#1E6CB3]" />
-                  ) : (
-                    <MdOutlineKeyboardArrowDown className="text-4xl" />
-                  )}
+              </div>
+
+              {/* personal Info */}
+              <div className="pt-10">
+                <h1 className="bg-blue-50 font-bold text-[#01183b] py-2 ps-1">
+                  Personal Info:
+                </h1>
+                <div className="my-5">
+                  <PersonalInfo personalInfo={allInfo?.personalInfo} />
                 </div>
-              </AccordionHeader>
-              <AccordionBody>
-                <AcademicInfo academicInfo={allInfo?.academicInfo} />
-              </AccordionBody>
-            </Accordion>
-            {/* Tutoring Info */}
-            <Accordion open={openAcc4}>
-              <AccordionHeader onClick={handleOpenAcc4}>
-                <div className="flex items-center justify-between w-full">
-                  <p className={openAcc4 && "text-[#1E6CB3]"}>Tutoring Info</p>
-                  {openAcc4 ? (
-                    <MdOutlineKeyboardArrowUp className="text-4xl text-[#1E6CB3]" />
-                  ) : (
-                    <MdOutlineKeyboardArrowDown className="text-4xl" />
-                  )}
+              </div>
+              {/* Contact Info */}
+              <div className="pt-10">
+                <h1 className="bg-blue-50 font-bold text-[#01183b] py-2 ps-1">
+                  Contact Info:
+                </h1>
+                <div className="my-5">
+                  <ContactInfo contactInfo={allInfo?.contactInfo} />
                 </div>
-              </AccordionHeader>
-              <AccordionBody>
-                <TutoringInfo tutoringInfo={allInfo?.tutoringInfo} />
-              </AccordionBody>
-            </Accordion>
-            {/* Additional Tutoring Info */}
-            <Accordion open={openAcc5}>
-              <AccordionHeader onClick={handleOpenAcc5}>
-                <div className="flex items-center justify-between w-full">
-                  <p className={openAcc5 && "text-[#1E6CB3]"}>
-                    Additional Tutoring Info
-                  </p>
-                  {openAcc5 ? (
-                    <MdOutlineKeyboardArrowUp className="text-4xl text-[#1E6CB3]" />
-                  ) : (
-                    <MdOutlineKeyboardArrowDown className="text-4xl" />
-                  )}
+              </div>
+              {/* Academic Info */}
+              <div className="pt-10">
+                <h1 className="bg-blue-50 font-bold text-[#01183b] py-2 ps-1">
+                  Academic Info:
+                </h1>
+                <div className="my-5">
+                  <AcademicInfo academicInfo={allInfo?.academicInfo} />
                 </div>
-              </AccordionHeader>
-              <AccordionBody>
-                <AdditionalTutoringInfo
-                  additionalTutoringInfo={allInfo?.additionalInfo}
-                />
-              </AccordionBody>
-            </Accordion>
-            {/* Promo Info */}
-            <Accordion open={openAcc6}>
-              <AccordionHeader onClick={handleOpenAcc6}>
-                <div className="flex items-center justify-between w-full">
-                  <p className={openAcc6 && "text-[#1E6CB3]"}>Promo Info</p>
-                  {openAcc6 ? (
-                    <MdOutlineKeyboardArrowUp className="text-4xl text-[#1E6CB3]" />
-                  ) : (
-                    <MdOutlineKeyboardArrowDown className="text-4xl" />
-                  )}
+              </div>
+
+              {/* Tutoring Info */}
+              <div className="pt-10">
+                <h1 className="bg-blue-50 font-bold text-[#01183b] py-2 ps-1">
+                  Tutoring Info:
+                </h1>
+                <div className="my-5">
+                  <TutoringInfo tutoringInfo={allInfo?.tutoringInfo} />
                 </div>
-              </AccordionHeader>
-              <AccordionBody>
-                <PromoInfo promoInfo={allInfo?.promoInfo} />
-              </AccordionBody>
-            </Accordion>
+              </div>
+
+              {/*Additional Tutoring Info */}
+              <div className="pt-10">
+                <h1 className="bg-blue-50 font-bold text-[#01183b] py-2 ps-1">
+                  Additional Tutoring Info:
+                </h1>
+                <div className="my-5">
+                  <AdditionalTutoringInfo
+                    additionalTutoringInfo={allInfo?.additionalInfo}
+                  />
+                </div>
+              </div>
+
+              {/*Promo Info */}
+              <div className="pt-10">
+                <h1 className="bg-blue-50 font-bold text-[#01183b] py-2 ps-1">
+                  Promo Info:
+                </h1>
+                <div className="my-5">
+                  <PromoInfo promoInfo={allInfo?.promoInfo} />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

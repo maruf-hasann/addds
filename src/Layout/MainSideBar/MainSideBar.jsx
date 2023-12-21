@@ -18,39 +18,39 @@ const MainSideBar = () => {
 
   return (
     <div
-      className="flex flex-col h-full w-60 fixed  pb-20 hidden-scrollbar"
+      className="flex flex-col h-full w-60 fixed  pb-20 z-40 bg-white"
       style={{
         msOverflowStyle: "none",
-        scrollbarWidth: "none",
+        scrollbarWidth: "thin",
+        scrollbarColor: "#888 #f1f1f1",
       }}
     >
       <div
         className="flex-1"
         style={{
-          scrollbarWidth: "thin",
-          scrollbarColor: "#888 #f1f1f1",
           overflowX: "hidden",
           scrollMarginRight: "15px", // Adjust as needed
         }}
       >
         {/* menu */}
-        <div className="grid grid-cols-1 text-gray-700 ps-1">
+        <div className="grid grid-cols-1 gap-2 px-3 pt-2 text-gray-700">
           {menus.map((menu, idx) => (
             <Link
               to={menu?.url}
               key={idx}
               onClick={() => setOpen(false)}
               className={`${
-                menu?.url.slice(1) === pathname &&
-                "border-l-4 border-primary bg-blue-100 ps-5"
-              }  py-2 px-2 cursor-pointer flex items-center gap-3`}
+                menu?.url.slice(1) === pathname
+                  ? "bg-blue-100 "
+                  : "hover:bg-blue-50"
+              }  py-2 px-2 cursor-pointer flex items-center gap-3  text-[#01183b] font-semibold rounded-md`}
             >
               {menu?.icon} {menu?.name}
             </Link>
           ))}
         </div>
         {/* setting */}
-        <div className="grid grid-cols-1 text-gray-700">
+        <div className="grid grid-cols-1 gap-2 px-3 py-2 text-gray-700">
           {withSubmenu?.map((menuItem) => (
             <Accordion
               open={open === menuItem?.id}
@@ -61,27 +61,32 @@ const MainSideBar = () => {
                 className={`border-b-0 ${
                   menuItem?.subMenus?.some((subMenu) =>
                     subMenu?.url?.slice(1)?.includes(pathname)
-                  ) && "border-l-4 border-primary bg-blue-200 mb-1 py-2"
-                }`}
+                  )
+                    ? "bg-blue-100 "
+                    : "hover:bg-blue-50"
+                }  py-2 px-2 cursor-pointer flex items-center gap-3  text-[#01183b] font-semibold rounded-md
+                `}
               >
-                <div className="font-normal text-base px-2 flex items-center gap-3 text-gray-700">
+                <div className="text-base px-2 flex items-center gap-3 text-[#01183b] font-semibold">
                   {menuItem?.icon} {menuItem?.name}
                 </div>
               </AccordionHeader>
               <AccordionBody className="pt-0">
-                <div className="grid grid-cols-1 text-gray-700">
+                <div className="grid grid-cols-1 gap-2 p-2 text-gray-700">
                   {menuItem?.subMenus.map((menu, idx) => (
                     <Link
                       to={menu?.url}
                       key={idx}
                       className={`${
-                        menu?.url?.slice(1) === pathname &&
-                        "border-l-4 border-primary bg-blue-100 ps-5"
+                        menu?.url?.slice(1) === pathname
+                          ? "bg-blue-100 "
+                          : "hover:bg-blue-50"
+                      }  py-2 px-2 cursor-pointer flex items-center gap-3  text-[#01183b] font-semibold rounded-md
                       } ${
                         menu?.url?.slice(1) !== pathname && "hover:text-primary"
-                      } py-2 px-2 cursor-pointer font-normal text-base ms-3 flex items-center gap-2`}
+                      } py-2 px-2 cursor-pointer font-normal text-base flex items-center gap-2`}
                     >
-                      {menu?.icon} {menu?.name}
+                      {menu?.name}
                     </Link>
                   ))}
                 </div>

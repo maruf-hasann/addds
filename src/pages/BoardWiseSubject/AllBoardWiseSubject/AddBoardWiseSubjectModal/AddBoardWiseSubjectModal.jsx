@@ -31,8 +31,9 @@ const AddBoardWiseSubjectModal = ({
 
   return (
     <div
-      className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${openAddBoardWiseSubjectModal ? "block" : "hidden"
-        }`}
+      className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${
+        openAddBoardWiseSubjectModal ? "block" : "hidden"
+      }`}
     >
       <div
         className="w-full h-full z-0 absolute top-0 left-0"
@@ -52,10 +53,8 @@ const AddBoardWiseSubjectModal = ({
           </button>
           <>
             <div className="py-10">
-              <div className="flex justify-between items-center pb-3">
-                <h1 className="font-bold text-blue-gray-800">
-                  Add Subject
-                </h1>
+              <div className="flex justify-between items-center mb-5">
+                <h1 className="font-bold text-blue-gray-800">Add Subject</h1>
               </div>
 
               <form

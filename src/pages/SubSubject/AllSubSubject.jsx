@@ -1,15 +1,12 @@
 import { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import toast from "react-hot-toast";
-import { educationVariants } from "../../../data/educationVariant";
-import { tutoringSubjects } from "../../../data/tutoringSubjects";
-import AddSubSubjectModal from "./AddSubSubjectModal/AddSubSubjectModal";
 import {
   useDeleteSubSubjectMutation,
   useGetSubSubjectQuery,
-} from "../../../store/service/subSubject/subSubjectApiService";
-import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
+} from "../../store/service/subSubject/subSubjectApiService";
+import AddSubSubjectModal from "./AddSubSubjectModal/AddSubSubjectModal";
 import EditSubSubjectModal from "./EditSubSubjectModal/EditSubSubjectModal";
+import DeleteModal from "../../components/Shared/DeleteModal/DeleteModal";
 
 const AllSubSubject = () => {
   const [openSubSubjectModal, setOpenSubSubjectModal] = useState(false);
@@ -28,8 +25,10 @@ const AllSubSubject = () => {
 
   return (
     <div className="py-10">
-      <div className="flex justify-between items-center pb-3">
-        <h1 className="font-bold text-2xl text-white">All Sub Subject</h1>
+      <div className="flex justify-between items-center mb-5">
+        <h1 className="font-bold text-xl md:text-2xl text-white">
+          All Sub Subject
+        </h1>
         <div
           className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
           onClick={() => setOpenSubSubjectModal(true)}

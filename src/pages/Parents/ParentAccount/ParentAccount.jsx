@@ -28,9 +28,11 @@ const ParentAccount = () => {
     return (
         <div className="py-10 w-full">
             <div className="flex justify-between items-center border-b pb-3">
-                <h1 className="font-bold mb-3">All Parent Account</h1>
+                <h1 className="font-bold mb-1 text-white text-2xl">
+                    All Parent Account
+                </h1>
             </div>
-            <div className="overflow-x-scroll">
+            <div className="overflow-x-scroll bg-white">
                 <table className="w-full text-left h-auto">
                     {/* head */}
                     <thead>

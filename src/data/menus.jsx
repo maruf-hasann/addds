@@ -3,7 +3,6 @@ import {
   MdBusiness,
   MdPlaylistAddCheck,
   MdPerson,
-  MdSubject,
   MdToday,
   MdAccountBalance,
   MdClass,
@@ -11,7 +10,7 @@ import {
   MdSettings,
   MdLibraryBooks,
 } from "react-icons/md";
-import { FaUserGraduate, FaUsers } from "react-icons/fa6";
+import { FaUsers } from "react-icons/fa6";
 
 // menu
 export const menus = [
@@ -38,12 +37,6 @@ export const menus = [
     name: "Tutoring Program",
     url: "./all-tutoring-programs",
     icon: <MdSettings />,
-  },
-  {
-    id: 5,
-    name: "Tutoring Subject",
-    url: "./all-tutoring-subjects",
-    icon: <MdAccountBox />,
   },
   {
     id: 6,
@@ -87,12 +80,7 @@ export const menus = [
     url: "./all-tutoring-classes",
     icon: <MdClass />,
   },
-  {
-    id: 13,
-    name: "Tutor Info",
-    url: "./all-tutor-infos",
-    icon: <MdAccountBox />,
-  },
+
   {
     id: 14,
     name: "School PM",
@@ -190,16 +178,10 @@ export const withSubmenu = [
       {
         name: "Tutor Account",
         url: "./tutor-account",
-        icon: <span>🧾</span>,
       },
       {
         name: "Academic Tutoring",
         url: "./academic-tutoring",
-        icon: (
-          <span>
-            <MdAccountBox />
-          </span>
-        ),
       },
     ],
   },
