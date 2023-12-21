@@ -185,6 +185,97 @@ export const withSubmenu = [
       },
     ],
   },
+  {
+    id: 2,
+    name: "Parents",
+    icon: <FaUsers />,
+    subMenus: [
+      {
+        name: "All Parent Account",
+        url: "./all-parent-account",
+        icon: <span>🧾</span>,
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "Students",
+    icon: <FaUsers />,
+    subMenus: [
+      {
+        name: "All Student Account",
+        url: "./all-student-account",
+        icon: <span>🧾</span>,
+      },
+    ],
+  },
+  // {
+  //   id: 2,
+  //   name: "Tutor Settings",
+  //   icon: <MdSettings />,
+  //   subMenus: [
+  //     {
+  //       name: "Add Education Variant",
+  //       url: "./add-education-variant",
+  //       icon: <span>📚</span>,
+  //     },
+  //     {
+  //       name: "Add Tutoring Variant",
+  //       url: "./add-tutoring-variant",
+  //       icon: <span>🏫</span>,
+  //     },
+  //     {
+  //       name: "Add Tutoring Place",
+  //       url: "./add-tutoring-place",
+  //       icon: <span>🏢</span>,
+  //     },
+  //     {
+  //       name: "Add Tutoring Program",
+  //       url: "./add-tutoring-program",
+  //       icon: <span>📋</span>,
+  //     },
+  //     {
+  //       name: "Add Student Variant",
+  //       url: "./add-student-variant",
+  //       icon: <span>👩‍🎓</span>,
+  //     },
+  //     {
+  //       name: "Add Extra Subject",
+  //       url: "./add-extra-subject",
+  //       icon: <span>📖</span>,
+  //     },
+  //     {
+  //       name: "Add Subject",
+  //       url: "./add-board-wise-subject",
+  //       icon: <span>📘</span>,
+  //     },
+  //     {
+  //       name: "Add Current Affair",
+  //       url: "./add-current-affair",
+  //       icon: <span>🗞️</span>,
+  //     },
+  //     {
+  //       name: "Add University",
+  //       url: "./add-university",
+  //       icon: <span>🏛️</span>,
+  //     },
+  //     {
+  //       name: "Add Semester",
+  //       url: "./add-semester",
+  //       icon: <span>🎓</span>,
+  //     },
+  //     {
+  //       name: "Add Tutoring Class",
+  //       url: "./add-tutoring-class",
+  //       icon: <span>📚</span>,
+  //     },
+  //     {
+  //       name: "Add Tutor Info",
+  //       url: "./add-tutor-info",
+  //       icon: <span>👤</span>,
+  //     },
+  //   ],
+  // },
 ];
 
 export function SettingIcon({ id, open }) {
