@@ -42,6 +42,7 @@ import ParentDetails from "../pages/Parents/ParentDetails/ParentDetails";
 import AllMockPricing from "../pages/MockPricing/AllMockPricing/AllMockPricing";
 
 import AllSubSubject from "../pages/SubSubject/AllSubSubject";
+import StudentDetails from "../pages/StudentAccount/StudentAccount/StudentDetails/StudentDetails";
 
 export const router = createBrowserRouter([
   {
@@ -182,6 +183,11 @@ export const router = createBrowserRouter([
       {
         path: "/all-student-account",
         element: <StudentAccount />,
+      },
+      {
+        path: "/student-profile/:number",
+        element: <StudentDetails />,
+        
       }
     ],
   },

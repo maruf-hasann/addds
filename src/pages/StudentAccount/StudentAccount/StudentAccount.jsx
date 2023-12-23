@@ -1,12 +1,11 @@
-import { FaStreetView } from "react-icons/fa6";
+import { FaStreetView, FaUser } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useGetStudentInfoFilterDataQuery } from "../../../store/service/studentInfoFilter/studentInfoFilterApiService";
+import { useGetAllStudentQuery } from "../../../store/service/studentInfoFilter/studentInfoFilterApiService";
 
 const StudentAccount = () => {
-    const { data: studentsInfoData } =
-        useGetStudentInfoFilterDataQuery("8801919195934");
-    const studentsInfo = studentsInfoData?.data[0];
-    console.log(studentsInfo);
+    const { data: studentsInfoData } = useGetAllStudentQuery("8801919195934");
+    const studentsInfo = studentsInfoData?.data;
+    console.log(studentsInfo, "studentsInfo");
 
     const tableDataClasses =
         "p-4 border-b border-blue-gray-50 whitespace-nowrap";
@@ -30,7 +29,9 @@ const StudentAccount = () => {
     return (
         <div className="py-10 w-full">
             <div className="flex justify-between items-center border-b pb-3">
-                <h1 className="font-bold mb-1 text-white text-2xl">All Student Account</h1>
+                <h1 className="font-bold mb-1 text-white text-2xl">
+                    All Student Account
+                </h1>
             </div>
             <div className="overflow-x-scroll bg-white">
                 <table className="w-full text-left h-auto">
@@ -48,61 +49,60 @@ const StudentAccount = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {[studentsInfo, studentsInfo]?.map((info, idx) => (
+                        {studentsInfo?.map((info, idx) => (
                             <tr className={tableDataClasses} key={idx}>
                                 <th className={tableDataClasses}>{idx + 1}</th>
                                 <th
                                     scope="row"
                                     className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap "
                                 >
-                                    <img
-                                        class="w-10 h-10 rounded-full"
-                                        src={
-                                            studentsInfo?.identity
-                                                ?.personalPhoto
-                                        }
-                                        alt={
-                                            studentsInfo?.personalInfo?.fullName
-                                        }
-                                    />
+                                    {info?.identityInfo?.personalPhoto ? (
+                                        <img
+                                            class="w-10 h-10 rounded-full"
+                                            src={
+                                                info?.identityInfo
+                                                    ?.personalPhoto
+                                            }
+                                            alt={info?.personalInfo?.fullName}
+                                        />
+                                    ) : (
+                                        <FaUser class="w-10 h-10 rounded-full" />
+                                    )}
                                 </th>
                                 <td className={tableDataClasses}>
-                                    {studentsInfo?.personalInfo?.fullName}
+                                    {info?.personalInfo?.fullName}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {studentsInfo?.personalInfo?.phoneNumber}
+                                    {info?.personalInfo?.phoneNumber}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {studentsInfo?.personalInfo?.email}
+                                    {info?.personalInfo?.email}
                                 </td>
                                 <td
                                     className={`capitalize ${tableDataClasses}`}
                                 >
-                                    {studentsInfo?.personalInfo?.gender}
+                                    {info?.personalInfo?.gender}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {studentsInfo?.personalInfo?.country}
+                                    {info?.personalInfo?.country}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {studentsInfo?.personalInfo?.city}
+                                    {info?.personalInfo?.city}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {studentsInfo?.personalInfo?.area}
+                                    {info?.personalInfo?.area}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {studentsInfo?.contactInfo?.whatsappNumber}
+                                    {info?.contactInfo?.whatsappNumber}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {
-                                        studentsInfo?.contactInfo
-                                            ?.emergencyContactNumber
-                                    }
+                                    {info?.contactInfo?.emergencyContactNumber}
                                 </td>
                                 <td
                                     className={`${tableDataClasses} w-[120px] flex gap-3 border-b-0`}
                                 >
                                     <Link
-                                        to={`/Student-profile/${studentsInfo?.personalInfo?.phoneNumber}`}
+                                        to={`/student-profile/${info?.phoneNumber}`}
                                         className="text-center flex justify-center mx-auto"
                                     >
                                         <FaStreetView
