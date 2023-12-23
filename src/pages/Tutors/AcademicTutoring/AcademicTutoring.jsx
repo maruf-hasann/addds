@@ -438,7 +438,7 @@ const AcademicTutoring = () => {
                   className={`${tableDataClasses} w-[120px] flex gap-3 border-b-0`}
                 >
                   <Link
-                    to={`/tutor-profile/${info?.personalInfo?.phoneNumber}`}
+                    to={`/academic-tutoring-details/${info?.personalInfo?.phoneNumber}`}
                     className="text-center flex justify-center mx-auto"
                   >
                     <FaStreetView

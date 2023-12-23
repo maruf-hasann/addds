@@ -232,7 +232,7 @@ const TutorAccount = () => {
                 </td>
                 <td className={`${tableDataClasses} w-[120px]`}>
                   <Link
-                    to={`/tutor-profile/${info?.personalInfo?.phoneNumber}`}
+                    to={`/tutor-account-details/${info?.personalInfo?.phoneNumber}`}
                     className="text-center flex justify-center mx-auto"
                   >
                     <FaStreetView
