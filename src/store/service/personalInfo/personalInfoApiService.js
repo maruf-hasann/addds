@@ -11,8 +11,8 @@ const personalInfoApiService = baseApi.injectEndpoints({
       invalidatesTags: ["PersonalInfo"],
     }),
     getPersonalInfo: build.query({
-      query: () => ({
-        url: `personal-info/8801708666342`,
+      query: (number) => ({
+        url: `personal-info/${number}`,
       }),
       invalidatesTags: ["PersonalInfo"],
     }),
@@ -20,5 +20,8 @@ const personalInfoApiService = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useSavePersonalInfoMutation, useGetPersonalInfoQuery } =
-  personalInfoApiService;
+export const {
+  useSavePersonalInfoMutation,
+  useGetPersonalInfoQuery,
+  useLazyGetPersonalInfoQuery,
+} = personalInfoApiService;
