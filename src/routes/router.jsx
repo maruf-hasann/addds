@@ -42,6 +42,8 @@ import ParentDetails from "../pages/Parents/ParentDetails/ParentDetails";
 import AllMockPricing from "../pages/MockPricing/AllMockPricing/AllMockPricing";
 
 import AllSubSubject from "../pages/SubSubject/AllSubSubject";
+import AcademicTutoringDetails from "../pages/Tutors/AcademicTutoring/AcademicTutoringDetails/AcademicTutoringDetails";
+import TutorAccountDetails from "../pages/Tutors/TutorAccount/TutorAccountDetails/TutorAccountDetails";
 
 export const router = createBrowserRouter([
   {
@@ -169,6 +171,14 @@ export const router = createBrowserRouter([
       {
         path: "/academic-tutoring",
         element: <AcademicTutoring />,
+      },
+      {
+        path: "/academic-tutoring-details/:number",
+        element: <AcademicTutoringDetails />,
+      },
+      {
+        path: "/tutor-account-details/:number",
+        element: <TutorAccountDetails />,
       },
       {
         path: "/all-parent-account",
