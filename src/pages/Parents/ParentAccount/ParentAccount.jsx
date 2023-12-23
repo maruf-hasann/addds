@@ -1,11 +1,12 @@
 import { FaStreetView } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useGetParentInfoFilterDataQuery } from "../../../store/service/parentInfoFilter/parentInfoFilterApiService";
+import {
+    useGetAllParentsQuery
+} from "../../../store/service/parentInfoFilter/parentInfoFilterApiService";
 
 const ParentAccount = () => {
-    const { data: parentsInfoData } =
-        useGetParentInfoFilterDataQuery("8801917272522");
-    const parentsInfo = parentsInfoData?.data[0];
+    const { data: parentsInfoData } = useGetAllParentsQuery();
+    const parentsInfo = parentsInfoData?.data;
     console.log(parentsInfo);
 
     const tableDataClasses =
@@ -48,40 +49,40 @@ const ParentAccount = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {[parentsInfo, parentsInfo]?.map((info, idx) => (
+                        {parentsInfo?.map((info, idx) => (
                             <tr className={tableDataClasses} key={idx}>
                                 <th className={tableDataClasses}>{idx + 1}</th>
                                 <td className={tableDataClasses}>
-                                    {parentsInfo?.personalInfo?.fullName}
+                                    {info?.personalInfo?.fullName}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {parentsInfo?.personalInfo?.phoneNumber}
+                                    {info?.personalInfo?.phoneNumber}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {parentsInfo?.personalInfo?.email}
+                                    {info?.personalInfo?.email}
                                 </td>
                                 <td
                                     className={`capitalize ${tableDataClasses}`}
                                 >
-                                    {parentsInfo?.personalInfo?.gender}
+                                    {info?.personalInfo?.gender}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {parentsInfo?.personalInfo?.country}
+                                    {info?.personalInfo?.country}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {parentsInfo?.personalInfo?.city}
+                                    {info?.personalInfo?.city}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {parentsInfo?.personalInfo?.area}
+                                    {info?.personalInfo?.area}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    {parentsInfo?.contactInfo?.whatsappNumber}
+                                    {info?.contactInfo?.whatsappNumber}
                                 </td>
                                 <td
                                     className={`${tableDataClasses} w-[120px] flex gap-3 border-b-0`}
                                 >
                                     <Link
-                                        to={`/parent-profile/${parentsInfo?.personalInfo?.phoneNumber}`}
+                                        to={`/parent-profile/${info?.personalInfo?.phoneNumber}`}
                                         className="text-center flex justify-center mx-auto"
                                     >
                                         <FaStreetView

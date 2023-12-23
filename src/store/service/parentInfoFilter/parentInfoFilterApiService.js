@@ -7,6 +7,11 @@ const parentInfoFilterApiService = baseApi.injectEndpoints({
                 url: `parents/info-filter/all/${number}`,
             }),
         }),
+        getAllParents: build.query({
+            query: (number) => ({
+                url: `parents/info-filter/all`,
+            }),
+        }),
     }),
     overrideExisting: false,
 });
@@ -14,4 +19,5 @@ const parentInfoFilterApiService = baseApi.injectEndpoints({
 export const {
     useLazyGetParentInfoFilterDataQuery,
     useGetParentInfoFilterDataQuery,
+    useGetAllParentsQuery
 } = parentInfoFilterApiService;

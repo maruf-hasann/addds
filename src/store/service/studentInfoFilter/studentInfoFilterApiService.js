@@ -7,6 +7,11 @@ const studentInfoFilterApiService = baseApi.injectEndpoints({
                 url: `students/info-filter/all/${number}`,
             }),
         }),
+        getAllStudent: build.query({
+            query: (number) => ({
+                url: `students/info-filter/all`,
+            }),
+        }),
     }),
     overrideExisting: false,
 });
@@ -14,4 +19,5 @@ const studentInfoFilterApiService = baseApi.injectEndpoints({
 export const {
     useLazyGetStudentInfoFilterDataQuery,
     useGetStudentInfoFilterDataQuery,
+    useGetAllStudentQuery
 } = studentInfoFilterApiService;
