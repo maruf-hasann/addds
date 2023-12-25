@@ -45,6 +45,8 @@ import AllSubSubject from "../pages/SubSubject/AllSubSubject";
 import StudentDetails from "../pages/StudentAccount/StudentAccount/StudentDetails/StudentDetails";
 import AcademicTutoringDetails from "../pages/Tutors/AcademicTutoring/AcademicTutoringDetails/AcademicTutoringDetails";
 import TutorAccountDetails from "../pages/Tutors/TutorAccount/TutorAccountDetails/TutorAccountDetails";
+import RegularJobBoard from "../pages/JobBoard/RegularJobBoard/RegularJobBoard";
+import MockTestJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTestJobBoard";
 
 export const router = createBrowserRouter([
   {
@@ -197,6 +199,15 @@ export const router = createBrowserRouter([
       {
         path: "/student-profile/:number",
         element: <StudentDetails />,
+        
+      },
+      {
+        path: "/all-regular-jobs",
+        element: <RegularJobBoard />,
+      },
+      {
+        path: "/all-mock-test-jobs",
+        element: <MockTestJobBoard />,
         
       }
     ],

@@ -7,6 +7,7 @@ import {
   MdAccountBalance,
   MdClass,
   MdAccountBox,
+  MdOutlineWork,
   MdSettings,
   MdLibraryBooks,
 } from "react-icons/md";
@@ -205,6 +206,23 @@ export const withSubmenu = [
       {
         name: "All Student Account",
         url: "./all-student-account",
+        icon: <span>🧾</span>,
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: "Job Board",
+    icon: <MdOutlineWork />,
+    subMenus: [
+      {
+        name: "All Regular Jobs",
+        url: "./all-regular-jobs",
+        icon: <span>🧾</span>,
+      },
+      {
+        name: "All Mock Test Jobs",
+        url: "./all-mock-test-jobs",
         icon: <span>🧾</span>,
       },
     ],
