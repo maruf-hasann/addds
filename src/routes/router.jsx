@@ -45,6 +45,7 @@ import AllSubSubject from "../pages/SubSubject/AllSubSubject";
 import StudentDetails from "../pages/StudentAccount/StudentAccount/StudentDetails/StudentDetails";
 import AcademicTutoringDetails from "../pages/Tutors/AcademicTutoring/AcademicTutoringDetails/AcademicTutoringDetails";
 import TutorAccountDetails from "../pages/Tutors/TutorAccount/TutorAccountDetails/TutorAccountDetails";
+import TutorProfileCVFormat from "../pages/TutorProfileCVFormat/TutorProfileCVFormat";
 
 export const router = createBrowserRouter([
   {
@@ -160,6 +161,10 @@ export const router = createBrowserRouter([
       {
         path: "/tutor-profile/:number",
         element: <TutorProfile />,
+      },
+      {
+        path: "/tutor-profile-cv-format/:number",
+        element: <TutorProfileCVFormat />,
       },
       {
         path: "/mock-pricing",
