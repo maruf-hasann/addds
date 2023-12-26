@@ -45,6 +45,12 @@ import AllSubSubject from "../pages/SubSubject/AllSubSubject";
 import StudentDetails from "../pages/StudentAccount/StudentAccount/StudentDetails/StudentDetails";
 import AcademicTutoringDetails from "../pages/Tutors/AcademicTutoring/AcademicTutoringDetails/AcademicTutoringDetails";
 import TutorAccountDetails from "../pages/Tutors/TutorAccount/TutorAccountDetails/TutorAccountDetails";
+import RegularActiveJobBoard from "../pages/JobBoard/RegularJobBoard/RegularActiveJobBoard";
+import RegularUnActiveJobBoard from "../pages/JobBoard/RegularJobBoard/RegularUnActiveJobBoard";
+import MockTesActiveJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTesActiveJobBoard";
+import MockTesUnActiveJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTesUnActiveJobBoard";
+import RegularHiredJobBoard from "../pages/JobBoard/RegularJobBoard/RegularHiredJobBoard";
+import MockTestHiredJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTestHiredJobBoard";
 import TutorProfileCVFormat from "../pages/TutorProfileCVFormat/TutorProfileCVFormat";
 import EditPersonalInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/EditPersonalInfo/EditPersonalInfo";
 import EditContactInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/EditContactInfo/EditContactInfo";
@@ -231,6 +237,30 @@ export const router = createBrowserRouter([
       {
         path: "/edit/promo-info/:number",
         element: <EditPromoInfo />,
+      },
+      {
+        path: "/all-active-regular-jobs",
+        element: <RegularActiveJobBoard />,
+      },
+      {
+        path: "/all-un-active-regular-jobs",
+        element: <RegularUnActiveJobBoard />,
+      },
+      {
+        path: "/all-hired-regular-jobs",
+        element: <RegularHiredJobBoard />,
+      },
+      {
+        path: "/all-active-mock-test-jobs",
+        element: <MockTesActiveJobBoard />,
+      },
+      {
+        path: "/all-un-active-mock-test-jobs",
+        element: <MockTesUnActiveJobBoard />,
+      },
+      {
+        path: "/all-hired-mock-test-jobs",
+        element: <MockTestHiredJobBoard />,
       },
     ],
   },

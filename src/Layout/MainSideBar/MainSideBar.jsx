@@ -18,7 +18,7 @@ const MainSideBar = () => {
 
   return (
     <div
-      className="flex flex-col h-full w-60 fixed  pb-20 z-40 bg-white"
+      className="flex flex-col h-full w-[18rem] fixed  pb-20 z-40 bg-white"
       style={{
         msOverflowStyle: "none",
         scrollbarWidth: "thin",
