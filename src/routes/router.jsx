@@ -51,6 +51,7 @@ import EditContactInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/EditC
 import EditAcademicInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/EditAcademicInfo/EditAcademicInfo";
 import EditTutoringInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditTutoringInfo/EditTutoringInfo";
 import EditAdditionalTutoringInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditAdditionalTutoringInfo/EditAdditionalTutoringInfo";
+import EditPromoInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditPromoInfo/EditPromoInfo";
 
 export const router = createBrowserRouter([
   {
@@ -226,6 +227,10 @@ export const router = createBrowserRouter([
       {
         path: "/edit/additional-tutoring-info/:number",
         element: <EditAdditionalTutoringInfo />,
+      },
+      {
+        path: "/edit/promo-info/:number",
+        element: <EditPromoInfo />,
       },
     ],
   },

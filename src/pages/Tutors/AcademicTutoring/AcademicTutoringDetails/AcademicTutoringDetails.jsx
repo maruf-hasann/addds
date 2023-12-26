@@ -81,7 +81,10 @@ const AcademicTutoringDetails = () => {
             additionalTutoringInfo={allInfo?.additionalInfo}
             number={allInfo?.phoneNumber}
           />
-          <PromoInfo promoInfo={allInfo?.promoInfo} />
+          <PromoInfo
+            promoInfo={allInfo?.promoInfo}
+            number={allInfo?.phoneNumber}
+          />
         </div>
       )}
     </div>
