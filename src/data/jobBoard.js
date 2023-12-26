@@ -1,1 +1,1 @@
-export const jobBoardStatus = ["pending", "approved"];
+export const jobBoardStatus = ["inactive", "hired", "active"];

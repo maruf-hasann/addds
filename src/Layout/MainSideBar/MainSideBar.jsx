@@ -18,7 +18,7 @@ const MainSideBar = () => {
 
   return (
     <div
-      className="flex flex-col h-full w-60 fixed  pb-20 z-40 bg-white"
+      className="flex flex-col h-full w-[18rem] fixed  pb-20 z-40 bg-white"
       style={{
         msOverflowStyle: "none",
         scrollbarWidth: "thin",
@@ -50,7 +50,7 @@ const MainSideBar = () => {
           ))}
         </div>
         {/* setting */}
-        <div className="grid grid-cols-1 gap-2 px-3 py-2 text-gray-700">
+        <div className="grid grid-cols-1 gap-2 px-3 py-2 text-gray-700 ">
           {withSubmenu?.map((menuItem) => (
             <Accordion
               open={open === menuItem?.id}
@@ -71,7 +71,7 @@ const MainSideBar = () => {
                   {menuItem?.icon} {menuItem?.name}
                 </div>
               </AccordionHeader>
-              <AccordionBody className="pt-0">
+              <AccordionBody className="pt-0 ">
                 <div className="grid grid-cols-1 gap-2 p-2 text-gray-700">
                   {menuItem?.subMenus.map((menu, idx) => (
                     <Link
@@ -81,7 +81,7 @@ const MainSideBar = () => {
                         menu?.url?.slice(1) === pathname
                           ? "bg-blue-100 "
                           : "hover:bg-blue-50"
-                      }  py-2 px-2 cursor-pointer flex items-center gap-3  text-[#01183b] font-semibold rounded-md
+                      }  py-2 px-3 cursor-pointer flex items-center gap-3  text-[#01183b] font-semibold rounded-md
                       } ${
                         menu?.url?.slice(1) !== pathname && "hover:text-primary"
                       } py-2 px-2 cursor-pointer font-normal text-base flex items-center gap-2`}

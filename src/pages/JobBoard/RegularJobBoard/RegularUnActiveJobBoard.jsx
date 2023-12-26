@@ -1,24 +1,25 @@
 import { FaStreetView } from "react-icons/fa6";
-import { Link } from "react-router-dom";
 import {
-    useGetAllRegularJobsQuery,
+    useGetAllJobsByStatusQuery,
     useUpdateJobStatusMutation,
 } from "../../../store/service/jobBoard/jobBoardApiService";
 import { jobBoardStatus } from "../../../data/jobBoard";
 import tutoringSubject from "../../../libs/tutoringSubject";
 
-const RegularJobBoard = () => {
+const RegularUnActiveJobBoard = () => {
     // redux api call
-    const { data: regularJobsData } = useGetAllRegularJobsQuery();
-    const allRegularJobs = regularJobsData?.data;
+    const { data: regularUnActiveJobsData } = useGetAllJobsByStatusQuery({
+        status: "inactive",
+        jobType: "Regular",
+    });
+    const allRegularUnActiveJobs = regularUnActiveJobsData?.data;
 
     // update redux api for regular job
     const [updateJobStatus] = useUpdateJobStatusMutation();
     // handle change status
     const handleStatusChange = async (value) => {
-        console.log(value);
         const updateData = {
-            phoneNumber: "8801793439379",
+            status: value?.status,
             jobId: value?.jobId,
             jobType: value?.jobType,
         };
@@ -62,7 +63,7 @@ const RegularJobBoard = () => {
         <div className="py-10 w-full">
             <div className="flex justify-between items-center border-b pb-3">
                 <h1 className="font-bold mb-1 text-white text-2xl">
-                    All Regular Jobs
+                    All In-Active Regular Jobs
                 </h1>
             </div>
             <div className="overflow-x-scroll bg-white">
@@ -81,7 +82,7 @@ const RegularJobBoard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {allRegularJobs?.map((regularJob, idx) => (
+                        {allRegularUnActiveJobs?.map((regularJob, idx) => (
                             <tr
                                 className={tableDataClasses}
                                 key={regularJob?.jobId}
@@ -139,10 +140,10 @@ const RegularJobBoard = () => {
                                     {regularJob?.location}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    <select
+                                    {/* <select
                                         onChange={(e) =>
                                             handleStatusChange({
-                                                phone: regularJob?.phone,
+                                                status: e.target.value,
                                                 jobId: regularJob?.jobId,
                                                 jobType: regularJob?.jobType,
                                             })
@@ -151,7 +152,7 @@ const RegularJobBoard = () => {
                                     >
                                         {regularJob?.regularStatus && (
                                             <option
-                                                className="text-white"
+                                                className="text-white py-6"
                                                 value={
                                                     regularJob?.regularStatus
                                                 }
@@ -168,23 +169,72 @@ const RegularJobBoard = () => {
                                             ?.map((status, idx) => (
                                                 <option
                                                     key={idx}
-                                                    className="text-white"
+                                                    className="text-white py-6"
                                                     value={status}
                                                 >
                                                     {status}
                                                 </option>
                                             ))}
-                                    </select>
+                                    </select> */}
+                                    <span className="bg-red-100 text-red-800 text-base font-medium me-2 px-2.5 py-1 rounded border border-red-400">
+                                        {regularJob?.regularStatus}
+                                    </span>
                                 </td>
                                 <td
-                                    className={`${tableDataClasses} w-[120px] flex gap-3 border-b-0`}
+                                    className={`${tableDataClasses} flex gap-2 items-center justify-center`}
                                 >
-                                    <Link className="text-center flex justify-center mx-auto">
+                                    {jobBoardStatus
+                                        ?.filter(
+                                            (status) =>
+                                                status?.toLowerCase() !==
+                                                regularJob?.regularStatus?.toLowerCase()
+                                        )
+                                        ?.map((status, idx) => (
+                                            <span
+                                                key={idx}
+                                                onClick={() =>
+                                                    handleStatusChange({
+                                                        status: status,
+                                                        jobId: regularJob?.jobId,
+                                                        jobType:
+                                                            regularJob?.jobType,
+                                                    })
+                                                }
+                                                className={`bg-${
+                                                    status?.toLowerCase() ==
+                                                    "active"
+                                                        ? "blue"
+                                                        : status?.toLowerCase() ==
+                                                          "inactive"
+                                                        ? "red"
+                                                        : "gray"
+                                                }-100 text-${
+                                                    status?.toLowerCase() ==
+                                                    "active"
+                                                        ? "blue"
+                                                        : status?.toLowerCase() ==
+                                                          "inactive"
+                                                        ? "red"
+                                                        : "gray"
+                                                }-800 text-base font-medium me-2 px-2.5 py-[1px] rounded border border-${
+                                                    status?.toLowerCase() ==
+                                                    "active"
+                                                        ? "blue"
+                                                        : status?.toLowerCase() ==
+                                                          "inactive"
+                                                        ? "red"
+                                                        : "gray"
+                                                }-400 cursor-pointer`}
+                                            >
+                                                {status}
+                                            </span>
+                                        ))}
+                                    <span className="text-center flex justify-center mx-auto">
                                         <FaStreetView
                                             title="View Profile"
                                             className="text-center mx-auto cursor-pointer hover:text-blue-500"
                                         />
-                                    </Link>
+                                    </span>
                                 </td>
                             </tr>
                         ))}
@@ -195,4 +245,4 @@ const RegularJobBoard = () => {
     );
 };
 
-export default RegularJobBoard;
+export default RegularUnActiveJobBoard;

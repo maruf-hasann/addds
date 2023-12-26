@@ -26,7 +26,7 @@ const Main = () => {
       <Header />
       <div className="flex relative z-20">
         {showSideBar && (
-          <div className="w-60 min-h-[calc(100vh)] z-50 border-r pt-[75px] hidden lg:block mr-[1px]">
+          <div className="w-[18rem] min-h-[calc(100vh)] z-50 border-r pt-[75px] hidden lg:block mr-[1px]">
             <MainSideBar />
           </div>
         )}

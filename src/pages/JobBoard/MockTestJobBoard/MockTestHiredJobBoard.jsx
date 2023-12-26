@@ -1,24 +1,22 @@
-import { FaStreetView, FaUser } from "react-icons/fa6";
-import { Link } from "react-router-dom";
-import {
-    useGetAllMockTestJobsQuery,
-    useUpdateJobStatusMutation,
-} from "../../../store/service/jobBoard/jobBoardApiService";
+import { FaStreetView } from "react-icons/fa6";
 import { jobBoardStatus } from "../../../data/jobBoard";
+import { useGetAllJobsByStatusQuery, useUpdateJobStatusMutation } from "../../../store/service/jobBoard/jobBoardApiService";
 import tutoringSubject from "../../../libs/tutoringSubject";
 
-const MockTestJobBoard = () => {
+const MockTestHiredJobBoard = () => {
     // redux api call
-    const { data: mockTestJobsData } = useGetAllMockTestJobsQuery();
-    const allMockTestJobs = mockTestJobsData?.data;
+    const { data: mockTestHiredJobsData } = useGetAllJobsByStatusQuery({
+        status: "hired",
+        jobType: "Mock",
+    });
+    const allMockTestHiredJobs = mockTestHiredJobsData?.data;
 
-    // update redux api for mock test job
+    // update redux api for regular job
     const [updateJobStatus] = useUpdateJobStatusMutation();
     // handle change status
     const handleStatusChange = async (value) => {
-        console.log(value);
         const updateData = {
-            phoneNumber: "8801793439379",
+            status: value?.status,
             jobId: value?.jobId,
             jobType: value?.jobType,
         };
@@ -60,7 +58,7 @@ const MockTestJobBoard = () => {
         <div className="py-10 w-full">
             <div className="flex justify-between items-center border-b pb-3">
                 <h1 className="font-bold mb-1 text-white text-2xl">
-                    All Mock Test Jobs
+                    All Hired Mock Test Jobs
                 </h1>
             </div>
             <div className="overflow-x-scroll bg-white">
@@ -79,7 +77,7 @@ const MockTestJobBoard = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {allMockTestJobs?.map((mockTestJob, idx) => (
+                        {allMockTestHiredJobs?.map((mockTestJob, idx) => (
                             <tr
                                 className={tableDataClasses}
                                 key={mockTestJob?.jobId}
@@ -107,18 +105,18 @@ const MockTestJobBoard = () => {
                                 </td>
                                 <td className={tableDataClasses}>
                                     {mockTestJob?.institute}
-                                </td> 
+                                </td>
                                 <td className={tableDataClasses}>
                                     {mockTestJob?.curriculum}
                                 </td>
-                               
+
                                 <td className={tableDataClasses}>
                                     {mockTestJob?.salary}
                                 </td>
                                 <td className={tableDataClasses}>
                                     {mockTestJob?.preferredGender}
                                 </td>
-                               
+
                                 <td className={tableDataClasses}>
                                     {mockTestJob?.studentGender}
                                 </td>
@@ -133,52 +131,65 @@ const MockTestJobBoard = () => {
                                     {mockTestJob?.location}
                                 </td>
                                 <td className={tableDataClasses}>
-                                    <select
-                                        onChange={(e) =>
-                                            handleStatusChange({
-                                                phone: mockTestJob?.phone,
-                                                jobId: mockTestJob?.jobId,
-                                                jobType: mockTestJob?.jobType,
-                                            })
-                                        }
-                                        className="rounded-lg bg-primary focus:outline-none p-2 text-white"
-                                    >
-                                        {mockTestJob?.mockTestStatus && (
-                                            <option
-                                                className="text-white"
-                                                value={
-                                                    mockTestJob?.mockTestStatus
-                                                }
-                                            >
-                                                {mockTestJob?.mockTestStatus}
-                                            </option>
-                                        )}
-                                        {jobBoardStatus
-                                            ?.filter(
-                                                (status) =>
-                                                    status?.toLowerCase() !==
-                                                    mockTestJob?.mockTestStatus?.toLowerCase()
-                                            )
-                                            ?.map((status, idx) => (
-                                                <option
-                                                    key={idx}
-                                                    className="text-white"
-                                                    value={status}
-                                                >
-                                                    {status}
-                                                </option>
-                                            ))}
-                                    </select>
+                                    <span className="bg-blue-100 text-blue-800 text-base font-medium me-2 px-2.5 py-1 rounded border border-blue-400">
+                                        {mockTestJob?.mockTestStatus}
+                                    </span>
                                 </td>
                                 <td
-                                    className={`${tableDataClasses} w-[120px] flex gap-3 border-b-0`}
+                                    className={`${tableDataClasses} flex gap-2 items-center justify-center`}
                                 >
-                                    <Link className="text-center flex justify-center mx-auto">
+                                    {jobBoardStatus
+                                        ?.filter(
+                                            (status) =>
+                                                status?.toLowerCase() !==
+                                                mockTestJob?.mockTestStatus?.toLowerCase()
+                                        )
+                                        ?.map((status, idx) => (
+                                            <span
+                                                key={idx}
+                                                onClick={() =>
+                                                    handleStatusChange({
+                                                        status: status,
+                                                        jobId: mockTestJob?.jobId,
+                                                        jobType:
+                                                            mockTestJob?.jobType,
+                                                    })
+                                                }
+                                                className={`bg-${
+                                                    status?.toLowerCase() ==
+                                                    "active"
+                                                        ? "blue"
+                                                        : status?.toLowerCase() ==
+                                                          "inactive"
+                                                        ? "red"
+                                                        : "gray"
+                                                }-100 text-${
+                                                    status?.toLowerCase() ==
+                                                    "active"
+                                                        ? "blue"
+                                                        : status?.toLowerCase() ==
+                                                          "inactive"
+                                                        ? "red"
+                                                        : "gray"
+                                                }-800 text-base font-medium me-2 px-2.5 py-[1px] rounded border border-${
+                                                    status?.toLowerCase() ==
+                                                    "active"
+                                                        ? "blue"
+                                                        : status?.toLowerCase() ==
+                                                          "inactive"
+                                                        ? "red"
+                                                        : "gray"
+                                                }-400 cursor-pointer`}
+                                            >
+                                                {status}
+                                            </span>
+                                        ))}
+                                    <span className="text-center flex justify-center mx-auto">
                                         <FaStreetView
                                             title="View Profile"
                                             className="text-center mx-auto cursor-pointer hover:text-blue-500"
                                         />
-                                    </Link>
+                                    </span>
                                 </td>
                             </tr>
                         ))}
@@ -189,4 +200,4 @@ const MockTestJobBoard = () => {
     );
 };
 
-export default MockTestJobBoard;
+export default MockTestHiredJobBoard;

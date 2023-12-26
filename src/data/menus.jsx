@@ -212,17 +212,44 @@ export const withSubmenu = [
   },
   {
     id: 4,
-    name: "Job Board",
+    name: "Regular Job Board",
     icon: <MdOutlineWork />,
     subMenus: [
       {
-        name: "All Regular Jobs",
-        url: "./all-regular-jobs",
+        name: "Active Jobs",
+        url: "./all-active-regular-jobs",
         icon: <span>🧾</span>,
       },
       {
-        name: "All Mock Test Jobs",
-        url: "./all-mock-test-jobs",
+        name: "InActive Jobs",
+        url: "./all-un-active-regular-jobs",
+        icon: <span>🧾</span>,
+      },
+      {
+        name: "Hired  Jobs",
+        url: "./all-hired-regular-jobs",
+        icon: <span>🧾</span>,
+      },
+    ],
+  },
+  {
+    id: 5,
+    name: "Mock Test Job Board",
+    icon: <MdOutlineWork />,
+    subMenus: [
+      {
+        name: "Active Jobs",
+        url: "./all-active-mock-test-jobs",
+        icon: <span>🧾</span>,
+      },
+      {
+        name: "InActive Jobs",
+        url: "./all-un-active-mock-test-jobs",
+        icon: <span>🧾</span>,
+      },
+      {
+        name: "Hired Jobs",
+        url: "./all-hired-mock-test-jobs",
         icon: <span>🧾</span>,
       },
     ],
