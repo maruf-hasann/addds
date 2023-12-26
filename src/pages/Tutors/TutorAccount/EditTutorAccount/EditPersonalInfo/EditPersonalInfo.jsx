@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  useLazyGetPersonalInfoQuery,
+  useUpdatePersonalInfoMutation,
+} from "../../../../../store/service/personalInfo/personalInfoApiService";
+import { ImSpinner9 } from "react-icons/im";
+import axios from "axios";
 
 const EditPersonalInfo = () => {
-  const {number} = useParams();
+  const { number } = useParams();
+  const navigate = useNavigate();
   const [fetchLoading, setFetchLoading] = useState(false);
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
@@ -108,7 +115,7 @@ const EditPersonalInfo = () => {
 
   const { register, handleSubmit } = useForm();
 
-  // handle register tutor
+  // handle update tutor
   const onSubmit = async (data) => {
     if (selectedCountry?.name !== currentCountry && !selectedState) {
       return toast.error("Please select a city");
@@ -143,179 +150,188 @@ const EditPersonalInfo = () => {
       setCity(updatedPersonaInfo?.city);
       setHomeAddress(updatedPersonaInfo?.homeAddress);
       setArea(updatedPersonaInfo?.area);
+      navigate(`/tutor-account-details/${number}`);
     } else {
       toast.error(result.error.data.message);
     }
   };
 
   return (
-    <div className="p-10 container mx-auto">
-      <div className="text-2xl font-medium mb-3">Personal Information</div>
-      <p className=" mb-5">
-        Thank you for your interest in tutoring! By filling out this application
-        you&apos;re just a few steps away from supporting learners.
-      </p>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {/* number and email */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-5">
-          {/* number */}
-          <div className="relative">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Number
-            </label>
-            <input
-              type="text"
-              {...register("number")}
-              readOnly
-              value={number}
-              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-            />
+    <div className="py-10">
+      <div className="flex justify-between items-center mb-5">
+        <h1 className="font-bold text-xl md:text-2xl text-white">
+          Update Personal Info
+        </h1>
+        <Link
+          to={`/tutor-account-details/${number}`}
+          className="bg-white text-[#1E6CB3] px-5 py-1 rounded-sm font-semibold"
+        >
+          Back
+        </Link>
+      </div>
+      <div className="border rounded-md bg-white p-2 sm:p-5 md:p-10">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          {/* number and email */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-5">
+            {/* number */}
+            <div className="relative">
+              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+                Number
+              </label>
+              <input
+                type="text"
+                {...register("number")}
+                readOnly
+                value={number}
+                className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              />
+            </div>
+            {/* email */}
+            <div className="w-full">
+              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+                Email
+              </label>
+              <input
+                type="email"
+                {...register("email")}
+                defaultValue={email}
+                className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              />
+            </div>
           </div>
-          {/* email */}
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Email
-            </label>
-            <input
-              type="email"
-              {...register("email")}
-              defaultValue={email}
-              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-            />
-          </div>
-        </div>
-        {/* full name and gender */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
-          {/* full name */}
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Full Name
-            </label>
-            <input
-              type="text"
-              {...register("fullName")}
-              defaultValue={fullName}
-              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-              placeholder="John Doe"
-            />
-          </div>
-          {/* gender */}
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Gender Selection
-            </label>
-            <select
-              {...register("gender")}
-              defaultValue={gender}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option value="" disabled>
-                Select your gender
-              </option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-        </div>
-
-        {/*country city */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
-          {/* country */}
-          <div className={`w-full`}>
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Select Country
-            </label>
-            <select
-              {...register("country")}
-              defaultValue=""
-              className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              onChange={(event) => handleSelectCountry(event.target.value)}
-            >
-              <option value="" disabled>
-                Choose Country
-              </option>
-              {countries?.map((country, idx) => (
-                <option
-                  selected={country?.name === currentCountry}
-                  key={idx}
-                  value={country.id}
-                >
-                  {country?.name}
+          {/* full name and gender */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
+            {/* full name */}
+            <div className="w-full">
+              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+                Full Name
+              </label>
+              <input
+                type="text"
+                {...register("fullName")}
+                defaultValue={fullName}
+                className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                placeholder="John Doe"
+              />
+            </div>
+            {/* gender */}
+            <div className="w-full">
+              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+                Gender Selection
+              </label>
+              <select
+                {...register("gender")}
+                defaultValue={gender}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              >
+                <option value="" disabled>
+                  Select your gender
                 </option>
-              ))}
-            </select>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
           </div>
 
-          {/* city */}
-          <div className={`w-full`}>
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Select City
-            </label>
-            <select
-              {...register("city")}
-              defaultValue={city}
-              className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              onChange={(event) => setSelectedState(event.target.value)}
-            >
-              <option value="" disabled>
-                Choose City
-              </option>
-              {states?.map((state, idx) => (
-                <option
-                  selected={city === state?.name}
-                  key={idx}
-                  value={state?.name}
-                >
-                  {state?.name}
+          {/*country city */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
+            {/* country */}
+            <div className={`w-full`}>
+              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+                Select Country
+              </label>
+              <select
+                {...register("country")}
+                defaultValue=""
+                className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(event) => handleSelectCountry(event.target.value)}
+              >
+                <option value="" disabled>
+                  Choose Country
                 </option>
-              ))}
-            </select>
-          </div>
-        </div>
+                {countries?.map((country, idx) => (
+                  <option
+                    selected={country?.name === currentCountry}
+                    key={idx}
+                    value={country.id}
+                  >
+                    {country?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        {/* home address and area */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
-          {/* home address */}
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Home Address
-            </label>
-            <textarea
-              {...register("homeAddress")}
-              defaultValue={homeAddress}
-              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-              placeholder="Uttara 10"
-            />
+            {/* city */}
+            <div className={`w-full`}>
+              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+                Select City
+              </label>
+              <select
+                {...register("city")}
+                defaultValue={city}
+                className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                onChange={(event) => setSelectedState(event.target.value)}
+              >
+                <option value="" disabled>
+                  Choose City
+                </option>
+                {states?.map((state, idx) => (
+                  <option
+                    selected={city === state?.name}
+                    key={idx}
+                    value={state?.name}
+                  >
+                    {state?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          {/* area */}
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Area
-            </label>
-            <textarea
-              {...register("area")}
-              defaultValue={area}
-              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-              placeholder="Uttara"
-            />
+
+          {/* home address and area */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
+            {/* home address */}
+            <div className="w-full">
+              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+                Home Address
+              </label>
+              <textarea
+                {...register("homeAddress")}
+                defaultValue={homeAddress}
+                className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                placeholder="Uttara 10"
+              />
+            </div>
+            {/* area */}
+            <div className="w-full">
+              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+                Area
+              </label>
+              <textarea
+                {...register("area")}
+                defaultValue={area}
+                className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                placeholder="Uttara"
+              />
+            </div>
           </div>
-        </div>
-        {/* submit button */}
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
-          >
-            {isLoading || fetchLoading ? (
-              <ImSpinner9 className="animate-spin my-1 mx-4" />
-            ) : (
-              "Submit"
-            )}
-          </button>
-        </div>
-      </form>
+          {/* submit button */}
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+            >
+              {isLoading || fetchLoading ? (
+                <ImSpinner9 className="animate-spin my-1 mx-4" />
+              ) : (
+                "Submit"
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

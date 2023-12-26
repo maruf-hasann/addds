@@ -1,6 +1,7 @@
 import React from "react";
 import { FaLocationPin, FaPhone } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 const CommonComponent = ({ name, value }) => {
   return (
@@ -102,12 +103,12 @@ const PersonalInfo = ({ personalInfo, identityInfo }) => {
                 </h2>
               </div>
               <div>
-                <button
-                  type="button"
+                <Link
+                  to={`/edit/personal-info/${personalInfo?.phoneNumber}`}
                   className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-0 focus:outline-none focus:ring-cyan-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
                 >
                   Edit
-                </button>
+                </Link>
               </div>
             </div>
             <div className="px-5 py-5 bg-[#f1f5f9] ">

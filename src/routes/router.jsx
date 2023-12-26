@@ -46,6 +46,7 @@ import StudentDetails from "../pages/StudentAccount/StudentAccount/StudentDetail
 import AcademicTutoringDetails from "../pages/Tutors/AcademicTutoring/AcademicTutoringDetails/AcademicTutoringDetails";
 import TutorAccountDetails from "../pages/Tutors/TutorAccount/TutorAccountDetails/TutorAccountDetails";
 import TutorProfileCVFormat from "../pages/TutorProfileCVFormat/TutorProfileCVFormat";
+import EditPersonalInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/EditPersonalInfo/EditPersonalInfo";
 
 export const router = createBrowserRouter([
   {
@@ -202,6 +203,11 @@ export const router = createBrowserRouter([
       {
         path: "/student-profile/:number",
         element: <StudentDetails />,
+        
+      },
+      {
+        path: "/edit/personal-info/:number",
+        element: <EditPersonalInfo />,
         
       }
     ],
