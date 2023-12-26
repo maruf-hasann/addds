@@ -40,6 +40,14 @@ const promotionApiService = baseApi.injectEndpoints({
       }),
       providesTags: ["PromoVideo"],
     }),
+    uploadPromoVideo: build.mutation({
+      query: (payload) => ({
+          url: "/tutor/promo-info/save-info",
+          method: "POST",
+          body: payload,
+      }),
+      invalidatesTags: ["PromoVideo"],
+  }),
   }),
   overrideExisting: false,
 });
@@ -51,4 +59,5 @@ export const {
   useUploadPromotionInfoMutation,
   useUploadSingleImageMutation,
   useUploadSingleVideoMutation,
+  useUploadPromoVideoMutation
 } = promotionApiService;

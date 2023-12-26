@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CommonComponent = ({ name, value }) => {
   return (
@@ -9,7 +10,7 @@ const CommonComponent = ({ name, value }) => {
   );
 };
 
-const AcademicInfo = ({ academicInfo }) => {
+const AcademicInfo = ({ academicInfo, number }) => {
   return (
     // <div>
     //   <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
@@ -78,12 +79,12 @@ const AcademicInfo = ({ academicInfo }) => {
               </h2>
             </div>
             <div>
-              <button
-                type="button"
+              <Link
+                to={`/edit/academic-info/${number}`}
                 className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-0 focus:outline-none focus:ring-cyan-300  font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
               >
                 Edit
-              </button>
+              </Link>
             </div>
           </div>
           <div className="px-5 py-5 bg-[#f1f5f9]">

@@ -52,6 +52,12 @@ import MockTesUnActiveJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTesU
 import RegularHiredJobBoard from "../pages/JobBoard/RegularJobBoard/RegularHiredJobBoard";
 import MockTestHiredJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTestHiredJobBoard";
 import TutorProfileCVFormat from "../pages/TutorProfileCVFormat/TutorProfileCVFormat";
+import EditPersonalInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/EditPersonalInfo/EditPersonalInfo";
+import EditContactInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/EditContactInfo/EditContactInfo";
+import EditAcademicInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/EditAcademicInfo/EditAcademicInfo";
+import EditTutoringInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditTutoringInfo/EditTutoringInfo";
+import EditAdditionalTutoringInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditAdditionalTutoringInfo/EditAdditionalTutoringInfo";
+import EditPromoInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditPromoInfo/EditPromoInfo";
 
 export const router = createBrowserRouter([
   {
@@ -207,6 +213,30 @@ export const router = createBrowserRouter([
       {
         path: "/student-profile/:number",
         element: <StudentDetails />,
+      },
+      {
+        path: "/edit/personal-info/:number",
+        element: <EditPersonalInfo />,
+      },
+      {
+        path: "/edit/contact-info/:number",
+        element: <EditContactInfo />,
+      },
+      {
+        path: "/edit/academic-info/:number",
+        element: <EditAcademicInfo />,
+      },
+      {
+        path: "/edit/tutoring-info/:number",
+        element: <EditTutoringInfo />,
+      },
+      {
+        path: "/edit/additional-tutoring-info/:number",
+        element: <EditAdditionalTutoringInfo />,
+      },
+      {
+        path: "/edit/promo-info/:number",
+        element: <EditPromoInfo />,
       },
       {
         path: "/all-active-regular-jobs",

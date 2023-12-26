@@ -10,10 +10,27 @@ const contactInfoApiService = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["ContactInfo"],
     }),
+    getTutorContactInfo: build.query({
+      query: (number) => ({
+        url: `tutor/contact-info/get/${number}`,
+      }),
+      providesTags: ["ContactInfo"],
+    }),
+    updateTutorContactInfo: build.mutation({
+      query: (payload) => ({
+        url: `/tutor/contact-info/update/${payload?.number}`,
+        method: "PATCH",
+        body: payload?.data,
+      }),
+      invalidatesTags: ["ContactInfo"],
+    }),
   }),
   overrideExisting: false,
 });
 
 export const {
-  useSaveContactInfoMutation
+  useSaveContactInfoMutation,
+  useGetTutorContactInfoQuery,
+  useLazyGetTutorContactInfoQuery,
+  useUpdateTutorContactInfoMutation,
 } = contactInfoApiService;

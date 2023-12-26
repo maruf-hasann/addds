@@ -16,6 +16,14 @@ const personalInfoApiService = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["PersonalInfo"],
     }),
+    updatePersonalInfo: build.mutation({
+      query: ({ data, number }) => ({
+        url: `/personal-info/update/${number}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["PersonalInfo"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -24,4 +32,5 @@ export const {
   useSavePersonalInfoMutation,
   useGetPersonalInfoQuery,
   useLazyGetPersonalInfoQuery,
+  useUpdatePersonalInfoMutation
 } = personalInfoApiService;
