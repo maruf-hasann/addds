@@ -49,6 +49,8 @@ import TutorProfileCVFormat from "../pages/TutorProfileCVFormat/TutorProfileCVFo
 import EditPersonalInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/EditPersonalInfo/EditPersonalInfo";
 import EditContactInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/EditContactInfo/EditContactInfo";
 import EditAcademicInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/EditAcademicInfo/EditAcademicInfo";
+import EditTutoringInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditTutoringInfo/EditTutoringInfo";
+import EditAdditionalTutoringInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditAdditionalTutoringInfo/EditAdditionalTutoringInfo";
 
 export const router = createBrowserRouter([
   {
@@ -216,6 +218,14 @@ export const router = createBrowserRouter([
       {
         path: "/edit/academic-info/:number",
         element: <EditAcademicInfo />,
+      },
+      {
+        path: "/edit/tutoring-info/:number",
+        element: <EditTutoringInfo />,
+      },
+      {
+        path: "/edit/additional-tutoring-info/:number",
+        element: <EditAdditionalTutoringInfo />,
       },
     ],
   },
