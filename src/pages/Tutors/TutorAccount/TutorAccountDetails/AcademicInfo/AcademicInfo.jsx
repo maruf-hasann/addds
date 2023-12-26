@@ -9,7 +9,7 @@ const CommonComponent = ({ name, value }) => {
   );
 };
 
-const AcademicInfo = ({ academicInfo }) => {
+const AcademicInfo = ({ academicInfo, number }) => {
   return (
     // <div>
     //   <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">

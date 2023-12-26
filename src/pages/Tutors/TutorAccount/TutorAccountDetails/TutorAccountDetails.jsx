@@ -75,11 +75,17 @@ const TutorAccountDetails = () => {
             identityInfo={allInfo?.identitiesInfo}
           />
           {/* contact info */}
-          <ContactInfo contactInfo={allInfo?.contactInfo} />
+          <ContactInfo
+            contactInfo={allInfo?.contactInfo}
+            number={allInfo?.phoneNumber}
+          />
 
           {/* academic info */}
 
-          <AcademicInfo academicInfo={allInfo?.academicInfo} />
+          <AcademicInfo
+            academicInfo={allInfo?.academicInfo}
+            number={allInfo?.phoneNumber}
+          />
         </div>
       )}
     </div>
