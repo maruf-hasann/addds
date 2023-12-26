@@ -62,6 +62,12 @@ const AcademicTutoringDetails = () => {
               >
                 #Details
               </Link>
+              <Link
+                to={`/tutor-profile-cv-format/${allInfo?.phoneNumber}`}
+                className=" py-2 text-[#1e6cb3] hover:underline"
+              >
+                #Details in CV Format
+              </Link>
             </div>
           </div>
           {/* tutoring info */}

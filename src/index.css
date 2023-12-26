@@ -11,7 +11,7 @@ scrolly {
 }
 /* width */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 15px;
 }
 
 ::-webkit-scrollbar:horizontal{
