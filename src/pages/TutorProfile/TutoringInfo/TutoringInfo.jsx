@@ -1,5 +1,10 @@
 import React from "react";
 import { TbSquareRoundedCheckFilled } from "react-icons/tb";
+import {
+  ArrayCommonComponent,
+  CommonComponent,
+  SubjectCommonComponent,
+} from "../TutorProfile";
 
 const TutoringInfo = ({ tutoringInfo }) => {
   const transformSubjectArray = (inputArray) => {
@@ -27,99 +32,62 @@ const TutoringInfo = ({ tutoringInfo }) => {
   };
 
   return (
-    <div>
-      {/* tutoring variant */}
-      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-        <TbSquareRoundedCheckFilled />{" "}
-        <span className="font-semibold">Tutoring Variant: </span>{" "}
-        {tutoringInfo?.tutoringVariant?.map((variant, idx) => (
-          <p key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
-            {" "}
-            {variant?.variantName}
-          </p>
-        ))}
+    <div className="shadow-md rounded-lg">
+      <div className="flex justify-between bg-white shadow-md pt-7 pb-3 px-4">
+        <div>
+          <h2 className="capitalize text-2xl font-semibold text-gray-800 ">
+            Tutoring Info
+          </h2>
+        </div>
       </div>
-      {/* tutoring grade */}
-      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-        <TbSquareRoundedCheckFilled />{" "}
-        <span className="font-semibold">Tutoring Grade: </span>{" "}
-        {tutoringInfo?.tutoringGrade?.map((grade, idx) => (
-          <p key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
-            {" "}
-            {grade?.gradeName}
-          </p>
-        ))}
-      </div>
-      {/* tutoring subject */}
-      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-        <TbSquareRoundedCheckFilled />{" "}
-        <span className="font-semibold">Tutoring Subjects: </span>{" "}
-        {transformSubjectArray(tutoringInfo?.tutoringSubjects)?.map(
-          (subject, idx) => (
-            <span key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
-              {subject.subSubjects?.length
-                ? `${subject.mainSubject}(${subject?.subSubjects?.map(
-                    (subSub) => subSub
-                  )})`
-                : subject?.mainSubject}
-            </span>
-          )
-        )}
-      </div>
-      {/* tutoring curriculum */}
-      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-        <TbSquareRoundedCheckFilled />{" "}
-        <span className="font-semibold">Tutoring Curriculum: </span>{" "}
-        {tutoringInfo?.tutoringCurriculum?.map((curriculum, idx) => (
-          <p key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
-            {" "}
-            {curriculum?.curriculumBoard}
-          </p>
-        ))}
-      </div>
-      {/* is teach admission test */}
-      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-        <TbSquareRoundedCheckFilled />{" "}
-        <span className="font-semibold">Teach Admission Test: </span>{" "}
-        {tutoringInfo?.isTeachAdmissionTest ? "Yes" : "No"}
-      </div>
-      {/* admission test subject */}
-      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-        <TbSquareRoundedCheckFilled />{" "}
-        <span className="font-semibold">Admission Test Subjects: </span>{" "}
-        {transformSubjectArray(tutoringInfo?.teachAdmissionTest)?.map(
-          (subject, idx) => (
-            <span key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
-              {subject.subSubjects?.length
-                ? `${subject.mainSubject}(${subject?.subSubjects?.map(
-                    (subSub) => subSub
-                  )})`
-                : subject?.mainSubject}
-            </span>
-          )
-        )}
-      </div>
-      {/* teach test paper */}
-      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-        <TbSquareRoundedCheckFilled />{" "}
-        <span className="font-semibold">Teach Test Paper: </span>{" "}
-        {tutoringInfo?.isTeachTestPapers ? "Yes" : "No"}
-      </div>
-      {/* Test paper subjects */}
-      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-        <TbSquareRoundedCheckFilled />{" "}
-        <span className="font-semibold">Test Paper Subjects: </span>{" "}
-        {transformSubjectArray(tutoringInfo?.teachTestPapers)?.map(
-          (subject, idx) => (
-            <span key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
-              {subject.subSubjects?.length
-                ? `${subject.mainSubject}(${subject?.subSubjects?.map(
-                    (subSub) => subSub
-                  )})`
-                : subject?.mainSubject}
-            </span>
-          )
-        )}
+      <div className="px-5 py-5 bg-[#f1f5f9]">
+        <div className="w-full rounded-md grid grid-cols-1 lg:grid-cols-2  gap-x-2">
+          <ArrayCommonComponent
+            name={"Tutoring Variants"}
+            values={tutoringInfo?.tutoringVariant}
+            valueName={"variantName"}
+          />
+          <ArrayCommonComponent
+            name={"Tutoring Grades"}
+            values={tutoringInfo?.tutoringGrade}
+            valueName={"gradeName"}
+          />
+          <SubjectCommonComponent
+            name={"Tutoring Subjects"}
+            allSubject={transformSubjectArray(tutoringInfo?.tutoringSubjects)}
+          />
+          <ArrayCommonComponent
+            name={"Tutoring Curriculum"}
+            values={tutoringInfo?.tutoringCurriculum}
+            valueName={"curriculumBoard"}
+          />
+          <CommonComponent
+            name={"Teach Admission Test"}
+            value={tutoringInfo?.isTeachAdmissionTest ? "Yes" : "No"}
+          />
+          {tutoringInfo?.isTeachAdmissionTest ? (
+            <SubjectCommonComponent
+              name={"Tutoring Subjects"}
+              allSubject={transformSubjectArray(
+                tutoringInfo?.teachAdmissionTest
+              )}
+            />
+          ) : (
+            ""
+          )}
+          <CommonComponent
+            name={"Teach Test Paper"}
+            value={tutoringInfo?.isTeachTestPapers ? "Yes" : "No"}
+          />
+          {tutoringInfo?.isTeachAdmissionTest ? (
+            <SubjectCommonComponent
+              name={"Tutoring Subjects"}
+              allSubject={transformSubjectArray(tutoringInfo?.teachTestPapers)}
+            />
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );

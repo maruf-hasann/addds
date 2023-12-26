@@ -41,16 +41,16 @@ const MainSideBar = () => {
               onClick={() => setOpen(false)}
               className={`${
                 menu?.url.slice(1) === pathname
-                  ? "bg-blue-100 "
-                  : "hover:bg-blue-50"
-              }  py-2 px-2 cursor-pointer flex items-center gap-3  text-[#01183b] font-semibold rounded-md`}
+                  ? "bg-blue-50 text-[#01183b]"
+                  : "text-gray-600 hover:text-[#01183b]"
+              }  py-2 px-2 cursor-pointer flex items-center gap-3  rounded-md text-sm`}
             >
               {menu?.icon} {menu?.name}
             </Link>
           ))}
         </div>
         {/* setting */}
-        <div className="grid grid-cols-1 gap-2 px-3 py-2 text-gray-700 ">
+        <div className="grid grid-cols-1 gap-2 px-3 py-2">
           {withSubmenu?.map((menuItem) => (
             <Accordion
               open={open === menuItem?.id}
@@ -62,29 +62,28 @@ const MainSideBar = () => {
                   menuItem?.subMenus?.some((subMenu) =>
                     subMenu?.url?.slice(1)?.includes(pathname)
                   )
-                    ? "bg-blue-100 "
-                    : "hover:bg-blue-50"
-                }  py-2 px-2 cursor-pointer flex items-center gap-3  text-[#01183b] font-semibold rounded-md
-                `}
+                  ? "bg-blue-50 text-[#01183b]"
+                  : "text-gray-600 hover:text-[#01183b]"
+                } ${open === menuItem?.id && 'text-[#01183b]'}  py-2 px-2 cursor-pointer flex items-center gap-3 rounded-md font-normal`}
               >
-                <div className="text-base px-2 flex items-center gap-3 text-[#01183b] font-semibold">
+                <div className="text-sm px-2 flex items-center gap-3">
                   {menuItem?.icon} {menuItem?.name}
                 </div>
               </AccordionHeader>
-              <AccordionBody className="pt-0 ">
-                <div className="grid grid-cols-1 gap-2 p-2 text-gray-700">
+              <AccordionBody className="pt-0 py-0">
+                <div className="grid grid-cols-1 gap-2 p-2 text-gray-700 ">
                   {menuItem?.subMenus.map((menu, idx) => (
                     <Link
                       to={menu?.url}
                       key={idx}
                       className={`${
                         menu?.url?.slice(1) === pathname
-                          ? "bg-blue-100 "
-                          : "hover:bg-blue-50"
-                      }  py-2 px-3 cursor-pointer flex items-center gap-3  text-[#01183b] font-semibold rounded-md
+                        ? "bg-blue-50 text-[#01183b]"
+                        : "text-gray-600 hover:text-[#01183b]"
+                      }  py-2 px-2 cursor-pointer flex items-center gap-3 rounded-md
                       } ${
                         menu?.url?.slice(1) !== pathname && "hover:text-primary"
-                      } py-2 px-2 cursor-pointer font-normal text-base flex items-center gap-2`}
+                      } py-2 px-2 cursor-pointer font-normal text-sm flex items-center gap-2`}
                     >
                       {menu?.name}
                     </Link>

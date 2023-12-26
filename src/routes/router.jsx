@@ -51,6 +51,7 @@ import MockTesActiveJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTesAct
 import MockTesUnActiveJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTesUnActiveJobBoard";
 import RegularHiredJobBoard from "../pages/JobBoard/RegularJobBoard/RegularHiredJobBoard";
 import MockTestHiredJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTestHiredJobBoard";
+import TutorProfileCVFormat from "../pages/TutorProfileCVFormat/TutorProfileCVFormat";
 
 export const router = createBrowserRouter([
   {
@@ -166,6 +167,10 @@ export const router = createBrowserRouter([
       {
         path: "/tutor-profile/:number",
         element: <TutorProfile />,
+      },
+      {
+        path: "/tutor-profile-cv-format/:number",
+        element: <TutorProfileCVFormat />,
       },
       {
         path: "/mock-pricing",
