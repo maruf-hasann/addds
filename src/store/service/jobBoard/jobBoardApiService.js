@@ -20,6 +20,18 @@ const jobBoardApiService = baseApi.injectEndpoints({
             }),
             providesTags: ["JobBoards"],
         }),
+        getSingleJob: build.query({
+            query: ({ jobId, jobType }) => ({
+                url: `job-portal/info?jobId=${jobId}&jobType=${jobType}`,
+            }),
+            providesTags: ["JobBoards"],
+        }),
+        getSingleJobUserInfo: build.query({
+            query: ({ jobId, jobType }) => ({
+                url: `job-portal/user-info?jobId=${jobId}&jobType=${jobType}`,
+            }),
+            providesTags: ["JobBoards"],
+        }),
         updateJobStatus: build.mutation({
             query: (payload) => ({
                 url: "job-portal/update/status",
@@ -36,5 +48,7 @@ export const {
     useGetAllMockTestJobsQuery,
     useGetAllRegularJobsQuery,
     useUpdateJobStatusMutation,
-    useGetAllJobsByStatusQuery
+    useGetAllJobsByStatusQuery,
+    useLazyGetSingleJobQuery,
+    useLazyGetSingleJobUserInfoQuery
 } = jobBoardApiService;
