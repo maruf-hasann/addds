@@ -183,7 +183,7 @@ const DataTable = ({
                 <th
                   key={index}
                   onClick={() => handleSort(column.dataIndex)}
-                  className={`cursor-pointer p-4 text-left hover:bg-blue-200 }`}
+                  className={`cursor-pointer p-4 text-left hover:bg-blue-200 whitespace-nowrap`}
                 >
                   <div className="flex items-center justify-between">
                     <span>{column.name}</span>
@@ -224,8 +224,16 @@ const DataTable = ({
                   >
                     {column?.render ? (
                       <column.render item={item} />
-                    ) : (
+                    ) : column?.dataIndex2 ? (
+                      item[column?.dataIndex]?.[column?.dataIndex2] ? (
+                        item[column?.dataIndex]?.[column?.dataIndex2]
+                      ) : (
+                        "N/A"
+                      )
+                    ) : item[column?.dataIndex] ? (
                       item[column?.dataIndex]
+                    ) : (
+                      "N/A"
                     )}
                   </td>
                 ))}

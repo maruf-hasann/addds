@@ -1,15 +1,12 @@
 import { FaStreetView } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useGetListOfTutorWithAcademicInfoQuery } from "../../../store/service/tutorInfoFilter/tutorInfoFilterApiService";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const TutorAccount = () => {
-  const { data: tutorsInfoData } = useGetListOfTutorWithAcademicInfoQuery();
+  const { data: tutorsInfoData, isLoading } =
+    useGetListOfTutorWithAcademicInfoQuery();
   const tutorsInfo = tutorsInfoData?.data;
-
-  const tableDataClasses =
-    "p-4 text-base text-gray-800 font-normal border-b whitespace-nowrap";
-  const tableHeadClasses =
-    "text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold whitespace-nowrap";
 
   return (
     <div className="py-10 w-full">
@@ -18,234 +15,207 @@ const TutorAccount = () => {
           All Tutor Account
         </h1>
       </div>
-      <div
-        className={`${
-          tutorsInfo?.length && "overflow-x-scroll "
-        } bg-white rounded`}
-      >
-        <table className="w-full text-left h-auto">
-          {/* head */}
-          <thead>
-            <tr>
-              <th className={`${tableHeadClasses}`}>Sl</th>
 
-              <th className={`${tableHeadClasses}`}>Profile</th>
-              <th className={`${tableHeadClasses}`}>Name</th>
-
-              <th className={`${tableHeadClasses}`}>Number</th>
-              <th className={`${tableHeadClasses}`}>Email</th>
-              <th className={`${tableHeadClasses}`}>Gender</th>
-              <th className={`${tableHeadClasses}`}>Country</th>
-              <th className={`${tableHeadClasses}`}>City</th>
-              <th className={`${tableHeadClasses}`}>Area</th>
-              <th className={`${tableHeadClasses}`}>Whatsapp Number</th>
-              <th className={`${tableHeadClasses}`}>Facebook URL</th>
-              <th className={`${tableHeadClasses}`}>Google Meet URL</th>
-              <th className={`${tableHeadClasses}`}>Emergency Contact Name</th>
-              <th className={`${tableHeadClasses}`}>
-                Emergency Contact Number
-              </th>
-              <th className={`${tableHeadClasses}`}>
-                Emergency Contact Relation
-              </th>
-              <th className={`${tableHeadClasses}`}>
-                Interview Convenient Time
-              </th>
-              <th className={`${tableHeadClasses}`}>Education Variant</th>
-              <th className={`${tableHeadClasses}`}>School Name</th>
-              <th className={`${tableHeadClasses}`}>High School Board</th>
-              <th className={`${tableHeadClasses}`}>High School Result</th>
-              <th className={`${tableHeadClasses}`}>Collage Name</th>
-              <th className={`${tableHeadClasses}`}>Collage Board</th>
-              <th className={`${tableHeadClasses}`}>Collage Result</th>
-              <th className={`${tableHeadClasses}`}>University Name</th>
-              <th className={`${tableHeadClasses}`}>Subject Name</th>
-              <th className={`${tableHeadClasses}`}>University Running Year</th>
-              <th className={`${tableHeadClasses}`}>Current Affair</th>
-
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {tutorsInfo?.map((info, idx) => (
-              <tr className={`hover:bg-blue-50`} key={idx}>
-                <th className={tableDataClasses}>{idx + 1}</th>
-                {/* profile */}
-                <td className={`${tableDataClasses} mx-auto text-center`}>
-                  {info?.identityInfo?.personalPhoto ? (
-                    <img
-                      src={info?.identityInfo?.personalPhoto}
-                      alt=""
-                      className="h-12 w-12 object-cover rounded-full"
-                    />
-                  ) : (
-                    "N/A"
-                  )}
-                </td>
-                {/* name */}
-                <td className={tableDataClasses}>
-                  {info?.personalInfo?.fullName
-                    ? info?.personalInfo?.fullName
-                    : "N/A"}
-                </td>
-                {/* phone number */}
-                <td className={tableDataClasses}>
-                  {info?.personalInfo?.phoneNumber
-                    ? info?.personalInfo?.phoneNumber
-                    : "N/A"}
-                </td>
-                {/* email */}
-                <td className={tableDataClasses}>
-                  {info?.personalInfo?.email
-                    ? info?.personalInfo?.email
-                    : "N/A"}
-                </td>
-                {/* gender */}
-                <td className={`capitalize ${tableDataClasses}`}>
-                  {info?.personalInfo?.gender
-                    ? info?.personalInfo?.gender
-                    : "N/A"}
-                </td>
-                {/* country */}
-                <td className={tableDataClasses}>
-                  {info?.personalInfo?.country
-                    ? info?.personalInfo?.country
-                    : "N/A"}
-                </td>
-                {/* city */}
-                <td className={tableDataClasses}>
-                  {info?.personalInfo?.city ? info?.personalInfo?.city : "N/A"}
-                </td>
-                {/* area */}
-                <td className={tableDataClasses}>
-                  {info?.personalInfo?.area ? info?.personalInfo?.area : "N/A"}
-                </td>
-                {/* whatsapp number */}
-                <td className={tableDataClasses}>
-                  {info?.contactInfo?.whatsappNumber
-                    ? info?.contactInfo?.whatsappNumber
-                    : "N/A"}
-                </td>
-                {/* facebook url */}
-                <td className={tableDataClasses}>
-                  {info?.contactInfo?.facebookUrl
-                    ? info?.contactInfo?.facebookUrl
-                    : "N/A"}
-                </td>
-                {/* google meet */}
-                <td className={tableDataClasses}>
-                  {info?.contactInfo?.googleMeetUrl
-                    ? info?.contactInfo?.googleMeetUrl
-                    : "N/A"}
-                </td>
-                {/* emergency contact name */}
-                <td className={tableDataClasses}>
-                  {info?.contactInfo?.emergencyContactName
-                    ? info?.contactInfo?.emergencyContactName
-                    : "N/A"}
-                </td>
-                {/* emergency contact number */}
-                <td className={tableDataClasses}>
-                  {info?.contactInfo?.emergencyContactNumber
-                    ? info?.contactInfo?.emergencyContactNumber
-                    : "N/A"}
-                </td>
-                {/* emergency contact relation */}
-                <td className={tableDataClasses}>
-                  {info?.contactInfo?.emergencyContactRelation
-                    ? info?.contactInfo?.emergencyContactRelation
-                    : "N/A"}
-                </td>
-                {/* interview convenient time */}
-                <td className={tableDataClasses}>
-                  {info?.contactInfo?.interviewConvenientTime
-                    ? info?.contactInfo?.interviewConvenientTime
-                    : "N/A"}
-                </td>
-                {/* education variant */}
-                <td className={tableDataClasses}>
-                  {info?.academicInfo?.educationVariant
-                    ? info?.academicInfo?.educationVariant
-                    : "N/A"}
-                </td>
-                {/* school name */}
-                <td className={tableDataClasses}>
-                  {info?.academicInfo?.schoolName
-                    ? info?.academicInfo?.schoolName
-                    : "N/A"}
-                </td>
-                {/* highschool board */}
-                <td className={tableDataClasses}>
-                  {info?.academicInfo?.highSchoolBoard
-                    ? info?.academicInfo?.highSchoolBoard
-                    : "N/A"}
-                </td>
-                {/* high school result */}
-                <td className={tableDataClasses}>
-                  {info?.academicInfo?.highSchoolResult
-                    ? info?.academicInfo?.highSchoolResult
-                    : "N/A"}
-                </td>
-                {/* collage name */}
-                <td className={tableDataClasses}>
-                  {info?.academicInfo?.collageName
-                    ? info?.academicInfo?.collageName
-                    : "N/A"}
-                </td>
-                {/* collage board */}
-                <td className={tableDataClasses}>
-                  {info?.academicInfo?.collageBoard
-                    ? info?.academicInfo?.collageBoard
-                    : "N/A"}
-                </td>
-                {/* collage result */}
-                <td className={tableDataClasses}>
-                  {info?.academicInfo?.collageResult
-                    ? info?.academicInfo?.collageResult
-                    : "N/A"}
-                </td>
-                {/* university name */}
-                <td className={tableDataClasses}>
-                  {info?.academicInfo?.universityName
-                    ? info?.academicInfo?.universityName
-                    : "N/A"}
-                </td>
-                {/* subject name */}
-                <td className={tableDataClasses}>
-                  {info?.academicInfo?.subjectsName
-                    ? info?.academicInfo?.subjectsName
-                    : "N/A"}
-                </td>
-                {/* university running year */}
-                <td className={tableDataClasses}>
-                  {info?.academicInfo?.universityRunningYear
-                    ? info?.academicInfo?.universityRunningYear
-                    : "N/A"}
-                </td>
-                {/* current affair */}
-                <td className={tableDataClasses}>
-                  {info?.academicInfo?.currentAffair
-                    ? info?.academicInfo?.currentAffair
-                    : "N/A"}
-                </td>
-                <td className={`${tableDataClasses} w-[120px]`}>
-                  <Link
-                    to={`/tutor-account-details/${info?.personalInfo?.phoneNumber}`}
-                    className="text-center flex justify-center mx-auto"
-                  >
-                    <FaStreetView
-                      title="View Profile"
-                      className="text-center mx-auto cursor-pointer hover:text-blue-500"
-                    />
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        isLoading={isLoading}
+        F
+        error={false}
+        tableData={tutorsInfo}
+        handleSelectedRowItem={(data) => console.log(data)}
+        columns={[
+          // personal info start
+          {
+            name: "Profile",
+            render: ({ item }) => (
+              <div>
+                {item?.identityInfo?.personalPhoto ? (
+                  <img
+                    src={item?.identityInfo?.personalPhoto}
+                    alt=""
+                    className="h-12 w-12 object-cover rounded-full"
+                  />
+                ) : (
+                  "N/A"
+                )}
+              </div>
+            ),
+          },
+          {
+            name: "Name",
+            dataIndex: "personalInfo",
+            dataIndex2: "fullName",
+            key: "_id",
+          },
+          {
+            name: "Number",
+            dataIndex: "personalInfo",
+            dataIndex2: "phoneNumber",
+            key: "_id",
+          },
+          {
+            name: "Email",
+            dataIndex: "personalInfo",
+            dataIndex2: "email",
+            key: "_id",
+          },
+          {
+            name: "Gender",
+            dataIndex: "personalInfo",
+            dataIndex2: "gender",
+            key: "_id",
+          },
+          {
+            name: "Country",
+            dataIndex: "personalInfo",
+            dataIndex2: "country",
+            key: "_id",
+          },
+          {
+            name: "City",
+            dataIndex: "personalInfo",
+            dataIndex2: "city",
+            key: "_id",
+          },
+          {
+            name: "Area",
+            dataIndex: "personalInfo",
+            dataIndex2: "area",
+            key: "_id",
+          },
+          {
+            name: "Home Address",
+            dataIndex: "personalInfo",
+            dataIndex2: "homeAddress",
+            key: "_id",
+          },
+          // contact info start
+          {
+            name: "Whatsapp Number",
+            dataIndex: "contactInfo",
+            dataIndex2: "whatsappNumber",
+            key: "_id",
+          },
+          {
+            name: "Facebook URL",
+            dataIndex: "contactInfo",
+            dataIndex2: "facebookUrl",
+            key: "_id",
+          },
+          {
+            name: "Google Meet URL",
+            dataIndex: "contactInfo",
+            dataIndex2: "googleMeetUrl",
+            key: "_id",
+          },
+          {
+            name: "Emergency Contact Name",
+            dataIndex: "contactInfo",
+            dataIndex2: "emergencyContactName",
+            key: "_id",
+          },
+          {
+            name: "Emergency Contact Number",
+            dataIndex: "contactInfo",
+            dataIndex2: "emergencyContactNumber",
+            key: "_id",
+          },
+          {
+            name: "Emergency Contact Relation",
+            dataIndex: "contactInfo",
+            dataIndex2: "emergencyContactRelation",
+            key: "_id",
+          },
+          {
+            name: "Interview Convenient Time",
+            dataIndex: "contactInfo",
+            dataIndex2: "interviewConvenientTime",
+            key: "_id",
+          },
+          // academic info start
+          {
+            name: "Education Variant",
+            dataIndex: "academicInfo",
+            dataIndex2: "educationVariant",
+            key: "_id",
+          },
+          {
+            name: "School Name",
+            dataIndex: "academicInfo",
+            dataIndex2: "schoolName",
+            key: "_id",
+          },
+          {
+            name: "High School Board",
+            dataIndex: "academicInfo",
+            dataIndex2: "highSchoolBoard",
+            key: "_id",
+          },
+          {
+            name: "High School Result",
+            dataIndex: "academicInfo",
+            dataIndex2: "highSchoolResult",
+            key: "_id",
+          },
+          {
+            name: "Collage Name",
+            dataIndex: "academicInfo",
+            dataIndex2: "collageName",
+            key: "_id",
+          },
+          {
+            name: "Collage Board",
+            dataIndex: "academicInfo",
+            dataIndex2: "collageBoard",
+            key: "_id",
+          },
+          {
+            name: "Collage Result",
+            dataIndex: "academicInfo",
+            dataIndex2: "collageResult",
+            key: "_id",
+          },
+          {
+            name: "University Name",
+            dataIndex: "academicInfo",
+            dataIndex2: "universityName",
+            key: "_id",
+          },
+          {
+            name: "Subject Name",
+            dataIndex: "academicInfo",
+            dataIndex2: "subjectsName",
+            key: "_id",
+          },
+          {
+            name: "University Running Year",
+            dataIndex: "academicInfo",
+            dataIndex2: "universityRunningYear",
+            key: "_id",
+          },
+          {
+            name: "Current Affair",
+            dataIndex: "academicInfo",
+            dataIndex2: "currentAffair",
+            key: "_id",
+          },
+          {
+            name: "Actions",
+            render: ({ item }) => (
+              <div className="flex gap-2">
+                <Link
+                  to={`/tutor-account-details/${item?.personalInfo?.phoneNumber}`}
+                  className="text-center flex justify-center mx-auto"
+                >
+                  <FaStreetView
+                    title="View Profile"
+                    className="text-center mx-auto cursor-pointer hover:text-blue-500"
+                  />
+                </Link>
+              </div>
+            ),
+          },
+        ]}
+      />
     </div>
   );
 };

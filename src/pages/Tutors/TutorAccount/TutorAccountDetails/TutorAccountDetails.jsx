@@ -69,6 +69,7 @@ const TutorAccountDetails = () => {
               </Link>
             </div>
           </div>
+          
           {/* personal Info */}
           <PersonalInfo
             personalInfo={allInfo?.personalInfo}

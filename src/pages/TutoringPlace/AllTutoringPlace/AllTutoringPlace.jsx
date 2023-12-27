@@ -5,6 +5,7 @@ import DeleteTutoringPlaceModal from "./DeleteTutoringPlace/DeleteTutoringPlaceM
 import EditTutoringPlaceModal from "./EditTutoringPlace/EditTutoringPlace";
 import { useGetTutoringPlacesQuery } from "../../../store/service/tutoringPlace/tutoringPlaceApiService";
 import AddTutoringPlaceModal from "./AddTutoringPlaceModal/AddTutoringPlaceModal";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllTutoringPlace = () => {
   const [openTutoringPlaceModal, setOpenTutoringPlaceModal] = useState(false);
@@ -17,7 +18,7 @@ const AllTutoringPlace = () => {
   const [openEditTutoringPlaceModal, setOpenEditTutoringPlaceModal] =
     useState(false);
 
-  const { data: tutoringPlacesData } = useGetTutoringPlacesQuery();
+  const { data: tutoringPlacesData, isLoading } = useGetTutoringPlacesQuery();
   const tutoringPlaces = tutoringPlacesData?.data;
 
   return (
@@ -34,55 +35,31 @@ const AllTutoringPlace = () => {
             Add New
           </div>
         </div>
-        <div className="overflow-x-auto border-x rounded bg-white">
-          <table className="w-full min-w-max table-auto text-left border">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                  Sl
-                </th>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                  Name
-                </th>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {tutoringPlaces?.map((place, idx) => {
-                const classes =
-                  "p-4 text-base text-gray-800 font-normal border-b";
-                return (
-                  <tr key={place._id} className={` hover:bg-blue-50`}>
-                    <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                    <td className={classes}>{place?.placeName}</td>
-                    <td className={`${classes} w-[120px]`}>
-                      <div className="flex justify-evenly items-center">
-                        <FaTrash
-                          onClick={() => {
-                            setDeleteTutoringPlaceData(place),
-                              setOpenDeleteTutoringPlaceModal(true);
-                          }}
-                          className="cursor-pointer hover:text-red-500"
-                        />{" "}
-                        <FaEdit
-                          onClick={() => {
-                            setEditTutoringPlaceData(place),
-                              setOpenEditTutoringPlaceModal(true);
-                          }}
-                          className="cursor-pointer hover:text-sky-500"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          isLoading={isLoading}
+          error={false}
+          tableData={tutoringPlaces}
+          handleSelectedRowItem={(data) => console.log(data)}
+          columns={[
+            { name: "Name", dataIndex: "placeName", key: "_id" },
+            {
+              name: "Actions",
+              render: ({ item }) => (
+                <div className="flex gap-2">
+                  <button
+                    className=" text-red-500"
+                    onClick={() => {
+                      setOpenDeleteTutoringPlaceModal(true),
+                        setDeleteTutoringPlaceData(item);
+                    }}
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
+              ),
+            },
+          ]}
+        />
       </div>
       {openDeleteTutoringPlaceModal && deleteTutoringPlaceData && (
         <DeleteTutoringPlaceModal
