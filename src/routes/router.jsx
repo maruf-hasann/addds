@@ -58,6 +58,8 @@ import EditAcademicInfo from "../pages/Tutors/TutorAccount/EditTutorAccount/Edit
 import EditTutoringInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditTutoringInfo/EditTutoringInfo";
 import EditAdditionalTutoringInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditAdditionalTutoringInfo/EditAdditionalTutoringInfo";
 import EditPromoInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditPromoInfo/EditPromoInfo";
+import MockTestJobDetails from "../pages/JobBoard/MockTestJobBoard/MockTestJobDetails/MockTestJobDetails";
+import RegularJobDetails from '../pages/JobBoard/RegularJobBoard/RegularJobDetails/RegularJobDetails';
 
 export const router = createBrowserRouter([
   {
@@ -251,6 +253,10 @@ export const router = createBrowserRouter([
         element: <RegularHiredJobBoard />,
       },
       {
+        path: "/regular-job-details",
+        element: <RegularJobDetails />,
+      },
+      {
         path: "/all-active-mock-test-jobs",
         element: <MockTesActiveJobBoard />,
       },
@@ -261,6 +267,10 @@ export const router = createBrowserRouter([
       {
         path: "/all-hired-mock-test-jobs",
         element: <MockTestHiredJobBoard />,
+      },
+      {
+        path: "/mock-test-job-details",
+        element: <MockTestJobDetails />,
       },
     ],
   },

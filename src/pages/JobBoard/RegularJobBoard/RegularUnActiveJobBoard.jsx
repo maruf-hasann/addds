@@ -5,8 +5,10 @@ import {
 } from "../../../store/service/jobBoard/jobBoardApiService";
 import { jobBoardStatus } from "../../../data/jobBoard";
 import tutoringSubject from "../../../libs/tutoringSubject";
+import { useNavigate } from "react-router-dom";
 
 const RegularUnActiveJobBoard = () => {
+    const navigate = useNavigate();
     // redux api call
     const { data: regularUnActiveJobsData } = useGetAllJobsByStatusQuery({
         status: "inactive",
@@ -58,6 +60,17 @@ const RegularUnActiveJobBoard = () => {
         "Location",
         "Regular Status",
     ];
+
+    // redirect to single job details
+    const handleNavigateSingleJob = (value) => {
+        if (value?.jobId && value?.jobType) {
+            navigate("/regular-job-details", {
+                state: { ...value, title: "In Active" },
+            });
+        } else {
+            toast.error("Please try again!");
+        }
+    };
 
     return (
         <div className="py-10 w-full">
@@ -229,7 +242,15 @@ const RegularUnActiveJobBoard = () => {
                                                 {status}
                                             </span>
                                         ))}
-                                    <span className="text-center flex justify-center mx-auto">
+                                    <span
+                                        onClick={() =>
+                                            handleNavigateSingleJob({
+                                                jobId: regularJob?.jobId,
+                                                jobType: regularJob?.jobType,
+                                            })
+                                        }
+                                        className="text-center flex justify-center mx-auto"
+                                    >
                                         <FaStreetView
                                             title="View Profile"
                                             className="text-center mx-auto cursor-pointer hover:text-blue-500"

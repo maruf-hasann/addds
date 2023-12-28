@@ -1,9 +1,15 @@
 import { FaStreetView } from "react-icons/fa6";
 import { jobBoardStatus } from "../../../data/jobBoard";
-import { useGetAllJobsByStatusQuery, useUpdateJobStatusMutation } from "../../../store/service/jobBoard/jobBoardApiService";
+import {
+    useGetAllJobsByStatusQuery,
+    useUpdateJobStatusMutation,
+} from "../../../store/service/jobBoard/jobBoardApiService";
 import tutoringSubject from "../../../libs/tutoringSubject";
+import { useNavigate } from "react-router-dom";
 
 const MockTesUnActiveJobBoard = () => {
+    const navigate = useNavigate();
+
     // redux api call
     const { data: mockTestUnActiveJobsData } = useGetAllJobsByStatusQuery({
         status: "inactive",
@@ -53,6 +59,17 @@ const MockTesUnActiveJobBoard = () => {
         "Location",
         "Mock Test Status",
     ];
+
+    // redirect to single job details
+    const handleNavigateSingleJob = (value) => {
+        if (value?.jobId && value?.jobType) {
+            navigate("/mock-test-job-details", {
+                state: { ...value, title: "In-Active" },
+            });
+        } else {
+            toast.error("Please try again!");
+        }
+    };
 
     return (
         <div className="py-10 w-full">
@@ -184,7 +201,15 @@ const MockTesUnActiveJobBoard = () => {
                                                 {status}
                                             </span>
                                         ))}
-                                    <span className="text-center flex justify-center mx-auto">
+                                    <span
+                                        onClick={() =>
+                                            handleNavigateSingleJob({
+                                                jobId: mockTestJob?.jobId,
+                                                jobType: mockTestJob?.jobType,
+                                            })
+                                        }
+                                        className="text-center flex justify-center mx-auto"
+                                    >
                                         <FaStreetView
                                             title="View Profile"
                                             className="text-center mx-auto cursor-pointer hover:text-blue-500"
