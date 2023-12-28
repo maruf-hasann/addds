@@ -7,6 +7,7 @@ import {
   useGetCurriculumBoardsQuery,
 } from "../../../store/service/curriculumBoard/curriculumBoardApiService";
 import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllCurriculumBoard = () => {
   const [openCurriculumBoardModal, setOpenCurriculumBoardModal] =
@@ -19,7 +20,8 @@ const AllCurriculumBoard = () => {
 
   const [deleteCurriculumBoard] = useDeleteCurriculumBoardMutation();
 
-  const { data: allCurriculumBoardData } = useGetCurriculumBoardsQuery();
+  const { data: allCurriculumBoardData, isLoading } =
+    useGetCurriculumBoardsQuery();
   const allCurriculumBoard = allCurriculumBoardData?.data;
 
   return (
@@ -35,62 +37,34 @@ const AllCurriculumBoard = () => {
           Add New
         </div>
       </div>
-      <div className="overflow-x-auto rounded bg-white">
-        <table className="w-full min-w-max table-auto text-left border">
-          {/* head */}
-          <thead>
-            <tr>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                Sl
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Name
-              </th>
-
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Variant
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            {allCurriculumBoard?.map((curriculumBoard, idx) => {
-              const classes =
-                "p-4 text-base text-gray-800 font-normal border-b";
-              return (
-                <tr className={`hover:bg-blue-50`} key={curriculumBoard?._id}>
-                  <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                  <td className={classes}>{curriculumBoard.boardName}</td>
-                  <td className={classes}>
-                    {curriculumBoard?.educationVariant}
-                  </td>
-                  <td className={`${classes} w-[120px]`}>
-                    <div className="flex justify-evenly items-center">
-                      <FaTrash
-                        onClick={() => {
-                          setDeleteCurriculumBoardData(curriculumBoard),
-                            setOpenDeleteCurriculumBoardModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        isLoading={isLoading}
+        error={false}
+        tableData={allCurriculumBoard}
+        handleSelectedRowItem={(data) => console.log(data)}
+        columns={[
+          { name: "Name", dataIndex: "boardName", key: "_id" },
+          { name: "Variant", dataIndex: "educationVariant", key: "_id" },
+          {
+            name: "Actions",
+            render: ({ item }) => (
+              <FaTrash
+                onClick={() => {
+                  setDeleteCurriculumBoardData(item),
+                    setOpenDeleteCurriculumBoardModal(true);
+                }}
+                className="cursor-pointer hover:text-red-500"
+              />
+            ),
+          },
+        ]}
+      />
       {openCurriculumBoardModal && (
         <AddCurriculumBoardModal
           openAddCurriculumBoardModal={openCurriculumBoardModal}
           setOpenAddCurriculumBoardModal={setOpenCurriculumBoardModal}
         />
       )}
-
       {openDeleteCurriculumBoardModal && (
         <DeleteModal
           id={deleteCurriculumBoardData?._id}

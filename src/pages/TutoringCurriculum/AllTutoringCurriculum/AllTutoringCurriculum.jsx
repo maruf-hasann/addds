@@ -8,6 +8,7 @@ import {
   useDeleteTutoringCurriculumMutation,
   useGetTutoringCurriculumQuery,
 } from "../../../store/service/tutoringCurriculum/tutoringCurriculumApiService";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllTutoringCurriculum = () => {
   /* handle delete state handle */
@@ -28,7 +29,8 @@ const AllTutoringCurriculum = () => {
 
   /* redux api call */
   const [deleteTutoringCurriculum] = useDeleteTutoringCurriculumMutation();
-  const { data: allTutoringCurriculumData } = useGetTutoringCurriculumQuery();
+  const { data: allTutoringCurriculumData, isLoading } =
+    useGetTutoringCurriculumQuery();
   const allTutoringCurriculum = allTutoringCurriculumData?.data;
 
   return (
@@ -44,71 +46,28 @@ const AllTutoringCurriculum = () => {
           Add New
         </div>
       </div>
-      <div className="overflow-x-auto rounded bg-white">
-        <table className="w-full min-w-max table-auto text-left border">
-          {/* head */}
-          <thead>
-            <tr>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                Sl
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Curriculum Name
-              </th>
-
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Variant
-              </th>
-
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            {allTutoringCurriculum?.map((tutoringCurriculum, idx) => {
-              const classes =
-                "p-4 text-base text-gray-800 font-normal border-b";
-              return (
-                <tr
-                  className={`hover:bg-blue-50`}
-                  key={tutoringCurriculum?._id}
-                >
-                  <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                  <td className={classes}>
-                    {tutoringCurriculum?.curriculumName}
-                  </td>
-                  <td className={classes}>
-                    {tutoringCurriculum?.educationVariant}
-                  </td>
-
-                  <td className={`${classes} w-[120px] flex gap-3`}>
-                    <span className="flex justify-evenly items-center">
-                      <FaEdit
-                        onClick={() => {
-                          setEditTutoringCurriculumData(tutoringCurriculum),
-                            setOpenEditTutoringCurriculumModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                    <span className="flex justify-evenly items-center">
-                      <FaTrash
-                        onClick={() => {
-                          setDeleteTutoringCurriculumData(tutoringCurriculum),
-                            setOpenDeleteTutoringCurriculumModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        isLoading={isLoading}
+        error={false}
+        tableData={allTutoringCurriculum}
+        handleSelectedRowItem={(data) => console.log(data)}
+        columns={[
+          { name: "Curriculum Name", dataIndex: "curriculumName", key: "_id" },
+          { name: "Variant", dataIndex: "educationVariant", key: "_id" },
+          {
+            name: "Actions",
+            render: ({ item }) => (
+              <FaTrash
+                onClick={() => {
+                  setDeleteTutoringCurriculumData(item),
+                    setOpenDeleteTutoringCurriculumModal(true);
+                }}
+                className="cursor-pointer hover:text-red-500"
+              />
+            ),
+          },
+        ]}
+      />
 
       {/* open add tutoring curriculum Modal */}
       {openTutoringCurriculumModal && (

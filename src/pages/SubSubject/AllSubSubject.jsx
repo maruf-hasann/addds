@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import {
   useDeleteSubSubjectMutation,
   useGetSubSubjectQuery,
@@ -7,6 +7,7 @@ import {
 import AddSubSubjectModal from "./AddSubSubjectModal/AddSubSubjectModal";
 import EditSubSubjectModal from "./EditSubSubjectModal/EditSubSubjectModal";
 import DeleteModal from "../../components/Shared/DeleteModal/DeleteModal";
+import DataTable from "../../components/Shared/DataTable/DataTable";
 
 const AllSubSubject = () => {
   const [openSubSubjectModal, setOpenSubSubjectModal] = useState(false);
@@ -20,7 +21,7 @@ const AllSubSubject = () => {
 
   const [deleteSubSubject] = useDeleteSubSubjectMutation();
 
-  const { data: allSubSubjectData } = useGetSubSubjectQuery();
+  const { data: allSubSubjectData, isLoading } = useGetSubSubjectQuery();
   const allSubSubject = allSubSubjectData?.data;
 
   return (
@@ -36,62 +37,29 @@ const AllSubSubject = () => {
           Add New
         </div>
       </div>
-      <div className="overflow-x-auto rounded bg-white">
-        <table className="w-full min-w-max table-auto text-left border">
-          {/* head */}
-          <thead>
-            <tr>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                Sl
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Main Subject
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Sub Subject
-              </th>
+      <DataTable
+        isLoading={isLoading}
+        error={false}
+        tableData={allSubSubject}
+        handleSelectedRowItem={(data) => console.log(data)}
+        columns={[
+          { name: "Main Subject", dataIndex: "mainSubject", key: "_id" },
+          { name: "Sub Subject", dataIndex: "subSubject", key: "_id" },
+          {
+            name: "Actions",
+            render: ({ item }) => (
+              <FaTrash
+                onClick={() => {
+                  setDeleteSubSubjectData(item),
+                    setOpenDeleteSubSubjectModal(true);
+                }}
+                className="cursor-pointer hover:text-red-500"
+              />
+            ),
+          },
+        ]}
+      />
 
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            {allSubSubject?.map((subSubject, idx) => {
-              const classes =
-                "p-4 text-base text-gray-800 font-normal border-b";
-              return (
-                <tr className={`hover:bg-blue-50`} key={subSubject?._id}>
-                  <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                  <td className={classes}>{subSubject?.mainSubject}</td>
-                  <td className={classes}>{subSubject?.subSubject}</td>
-                  <td className={`${classes} w-[120px] flex gap-3`}>
-                    <span className="flex justify-evenly items-center">
-                      <FaEdit
-                        onClick={() => {
-                          setEditSubSubjectData(subSubject),
-                            setOpenEditSubSubjectModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                    <span className="flex justify-evenly items-center">
-                      <FaTrash
-                        onClick={() => {
-                          setDeleteSubSubjectData(subSubject),
-                            setOpenDeleteSubSubjectModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
       {openSubSubjectModal && (
         <AddSubSubjectModal
           openAddSubSubjectModal={openSubSubjectModal}

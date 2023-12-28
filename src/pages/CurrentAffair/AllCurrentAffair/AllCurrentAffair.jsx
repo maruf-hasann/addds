@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import DeleteCurrentAffairModal from "./DeleteCurrentAffair/DeleteCurrentAffairModal";
 import { useGetCurrentAffairsQuery } from "../../../store/service/currentAffair/currentAffairApiService";
 import AddCurrentAffairModal from "./AddCurrentAffairModal/AddCurrentAffairModal";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllCurrentAffair = () => {
   const [openAddCurrentAffairModal, setOpenAddCurrentAffairModal] =
@@ -14,7 +15,7 @@ const AllCurrentAffair = () => {
   const [openDeleteCurrentAffairModal, setOpenDeleteCurrentAffairModal] =
     useState(false);
 
-  const { data: currentAffairsData } = useGetCurrentAffairsQuery();
+  const { data: currentAffairsData, isLoading } = useGetCurrentAffairsQuery();
   const currentAffairs = currentAffairsData?.data;
 
   return (
@@ -31,54 +32,27 @@ const AllCurrentAffair = () => {
             Add New
           </div>
         </div>
-        <div className="overflow-x-auto border-x rounded bg-white">
-          <table className="w-full min-w-max table-auto text-left border">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                  Sl
-                </th>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                  Name
-                </th>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {currentAffairs?.map((affair, idx) => {
-                const classes =
-                  "p-4 text-base text-gray-800 font-normal border-b";
-                return (
-                  <tr key={affair?._id} className={` hover:bg-blue-50`}>
-                    <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                    <td className={classes}>{affair?.affair}</td>
-                    <td className={`${classes} w-[120px]`}>
-                      <div className="flex justify-evenly items-center">
-                        <FaTrash
-                          onClick={() => {
-                            setDeleteCurrentAffairData(affair),
-                              setOpenDeleteCurrentAffairModal(true);
-                          }}
-                          className="cursor-pointer hover:text-red-500"
-                        />{" "}
-                        <FaEdit
-                          onClick={() =>
-                            toast.success("Current Affair updated successfully")
-                          }
-                          className="cursor-pointer hover:text-sky-500"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          isLoading={isLoading}
+          error={false}
+          tableData={currentAffairs}
+          handleSelectedRowItem={(data) => console.log(data)}
+          columns={[
+            { name: "Name", dataIndex: "affair", key: "_id" },
+            {
+              name: "Actions",
+              render: ({ item }) => (
+                <FaTrash
+                  onClick={() => {
+                    setDeleteCurrentAffairData(item),
+                      setOpenDeleteCurrentAffairModal(true);
+                  }}
+                  className="cursor-pointer hover:text-red-500"
+                />
+              ),
+            },
+          ]}
+        />
       </div>
       {openDeleteCurrentAffairModal && deleteCurrentAffairData && (
         <DeleteCurrentAffairModal

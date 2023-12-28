@@ -99,7 +99,7 @@ const AcademicTutoring = () => {
                   <img
                     src={item?.identityInfo?.personalPhoto}
                     alt=""
-                    className="h-12 w-12 object-cover rounded-full"
+                    className="h-8 w-8 object-cover rounded-full"
                   />
                 ) : (
                   "N/A"

@@ -7,6 +7,7 @@ import {
   useGetAllTutoringLocationQuery,
 } from "../../../store/service/tutoringLocation/tutoringLocationApiService";
 import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllTutoringLocation = () => {
   const [openTutoringLocationModal, setOpenTutoringLocationModal] =
@@ -24,14 +25,15 @@ const AllTutoringLocation = () => {
 
   const [deleteTutoringLocation] = useDeleteTutoringLocationByIdMutation();
 
-  const { data: allTutoringLocationData } = useGetAllTutoringLocationQuery();
+  const { data: allTutoringLocationData, isLoading } =
+    useGetAllTutoringLocationQuery();
   const allTutoringLocation = allTutoringLocationData?.data;
 
   return (
     <div className="py-10">
       <div className="flex justify-between items-center mb-5">
         <h1 className="font-bold text-xl md:text-2xl text-white">
-          All Sub Subject
+          All Tutoring Location
         </h1>
         <div
           className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
@@ -40,62 +42,29 @@ const AllTutoringLocation = () => {
           Add New
         </div>
       </div>
-      <div className="overflow-x-auto rounded bg-white">
-        <table className="w-full min-w-max table-auto text-left border">
-          {/* head */}
-          <thead>
-            <tr>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                Sl
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                City
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Location Name
-              </th>
+      <DataTable
+        isLoading={isLoading}
+        error={false}
+        tableData={allTutoringLocation}
+        handleSelectedRowItem={(data) => console.log(data)}
+        columns={[
+          { name: "City", dataIndex: "city", key: "_id" },
+          { name: "Location Name", dataIndex: "locationName", key: "_id" },
+          {
+            name: "Actions",
+            render: ({ item }) => (
+              <FaTrash
+                onClick={() => {
+                  setDeleteTutoringLocationData(item),
+                    setOpenDeleteTutoringLocationModal(true);
+                }}
+                className="cursor-pointer hover:text-red-500"
+              />
+            ),
+          },
+        ]}
+      />
 
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            {allTutoringLocation?.map((tutoringLocation, idx) => {
-              const classes =
-                "p-4 text-base text-gray-800 font-normal border-b";
-              return (
-                <tr className={`hover:bg-blue-50`} key={tutoringLocation?._id}>
-                  <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                  <td className={classes}>{tutoringLocation?.city}</td>
-                  <td className={classes}>{tutoringLocation?.locationName}</td>
-                  <td className={`${classes} w-[120px] flex gap-3`}>
-                    <span className="flex justify-evenly items-center">
-                      <FaEdit
-                        onClick={() => {
-                          setEditTutoringLocationData(tutoringLocation),
-                            setOpenEditTutoringLocationModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                    <span className="flex justify-evenly items-center">
-                      <FaTrash
-                        onClick={() => {
-                          setDeleteTutoringLocationData(tutoringLocation),
-                            setOpenDeleteTutoringLocationModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
       {openTutoringLocationModal && (
         <AddTutoringLocationModal
           openAddTutoringLocationModal={openTutoringLocationModal}

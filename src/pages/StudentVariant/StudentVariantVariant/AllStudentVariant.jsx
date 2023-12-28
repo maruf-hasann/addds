@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useState } from "react";
 import DeleteStudentVariantModal from "./DeleteStudentVariant/DeleteStudentVariantModal";
 import EditStudentVariantModal from "./EditStudentVariant/EditStudentVariant";
 import { useGetStudentVariantsQuery } from "../../../store/service/studentVariant/studentVariantApiService";
 import AddStudentVariantModal from "./AddStudentVariantModal/AddStudentVariantModal";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllStudentVariant = () => {
   const [openStudentVariantModal, setOpenStudentVariantModal] = useState(false);
@@ -18,7 +18,7 @@ const AllStudentVariant = () => {
   const [openEditStudentVariantModal, setOpenEditStudentVariantModal] =
     useState(false);
 
-  const { data: studentVariantsData } = useGetStudentVariantsQuery();
+  const { data: studentVariantsData, isLoading } = useGetStudentVariantsQuery();
   const studentVariants = studentVariantsData?.data;
 
   return (
@@ -36,55 +36,27 @@ const AllStudentVariant = () => {
             Add New
           </div>
         </div>
-        <div className="overflow-x-auto border-x rounded bg-white">
-          <table className="w-full min-w-max table-auto text-left border">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                  Sl
-                </th>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                  Name
-                </th>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {studentVariants?.map((variant, idx) => {
-                const classes =
-                  "p-4 text-base text-gray-800 font-normal border-b";
-                return (
-                  <tr key={variant._id} className={` hover:bg-blue-50`}>
-                    <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                    <td className={classes}>{variant?.variantName}</td>
-                    <td className={`${classes} w-[120px]`}>
-                      <div className="flex justify-evenly items-center">
-                        <FaTrash
-                          onClick={() => {
-                            setDeleteStudentVariantData(variant),
-                              setOpenDeleteStudentVariantModal(true);
-                          }}
-                          className="cursor-pointer hover:text-red-500"
-                        />{" "}
-                        <FaEdit
-                          onClick={() => {
-                            setEditStudentVariantData(variant),
-                              setOpenEditStudentVariantModal(true);
-                          }}
-                          className="cursor-pointer hover:text-sky-500"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          isLoading={isLoading}
+          error={false}
+          tableData={studentVariants}
+          handleSelectedRowItem={(data) => console.log(data)}
+          columns={[
+            { name: "Name", dataIndex: "variantName", key: "_id" },
+            {
+              name: "Actions",
+              render: ({ item }) => (
+                <FaTrash
+                  onClick={() => {
+                    setDeleteStudentVariantData(item),
+                      setOpenDeleteStudentVariantModal(true);
+                  }}
+                  className="cursor-pointer hover:text-red-500"
+                />
+              ),
+            },
+          ]}
+        />
       </div>
       {openDeleteStudentVariantModal && deleteStudentVariantData && (
         <DeleteStudentVariantModal
