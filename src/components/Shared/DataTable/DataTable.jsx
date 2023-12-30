@@ -247,12 +247,12 @@ const DataTable = ({
       {/* table end here  */}
 
       {/* pagination start here  */}
-      <div
+      {/* <div
         className={cn("py-2 flex items-center justify-between", {
           hidden: !pagination,
         })}
       >
-        <p className=" opacity-90">Showing 1 to 10 of 57 entries</p>
+        <p className=" opacity-90">Showing 1 to 10 of {tableData?.length} entries</p>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <button className="px-3 rounded-md  hover:bg-blue-50 py-2">
@@ -274,7 +274,7 @@ const DataTable = ({
             Next
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
