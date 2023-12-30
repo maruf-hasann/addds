@@ -20,6 +20,7 @@ const DataTable = ({
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [selectedRow, setSelectedRow] = useState([]);
   const [entries, setEntries] = useState(10);
+  const [sortedData, setSortedData] = useState([]);
 
   const handleSort = (key) => {
     let direction = "asc";
@@ -29,52 +30,48 @@ const DataTable = ({
     setSortConfig({ key, direction });
   };
 
-  // handle select all row based on select all checkbox
   const handleSelectAll = () => {
     setSelectAll(!selectAll);
     if (selectAll) {
       setSelectedRow([]);
       return;
     }
-    setSelectedRow(data);
+    setSelectedRow(sortedData);
   };
 
-  // handle select single row based on checkbox
   const handleSelectRow = (row) => {
-    // check if row is already selected then remove it from selected row
     const isExist = selectedRow.find((item) => item.key === row.key);
-    // if exist then remove it from selected row
     if (isExist) {
       setSelectedRow((prevSelectedRow) =>
         prevSelectedRow.filter((item) => item?.key !== row?.key)
       );
       return;
     }
-    // if not exist then add it to selected row
     setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
   };
 
-  // sort data based on sortConfig state
-  const sortedData = data?.sort((a, b) => {
-    if (sortConfig.direction === "asc") {
-      return a[sortConfig.key] > b[sortConfig.key] ? 1 : -1;
-    } else {
-      return a[sortConfig.key] < b[sortConfig.key] ? 1 : -1;
-    }
-  });
-
-  // add key to each object
   useEffect(() => {
     if (tableData) {
-      setData(
-        tableData?.map((item, index) => {
-          return { ...item, key: index };
-        })
-      );
+      const newData = tableData?.map((item, index) => {
+        return { ...item, key: index };
+      });
+      setData(newData);
+      setSortedData([...newData]); // Set sortedData initially
     }
   }, [tableData]);
 
-  // handle selected row item
+  useEffect(() => {
+    // Sort the data when sortConfig or data changes
+    const newSortedData = [...data].sort((a, b) => {
+      if (sortConfig.direction === "asc") {
+        return a[sortConfig.key] > b[sortConfig.key] ? 1 : -1;
+      } else {
+        return a[sortConfig.key] < b[sortConfig.key] ? 1 : -1;
+      }
+    });
+    setSortedData(newSortedData);
+  }, [data, sortConfig]);
+
   useEffect(() => {
     if (handleSelectedRowItem) {
       handleSelectedRowItem(selectedRow);
