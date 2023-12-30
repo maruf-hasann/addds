@@ -21,17 +21,6 @@ const DataTable = ({
   const [selectedRow, setSelectedRow] = useState([]);
   const [entries, setEntries] = useState(10);
 
-  // add key to each object
-  useEffect(() => {
-    if (tableData) {
-      setData(
-        tableData?.map((item, index) => {
-          return { ...item, key: index };
-        })
-      );
-    }
-  }, [tableData]);
-
   const handleSort = (key) => {
     let direction = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -74,6 +63,17 @@ const DataTable = ({
     }
   });
 
+  // add key to each object
+  useEffect(() => {
+    if (tableData) {
+      setData(
+        tableData?.map((item, index) => {
+          return { ...item, key: index };
+        })
+      );
+    }
+  }, [tableData]);
+
   // handle selected row item
   useEffect(() => {
     if (handleSelectedRowItem) {
@@ -81,6 +81,7 @@ const DataTable = ({
     }
   }, [selectedRow]);
 
+  // table skeleton
   if (isLoading) {
     return (
       <div>
