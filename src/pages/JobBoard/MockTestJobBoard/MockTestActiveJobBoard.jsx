@@ -1,22 +1,23 @@
 import { FaStreetView } from "react-icons/fa6";
+import { jobBoardStatus } from "../../../data/jobBoard";
 import {
   useGetAllJobsByStatusQuery,
   useUpdateJobStatusMutation,
 } from "../../../store/service/jobBoard/jobBoardApiService";
-import { jobBoardStatus } from "../../../data/jobBoard";
 import tutoringSubject from "../../../libs/tutoringSubject";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import DataTable from "../../../components/Shared/DataTable/DataTable";
 
-const RegularUnActiveJobBoard = () => {
+const MockTestActiveJobBoard = () => {
   const navigate = useNavigate();
   // redux api call
-  const { data: regularUnActiveJobsData, isLoading } =
+  const { data: mockTestActiveJobsData, isLoading } =
     useGetAllJobsByStatusQuery({
-      status: "inactive",
-      jobType: "Regular",
+      status: "active",
+      jobType: "Mock",
     });
-  const allRegularUnActiveJobs = regularUnActiveJobsData?.data;
+  const allMockTestActiveJobs = mockTestActiveJobsData?.data;
 
   // update redux api for regular job
   const [updateJobStatus] = useUpdateJobStatusMutation();
@@ -42,8 +43,8 @@ const RegularUnActiveJobBoard = () => {
   // redirect to single job details
   const handleNavigateSingleJob = (value) => {
     if (value?.jobId && value?.jobType) {
-      navigate("/regular-job-details", {
-        state: { ...value, title: "In Active" },
+      navigate("/mock-test-job-details", {
+        state: { ...value, title: "Active" },
       });
     } else {
       toast.error("Please try again!");
@@ -54,16 +55,16 @@ const RegularUnActiveJobBoard = () => {
     <div className="py-10 w-full">
       <div className="flex justify-between items-center pb-3">
         <h1 className="font-bold mb-1 text-white text-2xl">
-          All In-Active Regular Jobs
+          All Active Mock Test Jobs
         </h1>
       </div>
       <DataTable
         isLoading={isLoading}
         error={false}
-        tableData={allRegularUnActiveJobs}
+        tableData={allMockTestActiveJobs}
         handleSelectedRowItem={(data) => console.log(data)}
         columns={[
-          { name: "Book Id", dataIndex: "bookId", key: "_id" },
+          { name: "Mock Job Id", dataIndex: "mockJobId", key: "_id" },
           { name: "Tutoring Place", dataIndex: "tutoringPlace", key: "_id" },
           {
             name: "Tutoring Category",
@@ -77,25 +78,21 @@ const RegularUnActiveJobBoard = () => {
           },
           {
             name: "Education Variant",
-            dataIndex: "tutoringEducationVariant",
+            dataIndex: "educationVariant",
             key: "_id",
           },
           { name: "Job Type", dataIndex: "jobType", key: "_id" },
           { name: "Institute", dataIndex: "institute", key: "_id" },
           { name: "Curriculum", dataIndex: "curriculum", key: "_id" },
-          {
-            name: "Tutoring Days PerWeek",
-            dataIndex: "tutoringDaysPerWeek",
-            key: "_id",
-          },
+
           { name: "Salary", dataIndex: "salary", key: "_id" },
           {
             name: "Preferred Gender",
             dataIndex: "preferredGender",
             key: "_id",
           },
-          { name: "Convenient Time", dataIndex: "convenientTime", key: "_id" },
           { name: "Student Gender", dataIndex: "studentGender", key: "_id" },
+
           {
             name: "Tutoring Subjects",
             render: ({ item }) => (
@@ -106,22 +103,22 @@ const RegularUnActiveJobBoard = () => {
           },
           { name: "Location", dataIndex: "location", key: "_id" },
           {
-            name: "Regular Status",
+            name: "Mock Test Status",
             render: ({ item }) => (
-              <span className="bg-red-100 text-red-800 text-base font-medium me-2 px-2.5 py-1 rounded border border-red-400">
-                {item?.regularStatus}
+              <span className="bg-blue-100 text-blue-800 text-base font-medium me-2 px-2.5 py-1 rounded border border-blue-400">
+                {item?.mockTestStatus}
               </span>
             ),
           },
           {
             name: "Actions",
             render: ({ item }) => (
-              <div className="flex gap-2 items-center justify-center">
+              <div className={`flex gap-2 items-center justify-center`}>
                 {jobBoardStatus
                   ?.filter(
                     (status) =>
                       status?.toLowerCase() !==
-                      item?.regularStatus?.toLowerCase()
+                      item?.mockTestStatus?.toLowerCase()
                   )
                   ?.map((status, idx) => (
                     <span
@@ -179,4 +176,4 @@ const RegularUnActiveJobBoard = () => {
   );
 };
 
-export default RegularUnActiveJobBoard;
+export default MockTestActiveJobBoard;

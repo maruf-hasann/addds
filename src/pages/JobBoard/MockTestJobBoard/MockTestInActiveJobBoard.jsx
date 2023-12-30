@@ -8,7 +8,7 @@ import tutoringSubject from "../../../libs/tutoringSubject";
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../../components/Shared/DataTable/DataTable";
 
-const MockTesUnActiveJobBoard = () => {
+const MockTestInActiveJobBoard = () => {
   const navigate = useNavigate();
 
   // redux api call
@@ -176,4 +176,4 @@ const MockTesUnActiveJobBoard = () => {
   );
 };
 
-export default MockTesUnActiveJobBoard;
+export default MockTestInActiveJobBoard;
