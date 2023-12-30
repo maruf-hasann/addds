@@ -6,6 +6,7 @@ import DeleteTutoringVariantModal from "./DeleteTutoringVariant/DeleteTutoringVa
 import EditTutoringVariantModal from "./EditTutoringVariant/EditTutoringVariant";
 import { useGetTutoringVariantsQuery } from "../../../store/service/tutoringVariant/tutoringVariantApiService";
 import AddTutoringVariantModal from "./AddTutoringVariantModal/AddTutoringVariantModal";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllTutoringVariant = () => {
   const [openTutoringVariantModal, setOpenTutoringVariantModal] =
@@ -18,7 +19,7 @@ const AllTutoringVariant = () => {
   const [openEditTutoringVariantModal, setOpenEditTutoringVariantModal] =
     useState(false);
 
-  const { data: tutoringVariantsData } = useGetTutoringVariantsQuery();
+  const { data: tutoringVariantsData, isLoading } = useGetTutoringVariantsQuery();
   const tutoringVariants = tutoringVariantsData?.data;
 
   return (
@@ -35,55 +36,31 @@ const AllTutoringVariant = () => {
             Add New
           </div>
         </div>
-        <div className="overflow-x-auto border-x rounded  bg-white">
-          <table className="w-full min-w-max table-auto text-left border">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                  Sl
-                </th>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                  Name
-                </th>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {tutoringVariants?.map((variant, idx) => {
-                const classes =
-                  "p-4 text-base text-gray-800 font-normal border-b";
-                return (
-                  <tr key={variant._id} className={` hover:bg-blue-50`}>
-                    <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                    <td className={classes}>{variant?.variantName}</td>
-                    <td className={`${classes} w-[120px]`}>
-                      <div className="flex justify-evenly items-center">
-                        <FaTrash
-                          onClick={() => {
-                            setDeleteTutoringVariantData(variant),
-                              setOpenDeleteTutoringVariantModal(true);
-                          }}
-                          className="cursor-pointer hover:text-red-500"
-                        />{" "}
-                        <FaEdit
-                          onClick={() => {
-                            setEditTutoringVariantData(variant),
-                              setOpenEditTutoringVariantModal(true);
-                          }}
-                          className="cursor-pointer hover:text-sky-500"
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+        isLoading={isLoading}
+        error={false}
+        tableData={tutoringVariants}
+        handleSelectedRowItem={(data) => console.log(data)}
+        columns={[
+          { name: "Name", dataIndex: "variantName", key: "_id" },
+          {
+            name: "Actions",
+            render: ({ item }) => (
+              <div className="flex gap-2">
+                <button
+                  className=" text-red-500"
+                  onClick={() => {
+                    setOpenDeleteTutoringVariantModal(true),
+                      setDeleteTutoringVariantData(item);
+                  }}
+                >
+                  <FaTrash />
+                </button>
+              </div>
+            ),
+          },
+        ]}
+      />
       </div>
       {openDeleteTutoringVariantModal && deleteTutoringVariantData && (
         <DeleteTutoringVariantModal

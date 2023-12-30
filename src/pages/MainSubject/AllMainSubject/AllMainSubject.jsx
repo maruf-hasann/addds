@@ -7,6 +7,7 @@ import {
 } from "../../../store/service/mainSubject/mainSubjectApiService";
 import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
 import EditMainSubjectModal from "./EditMainSubjectModal/EditMainSubjectModal";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllMainSubject = () => {
   /* for delete state */
@@ -22,7 +23,7 @@ const AllMainSubject = () => {
 
   /* redux api call */
   const [deleteMainSubject] = useDeleteMainSubjectMutation();
-  const { data: allMainSubjectData } = useGetMainSubjectQuery();
+  const { data: allMainSubjectData, isLoading } = useGetMainSubjectQuery();
   const allMainSubject = allMainSubjectData?.data;
 
   return (
@@ -38,62 +39,28 @@ const AllMainSubject = () => {
           Add New
         </div>
       </div>
-      <div className="overflow-x-auto rounded bg-white">
-        <table className="w-full min-w-max table-auto text-left border">
-          {/* head */}
-          <thead>
-            <tr>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                Sl
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Name
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Subject Variant
-              </th>
-
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            {allMainSubject?.map((mainSubject, idx) => {
-              const classes =
-                "p-4 text-base text-gray-800 font-normal border-b";
-              return (
-                <tr className={`hover:bg-blue-50`} key={mainSubject?._id}>
-                  <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                  <td className={classes}>{mainSubject?.name}</td>
-                  <td className={classes}>{mainSubject?.subjectVariant}</td>
-                  <td className={`${classes} w-[120px] flex gap-3`}>
-                    <span className="flex justify-evenly items-center">
-                      <FaEdit
-                        onClick={() => {
-                          setEditMainSubjectData(mainSubject),
-                            setOpenEditMainSubjectModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                    <span className="flex justify-evenly items-center">
-                      <FaTrash
-                        onClick={() => {
-                          setDeleteMainSubjectData(mainSubject),
-                            setOpenDeleteMainSubjectModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        isLoading={isLoading}
+        error={false}
+        tableData={allMainSubject}
+        handleSelectedRowItem={(data) => console.log(data)}
+        columns={[
+          { name: "Name", dataIndex: "name", key: "_id" },
+          { name: "Subject Variant", dataIndex: "subjectVariant", key: "_id" },
+          {
+            name: "Actions",
+            render: ({ item }) => (
+              <FaTrash
+                onClick={() => {
+                  setDeleteMainSubjectData(item),
+                    setOpenDeleteMainSubjectModal(true);
+                }}
+                className="cursor-pointer hover:text-red-500"
+              />
+            ),
+          },
+        ]}
+      />
 
       {/* Open Add Main Subject Modal  */}
       {openMainSubjectModal && (

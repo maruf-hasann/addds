@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useGetClassesQuery } from "../../../store/service/tutoringClasses/tutoringClassesApiService";
 import ViewSubjectModal from "./ViewSubjectModal/ViewSubjectModal";
 import AddTutoringClassModal from "./AddTutoringClassModal/AddTutoringClassModal";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllTutoringClass = () => {
   const [openTutoringClassModal, setOpenTutoringClassModal] = useState(false);
@@ -10,7 +10,7 @@ const AllTutoringClass = () => {
   const [viewSubjectData, setViewSubjectData] = useState(null);
   const [openViewSubjectModal, setOpenViewSubjectModal] = useState(false);
 
-  const { data: allTutoringClassesData } = useGetClassesQuery();
+  const { data: allTutoringClassesData, isLoading } = useGetClassesQuery();
   const allClasses = allTutoringClassesData?.data;
 
   return (
@@ -27,46 +27,28 @@ const AllTutoringClass = () => {
             Add New
           </div>
         </div>
-        <div className="overflow-x-auto border-x rounded bg-white">
-          <table className="w-full min-w-max table-auto text-left border">
-            {/* head */}
-            <thead>
-              <tr>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                  Sl
-                </th>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                  Class Name
-                </th>
-                <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                  Subject
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {allClasses?.map((tutoringClass, idx) => {
-                const classes =
-                  "p-4 text-base text-gray-800 font-normal border-b";
-                return (
-                  <tr key={tutoringClass._id} className={` hover:bg-blue-50`}>
-                    <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                    <td className={classes}>{tutoringClass?.className}</td>
-                    <td
-                      onClick={() => {
-                        setViewSubjectData(tutoringClass),
-                          setOpenViewSubjectModal(true);
-                      }}
-                      className={`${classes} w-[150px] cursor-pointer hover:text-blue-gray-500`}
-                    >
-                      View Subjects
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+        <DataTable
+          isLoading={isLoading}
+          error={false}
+          tableData={allClasses}
+          handleSelectedRowItem={(data) => console.log(data)}
+          columns={[
+            { name: "Class Name", dataIndex: "className", key: "_id" },
+            {
+              name: "Actions",
+              render: ({ item }) => (
+                <div
+                  onClick={() => {
+                    setViewSubjectData(item), setOpenViewSubjectModal(true);
+                  }}
+                  className={` cursor-pointer hover:text-blue-gray-500`}
+                >
+                  View Subjects
+                </div>
+              ),
+            },
+          ]}
+        />
       </div>
       {openViewSubjectModal && viewSubjectData && (
         <ViewSubjectModal

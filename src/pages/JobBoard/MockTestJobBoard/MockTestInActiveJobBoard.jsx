@@ -8,16 +8,16 @@ import tutoringSubject from "../../../libs/tutoringSubject";
 import { useNavigate } from "react-router-dom";
 import DataTable from "../../../components/Shared/DataTable/DataTable";
 
-const MockTestHiredJobBoard = () => {
+const MockTestInActiveJobBoard = () => {
   const navigate = useNavigate();
+
   // redux api call
-  const { data: mockTestHiredJobsData, isLoading } = useGetAllJobsByStatusQuery(
-    {
-      status: "hired",
+  const { data: mockTestUnActiveJobsData, isLoading } =
+    useGetAllJobsByStatusQuery({
+      status: "inactive",
       jobType: "Mock",
-    }
-  );
-  const allMockTestHiredJobs = mockTestHiredJobsData?.data;
+    });
+  const allMockTestUnActiveJobs = mockTestUnActiveJobsData?.data;
 
   // update redux api for regular job
   const [updateJobStatus] = useUpdateJobStatusMutation();
@@ -44,7 +44,7 @@ const MockTestHiredJobBoard = () => {
   const handleNavigateSingleJob = (value) => {
     if (value?.jobId && value?.jobType) {
       navigate("/mock-test-job-details", {
-        state: { ...value, title: "Hired" },
+        state: { ...value, title: "In-Active" },
       });
     } else {
       toast.error("Please try again!");
@@ -55,14 +55,13 @@ const MockTestHiredJobBoard = () => {
     <div className="py-10 w-full">
       <div className="flex justify-between items-center pb-3">
         <h1 className="font-bold mb-1 text-white text-2xl">
-          All Hired Mock Test Jobs
+          All In-Active Mock Test Jobs
         </h1>
       </div>
-
       <DataTable
         isLoading={isLoading}
         error={false}
-        tableData={allMockTestHiredJobs}
+        tableData={allMockTestUnActiveJobs}
         handleSelectedRowItem={(data) => console.log(data)}
         columns={[
           { name: "Mock Job Id", dataIndex: "mockJobId", key: "_id" },
@@ -106,7 +105,7 @@ const MockTestHiredJobBoard = () => {
           {
             name: "Mock Test Status",
             render: ({ item }) => (
-              <span className="bg-blue-100 text-blue-800 text-base font-medium me-2 px-2.5 py-1 rounded border border-blue-400">
+              <span className="bg-red-100 text-red-800 text-base font-medium me-2 px-2.5 py-1 rounded border border-red-400">
                 {item?.mockTestStatus}
               </span>
             ),
@@ -177,4 +176,4 @@ const MockTestHiredJobBoard = () => {
   );
 };
 
-export default MockTestHiredJobBoard;
+export default MockTestInActiveJobBoard;

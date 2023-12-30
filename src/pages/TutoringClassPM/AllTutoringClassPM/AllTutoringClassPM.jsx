@@ -7,6 +7,7 @@ import {
   useGetTutoringClassPMQuery,
 } from "../../../store/service/tutoringClassPM/tutoringClassPMApiService";
 import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllTutoringClassPM = () => {
   const [openTutoringClassPMModal, setOpenTutoringClassPMModal] =
@@ -19,7 +20,8 @@ const AllTutoringClassPM = () => {
 
   const [deleteTutoringClassPM] = useDeleteTutoringClassPMMutation();
 
-  const { data: allTutoringClassPMData } = useGetTutoringClassPMQuery();
+  const { data: allTutoringClassPMData, isLoading } =
+    useGetTutoringClassPMQuery();
   const allTutoringClassPM = allTutoringClassPMData?.data;
 
   return (
@@ -35,56 +37,29 @@ const AllTutoringClassPM = () => {
           Add New
         </div>
       </div>
-      <div className="overflow-x-auto rounded bg-white">
-        <table className="w-full min-w-max table-auto text-left border">
-          {/* head */}
-          <thead>
-            <tr>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                Sl
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Name
-              </th>
+      <DataTable
+        isLoading={isLoading}
+        error={false}
+        tableData={allTutoringClassPM}
+        handleSelectedRowItem={(data) => console.log(data)}
+        columns={[
+          { name: "Name", dataIndex: "className", key: "_id" },
+          { name: "Variant", dataIndex: "educationVariant", key: "_id" },
+          {
+            name: "Actions",
+            render: ({ item }) => (
+              <FaTrash
+                onClick={() => {
+                  setDeleteTutoringClassPMData(item),
+                    setOpenDeleteTutoringClassPMModal(true);
+                }}
+                className="cursor-pointer hover:text-red-500"
+              />
+            ),
+          },
+        ]}
+      />
 
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Variant
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-
-            {allTutoringClassPM?.map((tutoringClassPM, idx) => {
-              const classes =
-                "p-4 text-base text-gray-800 font-normal border-b";
-              return (
-                <tr className={`hover:bg-blue-50`} key={tutoringClassPM?._id}>
-                  <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                  <td className={classes}>{tutoringClassPM.className}</td>
-                  <td className={classes}>
-                    {tutoringClassPM?.educationVariant}
-                  </td>
-                  <td className={`${classes} w-[120px]`}>
-                    <div className="flex justify-evenly items-center">
-                      <FaTrash
-                        onClick={() => {
-                          setDeleteTutoringClassPMData(tutoringClassPM),
-                            setOpenDeleteTutoringClassPMModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
       {openTutoringClassPMModal && (
         <AddTutoringClassPMModal
           openAddTutoringClassPMModal={openTutoringClassPMModal}

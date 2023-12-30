@@ -7,6 +7,7 @@ import {
 } from "../../../store/service/collageHC/collageHCApiService";
 import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
 import EditCollageHCModal from "./EditCollageHCModal/EditCollageHCModal";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllCollageHC = () => {
   const [openCollageHCModal, setOpenCollageHCModal] = useState(false);
@@ -21,7 +22,7 @@ const AllCollageHC = () => {
 
   const [deleteCollageHC] = useDeleteCollageHCMutation();
 
-  const { data: allCollageHCData } = useGetCollageHCQuery();
+  const { data: allCollageHCData, isLoading } = useGetCollageHCQuery();
   const allCollageHC = allCollageHCData?.data;
 
   return (
@@ -37,66 +38,30 @@ const AllCollageHC = () => {
           Add New
         </div>
       </div>
-      <div className="overflow-x-auto rounded bg-white">
-        <table className="w-full min-w-max table-auto text-left border">
-          {/* head */}
-          <thead>
-            <tr>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Sl
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Name
-              </th>
+      <DataTable
+        isLoading={isLoading}
+        error={false}
+        tableData={allCollageHC}
+        handleSelectedRowItem={(data) => console.log(data)}
+        columns={[
+          { name: "Name", dataIndex: "collageName", key: "_id" },
+          { name: "Variant", dataIndex: "educationVariant", key: "_id" },
+          { name: "Division", dataIndex: "division", key: "_id" },
+          {
+            name: "Actions",
+            render: ({ item }) => (
+              <FaTrash
+                onClick={() => {
+                  setDeleteCollageHCData(item),
+                    setOpenDeleteCollageHCModal(true);
+                }}
+                className="cursor-pointer hover:text-red-500"
+              />
+            ),
+          },
+        ]}
+      />
 
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Variant
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Division
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* row 1 */}
-            {allCollageHC?.map((collageHC, idx) => {
-              const classes =
-                "p-4 text-base text-gray-800 font-normal border-b";
-              return (
-                <tr className={`hover:bg-blue-50`} key={collageHC?._id}>
-                  <th className={classes}>{idx + 1}</th>
-                  <td className={classes}>{collageHC?.collageName}</td>
-                  <td className={classes}>{collageHC?.educationVariant}</td>
-                  <td className={classes}>{collageHC?.division}</td>
-                  <td className={`${classes} w-[120px] flex gap-3`}>
-                    <span className="flex justify-evenly items-center">
-                      <FaEdit
-                        onClick={() => {
-                          setEditCollageHCData(collageHC),
-                            setOpenEditCollageHCModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                    <span className="flex justify-evenly items-center">
-                      <FaTrash
-                        onClick={() => {
-                          setDeleteCollageHCData(collageHC),
-                            setOpenDeleteCollageHCModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
       {openCollageHCModal && (
         <AddCollageHCModal
           openAddCollageHCModal={openCollageHCModal}

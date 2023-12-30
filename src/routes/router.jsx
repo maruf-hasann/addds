@@ -46,9 +46,8 @@ import StudentDetails from "../pages/StudentAccount/StudentAccount/StudentDetail
 import AcademicTutoringDetails from "../pages/Tutors/AcademicTutoring/AcademicTutoringDetails/AcademicTutoringDetails";
 import TutorAccountDetails from "../pages/Tutors/TutorAccount/TutorAccountDetails/TutorAccountDetails";
 import RegularActiveJobBoard from "../pages/JobBoard/RegularJobBoard/RegularActiveJobBoard";
-import RegularUnActiveJobBoard from "../pages/JobBoard/RegularJobBoard/RegularUnActiveJobBoard";
-import MockTesActiveJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTesActiveJobBoard";
-import MockTesUnActiveJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTesUnActiveJobBoard";
+
+import MockTestInActiveJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTestInActiveJobBoard";
 import RegularHiredJobBoard from "../pages/JobBoard/RegularJobBoard/RegularHiredJobBoard";
 import MockTestHiredJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTestHiredJobBoard";
 import TutorProfileCVFormat from "../pages/TutorProfileCVFormat/TutorProfileCVFormat";
@@ -59,7 +58,9 @@ import EditTutoringInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutor
 import EditAdditionalTutoringInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditAdditionalTutoringInfo/EditAdditionalTutoringInfo";
 import EditPromoInfo from "../pages/Tutors/AcademicTutoring/EditAcademicTutoring/EditPromoInfo/EditPromoInfo";
 import MockTestJobDetails from "../pages/JobBoard/MockTestJobBoard/MockTestJobDetails/MockTestJobDetails";
-import RegularJobDetails from '../pages/JobBoard/RegularJobBoard/RegularJobDetails/RegularJobDetails';
+import RegularJobDetails from "../pages/JobBoard/RegularJobBoard/RegularJobDetails/RegularJobDetails";
+import MockTestActiveJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTestActiveJobBoard";
+import RegularInActiveJobBoard from "../pages/JobBoard/RegularJobBoard/RegularInActiveJobBoard";
 
 export const router = createBrowserRouter([
   {
@@ -246,7 +247,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-un-active-regular-jobs",
-        element: <RegularUnActiveJobBoard />,
+        element: <RegularInActiveJobBoard />,
       },
       {
         path: "/all-hired-regular-jobs",
@@ -258,11 +259,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/all-active-mock-test-jobs",
-        element: <MockTesActiveJobBoard />,
+        element: <MockTestActiveJobBoard />,
       },
       {
         path: "/all-un-active-mock-test-jobs",
-        element: <MockTesUnActiveJobBoard />,
+        element: <MockTestInActiveJobBoard />,
       },
       {
         path: "/all-hired-mock-test-jobs",

@@ -8,6 +8,7 @@ import {
   useDeleteSubjectVariantMutation,
   useGetSubjectVariantQuery,
 } from "../../../store/service/subjectVariant/subjectVariantApiService";
+import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const AllSubjectVariant = () => {
   /* for delete state */
@@ -24,7 +25,8 @@ const AllSubjectVariant = () => {
 
   /* Subject Variant Redux */
   const [deleteSubjectVariant] = useDeleteSubjectVariantMutation();
-  const { data: allSubjectVariantData } = useGetSubjectVariantQuery();
+  const { data: allSubjectVariantData, isLoading } =
+    useGetSubjectVariantQuery();
   const allSubjectVariant = allSubjectVariantData?.data;
 
   return (
@@ -40,66 +42,33 @@ const AllSubjectVariant = () => {
           Add New
         </div>
       </div>
-      <div className="overflow-x-auto rounded bg-white">
-        <table className="w-full min-w-max table-auto text-left border">
-          {/* head */}
-          <thead>
-            <tr>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px]">
-                Sl
-              </th>
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Variant
-              </th>
+      <DataTable
+        isLoading={isLoading}
+        error={false}
+        tableData={allSubjectVariant}
+        handleSelectedRowItem={(data) => console.log(data)}
+        columns={[
+          { name: "Variant", dataIndex: "variant", key: "_id" },
+          {
+            name: "Subject Class Name",
+            dataIndex: "subjectClassVariant",
+            key: "_id",
+          },
+          {
+            name: "Actions",
+            render: ({ item }) => (
+              <FaTrash
+                onClick={() => {
+                  setDeleteSubjectVariantData(item),
+                    setOpenDeleteSubjectVariantModal(true);
+                }}
+                className="cursor-pointer hover:text-red-500"
+              />
+            ),
+          },
+        ]}
+      />
 
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold">
-                Subject Class Variant
-              </th>
-
-              <th className="text-gray-900 border-blue-100 bg-blue-100 px-4 py-2 font-semibold w-[120px] text-center">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* body */}
-            {allSubjectVariant?.map((subjectVariant, idx) => {
-              const classes =
-                "p-4 text-base text-gray-800 font-normal border-b";
-              return (
-                <tr className={`hover:bg-blue-50`} key={subjectVariant?._id}>
-                  <th className={`${classes} w-[120px]`}>{idx + 1}</th>
-                  <td className={classes}>{subjectVariant?.variant}</td>
-                  <td className={classes}>
-                    {subjectVariant?.subjectClassVariant}
-                  </td>
-
-                  <td className={`${classes} w-[120px] flex gap-4`}>
-                    <span className="flex justify-evenly items-center">
-                      <FaEdit
-                        onClick={() => {
-                          setEditSubjectVariantData(subjectVariant),
-                            setOpenEditSubjectVariantModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                    <span className="flex justify-evenly items-center">
-                      <FaTrash
-                        onClick={() => {
-                          setDeleteSubjectVariantData(subjectVariant),
-                            setOpenDeleteSubjectVariantModal(true);
-                        }}
-                        className="cursor-pointer hover:text-red-500"
-                      />{" "}
-                    </span>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
       {/* Open Subject Variant Modal  */}
       {openSubjectVariantModal && (
         <AddSubjectVariantModal

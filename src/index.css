@@ -15,7 +15,7 @@ scrolly {
 }
 
 ::-webkit-scrollbar:horizontal{
-  height: 8px;
+  height: 15px;
 }
 
 /* Track */

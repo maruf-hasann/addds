@@ -6,18 +6,18 @@ import {
 } from "../../../store/service/jobBoard/jobBoardApiService";
 import tutoringSubject from "../../../libs/tutoringSubject";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 import DataTable from "../../../components/Shared/DataTable/DataTable";
 
-const MockTestHiredJobBoard = () => {
+const MockTestActiveJobBoard = () => {
   const navigate = useNavigate();
   // redux api call
-  const { data: mockTestHiredJobsData, isLoading } = useGetAllJobsByStatusQuery(
-    {
-      status: "hired",
+  const { data: mockTestActiveJobsData, isLoading } =
+    useGetAllJobsByStatusQuery({
+      status: "active",
       jobType: "Mock",
-    }
-  );
-  const allMockTestHiredJobs = mockTestHiredJobsData?.data;
+    });
+  const allMockTestActiveJobs = mockTestActiveJobsData?.data;
 
   // update redux api for regular job
   const [updateJobStatus] = useUpdateJobStatusMutation();
@@ -44,7 +44,7 @@ const MockTestHiredJobBoard = () => {
   const handleNavigateSingleJob = (value) => {
     if (value?.jobId && value?.jobType) {
       navigate("/mock-test-job-details", {
-        state: { ...value, title: "Hired" },
+        state: { ...value, title: "Active" },
       });
     } else {
       toast.error("Please try again!");
@@ -55,14 +55,13 @@ const MockTestHiredJobBoard = () => {
     <div className="py-10 w-full">
       <div className="flex justify-between items-center pb-3">
         <h1 className="font-bold mb-1 text-white text-2xl">
-          All Hired Mock Test Jobs
+          All Active Mock Test Jobs
         </h1>
       </div>
-
       <DataTable
         isLoading={isLoading}
         error={false}
-        tableData={allMockTestHiredJobs}
+        tableData={allMockTestActiveJobs}
         handleSelectedRowItem={(data) => console.log(data)}
         columns={[
           { name: "Mock Job Id", dataIndex: "mockJobId", key: "_id" },
@@ -177,4 +176,4 @@ const MockTestHiredJobBoard = () => {
   );
 };
 
-export default MockTestHiredJobBoard;
+export default MockTestActiveJobBoard;
