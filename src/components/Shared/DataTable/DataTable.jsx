@@ -12,6 +12,7 @@ const DataTable = ({
   columns,
   isLoading,
   pagination = true,
+  hideSerial = false,
   ...restProps
 }) => {
   // default table data
@@ -104,7 +105,7 @@ const DataTable = ({
 
   return (
     <div className="bg-white rounded-md text-gray-700 px-3 py-10 mt-2">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col-reverse gap-5 md:flex-row items-center justify-between">
         <div className="flex items-center gap-x-2 ">
           <p>Show</p>
           <select
@@ -171,11 +172,13 @@ const DataTable = ({
                   onChange={handleSelectAll}
                 />
               </th>
-              <th className={`p-4 text-left }`}>
-                <div className="flex items-center justify-between">
-                  <span>Sl</span>
-                </div>
-              </th>
+              {!hideSerial && (
+                <th className={`p-4 text-left }`}>
+                  <div className="flex items-center justify-between">
+                    <span>Sl</span>
+                  </div>
+                </th>
+              )}
 
               {columns?.map((column, index) => (
                 <th
@@ -209,14 +212,16 @@ const DataTable = ({
                     onChange={() => handleSelectRow(item)}
                   />
                 </td>
-                <td className="p-4 border-t border-t-blue-gray-100 w-28">
-                  {idx + 1}
-                </td>
+                {!hideSerial && (
+                  <td className="p-4 border-t border-t-blue-gray-100 w-28">
+                    {idx + 1}
+                  </td>
+                )}
                 {/* render table data based on column data index  */}
                 {columns?.map((column, index) => (
                   <td
                     key={index}
-                    className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap ${
+                    className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top ${
                       index === columns.length - 1 ? "w-40" : ""
                     }`}
                   >
