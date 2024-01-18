@@ -10,11 +10,18 @@ import {
   MdOutlineWork,
   MdSettings,
   MdLibraryBooks,
+  MdPermMedia,
 } from "react-icons/md";
 import { FaUsers } from "react-icons/fa6";
 
 // menu
 export const menus = [
+  {
+    id: 0,
+    name: "Media Library",
+    url: "./all-media-library",
+    icon: <MdPermMedia />,
+  },
   {
     id: 1,
     name: "Education Variant",
