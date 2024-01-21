@@ -13,6 +13,7 @@ const DataTable = ({
   isLoading,
   pagination = true,
   hideSerial = false,
+  checkbox = false,
   ...restProps
 }) => {
   // default table data
@@ -162,16 +163,18 @@ const DataTable = ({
       </div>
       {/* table start here  */}
       <div className="overflow-x-auto">
-        <table className="min-w-full dark:bg-boxdark rounded-lg overflow-hidden mt-4">
+        <table className="min-w-full rounded-lg overflow-hidden mt-4">
           <thead className="bg-blue-100">
             <tr>
-              <th className="p-4 text-left w-14">
-                <input
-                  type="checkbox"
-                  checked={selectAll}
-                  onChange={handleSelectAll}
-                />
-              </th>
+              {checkbox && (
+                <th className="p-4 text-left w-14">
+                  <input
+                    type="checkbox"
+                    checked={selectAll}
+                    onChange={handleSelectAll}
+                  />
+                </th>
+              )}
               {!hideSerial && (
                 <th className={`p-4 text-left }`}>
                   <div className="flex items-center justify-between">
@@ -203,15 +206,17 @@ const DataTable = ({
                     : ""
                 }`}
               >
-                <td className="p-4 border-t border-t-blue-gray-100">
-                  <input
-                    type="checkbox"
-                    checked={
-                      selectedRow.find((row) => row.key === item.key) || false
-                    }
-                    onChange={() => handleSelectRow(item)}
-                  />
-                </td>
+                {checkbox && (
+                  <td className="p-4 border-t border-t-blue-gray-100">
+                    <input
+                      type="checkbox"
+                      checked={
+                        selectedRow.find((row) => row.key === item.key) || false
+                      }
+                      onChange={() => handleSelectRow(item)}
+                    />
+                  </td>
+                )}
                 {!hideSerial && (
                   <td className="p-4 border-t border-t-blue-gray-100 w-28">
                     {idx + 1}

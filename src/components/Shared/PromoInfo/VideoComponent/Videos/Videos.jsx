@@ -18,6 +18,7 @@ const Videos = ({ videos, isLoading }) => {
         error={false}
         tableData={videos}
         hideSerial={true}
+        checkbox={true}
         handleSelectedRowItem={(data) => console.log(data)}
         columns={[
           {

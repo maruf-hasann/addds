@@ -14,6 +14,7 @@ const Images = ({ images, isLoading }) => {
         error={false}
         tableData={images}
         hideSerial={true}
+        checkbox={true}
         handleSelectedRowItem={(data) => console.log(data)}
         columns={[
           {
