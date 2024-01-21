@@ -1,8 +1,12 @@
-import React from "react";
-import { TbSquareRoundedCheckFilled } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
-const PromoInfo = ({ promoInfo, number}) => {
+import { Link } from "react-router-dom";
+import Videos from "./Videos/Videos";
+import Images from "./Images/Images";
+
+const PromoInfo = ({ promoInfo, number, isLoading }) => {
+  const [activeTab, setActiveTab] = useState("video");
+
   return (
     <div className="bg-white  my-10">
       <div className="">
@@ -24,37 +28,39 @@ const PromoInfo = ({ promoInfo, number}) => {
           </div>
           <div className="px-5 py-5 bg-[#f1f5f9]">
             <div className="w-full rounded-md grid grid-cols-1">
-              <div className="p-5 border-0 border-b-[1px] border-gray-200 bg-white">
-                <h4 className="font-medium text-sm mb-1">Media</h4>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <div className="flex gap-5 flex-wrap justify-center">
-                    {promoInfo?.mediaGallery?.map((media, idx) => (
-                      <img
-                        key={idx}
-                        src={media?.imgUrl}
-                        className="max-w-[250px] w-full h-[150px] object-cover"
-                      />
-                    ))}
-                  </div>
+              <div className="flex gap-5 md:gap-10 px-5 pt-5 border-0 border-b-[1px] border-gray-200 bg-white">
+                <div
+                  className="pb-3 relative cursor-pointer"
+                  onClick={() => setActiveTab("video")}
+                >
+                  <p className="font-semibold text-gray-700 ">Video</p>
+                  {activeTab === "video" && (
+                    <div className="h-1 w-11 bg-primary absolute top-[88%] rounded-t-full"></div>
+                  )}
+                </div>
+                <div
+                  className="pb-3 relative cursor-pointer"
+                  onClick={() => setActiveTab("photo")}
+                >
+                  <p className="font-semibold text-gray-700 ">Photos</p>
+                  {activeTab === "photo" && (
+                    <div className="h-1 w-14 bg-primary absolute top-[88%] rounded-t-full"></div>
+                  )}
                 </div>
               </div>
-              <div className="p-5 border-0 border-b-[1px] border-gray-200 bg-white">
-                <h4 className="font-medium text-sm mb-1">Video</h4>
-                <div className="flex items-center gap-2 flex-wrap">
-                  <div className="flex gap-5 flex-wrap justify-center">
-                    {promoInfo?.videoGallery?.map((video, idx) => (
-                      <video
-                        key={idx}
-                        controls
-                        width="100%"
-                        className="max-w-[300px] w-full h-auto"
-                      >
-                        <source src={video?.videoUrl} type="video/mp4" />
-                        Your browser does not support the video tag.
-                      </video>
-                    ))}
-                  </div>
-                </div>
+              <div className="p-5 bg-white">
+                {activeTab === "video" && (
+                  <Videos
+                    isLoading={isLoading}
+                    videos={promoInfo?.videoGallery}
+                  />
+                )}
+                {activeTab === "photo" && (
+                  <Images
+                    isLoading={isLoading}
+                    images={promoInfo?.mediaGallery}
+                  />
+                )}
               </div>
             </div>
           </div>
