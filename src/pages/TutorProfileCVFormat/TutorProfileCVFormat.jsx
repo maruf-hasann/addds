@@ -139,7 +139,7 @@ const TutorProfileCVFormat = () => {
               Promo Info:
             </h1>
             <div className="my-5">
-              <PromoInfoCV promoInfo={allInfo?.promoInfo} />
+              <PromoInfoCV promoInfo={allInfo?.promoInfo} isLoading={isLoading}/>
             </div>
           </div>
         </div>

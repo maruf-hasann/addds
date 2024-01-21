@@ -47,7 +47,7 @@ const AdditionalTutoringInfo = ({ additionalTutoringInfo, number }) => {
             </Link>
           </div>
         </div>
-        <div className="px-5 py-5 bg-[#f1f5f9]">
+        <div className="px-5 py-5 bg-[#f1f5f9] grid gird-cols-1 gap-2">
           <div className="w-full rounded-md grid grid-cols-1 lg:grid-cols-2  gap-x-2">
             <CommonComponent
               name={"Grow Tutoring Program"}
@@ -103,6 +103,8 @@ const AdditionalTutoringInfo = ({ additionalTutoringInfo, number }) => {
               name={"Max. Exp. Salary"}
               value={additionalTutoringInfo?.maxExpectedSalary}
             />
+          </div>
+          <div>
             <CommonComponent
               name={"Personal Statement"}
               value={additionalTutoringInfo?.personalStatement}

@@ -107,9 +107,11 @@ const AdditionalTutoringInfoCV = ({ additionalTutoringInfo }) => {
 
       {/* personal statement*/}
 
-      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-        <TbSquareRoundedCheckFilled />{" "}
-        <span className="font-semibold">Personal Statement: </span>
+      <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex gap-2 ">
+        <div className="flex gap-2">
+        <TbSquareRoundedCheckFilled className="whitespace-nowrap text-xl"/>{" "}
+        <span className="font-semibold whitespace-nowrap">Personal Statement: </span>
+        </div>
         {additionalTutoringInfo?.personalStatement}
       </p>
     </div>
