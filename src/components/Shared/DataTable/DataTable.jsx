@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import cn from "../../../libs/cn";
 import TableSkeleton from "./TableSkeleton/TableSkeleton";
+import { handleSort } from "../../../libs/DataTable/handleSort";
+import { handleSelectAll } from "../../../libs/DataTable/handleSelectAll";
+import { handleSelectRow } from "../../../libs/DataTable/handleSelectRow";
 // import TableSkeleton from "../Loader/TableSkeleton";
 
 const DataTable = ({
@@ -24,33 +27,16 @@ const DataTable = ({
   const [entries, setEntries] = useState(10);
   const [sortedData, setSortedData] = useState([]);
 
-  const handleSort = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
-
-  const handleSelectAll = () => {
-    setSelectAll(!selectAll);
-    if (selectAll) {
-      setSelectedRow([]);
-      return;
-    }
-    setSelectedRow(sortedData);
-  };
-
-  const handleSelectRow = (row) => {
-    const isExist = selectedRow.find((item) => item.key === row.key);
-    if (isExist) {
-      setSelectedRow((prevSelectedRow) =>
-        prevSelectedRow.filter((item) => item?.key !== row?.key)
-      );
-      return;
-    }
-    setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
-  };
+  // const handleSelectRow = (row) => {
+  //   const isExist = selectedRow.find((item) => item.key === row.key);
+  //   if (isExist) {
+  //     setSelectedRow((prevSelectedRow) =>
+  //       prevSelectedRow.filter((item) => item?.key !== row?.key)
+  //     );
+  //     return;
+  //   }
+  //   setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
+  // };
 
   useEffect(() => {
     if (tableData) {
@@ -171,7 +157,14 @@ const DataTable = ({
                   <input
                     type="checkbox"
                     checked={selectAll}
-                    onChange={handleSelectAll}
+                    onChange={() =>
+                      handleSelectAll({
+                        selectAll,
+                        setSelectAll,
+                        sortedData,
+                        setSelectedRow,
+                      })
+                    }
                   />
                 </th>
               )}
@@ -186,7 +179,13 @@ const DataTable = ({
               {columns?.map((column, index) => (
                 <th
                   key={index}
-                  onClick={() => handleSort(column.dataIndex)}
+                  onClick={() =>
+                    handleSort({
+                      key: column.dataIndex,
+                      setSortConfig: setSortConfig,
+                      sortConfig: sortConfig,
+                    })
+                  }
                   className={`cursor-pointer p-4 text-left hover:bg-blue-200 whitespace-nowrap`}
                 >
                   <div className="flex items-center justify-between">
@@ -213,7 +212,13 @@ const DataTable = ({
                       checked={
                         selectedRow.find((row) => row.key === item.key) || false
                       }
-                      onChange={() => handleSelectRow(item)}
+                      onChange={() =>
+                        handleSelectRow({
+                          row: item,
+                          selectedRow,
+                          setSelectedRow,
+                        })
+                      }
                     />
                   </td>
                 )}
