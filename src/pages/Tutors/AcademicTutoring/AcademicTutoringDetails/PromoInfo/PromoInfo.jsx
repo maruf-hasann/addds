@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
-import Videos from "./Videos/Videos";
-import Images from "./Images/Images";
+import Videos from "../../../../../components/Shared/PromoInfo/VideoComponent/Videos/Videos";
+import Images from "../../../../../components/Shared/PromoInfo/ImageComponent/Images/Images";
+
 
 const PromoInfo = ({ promoInfo, number, isLoading }) => {
   const [activeTab, setActiveTab] = useState("video");

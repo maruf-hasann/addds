@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useEffect } from "react";
 import cn from "../../../libs/cn";
 import TableSkeleton from "./TableSkeleton/TableSkeleton";
+import { handleSort } from "../../../libs/DataTable/handleSort";
+import { handleSelectAll } from "../../../libs/DataTable/handleSelectAll";
+import { handleSelectRow } from "../../../libs/DataTable/handleSelectRow";
 // import TableSkeleton from "../Loader/TableSkeleton";
 
 const DataTable = ({
@@ -13,6 +16,7 @@ const DataTable = ({
   isLoading,
   pagination = true,
   hideSerial = false,
+  checkbox = false,
   ...restProps
 }) => {
   // default table data
@@ -23,33 +27,16 @@ const DataTable = ({
   const [entries, setEntries] = useState(10);
   const [sortedData, setSortedData] = useState([]);
 
-  const handleSort = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
-
-  const handleSelectAll = () => {
-    setSelectAll(!selectAll);
-    if (selectAll) {
-      setSelectedRow([]);
-      return;
-    }
-    setSelectedRow(sortedData);
-  };
-
-  const handleSelectRow = (row) => {
-    const isExist = selectedRow.find((item) => item.key === row.key);
-    if (isExist) {
-      setSelectedRow((prevSelectedRow) =>
-        prevSelectedRow.filter((item) => item?.key !== row?.key)
-      );
-      return;
-    }
-    setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
-  };
+  // const handleSelectRow = (row) => {
+  //   const isExist = selectedRow.find((item) => item.key === row.key);
+  //   if (isExist) {
+  //     setSelectedRow((prevSelectedRow) =>
+  //       prevSelectedRow.filter((item) => item?.key !== row?.key)
+  //     );
+  //     return;
+  //   }
+  //   setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
+  // };
 
   useEffect(() => {
     if (tableData) {
@@ -162,16 +149,25 @@ const DataTable = ({
       </div>
       {/* table start here  */}
       <div className="overflow-x-auto">
-        <table className="min-w-full dark:bg-boxdark rounded-lg overflow-hidden mt-4">
+        <table className="min-w-full rounded-lg overflow-hidden mt-4">
           <thead className="bg-blue-100">
             <tr>
-              <th className="p-4 text-left w-14">
-                <input
-                  type="checkbox"
-                  checked={selectAll}
-                  onChange={handleSelectAll}
-                />
-              </th>
+              {checkbox && (
+                <th className="p-4 text-left w-14">
+                  <input
+                    type="checkbox"
+                    checked={selectAll}
+                    onChange={() =>
+                      handleSelectAll({
+                        selectAll,
+                        setSelectAll,
+                        sortedData,
+                        setSelectedRow,
+                      })
+                    }
+                  />
+                </th>
+              )}
               {!hideSerial && (
                 <th className={`p-4 text-left }`}>
                   <div className="flex items-center justify-between">
@@ -183,7 +179,13 @@ const DataTable = ({
               {columns?.map((column, index) => (
                 <th
                   key={index}
-                  onClick={() => handleSort(column.dataIndex)}
+                  onClick={() =>
+                    handleSort({
+                      key: column.dataIndex,
+                      setSortConfig: setSortConfig,
+                      sortConfig: sortConfig,
+                    })
+                  }
                   className={`cursor-pointer p-4 text-left hover:bg-blue-200 whitespace-nowrap`}
                 >
                   <div className="flex items-center justify-between">
@@ -203,15 +205,23 @@ const DataTable = ({
                     : ""
                 }`}
               >
-                <td className="p-4 border-t border-t-blue-gray-100">
-                  <input
-                    type="checkbox"
-                    checked={
-                      selectedRow.find((row) => row.key === item.key) || false
-                    }
-                    onChange={() => handleSelectRow(item)}
-                  />
-                </td>
+                {checkbox && (
+                  <td className="p-4 border-t border-t-blue-gray-100">
+                    <input
+                      type="checkbox"
+                      checked={
+                        selectedRow.find((row) => row.key === item.key) || false
+                      }
+                      onChange={() =>
+                        handleSelectRow({
+                          row: item,
+                          selectedRow,
+                          setSelectedRow,
+                        })
+                      }
+                    />
+                  </td>
+                )}
                 {!hideSerial && (
                   <td className="p-4 border-t border-t-blue-gray-100 w-28">
                     {idx + 1}
