@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useLazyGetTutorInfoFilterDataQuery } from "../../../../store/service/tutorInfoFilter/tutorInfoFilterApiService";
 import { ImSpinner10 } from "react-icons/im";
-import { FaLocationPin, FaPhone } from "react-icons/fa6";
-import { IoMdMail } from "react-icons/io";
-import { FaEdit } from "react-icons/fa";
 import PersonalInfo from "./PersonalInfo/PersonalInfo";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import AcademicInfo from "./AcademicInfo/AcademicInfo";
+import IdentityInfo from "./IdentityInfo/IdentityInfo";
 
 const TutorAccountDetails = () => {
   const { number } = useParams();
   const [isLoading, setIsLoading] = useState(false);
   const [allInfo, setAllInfo] = useState(null);
+
+  console.log(allInfo);
 
   const [fetchTutorInfo] = useLazyGetTutorInfoFilterDataQuery();
 
@@ -69,7 +69,7 @@ const TutorAccountDetails = () => {
               </Link>
             </div>
           </div>
-          
+
           {/* personal Info */}
           <PersonalInfo
             personalInfo={allInfo?.personalInfo}
@@ -82,9 +82,13 @@ const TutorAccountDetails = () => {
           />
 
           {/* academic info */}
-
           <AcademicInfo
             academicInfo={allInfo?.academicInfo}
+            number={allInfo?.phoneNumber}
+          />
+          <IdentityInfo
+            identityInfo={allInfo?.identitiesInfo}
+            isLoading={isLoading}
             number={allInfo?.phoneNumber}
           />
         </div>

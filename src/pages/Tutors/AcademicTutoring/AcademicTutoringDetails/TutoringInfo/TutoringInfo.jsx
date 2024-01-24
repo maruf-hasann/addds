@@ -1,83 +1,10 @@
 import React from "react";
 import { FaLocationPin, FaPhone } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
-import { TbSquareRoundedCheckFilled } from "react-icons/tb";
 import { Link } from "react-router-dom";
-
-const CommonComponent = ({ name, value }) => {
-  return (
-    <div className="p-5 border-0 border-b-[1px] border-gray-200 bg-white">
-      <h4 className="font-medium text-sm mb-1">{name}</h4>
-      <h2 className="font-bold text-lg">{value}</h2>
-    </div>
-  );
-};
-
-const ArrayCommonComponent = ({ name, values, valueName }) => {
-  return (
-    <div className="p-5 border-0 border-b-[1px] border-gray-200 bg-white">
-      <h4 className="font-medium text-sm mb-1">{name}</h4>
-      <div className="flex items-center gap-2 flex-wrap">
-        {values?.map((value, idx) => (
-          <h2
-            key={idx}
-            className="font-bold text-lg bg-blue-50 px-3 rounded-sm"
-          >
-            {value?.[valueName]}
-          </h2>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const SubjectCommonComponent = ({ name, allSubject }) => {
-  return (
-    <div className="p-5 border-0 border-b-[1px] border-gray-200 bg-white">
-      <h4 className="font-medium text-sm mb-1">{name}</h4>
-      <div className="flex items-center gap-2 flex-wrap">
-        {allSubject?.map((subject, idx) => (
-          <span
-            key={idx}
-            className="font-bold text-lg bg-blue-50 px-3 rounded-sm"
-          >
-            {subject.subSubjects?.length
-              ? `${subject.mainSubject}(${subject?.subSubjects?.map(
-                  (subSub) => subSub
-                )})`
-              : subject?.mainSubject}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-};
+import CommonTutoringInfo from "../../../../../components/Shared/TutorProfile/TutoringInfo/CommonTutoringInfo";
 
 const TutoringInfo = ({ tutoringInfo, personalInfo, identityInfo }) => {
-  const transformSubjectArray = (inputArray) => {
-    // Check if the input is an array
-    if (!Array.isArray(inputArray)) {
-      return;
-    }
-
-    return inputArray.reduce((acc, item) => {
-      const existingItem = acc.find((i) => i.mainSubject === item.mainSubject);
-
-      if (existingItem) {
-        if (item.subSubject) {
-          existingItem.subSubjects.push(item.subSubject);
-        }
-      } else {
-        acc.push({
-          mainSubject: item.mainSubject,
-          subSubjects: item.subSubject ? [item.subSubject] : [],
-        });
-      }
-
-      return acc;
-    }, []);
-  };
-
   return (
     <div>
       <div>
@@ -146,59 +73,7 @@ const TutoringInfo = ({ tutoringInfo, personalInfo, identityInfo }) => {
                   </Link>
                 </div>
               </div>
-              <div className="px-5 py-5 bg-[#f1f5f9] ">
-                <div className="w-full rounded-md grid grid-cols-1 lg:grid-cols-2  gap-x-2">
-                  <ArrayCommonComponent
-                    name={"Tutoring Variants"}
-                    values={tutoringInfo?.tutoringVariant}
-                    valueName={"variantName"}
-                  />
-                  <ArrayCommonComponent
-                    name={"Tutoring Grades"}
-                    values={tutoringInfo?.tutoringGrade}
-                    valueName={"gradeName"}
-                  />
-                  <SubjectCommonComponent
-                    name={"Tutoring Subjects"}
-                    allSubject={transformSubjectArray(
-                      tutoringInfo?.tutoringSubjects
-                    )}
-                  />
-                  <ArrayCommonComponent
-                    name={"Tutoring Curriculum"}
-                    values={tutoringInfo?.tutoringCurriculum}
-                    valueName={"curriculumBoard"}
-                  />
-                  <CommonComponent
-                    name={"Teach Admission Test"}
-                    value={tutoringInfo?.isTeachAdmissionTest ? "Yes" : "No"}
-                  />
-                  {tutoringInfo?.isTeachAdmissionTest ? (
-                    <SubjectCommonComponent
-                      name={"Tutoring Subjects"}
-                      allSubject={transformSubjectArray(
-                        tutoringInfo?.teachAdmissionTest
-                      )}
-                    />
-                  ) : (
-                    ""
-                  )}
-                  <CommonComponent
-                    name={"Teach Test Paper"}
-                    value={tutoringInfo?.isTeachTestPapers ? "Yes" : "No"}
-                  />
-                  {tutoringInfo?.isTeachAdmissionTest ? (
-                    <SubjectCommonComponent
-                      name={"Tutoring Subjects"}
-                      allSubject={transformSubjectArray(
-                        tutoringInfo?.teachTestPapers
-                      )}
-                    />
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
+              <CommonTutoringInfo tutoringInfo={tutoringInfo} />
             </div>
           </div>
           <div className="col-span-4 hidden xl:block rounded-sm">
