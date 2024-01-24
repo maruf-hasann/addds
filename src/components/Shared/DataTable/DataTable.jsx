@@ -17,6 +17,7 @@ const DataTable = ({
   pagination = true,
   hideSerial = false,
   checkbox = false,
+  textCenter = false,
   ...restProps
 }) => {
   // default table data
@@ -26,17 +27,6 @@ const DataTable = ({
   const [selectedRow, setSelectedRow] = useState([]);
   const [entries, setEntries] = useState(10);
   const [sortedData, setSortedData] = useState([]);
-
-  // const handleSelectRow = (row) => {
-  //   const isExist = selectedRow.find((item) => item.key === row.key);
-  //   if (isExist) {
-  //     setSelectedRow((prevSelectedRow) =>
-  //       prevSelectedRow.filter((item) => item?.key !== row?.key)
-  //     );
-  //     return;
-  //   }
-  //   setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
-  // };
 
   useEffect(() => {
     if (tableData) {
@@ -231,7 +221,7 @@ const DataTable = ({
                 {columns?.map((column, index) => (
                   <td
                     key={index}
-                    className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top ${
+                    className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap ${!textCenter && 'align-top'} ${
                       index === columns.length - 1 ? "w-40" : ""
                     }`}
                   >
@@ -255,38 +245,7 @@ const DataTable = ({
           </tbody>
         </table>
       </div>
-
       {/* table end here  */}
-
-      {/* pagination start here  */}
-      {/* <div
-        className={cn("py-2 flex items-center justify-between", {
-          hidden: !pagination,
-        })}
-      >
-        <p className=" opacity-90">Showing 1 to 10 of {tableData?.length} entries</p>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <button className="px-3 rounded-md  hover:bg-blue-50 py-2">
-              Prev
-            </button>
-            <div className="flex space-x-2">
-              <button className="px-3 rounded-md  hover:bg-blue-50 py-2">
-                1
-              </button>
-              <button className="px-3 rounded-md  hover:bg-blue-50 py-2">
-                2
-              </button>
-              <button className="px-3 rounded-md  hover:bg-blue-50 py-2">
-                3
-              </button>
-            </div>
-          </div>
-          <button className="px-3 py-2 rounded-md  hover:bg-blue-50 ">
-            Next
-          </button>
-        </div>
-      </div> */}
     </div>
   );
 };
