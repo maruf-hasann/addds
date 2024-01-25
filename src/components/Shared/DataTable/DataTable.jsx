@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import cn from "../../../libs/cn";
+
 import TableSkeleton from "./TableSkeleton/TableSkeleton";
-import { handleSort } from "../../../libs/DataTable/handleSort";
-import { handleSelectAll } from "../../../libs/DataTable/handleSelectAll";
-import { handleSelectRow } from "../../../libs/DataTable/handleSelectRow";
+
 // import TableSkeleton from "../Loader/TableSkeleton";
 
 const DataTable = ({
@@ -79,6 +77,39 @@ const DataTable = ({
       </div>
     );
   }
+
+  const handleSelectAll = ({
+    selectAll,
+    setSelectAll,
+    setSelectedRow,
+    sortedData,
+  }) => {
+    setSelectAll(!selectAll);
+    if (selectAll) {
+      setSelectedRow([]);
+      return;
+    }
+    setSelectedRow(sortedData);
+  };
+
+  const handleSelectRow = ({ row, selectedRow, setSelectedRow }) => {
+    const isExist = selectedRow.find((item) => item.key === row.key);
+    if (isExist) {
+      setSelectedRow((prevSelectedRow) =>
+        prevSelectedRow.filter((item) => item?.key !== row?.key)
+      );
+      return;
+    }
+    setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
+  };
+
+  const handleSort = ({ key, sortConfig, setSortConfig }) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
 
   return (
     <div className="bg-white rounded-md text-gray-700 px-3 py-10 mt-2">
@@ -221,9 +252,9 @@ const DataTable = ({
                 {columns?.map((column, index) => (
                   <td
                     key={index}
-                    className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap ${!textCenter && 'align-top'} ${
-                      index === columns.length - 1 ? "w-40" : ""
-                    }`}
+                    className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap ${
+                      !textCenter && "align-top"
+                    } ${index === columns.length - 1 ? "w-40" : ""}`}
                   >
                     {column?.render ? (
                       <column.render item={item} />

@@ -1,4 +1,4 @@
-const transformSubjectArray = (inputArray) => {
+export const transformSubjectArray = (inputArray) => {
   // Check if the input is an array
   if (!Array.isArray(inputArray)) {
     return;
@@ -22,4 +22,4 @@ const transformSubjectArray = (inputArray) => {
   }, []);
 };
 
-export default transformSubjectArray;
+

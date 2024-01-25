@@ -1,7 +1,8 @@
 import ArrayCommonComponent from "../../../../libs/TutorProfile/ArrayCommonComponent";
 import CommonComponent from "../../../../libs/TutorProfile/CommonComponent";
 import SubjectCommonComponent from "../../../../libs/TutorProfile/SubjectCommonComponent";
-import transformSubjectArray from "../../../../libs/TutorProfile/transformSubjectArray";
+import { transformSubjectArray } from "../../../../libs/TutorProfile/transformSubjectArray";
+
 
 
 const CommonTutoringInfo = ({ tutoringInfo }) => {

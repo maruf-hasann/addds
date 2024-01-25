@@ -4,8 +4,6 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import ReactPlayer from "react-player";
-import { handleSelectRow } from "../../../../../libs/DataTable/handleSelectRow";
-import { handleSelectAll } from "../../../../../libs/DataTable/handleSelectAll";
 import TableSkeleton from "../../../DataTable/TableSkeleton/TableSkeleton";
 
 const Videos = ({ videos, isLoading }) => {
@@ -78,6 +76,41 @@ const Videos = ({ videos, isLoading }) => {
       name: "Date",
     },
   ];
+
+ const handleSelectAll = ({
+    selectAll,
+    setSelectAll,
+    setSelectedRow,
+    sortedData,
+  }) => {
+    setSelectAll(!selectAll);
+    if (selectAll) {
+      setSelectedRow([]);
+      return;
+    }
+    setSelectedRow(sortedData);
+  };
+
+const handleSelectRow = ({row, selectedRow, setSelectedRow}) => {
+    const isExist = selectedRow.find((item) => item.key === row.key);
+    if (isExist) {
+      setSelectedRow((prevSelectedRow) =>
+        prevSelectedRow.filter((item) => item?.key !== row?.key)
+      );
+      return;
+    }
+    setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
+  };
+  
+const handleSort = ({ key, sortConfig, setSortConfig }) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+  
+  
 
   return (
     <div>
