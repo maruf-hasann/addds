@@ -78,12 +78,15 @@ const DataTable = ({
     );
   }
 
-  const handleSelectAll = ({
-    selectAll,
-    setSelectAll,
-    setSelectedRow,
-    sortedData,
-  }) => {
+  const handleSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const handleSelectAll = () => {
     setSelectAll(!selectAll);
     if (selectAll) {
       setSelectedRow([]);
@@ -92,7 +95,7 @@ const DataTable = ({
     setSelectedRow(sortedData);
   };
 
-  const handleSelectRow = ({ row, selectedRow, setSelectedRow }) => {
+  const handleSelectRow = (row) => {
     const isExist = selectedRow.find((item) => item.key === row.key);
     if (isExist) {
       setSelectedRow((prevSelectedRow) =>
@@ -101,14 +104,6 @@ const DataTable = ({
       return;
     }
     setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
-  };
-
-  const handleSort = ({ key, sortConfig, setSortConfig }) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
   };
 
   return (
@@ -178,14 +173,7 @@ const DataTable = ({
                   <input
                     type="checkbox"
                     checked={selectAll}
-                    onChange={() =>
-                      handleSelectAll({
-                        selectAll,
-                        setSelectAll,
-                        sortedData,
-                        setSelectedRow,
-                      })
-                    }
+                    onChange={handleSelectAll}
                   />
                 </th>
               )}
@@ -200,13 +188,7 @@ const DataTable = ({
               {columns?.map((column, index) => (
                 <th
                   key={index}
-                  onClick={() =>
-                    handleSort({
-                      key: column.dataIndex,
-                      setSortConfig: setSortConfig,
-                      sortConfig: sortConfig,
-                    })
-                  }
+                  onClick={() => handleSort(column.dataIndex)}
                   className={`cursor-pointer p-4 text-left hover:bg-blue-200 whitespace-nowrap`}
                 >
                   <div className="flex items-center justify-between">
@@ -233,13 +215,7 @@ const DataTable = ({
                       checked={
                         selectedRow.find((row) => row.key === item.key) || false
                       }
-                      onChange={() =>
-                        handleSelectRow({
-                          row: item,
-                          selectedRow,
-                          setSelectedRow,
-                        })
-                      }
+                      onChange={() => handleSelectRow(item)}
                     />
                   </td>
                 )}
