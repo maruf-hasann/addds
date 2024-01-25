@@ -21,7 +21,7 @@ const data = [
   },
 ];
 
-const AllMediaLibrary = () => {
+const MediaLibrary = () => {
   const [openAddMediaLibraryModal, setOpenAddMediaLibraryModal] =
     useState(false);
   const [activeTab, setActiveTab] = useState("videos");
@@ -86,4 +86,4 @@ const AllMediaLibrary = () => {
   );
 };
 
-export default AllMediaLibrary;
+export default MediaLibrary;

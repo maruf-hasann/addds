@@ -61,7 +61,7 @@ import MockTestJobDetails from "../pages/JobBoard/MockTestJobBoard/MockTestJobDe
 import RegularJobDetails from "../pages/JobBoard/RegularJobBoard/RegularJobDetails/RegularJobDetails";
 import MockTestActiveJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTestActiveJobBoard";
 import RegularInActiveJobBoard from "../pages/JobBoard/RegularJobBoard/RegularInActiveJobBoard";
-import AllMediaLibrary from "../pages/MediaLibrary/AllMediaLibrary/AllMediaLibrary";
+import MediaLibrary from "../pages/MediaLibrary/AllMediaLibrary/MediaLibrary";
 
 export const router = createBrowserRouter([
   {
@@ -70,11 +70,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <AllMediaLibrary />,
+        element: <MediaLibrary />,
       },
       {
-        path: "/all-media-library",
-        element: <AllMediaLibrary />,
+        path: "/media-library",
+        element: <MediaLibrary />,
       },
       {
         path: "/all-education-variants",
