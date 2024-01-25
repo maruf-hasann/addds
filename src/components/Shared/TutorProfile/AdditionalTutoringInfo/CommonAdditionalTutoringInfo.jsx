@@ -1,8 +1,7 @@
 import React from "react";
-import {
-  ArrayCommonComponent,
-  CommonComponent,
-} from "../../../../libs/TutorProfile/TutorProfile";
+import CommonComponent from "../../../../libs/TutorProfile/CommonComponent";
+import ArrayCommonComponent from "../../../../libs/TutorProfile/ArrayCommonComponent";
+
 
 const CommonAdditionalTutoringInfo = ({ additionalTutoringInfo }) => {
   return (

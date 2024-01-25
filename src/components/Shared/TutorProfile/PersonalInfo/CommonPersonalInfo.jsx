@@ -2,7 +2,8 @@ import React from "react";
 import { FaLocationPin, FaPhone } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { CommonComponent } from "../../../../libs/TutorProfile/TutorProfile";
+import CommonComponent from "../../../../libs/TutorProfile/CommonComponent";
+
 
 const CommonPersonalInfo = ({
   identityInfo,
