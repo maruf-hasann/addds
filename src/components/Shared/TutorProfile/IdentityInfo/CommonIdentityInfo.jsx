@@ -17,6 +17,7 @@ const CommonIdentityInfo = ({ identityInfo, isLoading }) => {
             tableData={identityInfo?.attachment}
             hideSerial={true}
             handleSelectedRowItem={(data) => console.log(data)}
+            textCenter={true}
             columns={[
               {
                 name: "Image",

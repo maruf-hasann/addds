@@ -6,6 +6,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import ReactPlayer from "react-player";
 import { handleSelectRow } from "../../../../../libs/DataTable/handleSelectRow";
 import { handleSelectAll } from "../../../../../libs/DataTable/handleSelectAll";
+import TableSkeleton from "../../../DataTable/TableSkeleton/TableSkeleton";
 
 const Videos = ({ videos, isLoading }) => {
   const [hideThumbnail, setHideThumbnail] = useState(null);
