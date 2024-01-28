@@ -4,8 +4,6 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
 import ReactPlayer from "react-player";
-import { handleSelectRow } from "../../../../../libs/DataTable/handleSelectRow";
-import { handleSelectAll } from "../../../../../libs/DataTable/handleSelectAll";
 import TableSkeleton from "../../../DataTable/TableSkeleton/TableSkeleton";
 
 const Videos = ({ videos, isLoading }) => {
@@ -79,6 +77,34 @@ const Videos = ({ videos, isLoading }) => {
     },
   ];
 
+  const handleSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const handleSelectAll = () => {
+    setSelectAll(!selectAll);
+    if (selectAll) {
+      setSelectedRow([]);
+      return;
+    }
+    setSelectedRow(sortedData);
+  };
+
+  const handleSelectRow = (row) => {
+    const isExist = selectedRow.find((item) => item.key === row.key);
+    if (isExist) {
+      setSelectedRow((prevSelectedRow) =>
+        prevSelectedRow.filter((item) => item?.key !== row?.key)
+      );
+      return;
+    }
+    setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
+  };
+
   return (
     <div>
       <div className="bg-white rounded-md text-gray-700 px-3 py-10 mt-2">
@@ -146,27 +172,14 @@ const Videos = ({ videos, isLoading }) => {
                   <input
                     type="checkbox"
                     checked={selectAll}
-                    onChange={() =>
-                      handleSelectAll({
-                        selectAll,
-                        setSelectAll,
-                        sortedData,
-                        setSelectedRow,
-                      })
-                    }
+                    onChange={handleSelectAll}
                   />
                 </th>
 
                 {columns?.map((column, index) => (
                   <th
                     key={index}
-                    onClick={() =>
-                      handleSort({
-                        key: column.dataIndex,
-                        setSortConfig: setSortConfig,
-                        sortConfig: sortConfig,
-                      })
-                    }
+                    onClick={() => handleSort(column.dataIndex)}
                     className={`cursor-pointer p-4 text-left hover:bg-blue-200 whitespace-nowrap`}
                   >
                     <div className="flex items-center justify-between">
@@ -192,13 +205,7 @@ const Videos = ({ videos, isLoading }) => {
                       checked={
                         selectedRow.find((row) => row.key === item.key) || false
                       }
-                      onChange={() =>
-                        handleSelectRow({
-                          row: item,
-                          selectedRow,
-                          setSelectedRow,
-                        })
-                      }
+                      onChange={() => handleSelectRow(item)}
                     />
                   </td>
 

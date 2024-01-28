@@ -1,5 +1,4 @@
-import React from "react";
-import { CommonComponent } from "../../../../libs/TutorProfile/TutorProfile";
+import CommonComponent from "../../../../libs/TutorProfile/CommonComponent";
 
 const CommonContactInfo = ({ contactInfo }) => {
   return (

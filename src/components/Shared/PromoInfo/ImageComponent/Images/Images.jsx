@@ -3,6 +3,7 @@ import { BiWorld } from "react-icons/bi";
 import { FaLock } from "react-icons/fa";
 import { useState } from "react";
 import DataTable from "../../../DataTable/DataTable";
+import { FaAngleDown } from "react-icons/fa6";
 
 const Images = ({ images, isLoading }) => {
   const [updateVisibility, setUpdateVisibility] = useState(null);
