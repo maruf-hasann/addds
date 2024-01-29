@@ -12,7 +12,7 @@ import {
   MdLibraryBooks,
   MdPermMedia,
 } from "react-icons/md";
-import { FaUsers } from "react-icons/fa6";
+import { FaUsers, FaBlog } from "react-icons/fa6";
 
 // menu
 export const menus = [
@@ -213,6 +213,23 @@ export const withSubmenu = [
       {
         name: "All Student Account",
         url: "./all-student-account",
+        icon: <span>🧾</span>,
+      },
+    ],
+  },
+  {
+    id: 393,
+    name: "Blog",
+    icon: <FaBlog />,
+    subMenus: [
+      {
+        name: "All Blog",
+        url: "./all-blog",
+        icon: <span>🧾</span>,
+      },
+      {
+        name: "Category",
+        url: "./all-category",
         icon: <span>🧾</span>,
       },
     ],

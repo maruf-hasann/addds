@@ -62,6 +62,8 @@ import RegularJobDetails from "../pages/JobBoard/RegularJobBoard/RegularJobDetai
 import MockTestActiveJobBoard from "../pages/JobBoard/MockTestJobBoard/MockTestActiveJobBoard";
 import RegularInActiveJobBoard from "../pages/JobBoard/RegularJobBoard/RegularInActiveJobBoard";
 import MediaLibrary from "../pages/MediaLibrary/AllMediaLibrary/MediaLibrary";
+import AllBlog from "../pages/Blog/AllBlog/AllBlog";
+import AllCategory from "../pages/Category/AllCategory/AllCategory";
 
 export const router = createBrowserRouter([
   {
@@ -193,6 +195,12 @@ export const router = createBrowserRouter([
       {
         path: "/tutor-account",
         element: <TutorAccount />,
+      }, {
+         path: "/all-blog",
+        element: <AllBlog />,
+      }, {
+         path: "/all-category",
+        element: <AllCategory />,
       },
       {
         path: "/academic-tutoring",
