@@ -5,11 +5,10 @@ import {
   useUpdateJobStatusMutation,
 } from "../../../store/service/jobBoard/jobBoardApiService";
 import tutoringSubject from "../../../libs/tutoringSubject";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import DataTable from "../../../components/Shared/DataTable/DataTable";
 
 const RegularActiveJobBoard = () => {
-  const navigate = useNavigate();
   // redux api call
   const { data: regularActiveJobsData, isLoading } = useGetAllJobsByStatusQuery(
     {
@@ -37,17 +36,6 @@ const RegularActiveJobBoard = () => {
       toast.success("Update Job Post successfully !");
     } else {
       toast.error("Something went wrong..!");
-    }
-  };
-
-  // redirect to single job details
-  const handleNavigateSingleJob = (value) => {
-    if (value?.jobId && value?.jobType) {
-      navigate("/regular-job-details", {
-        state: { ...value, title: "Active" },
-      });
-    } else {
-      toast.error("Please try again!");
     }
   };
 
@@ -158,20 +146,14 @@ const RegularActiveJobBoard = () => {
                       {status}
                     </span>
                   ))}
-                <span
-                  onClick={() =>
-                    handleNavigateSingleJob({
-                      jobId: item?.jobId,
-                      jobType: item?.jobType,
-                    })
-                  }
+                <Link to={`/regular-job-details/${item?.jobType}/${item?.jobId}`}
                   className="text-center flex justify-center mx-auto"
                 >
                   <FaStreetView
                     title="View Profile"
                     className="text-center mx-auto cursor-pointer hover:text-blue-500"
                   />
-                </span>
+                </Link>
               </div>
             ),
           },
