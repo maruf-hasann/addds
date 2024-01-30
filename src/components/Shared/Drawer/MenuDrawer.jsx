@@ -84,10 +84,9 @@ const MenuDrawer = ({ open, setOpen }) => {
                     onClick={() => {
                       closeDrawer, setOpen(false);
                     }}
-                    className={`${
-                      menu.url.slice(1) === pathname &&
+                    className={`${menu.url.slice(1) === pathname &&
                       "border-l-4 border-primary bg-blue-100 ps-5"
-                    }  py-2 px-2 cursor-pointer flex items-center gap-3`}
+                      }  py-2 px-2 cursor-pointer flex items-center gap-3`}
                   >
                     {menu.icon} {menu.name}
                   </Link>
@@ -95,18 +94,18 @@ const MenuDrawer = ({ open, setOpen }) => {
               </div>
               {/* setting */}
               <div className="grid grid-cols-1 text-gray-700">
-                {withSubmenu.map((menuItem) => (
+                {withSubmenu.map((menuItem, index) => (
                   <Accordion
+                    key={index}
                     open={open === menuItem.id}
                     icon={<SettingIcon id={menuItem.id} open={open} />}
                   >
                     <AccordionHeader
                       onClick={() => handleOpen(menuItem.id)}
-                      className={`border-b-0 ${
-                        menuItem?.subMenus.some((subMenu) =>
-                          subMenu.url.slice(1).includes(pathname)
-                        ) && "border-l-4 border-primary bg-blue-200 mb-1 py-2"
-                      }`}
+                      className={`border-b-0 ${menuItem?.subMenus.some((subMenu) =>
+                        subMenu.url.slice(1).includes(pathname)
+                      ) && "border-l-4 border-primary bg-blue-200 mb-1 py-2"
+                        }`}
                     >
                       <div className="font-normal text-base px-2 flex items-center gap-3 text-gray-700">
                         {menuItem.icon} {menuItem.name}
@@ -119,13 +118,11 @@ const MenuDrawer = ({ open, setOpen }) => {
                             to={menu.url}
                             key={idx}
                             onClick={closeDrawer}
-                            className={`${
-                              menu.url.slice(1) === pathname &&
+                            className={`${menu.url.slice(1) === pathname &&
                               "border-l-4 border-primary bg-blue-100 ps-5"
-                            } ${
-                              menu.url.slice(1) !== pathname &&
+                              } ${menu.url.slice(1) !== pathname &&
                               "hover:text-primary"
-                            } py-2 px-2 cursor-pointer font-normal text-base ms-3`}
+                              } py-2 px-2 cursor-pointer font-normal text-base ms-3`}
                           >
                             {menu.icon} {menu.name}
                           </Link>

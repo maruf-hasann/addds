@@ -37,13 +37,12 @@ const MainSideBar = () => {
           {menus.map((menu, idx) => (
             <Link
               to={menu?.url}
-              key={idx}
+              key={idx + 2}
               onClick={() => setOpen(false)}
-              className={`${
-                menu?.url.slice(1) === pathname
-                  ? "bg-blue-50 text-[#01183b]"
-                  : "text-gray-600 hover:text-[#01183b]"
-              }  py-2 px-2 cursor-pointer flex items-center gap-3  rounded-md text-sm`}
+              className={`${menu?.url.slice(1) === pathname
+                ? "bg-blue-50 text-[#01183b]"
+                : "text-gray-600 hover:text-[#01183b]"
+                }  py-2 px-2 cursor-pointer flex items-center gap-3  rounded-md text-sm`}
             >
               {menu?.icon} {menu?.name}
             </Link>
@@ -51,20 +50,20 @@ const MainSideBar = () => {
         </div>
         {/* setting */}
         <div className="grid grid-cols-1 gap-2 px-3 py-2">
-          {withSubmenu?.map((menuItem) => (
+          {withSubmenu?.map((menuItem, index) => (
             <Accordion
+              key={index + 2}
               open={open === menuItem?.id}
               icon={<SettingIcon id={menuItem?.id} open={open} />}
             >
               <AccordionHeader
                 onClick={() => handleOpen(menuItem?.id)}
-                className={`border-b-0 ${
-                  menuItem?.subMenus?.some((subMenu) =>
-                    subMenu?.url?.slice(1)?.includes(pathname)
-                  )
+                className={`border-b-0 ${menuItem?.subMenus?.some((subMenu) =>
+                  subMenu?.url?.slice(1)?.includes(pathname)
+                )
                   ? "bg-blue-50 text-[#01183b]"
                   : "text-gray-600 hover:text-[#01183b]"
-                } ${open === menuItem?.id && 'text-[#01183b]'}  py-2 px-2 cursor-pointer flex items-center gap-3 rounded-md font-normal`}
+                  } ${open === menuItem?.id && 'text-[#01183b]'}  py-2 px-2 cursor-pointer flex items-center gap-3 rounded-md font-normal`}
               >
                 <div className="text-sm px-2 flex items-center gap-3">
                   {menuItem?.icon} {menuItem?.name}
@@ -76,14 +75,12 @@ const MainSideBar = () => {
                     <Link
                       to={menu?.url}
                       key={idx}
-                      className={`${
-                        menu?.url?.slice(1) === pathname
+                      className={`${menu?.url?.slice(1) === pathname
                         ? "bg-blue-50 text-[#01183b]"
                         : "text-gray-600 hover:text-[#01183b]"
-                      }  py-2 px-2 cursor-pointer flex items-center gap-3 rounded-md
-                      } ${
-                        menu?.url?.slice(1) !== pathname && "hover:text-primary"
-                      } py-2 px-2 cursor-pointer font-normal text-sm flex items-center gap-2`}
+                        }  py-2 px-2 cursor-pointer flex items-center gap-3 rounded-md
+                      } ${menu?.url?.slice(1) !== pathname && "hover:text-primary"
+                        } py-2 px-2 cursor-pointer font-normal text-sm flex items-center gap-2`}
                     >
                       {menu?.name}
                     </Link>
