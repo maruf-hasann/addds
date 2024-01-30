@@ -224,12 +224,12 @@ export const withSubmenu = [
     subMenus: [
       {
         name: "All Blog",
-        url: "./all-blog",
+        url: "./blog",
         icon: <span>🧾</span>,
       },
       {
         name: "Category",
-        url: "./all-category",
+        url: "./category",
         icon: <span>🧾</span>,
       },
     ],

@@ -196,10 +196,10 @@ export const router = createBrowserRouter([
         path: "/tutor-account",
         element: <TutorAccount />,
       }, {
-         path: "/all-blog",
+         path: "/blog",
         element: <AllBlog />,
       }, {
-         path: "/all-category",
+         path: "/category",
         element: <AllCategory />,
       },
       {
