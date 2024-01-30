@@ -1,5 +1,7 @@
 import React from "react";
+import ReactHtmlParser from "react-html-parser";
 import { FaRegCircleXmark } from "react-icons/fa6";
+
 
 const DetailsBlog = ({ setDetailsModal, detailsModal, blog }) => {
   // handle close modal
@@ -18,9 +20,7 @@ const DetailsBlog = ({ setDetailsModal, detailsModal, blog }) => {
         onClick={handleClose}
       ></div>
       <div className="relative z-50 w-full max-w-5xl  max-h-full mt-[20vh] mx-auto md:w-1/2 lg:w-1/3 md:px-0">
-        <div
-          className={`relative  rounded-lg shadow text-primary px-10 bg-white`}
-        >
+        <div className={`relative  rounded-lg shadow text-primary  bg-white`}>
           {/* modal close button */}
           <button
             onClick={handleClose}
@@ -30,14 +30,21 @@ const DetailsBlog = ({ setDetailsModal, detailsModal, blog }) => {
             <FaRegCircleXmark className="text-3xl text-red-400 hover:text-red-500" />
           </button>
           <>
-            <div className="max-w-md mx-auto p-4  mt-5 bg-white">
-              <h3 className="font-semibold text-xl mb-3">{blog?.title}</h3>
+            <div className="max-w-md mx-auto py-4 mt-5 bg-white">
+              <h3 className="font-semibold mb-2">User Information</h3>
               {/* user Info */}
               <div className="mb-6">
                 <h4>Name : {blog?.user?.fullName}</h4>
-                <h4>Role :{blog?.user?.role}</h4>
+                <h4>Role : {blog?.user?.role}</h4>
               </div>
-              <p>{blog?.description}</p>
+              <img src={blog?.imageUrl}  className="w-full h-auto"/>
+              <h3 className="font-semibold text-xl mt-3 text-black">
+                {blog?.title}
+              </h3>
+
+              <p className="text-xl mb-10 dark:text-gray-400 ">
+                {ReactHtmlParser(blog?.description)}
+              </p>
             </div>
           </>
         </div>

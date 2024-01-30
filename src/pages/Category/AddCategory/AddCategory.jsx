@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Button } from "@material-tailwind/react";
-import { BsImage } from "react-icons/bs";
+
 import { FaRegCircleXmark } from "react-icons/fa6";
+import { IoCloudUploadOutline } from "react-icons/io5";
 import { IoIosArrowDown, IoIosClose } from "react-icons/io";
 import { useAddCategoryMutation } from "../../../store/service/category/categoryApiservice";
 import { FaSpinner } from "react-icons/fa";
@@ -22,13 +23,6 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
     formState: { errors },
   } = useForm();
 
-  // show image after changing
-  const post_image = watch("post_image");
-  useEffect(() => {
-    if (post_image?.length > 0) {
-      setImageShow(URL.createObjectURL(post_image[0]));
-    }
-  }, [watch, post_image]);
   // from data
   const onSubmit = async (data) => {
     //   image
@@ -52,7 +46,13 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
   const handleClose = () => {
     setModalOpen(!modalOpen);
   };
-
+  // show image after changing
+  const post_image = watch("post_image");
+  useEffect(() => {
+    if (post_image?.length > 0) {
+      setImageShow(URL.createObjectURL(post_image[0]));
+    }
+  }, [watch, post_image]);
   return (
     <div
       className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${
@@ -109,11 +109,11 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
                   )}
                 </div>
                 {/* Image */}
-                <div className="cursor-pointer">
+                <div className="cursor-pointer ">
                   {imageShow ? (
                     <>
                       <div
-                        className="flex  relative left-20 cursor-pointer p-[2px] rounded-full"
+                        className="flex  relative left-52 cursor-pointer p-[2px] rounded-full"
                         onClick={() => setImageShow("")}
                       >
                         <IoIosClose size={24} />
@@ -132,21 +132,26 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
                       <>
                         {imageShow ? (
                           <div className="relative">
-                            <img
-                              className="h-[90px] w-[90px]"
-                              src={imageShow}
-                            />
+                            <img className="h-auto w-[200px]" src={imageShow} />
                           </div>
                         ) : (
                           <>
-                            <span>
-                              <BsImage
-                                size={50}
-                                className={`${
-                                  errors.post_image ? " text-red" : "text-gray"
-                                }`}
-                              />
-                            </span>
+                            <div className="w-[200px]">
+                              <div className="text-center">
+                                <IoCloudUploadOutline
+                                  size={50}
+                                  className={`inline-block ${
+                                    errors.post_image
+                                      ? " text-red"
+                                      : "text-gray"
+                                  }`}
+                                />
+                              </div>
+                              <div className="text-center mb-2">
+                                <h2 className="mb-2">Upload Image </h2>
+                                
+                              </div>
+                            </div>
                           </>
                         )}
                       </>

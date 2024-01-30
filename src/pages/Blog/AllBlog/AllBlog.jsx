@@ -7,12 +7,14 @@ import {
 import { FaStreetView, FaTrash } from "react-icons/fa6";
 import BlogDeleteModal from "../../../components/Shared/DeleteModal/BlogDeleteModal";
 import DetailsBlog from "../DetailsBlog/DetailsBlog";
+import AddBlog from "../AddBlog/AddBlog";
 
 const AllBlog = () => {
   const [blogdeleteData, setBlogdeleteData] = useState(null);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [detailsModal, setDetailsModal] = useState(false);
   const [blog, setBlog] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   // all blog data
   const { data: blogData, isLoading } = useGetAllBlogsQuery();
@@ -86,6 +88,10 @@ const AllBlog = () => {
           },
         ]}
       />
+      {/* add blog */}
+      {modalOpen && (
+        <AddBlog modalOpen={modalOpen} setModalOpen={setModalOpen} />
+      )}
       {/* blog details */}
       {detailsModal && (
         <DetailsBlog
