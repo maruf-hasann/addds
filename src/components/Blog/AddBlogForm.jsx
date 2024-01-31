@@ -101,7 +101,7 @@ const AddBlogForm = ({setModalOpen}) => {
           type="text"
           id="title"
           name="title"
-          className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
+          className="w-full p-2 mb-4 text-black border rounded-md outline-none focus:outline-primaryAlfa-50"
           placeholder="Please add a title"
           onKeyUp={() => {
             trigger("title");
@@ -127,7 +127,7 @@ const AddBlogForm = ({setModalOpen}) => {
               placeHolder="Tag Name"
               classNames={{
                 tag: "tag-cls",
-                input: "",
+                input: "text-black",
               }}
             />
             <em className="text-xs">Press enter to add new tag</em>
@@ -145,7 +145,7 @@ const AddBlogForm = ({setModalOpen}) => {
             </label>
             <select
               id="category"
-              className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
+              className="w-full text-black p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
               {...register("category", {
                 required: "Category are required!",
               })}
@@ -176,7 +176,7 @@ const AddBlogForm = ({setModalOpen}) => {
 
         <textarea
           rows="3"
-          className="w-full p-2 mb-2 border rounded-md outline-none focus:outline-primaryAlfa-50"
+          className="w-full p-2  text-black mb-2 border rounded-md outline-none focus:outline-primaryAlfa-50"
           type="text"
           {...register("shortDescription", {
             required: "Short Description is required",
@@ -191,7 +191,7 @@ const AddBlogForm = ({setModalOpen}) => {
       </div>
 
       {/* Description */}
-      <div className="mb-6 dark:bg-dark">
+      <div className="mb-6 text-black">
         <label className="block mb-2 font-semibold text-sm text-gray-500">
           Description
         </label>
@@ -234,9 +234,8 @@ const AddBlogForm = ({setModalOpen}) => {
                         }`}
                       />
                     </div>
-                    <div className='text-center mb-2'>
-                      <h2 className='mb-2'>Upload Image </h2>
-                     
+                    <div className="text-center mb-2">
+                      <h2 className="mb-2">Upload Image </h2>
                     </div>
                   </div>
                 </>
