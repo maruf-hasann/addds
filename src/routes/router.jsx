@@ -64,6 +64,7 @@ import RegularInActiveJobBoard from "../pages/JobBoard/RegularJobBoard/RegularIn
 import MediaLibrary from "../pages/MediaLibrary/AllMediaLibrary/MediaLibrary";
 import AllBlog from "../pages/Blog/AllBlog/AllBlog";
 import AllCategory from "../pages/Category/AllCategory/AllCategory";
+import AllVideo from "../pages/Blog/Video/AllVideo/AllVideo";
 
 export const router = createBrowserRouter([
   {
@@ -201,6 +202,9 @@ export const router = createBrowserRouter([
       }, {
          path: "/category",
         element: <AllCategory />,
+      }, {
+         path: "/video",
+        element: <AllVideo />,
       },
       {
         path: "/academic-tutoring",

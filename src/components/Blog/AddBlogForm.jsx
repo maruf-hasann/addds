@@ -127,7 +127,7 @@ const AddBlogForm = ({setModalOpen}) => {
               placeHolder="Tag Name"
               classNames={{
                 tag: "tag-cls",
-                input: "text-black",
+                input: "text-black py-0",
               }}
             />
             <em className="text-xs">Press enter to add new tag</em>

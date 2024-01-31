@@ -3,6 +3,7 @@ import ReactHtmlParser from "react-html-parser";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import { MdOutlineAlternateEmail } from "react-icons/md";
+import { LiaUserShieldSolid } from "react-icons/lia";
 const DetailsBlog = ({ setDetailsModal, detailsModal, blog }) => {
 
   // handle close modal
@@ -12,7 +13,7 @@ const DetailsBlog = ({ setDetailsModal, detailsModal, blog }) => {
 
   return (
     <div
-      className={`fixed  top-0 left-0 z-50  p-4  overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${
+      className={`fixed  top-0 left-0 z-50  p-4  overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)]  max-h-full backdrop-blur-sm ${
         detailsModal ? "block" : "hidden"
       }`}
     >
@@ -36,25 +37,36 @@ const DetailsBlog = ({ setDetailsModal, detailsModal, blog }) => {
             <div className=" px-14 mx-auto py-4 mt-5 bg-white text-black">
               <h3 className="font-semibold mb-2">User Information</h3>
               {/* user Info */}
-              <div className="mb-6 mt-3">
+              <div className="mb-6 mt-3 flex  items-center gap-6 ">
                 <img
                   src={blog?.authorProfileImage}
                   className="w-[70px] h-[70px] rounded-full ring-4 ring-primary"
                 />
-                <h4 className="font-semibold mt-4 "> {blog?.user?.fullName}</h4>
-                <h4 className="">Role : {blog?.user?.role}</h4>
-                <h4 className="flex  items-center gap-2 ">
-                  <FaPhoneAlt /> {"+" + blog?.user?.phoneNumber}
-                </h4> <h4 className="flex  items-center gap-2 ">
-                  <MdOutlineAlternateEmail />  { blog?.user?.email}
-                </h4>
+                <div>
+                  <h4 className="font-semibold mt-4 ">
+                    {" "}
+                    {blog?.user?.fullName}
+                  </h4>
+                  <h4 className=" flex  items-center gap-2">
+                    <LiaUserShieldSolid /> {blog?.user?.role}
+                  </h4>
+                  <h4 className="flex  items-center gap-2 ">
+                    <FaPhoneAlt /> {"+" + blog?.user?.phoneNumber}
+                  </h4>{" "}
+                  <h4 className="flex  items-center gap-2 ">
+                    <MdOutlineAlternateEmail /> {blog?.user?.email}
+                  </h4>
+                </div>
               </div>
-              <img src={blog?.imageUrl} className="w-full h-[500px] rounded-md" />
+              <img
+                src={blog?.imageUrl}
+                className="w-full h-[500px] rounded-md"
+              />
               <h3 className="font-semibold text-xl mt-5 text-black">
                 {blog?.title}
               </h3>
 
-              <p className="text-xl mb-10 dark:text-gray-400 ">
+              <p className="text-xl mb-5  dark:text-gray-400 ">
                 {ReactHtmlParser(blog?.description)}
               </p>
             </div>

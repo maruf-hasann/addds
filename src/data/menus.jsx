@@ -231,6 +231,10 @@ export const withSubmenu = [
         name: "Category",
         url: "./category",
         icon: <span>🧾</span>,
+      },  {
+        name: "Video",
+        url: "./video",
+        icon: <span>🧾</span>,
       },
     ],
   },

@@ -94,7 +94,7 @@ const UpdateCategory = ({ updateModal, setUpdateModal, updateData }) => {
 
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white"
+                className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white text-black"
               >
                 {/* name area */}
                 <div>
