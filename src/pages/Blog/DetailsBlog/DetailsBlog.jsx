@@ -49,8 +49,8 @@ const DetailsBlog = ({ setDetailsModal, detailsModal, blog }) => {
                   <MdOutlineAlternateEmail />  { blog?.user?.email}
                 </h4>
               </div>
-              <img src={blog?.imageUrl} className="w-full h-auto rounded-md" />
-              <h3 className="font-semibold text-xl mt-3 text-black">
+              <img src={blog?.imageUrl} className="w-full h-[500px] rounded-md" />
+              <h3 className="font-semibold text-xl mt-5 text-black">
                 {blog?.title}
               </h3>
 
