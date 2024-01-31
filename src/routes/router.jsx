@@ -259,7 +259,7 @@ export const router = createBrowserRouter([
         element: <RegularHiredJobBoard />,
       },
       {
-        path: "/regular-job-details",
+        path: "/regular-job-details/:jobType/:jobId",
         element: <RegularJobDetails />,
       },
       {
@@ -275,7 +275,7 @@ export const router = createBrowserRouter([
         element: <MockTestHiredJobBoard />,
       },
       {
-        path: "/mock-test-job-details",
+        path: "/mock-test-job-details/:jobType/:jobId",
         element: <MockTestJobDetails />,
       },
     ],
