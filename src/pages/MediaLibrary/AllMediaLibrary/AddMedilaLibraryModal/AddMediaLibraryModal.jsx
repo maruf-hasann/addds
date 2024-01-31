@@ -1,13 +1,5 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Dialog,
-  DialogBody,
-  DialogFooter,
-  DialogHeader,
-} from "@material-tailwind/react";
-import toast from "react-hot-toast";
-import { FaSpinner } from "react-icons/fa";
+import { Dialog, DialogBody, DialogHeader } from "@material-tailwind/react";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import {
   Tabs,
@@ -36,7 +28,11 @@ export const AddMediaLibraryModal = ({
 }) => {
   const [activeTab, setActiveTab] = useState("videos");
   return (
-    <Dialog open={openAddMediaLibraryModal} handler={handleOpen}>
+    <Dialog
+      open={openAddMediaLibraryModal}
+      handler={handleOpen}
+      className="h-screen overflow-y-auto"
+    >
       <DialogHeader className="flex justify-between">
         <span>Add your videos or photos here</span>
 
@@ -73,7 +69,7 @@ export const AddMediaLibraryModal = ({
                 <AddVideoTab />
               </TabPanel>
               <TabPanel value="photos">
-                <AddPhotoTab />
+                <AddPhotoTab handleOpen={handleOpen} />
               </TabPanel>
             </TabsBody>
           </Tabs>
