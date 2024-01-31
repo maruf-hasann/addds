@@ -228,6 +228,8 @@ const DataTable = ({
                 {columns?.map((column, index) => (
                   <td
                     key={index}
+
+                    
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap ${
                       !textCenter && "align-top"
                     } ${index === columns.length - 1 ? "w-40" : ""}`}

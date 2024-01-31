@@ -10,6 +10,7 @@ import PromoInfoCV from "./PromoInfoCV/PromoInfoCV";
 import { FaLocationPin, FaPhone } from "react-icons/fa6";
 import { IoMdMail } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { TbListDetails } from "react-icons/tb";
 
 const TutorProfileCVFormat = () => {
   const { number } = useParams();
@@ -47,9 +48,10 @@ const TutorProfileCVFormat = () => {
         </h1>
         <Link
           to={`/tutor-profile/${allInfo?.phoneNumber}`}
-          className="bg-white text-[#1E6CB3] px-5 py-1 rounded-sm font-semibold"
+          className="py-2 cursor-pointer mr-2 text-white"
+          title="Details"
         >
-          Details
+          <TbListDetails className="text-3xl" />
         </Link>
       </div>
       <div className="bg-white border rounded-md p-2 sm:p-5 md:p-10">
@@ -139,7 +141,10 @@ const TutorProfileCVFormat = () => {
               Promo Info:
             </h1>
             <div className="my-5">
-              <PromoInfoCV promoInfo={allInfo?.promoInfo} isLoading={isLoading}/>
+              <PromoInfoCV
+                promoInfo={allInfo?.promoInfo}
+                isLoading={isLoading}
+              />
             </div>
           </div>
         </div>

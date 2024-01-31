@@ -6,6 +6,9 @@ import PersonalInfo from "./PersonalInfo/PersonalInfo";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import AcademicInfo from "./AcademicInfo/AcademicInfo";
 import IdentityInfo from "./IdentityInfo/IdentityInfo";
+import { BiSolidUserAccount } from "react-icons/bi";
+import { TbListDetails } from "react-icons/tb";
+import { SiMicrosoftacademic } from "react-icons/si";
 
 const TutorAccountDetails = () => {
   const { number } = useParams();
@@ -48,24 +51,29 @@ const TutorAccountDetails = () => {
             <h1 className="font-bold text-xl md:text-2xl text-[#1e6cb3]">
               Tutor Profile
             </h1>
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-10 mr-10">
               <Link
                 to={`/academic-tutoring-details/${allInfo?.phoneNumber}`}
-                className=" py-2 text-[#1e6cb3] hover:underline"
+                className="py-2 text-gray-600 hover:text-primary cursor-pointer"
               >
-                #Academic Tutoring
+                <SiMicrosoftacademic
+                  className="text-3xl"
+                  title="Academic Tutoring"
+                />
               </Link>
               <Link
                 to={`/tutor-profile/${allInfo?.phoneNumber}`}
-                className=" py-2 text-[#1e6cb3] hover:underline"
+                className="py-2 text-gray-600 hover:text-primary cursor-pointer"
+                title="Details"
               >
-                #Details
+                <TbListDetails className="text-3xl" />
               </Link>
               <Link
                 to={`/tutor-profile-cv-format/${allInfo?.phoneNumber}`}
-                className=" py-2 text-[#1e6cb3] hover:underline"
+                className=" py-2 text-gray-600 hover:text-primary cursor-pointer"
+                title="Details In CV Format"
               >
-                #Details in CV Format
+                <BiSolidUserAccount className="text-3xl" />
               </Link>
             </div>
           </div>
