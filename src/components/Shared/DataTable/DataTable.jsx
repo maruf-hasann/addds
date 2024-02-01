@@ -201,7 +201,7 @@ const DataTable = ({
           <tbody className=" border-blue-gray-10">
             {sortedData?.slice(0, entries).map((item, idx) => (
               <tr
-                key={item._id}
+                key={idx}
                 className={`hover:bg-blue-50 ${
                   idx === sortedData?.length - 1
                     ? "border-b border-b-blue-gray-100"
@@ -228,6 +228,8 @@ const DataTable = ({
                 {columns?.map((column, index) => (
                   <td
                     key={index}
+
+                    
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap ${
                       !textCenter && "align-top"
                     } ${index === columns.length - 1 ? "w-40" : ""}`}

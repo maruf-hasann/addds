@@ -14,6 +14,7 @@ const AllSemester = () => {
 
   const { data: semestersData, isLoading } = useGetSemestersQuery();
   const semesters = semestersData?.data;
+  
 
   return (
     <>

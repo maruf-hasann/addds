@@ -20,6 +20,7 @@ const AllStudentVariant = () => {
 
   const { data: studentVariantsData, isLoading } = useGetStudentVariantsQuery();
   const studentVariants = studentVariantsData?.data;
+  
 
   return (
     <>

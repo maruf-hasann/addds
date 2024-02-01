@@ -5,11 +5,10 @@ import {
   useUpdateJobStatusMutation,
 } from "../../../store/service/jobBoard/jobBoardApiService";
 import tutoringSubject from "../../../libs/tutoringSubject";
-import { useNavigate } from "react-router-dom";
 import DataTable from "../../../components/Shared/DataTable/DataTable";
+import { Link } from "react-router-dom";
 
 const MockTestHiredJobBoard = () => {
-  const navigate = useNavigate();
   // redux api call
   const { data: mockTestHiredJobsData, isLoading } = useGetAllJobsByStatusQuery(
     {
@@ -40,16 +39,6 @@ const MockTestHiredJobBoard = () => {
     }
   };
 
-  // redirect to single job details
-  const handleNavigateSingleJob = (value) => {
-    if (value?.jobId && value?.jobType) {
-      navigate("/mock-test-job-details", {
-        state: { ...value, title: "Hired" },
-      });
-    } else {
-      toast.error("Please try again!");
-    }
-  };
 
   return (
     <div className="py-10 w-full">
@@ -154,20 +143,15 @@ const MockTestHiredJobBoard = () => {
                       {status}
                     </span>
                   ))}
-                <span
-                  onClick={() =>
-                    handleNavigateSingleJob({
-                      jobId: item?.jobId,
-                      jobType: item?.jobType,
-                    })
-                  }
+                <Link
+                  to={`/mock-test-job-details/${item?.jobType}/${item?.jobId}`}
                   className="text-center flex justify-center mx-auto"
                 >
                   <FaStreetView
                     title="View Profile"
                     className="text-center mx-auto cursor-pointer hover:text-blue-500"
                   />
-                </span>
+                </Link>
               </div>
             ),
           },

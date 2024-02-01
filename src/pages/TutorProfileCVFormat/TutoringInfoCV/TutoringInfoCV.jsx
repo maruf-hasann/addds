@@ -51,21 +51,28 @@ const TutoringInfoCV = ({ tutoringInfo }) => {
         ))}
       </div>
       {/* tutoring subject */}
-      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-        <TbSquareRoundedCheckFilled />{" "}
-        <span className="font-semibold">Tutoring Subjects: </span>{" "}
-        {transformSubjectArray(tutoringInfo?.tutoringSubjects)?.map(
-          (subject, idx) => (
-            <span key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
-              {subject.subSubjects?.length
-                ? `${subject.mainSubject}(${subject?.subSubjects?.map(
-                    (subSub) => subSub
-                  )})`
-                : subject?.mainSubject}
-            </span>
-          )
-        )}
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex gap-2 ">
+        <div className="flex gap-2">
+          <TbSquareRoundedCheckFilled className="whitespace-nowrap" />{" "}
+          <span className="font-semibold whitespace-nowrap">
+            Tutoring Subjects:{" "}
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {transformSubjectArray(tutoringInfo?.tutoringSubjects)?.map(
+            (subject, idx) => (
+              <span key={idx} className="bg-blue-50 px-3 hover:bg-blue-100">
+                {subject.subSubjects?.length
+                  ? `${subject.mainSubject}(${subject?.subSubjects?.map(
+                      (subSub) => subSub
+                    )})`
+                  : subject?.mainSubject}
+              </span>
+            )
+          )}
+        </div>
       </div>
+
       {/* tutoring curriculum */}
       <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
         <TbSquareRoundedCheckFilled />{" "}

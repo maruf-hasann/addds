@@ -7,6 +7,7 @@ const TutorAccount = () => {
   const { data: tutorsInfoData, isLoading } =
     useGetListOfTutorWithAcademicInfoQuery();
   const tutorsInfo = tutorsInfoData?.data;
+ 
 
   return (
     <div className="py-10 w-full">

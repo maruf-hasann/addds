@@ -12,15 +12,21 @@ const AdditionalTutoringInfoCV = ({ additionalTutoringInfo }) => {
       </div>
 
       {/* tutoring Program */}
-      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-        <TbSquareRoundedCheckFilled />{" "}
-        <span className="font-semibold">Tutoring Programs: </span>{" "}
-        {additionalTutoringInfo?.tutoringProgram?.map((program, idx) => (
-          <p key={idx + 1} className="bg-blue-50 px-3 hover:bg-blue-100">
-            {" "}
-            {program?.programName}
-          </p>
-        ))}
+      <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex gap-2 ">
+        <div className="flex gap-2">
+          <TbSquareRoundedCheckFilled className="whitespace-nowrap" />{" "}
+          <span className="font-semibold whitespace-nowrap">
+            Tutoring Programs:{" "}
+          </span>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {additionalTutoringInfo?.tutoringProgram?.map((program, idx) => (
+            <p key={idx + 1} className="bg-blue-50 px-3 hover:bg-blue-100 ">
+              {" "}
+              {program?.programName}
+            </p>
+          ))}
+        </div>
       </div>
 
       {/* Have tutoring training */}
@@ -44,11 +50,16 @@ const AdditionalTutoringInfoCV = ({ additionalTutoringInfo }) => {
             <span className="font-semibold">Years Of Experience: </span>
             {additionalTutoringInfo?.yearsOfExperience}
           </p>
-          <p className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex items-center gap-2">
-            <TbSquareRoundedCheckFilled />{" "}
-            <span className="font-semibold">Teaching History: </span>
+
+          <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex gap-2 ">
+            <div className="flex gap-2">
+              <TbSquareRoundedCheckFilled className="whitespace-nowrap" />{" "}
+              <span className="font-semibold whitespace-nowrap">
+                Teaching History:{" "}
+              </span>
+            </div>
             {additionalTutoringInfo?.teachingHistory}
-          </p>
+          </div>
         </>
       ) : (
         ""
@@ -109,8 +120,10 @@ const AdditionalTutoringInfoCV = ({ additionalTutoringInfo }) => {
 
       <div className="mb-2 hover:text-[#1E6CB3] cursor-pointer text-gray-600 capitalize flex gap-2 ">
         <div className="flex gap-2">
-          <TbSquareRoundedCheckFilled className="whitespace-nowrap text-xl" />{" "}
-          <span className="font-semibold whitespace-nowrap">Personal Statement: </span>
+          <TbSquareRoundedCheckFilled className="whitespace-nowrap" />{" "}
+          <span className="font-semibold whitespace-nowrap">
+            Personal Statement:{" "}
+          </span>
         </div>
         {additionalTutoringInfo?.personalStatement}
       </div>
