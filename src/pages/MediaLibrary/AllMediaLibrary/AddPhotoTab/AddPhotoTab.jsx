@@ -72,7 +72,7 @@ export const AddPhotoTab = ({ handleOpen }) => {
           label="Image Title"
           required
           value={imageTitle}
-          onChange={(e) => setImageTitle(e.target.value)}
+          onBlur={(e) => setImageTitle(e.target.value)}
         />
       </div>
       {!selectedImage ? (
@@ -122,9 +122,11 @@ export const AddPhotoTab = ({ handleOpen }) => {
         </div>
       )}
 
-      <div className="flex justify-end mt-20">
-        <Button type="submit">Upload Image</Button>
-      </div>
+      {selectedImage && (
+        <div className="flex justify-end mt-20">
+          <Button type="submit">Upload Image</Button>
+        </div>
+      )}
     </form>
   );
 };

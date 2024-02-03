@@ -11,6 +11,7 @@ export const AddVideoTab = ({ handleOpen }) => {
   const [uploadMedia] = useUploadMediaMutation();
 
   const handleFileChange = (e) => {
+    const fileInput = document.getElementById("video-file-input");
     const file = e.target.files[0];
     if (file && file.type.startsWith("video/")) {
       setSelectedVideo(file);
@@ -68,7 +69,7 @@ export const AddVideoTab = ({ handleOpen }) => {
           variant="outlined"
           label="Video Title"
           required
-          onChange={(e) => setVideoTitle(e.target.value)}
+          onBlur={(e) => setVideoTitle(e.target.value)}
         />
       </div>
       {!selectedVideo ? (
@@ -76,18 +77,7 @@ export const AddVideoTab = ({ handleOpen }) => {
           className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer my-10"
           onDrop={handleDrop}
           onDragOver={handleDragOver}
-          onClick={() => {
-            const fileInput = document.getElementById("video-file-input");
-            fileInput.click();
-          }}
         >
-          <input
-            type="file"
-            accept="video/*"
-            onChange={handleFileChange}
-            id="video-file-input"
-            className="hidden"
-          />
           <label htmlFor="video-file-input" className="cursor-pointer">
             <div
               className={`grid grid-cols-1 items-center justify-center gap-5`}
@@ -101,6 +91,13 @@ export const AddVideoTab = ({ handleOpen }) => {
               </p>
             </div>
           </label>
+          <input
+            type="file"
+            accept="video/*"
+            onChange={handleFileChange}
+            id="video-file-input"
+            className="hidden"
+          />
         </div>
       ) : (
         <div className="flex flex-col items-center gap-2">
@@ -119,9 +116,11 @@ export const AddVideoTab = ({ handleOpen }) => {
         </div>
       )}
 
-      <div className="flex justify-end mt-20">
-        <Button type="submit">Upload Video</Button>
-      </div>
+      {selectedVideo && (
+        <div className="flex justify-end mt-20">
+          <Button type="submit">Upload Video</Button>
+        </div>
+      )}
     </form>
   );
 };
