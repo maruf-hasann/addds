@@ -19,7 +19,7 @@ export const menus = [
   {
     id: 0,
     name: "Media Library",
-    url: "./all-media-library",
+    url: "./media-library",
     icon: <MdPermMedia />,
   },
   {
