@@ -6,9 +6,10 @@ import AcademicInfo from "./AcademicInfo/AcademicInfo";
 import TutoringInfo from "./TutoringInfo/TutoringInfo";
 import Promotion from "./Promotion/Promotion";
 import { useState } from "react";
+import AdditionalTutoringInfo from "./AdditionalTutoringInfo/AdditionalTutoringInfo";
 
 const AddTutorsInfo = () => {
-  const [activeTab, setActiveTab] = useState(1);
+  const [activeTab, setActiveTab] = useState(5);
 
   const tabHeaders = [
     {
@@ -24,12 +25,16 @@ const AddTutorsInfo = () => {
       id: 3,
     },
     {
-      label: "Tutor Info",
+      label: "Tutoring Info",
       id: 4,
     },
     {
-      label: "Promotion",
+      label: "Additional Tutoring Info",
       id: 5,
+    },
+    {
+      label: "Promotion",
+      id: 6,
     },
   ];
 
@@ -52,6 +57,10 @@ const AddTutorsInfo = () => {
     },
     {
       id: 5,
+      value: <AdditionalTutoringInfo setActiveTab={setActiveTab} />,
+    },
+    {
+      id: 6,
       value: <Promotion setActiveTab={setActiveTab} />,
     },
   ];
@@ -69,7 +78,7 @@ const AddTutorsInfo = () => {
           See All
         </Link>
       </div>
-      <div className="grid grid-cols-5 bg-blue-50 p-1 rounded-t-md">
+      <div className="grid grid-cols-6 bg-blue-50 p-1 rounded-t-md">
         {tabHeaders.map(({ label, id }) => {
           return (
             <Button
