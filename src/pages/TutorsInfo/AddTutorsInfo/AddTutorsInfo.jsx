@@ -10,8 +10,6 @@ import { useState } from "react";
 const AddTutorsInfo = () => {
   const [activeTab, setActiveTab] = useState(1);
 
-  console.log(activeTab);
-
   const tabHeaders = [
     {
       label: "Personal Info",
@@ -90,37 +88,15 @@ const AddTutorsInfo = () => {
         })}
       </div>
       <div className="bg-white border">
-        {data?.map((form) => (
+        {data?.map((form, index) => (
           <section
-            id={form.id}
+            id={index}
             className={`${activeTab === form.id ? "block" : "hidden"}`}
           >
             {form.value}
           </section>
         ))}
       </div>
-      {/* <Tabs id="custom-animation" value={1}>
-        <TabsHeader>
-          {tabHeaders.map(({ label, id }) => (
-            <Tab key={id} value={id}>
-              {label}
-            </Tab>
-          ))}
-        </TabsHeader>
-        <TabsBody
-          animate={{
-            initial: { y: 250 },
-            mount: { y: 0 },
-            unmount: { y: 250 },
-          }}
-        >
-          {data.map(({ id, value }) => (
-            <TabPanel key={id} value={id}>
-              {value}
-            </TabPanel>
-          ))}
-        </TabsBody>
-      </Tabs> */}
     </div>
   );
 };

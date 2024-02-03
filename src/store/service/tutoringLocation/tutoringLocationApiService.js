@@ -31,6 +31,12 @@ const tutoringLocationApiService = baseApi.injectEndpoints({
       }),
       providesTags: ["TutoringLocation"],
     }),
+    getLocationByCity: build.query({
+      query: (city) => ({
+        url: `/tutoring-location/city/${city}`,
+      }),
+      providesTags: ["TutoringLocation"],
+    }),
   }),
   overrideExisting: false,
 });
@@ -40,4 +46,5 @@ export const {
   useDeleteTutoringLocationByIdMutation,
   useSaveTutoringLocationMutation,
   useUpdateTutoringLocationByIdMutation,
+  useLazyGetLocationByCityQuery,
 } = tutoringLocationApiService;

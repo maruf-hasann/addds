@@ -14,22 +14,22 @@ import toast from "react-hot-toast";
 
 import { useSavePersonalInfoMutation } from "../../../../store/service/personalInfo/personalInfoApiService";
 import axios from "axios";
-import { useLazySendOtpQuery } from "../../../../store/service/sendOtp/sendOtpApiService";
 import { ImSpinner10, ImSpinner9 } from "react-icons/im";
+import { useLazyGetLocationByCityQuery } from "../../../../store/service/tutoringLocation/tutoringLocationApiService";
 
-const PersonalInfo = ({setActiveTab}) => {
+const PersonalInfo = ({ setActiveTab }) => {
   const [number, setNumber] = useState(null);
   const [numberError, setNumberError] = useState(false);
 
   const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
 
-  const [selectedCountry, setSelectedCountry] = useState(null);
-  const [selectedState, setSelectedState] = useState(null);
-  const [otpSendLoading, setOtpSendLoading] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [locations, setLocations] = useState([]);
 
   const [tutorRegistration, { isLoading }] = useSavePersonalInfoMutation();
-  const [sendOTP] = useLazySendOtpQuery();
+  const [getLocations] = useLazyGetLocationByCityQuery();
 
   // get country, state, city header
   const headers = {
@@ -60,6 +60,20 @@ const PersonalInfo = ({setActiveTab}) => {
     return () => {};
   }, []);
 
+  // fetch area by city
+  useEffect(() => {
+    if (selectedState) {
+      const fetchLocations = async () => {
+        const result = await getLocations(selectedState);
+        if (result?.data?.success) {
+          setLocations(result.data.data);
+        }
+      };
+
+      fetchLocations();
+    }
+  }, [selectedState]);
+
   // fetch all states
   useEffect(() => {
     if (selectedCountry) {
@@ -85,7 +99,8 @@ const PersonalInfo = ({setActiveTab}) => {
 
   // handle select country
   const handleSelectCountry = (id) => {
-    setSelectedState(null);
+    setSelectedState("");
+    setLocations([]);
     setSelectedCountry(countries.find((country) => country.id === Number(id)));
   };
 
@@ -130,40 +145,20 @@ const PersonalInfo = ({setActiveTab}) => {
       country: selectedCountry?.name,
       city: selectedState,
       gender: data.gender,
-      role: data.role,
+      role: 'tutor',
       otp: Number(data.otp),
       homeAddress: data.homeAddress,
-      area: data.area
+      area: data.area,
     };
 
     const result = await tutorRegistration(registrationData);
     if (result.data) {
       toast.success(result.data.message);
-      localStorage.setItem('tutor-number', number)
+      localStorage.setItem("tutor-number", number);
       reset();
-      setActiveTab(2)
+      setActiveTab(2);
     } else {
       toast.error(result.error.data.message);
-    }
-  };
-
-  // handle send otp
-  const handelOtpSend = async () => {
-    if (!number) {
-      return toast.error("please enter a number");
-    }
-    if (numberError) {
-      return toast.error("please enter a valid number");
-    }
-
-    setOtpSendLoading(true);
-    const result = await sendOTP({ number: number?.substring(1) });
-    if (result.data) {
-      toast.success(result.data.message);
-      setOtpSendLoading(false);
-    } else {
-      toast.error(result.error.data.message);
-      setOtpSendLoading(false);
     }
   };
 
@@ -186,32 +181,14 @@ const PersonalInfo = ({setActiveTab}) => {
                 value={number}
                 onChange={setNumber}
               />
-              <span
-                onClick={handelOtpSend}
-                className="hidden md:block lg:hidden xl:block text-xs bg-primary text-white font-semibold px-4 py-2 rounded-sm absolute top-[5px] right-[5px] cursor-pointer"
-              >
-                {otpSendLoading ? (
-                  <ImSpinner10 className="animate-spin text-[16px]" />
-                ) : (
-                  "Send OTP"
-                )}
-              </span>
-              <span
-                onClick={handelOtpSend}
-                className="md:hidden lg:block xl:hidden text-xs bg-primary text-white font-semibold px-3 py-2 rounded-sm absolute top-[6px] right-[5px] cursor-pointer"
-              >
-                {otpSendLoading ? (
-                  <ImSpinner10 className="animate-spin" />
-                ) : (
-                  <FaArrowRight />
-                )}
-              </span>
             </div>
 
             {number && isValidPhoneNumber(number) ? (
               ""
             ) : (
-              <p className={`text-red-500 ${!numberError && "hidden"}`}>
+              <p
+                className={`text-red-500 ${!numberError && "hidden"} absolute`}
+              >
                 Please enter a valid number
               </p>
             )}
@@ -223,12 +200,14 @@ const PersonalInfo = ({setActiveTab}) => {
               OTP
             </label>
             <input
-              type="text"
+              type="number"
               {...register("otp", { required: "OTP is required" })}
-              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light appearance-none"
               placeholder="******"
             />
-            {errors.otp && <p className="text-red-500">{errors.otp.message}</p>}
+            {errors.otp && (
+              <p className="text-red-500 absolute">{errors.otp.message}</p>
+            )}
           </div>
         </div>
         {/* full name and email */}
@@ -245,7 +224,7 @@ const PersonalInfo = ({setActiveTab}) => {
               placeholder="John Doe"
             />
             {errors.fullName && (
-              <p className="text-red-500">{errors.fullName.message}</p>
+              <p className="text-red-500 absolute">{errors.fullName.message}</p>
             )}
           </div>
           {/* email */}
@@ -260,35 +239,13 @@ const PersonalInfo = ({setActiveTab}) => {
               placeholder="example@mail.com"
             />
             {errors.email && (
-              <p className="text-red-500">{errors.email.message}</p>
+              <p className="text-red-500 absolute">{errors.email.message}</p>
             )}
           </div>
         </div>
 
-        {/* account type and gender */}
+        {/*gender & country */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
-          {/* account type */}
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Account Type
-            </label>
-            <select
-              {...register("role", { required: "Account type is required" })}
-              defaultValue={""}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option value="" disabled>
-                Select your account type
-              </option>
-              <option value="tutor">Tutor</option>
-              <option value="student">Student</option>
-              <option value="parent">Parent</option>
-              <option value="school">School</option>
-            </select>
-            {errors.role && (
-              <p className="text-red-500">{errors.role.message}</p>
-            )}
-          </div>
           {/* gender */}
           <div className="w-full">
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
@@ -304,20 +261,18 @@ const PersonalInfo = ({setActiveTab}) => {
               <option value="other">Other</option>
             </select>
             {errors.gender && (
-              <p className="text-red-500">{errors.gender.message}</p>
+              <p className="text-red-500 absolute">{errors.gender.message}</p>
             )}
           </div>
-        </div>
-
-        {/*country city */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
           {/* country */}
           <div className={`w-full`}>
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
               Select Country
             </label>
             <select
-              {...register("country")}
+              {...register("country", {
+                required: selectedCountry ? false : "Country is required",
+              })}
               defaultValue=""
               className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(event) => handleSelectCountry(event.target.value)}
@@ -335,20 +290,26 @@ const PersonalInfo = ({setActiveTab}) => {
                 </option>
               ))}
             </select>
+            {errors.country && (
+              <p className="text-red-500 absolute">{errors.country.message}</p>
+            )}
           </div>
+        </div>
 
+        {/*city & area*/}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
           {/* city */}
           <div className={`w-full`}>
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
               Select City
             </label>
             <select
-              {...register("city")}
+              {...register("city", { required: "City is required" })}
               defaultValue=""
               className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(event) => setSelectedState(event.target.value)}
             >
-              <option value="" disabled>
+              <option value="" disabled selected={!selectedState}>
                 Choose City
               </option>
               {states?.map((state, idx) => (
@@ -357,11 +318,37 @@ const PersonalInfo = ({setActiveTab}) => {
                 </option>
               ))}
             </select>
+            {errors.city && (
+              <p className="text-red-500 absolute">{errors.city.message}</p>
+            )}
+          </div>
+          {/* city */}
+          <div className={`w-full`}>
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Select Area
+            </label>
+            <select
+              {...register("area", { required: "Area is required" })}
+              defaultValue=""
+              className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value="" disabled>
+                Choose Area
+              </option>
+              {locations?.map((location, idx) => (
+                <option key={idx} value={location?.locationName}>
+                  {location?.locationName}
+                </option>
+              ))}
+            </select>
+            {errors.area && (
+              <p className="text-red-500 absolute">{errors.area.message}</p>
+            )}
           </div>
         </div>
 
-        {/* home address and area */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 my-10">
+        {/* home address */}
+        <div className="grid grid-cols-1 my-10">
           {/* home address */}
           <div className="w-full">
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
@@ -371,17 +358,6 @@ const PersonalInfo = ({setActiveTab}) => {
               {...register("homeAddress")}
               className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
               placeholder="Uttara 10"
-            />
-          </div>
-          {/* area */}
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Area
-            </label>
-            <textarea
-              {...register("area")}
-              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-              placeholder="Uttara"
             />
           </div>
         </div>
@@ -395,7 +371,7 @@ const PersonalInfo = ({setActiveTab}) => {
             {isLoading ? (
               <ImSpinner9 className="animate-spin my-1 mx-4" />
             ) : (
-              "Submit"
+              "Save"
             )}
           </button>
         </div>
