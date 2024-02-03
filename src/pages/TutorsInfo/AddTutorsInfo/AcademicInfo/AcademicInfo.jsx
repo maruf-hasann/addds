@@ -6,15 +6,19 @@ import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
 import { useGetEducationVariantsQuery } from "../../../../store/service/educationVariant/educationVariantApiService";
+import { useEffect } from "react";
 import { useGetCurrentAffairsQuery } from "../../../../store/service/currentAffair/currentAffairApiService";
 import { useGetUniversitiesQuery } from "../../../../store/service/university/universityApiService";
 import { useGetSemestersQuery } from "../../../../store/service/semester/semesterApiService";
+import { useGetSchoolPMQuery } from "../../../../store/service/schoolPM/schoolPMApiService";
+import { useGetCollageHCQuery } from "../../../../store/service/collageHC/collageHCApiService";
+import { useGetCurriculumBoardsQuery } from "../../../../store/service/curriculumBoard/curriculumBoardApiService";
 import { useSaveAcademicInfoMutation } from "../../../../store/service/tutorInfo/academicInfo/academicInfoApiService";
-import { useEffect } from "react";
 
-const AcademicInfo = ({setActiveTab}) => {
+const AcademicInfo = ({ setActiveTab }) => {
   const [number, setNumber] = useState(null);
   const [numberError, setNumberError] = useState(false);
+  const [educationVariant, setEducationVariant] = useState(null);
 
   const { data: allEducationVariantData } = useGetEducationVariantsQuery();
   const educationVariants = allEducationVariantData?.data;
@@ -28,20 +32,39 @@ const AcademicInfo = ({setActiveTab}) => {
   const { data: allSemesterData } = useGetSemestersQuery();
   const semesters = allSemesterData?.data;
 
+  const { data: allSchoolData } = useGetSchoolPMQuery();
+  const schools = allSchoolData?.data;
+
+  const { data: allCollageData } = useGetCollageHCQuery();
+  const collages = allCollageData?.data;
+
+  const { data: allCurriculumBoardData } = useGetCurriculumBoardsQuery();
+  const curriculumBoards = allCurriculumBoardData?.data;
+
   const [saveAcademicInfo, { isLoading }] = useSaveAcademicInfoMutation();
 
-    // get previous tab number
-    useEffect(()=>{
-      const number = localStorage.getItem('tutor-number')
-      setNumber(number)
-    }, [])
+  const commonInputClassName =
+    "shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light h-10";
 
-    // handle check valid number or not
-    useEffect(() => {
-      if (number && !isValidPhoneNumber(number) && number?.length < 14) {
-        setNumberError(true);
-      }
-    }, [number]);
+  const commonSelectClassName =
+    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-10 focus:outline-none";
+
+  // get previous tab number
+  useEffect(() => {
+    const number = localStorage.getItem("tutor-number");
+    setNumber(number);
+  }, []);
+
+  //check number is valid or not
+  useEffect(() => {
+    number && isValidPhoneNumber(number)
+      ? setNumberError(false)
+      : setNumberError(true);
+
+    if (number?.length < 14) {
+      setNumberError(true);
+    }
+  }, [number]);
 
   const {
     register,
@@ -53,15 +76,17 @@ const AcademicInfo = ({setActiveTab}) => {
   const resultData = ["A+", "A", "A-", "B", "C", "D", "F"];
 
   const onSubmit = async (data) => {
-    data.phoneNumber = number.substring(1);
+    if (numberError) return;
+    if (!number) return toast.error("Please enter a number");
+    data.phoneNumber = number?.substring(1);
 
     const result = await saveAcademicInfo(data);
 
     if (result.data) {
       toast.success(result.data.message);
-      localStorage.setItem('tutor-number', number)
-      setNumber(null)
-      reset()
+      localStorage.setItem("tutor-number", number);
+      setNumber(null);
+      reset();
       setActiveTab(4);
     } else {
       toast.error(result.error?.data?.message);
@@ -70,31 +95,32 @@ const AcademicInfo = ({setActiveTab}) => {
 
   return (
     <div className="p-2 lg:p-10">
-      {/* number */}
-      <div className="w-full relative mt-5 lg:mt-0 mb-10">
-        <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-          Number
-        </label>
-        <PhoneInput
-          className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 w-full ps-2 flex  items-center gap-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-          international
-          countryCallingCodeEditable={true}
-          defaultCountry="BD"
-          value={number}
-          onChange={setNumber}
-        />
-
-        {number && isValidPhoneNumber(number) ? (
-          ""
-        ) : (
-          <p className={`text-red-500 ${!numberError && "hidden"}`}>
-            Please enter a valid number
-          </p>
-        )}
-      </div>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+          {/* number */}
+          <div className="w-full">
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Number
+            </label>
+            <PhoneInput
+              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 w-full ps-2 flex  items-center gap-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              international
+              countryCallingCodeEditable={true}
+              defaultCountry="BD"
+              value={number}
+              onChange={setNumber}
+            />
+
+            {number && isValidPhoneNumber(number) ? (
+              ""
+            ) : (
+              <p
+                className={`text-red-500 absolute ${!numberError && "hidden"}`}
+              >
+                Please enter a valid number
+              </p>
+            )}
+          </div>
           {/* select education variant */}
           <div className="w-full">
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
@@ -106,6 +132,7 @@ const AcademicInfo = ({setActiveTab}) => {
               {...register("educationVariant", {
                 required: "Education Variant is Required",
               })}
+              onChange={(event) => setEducationVariant(event.target.value)}
             >
               <option disabled value="">
                 Select Education Variant
@@ -114,7 +141,6 @@ const AcademicInfo = ({setActiveTab}) => {
                 <option
                   onClick={() => console.log(variant)}
                   key={idx}
-                  
                   value={variant?.variantName}
                 >
                   {variant?.variantName}
@@ -122,7 +148,9 @@ const AcademicInfo = ({setActiveTab}) => {
               ))}
             </select>
             {errors.educationVariant ? (
-              <p className="text-red-500">{errors.educationVariant.message}</p>
+              <p className="text-red-500 absolute">
+                {errors.educationVariant.message}
+              </p>
             ) : (
               ""
             )}
@@ -130,23 +158,187 @@ const AcademicInfo = ({setActiveTab}) => {
           {/* school name */}
           <div className={`w-full`}>
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              School Name
+              Select School
             </label>
-            <input
-              type="text"
+            <select
               {...register("schoolName", {
-                required: "School name is Required",
+                required: "School name is required",
               })}
-            
-              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-              placeholder="Enter your school name"
-            />
-            {errors.schoolName ? (
-              <p className="text-red-500">{errors.schoolName.message}</p>
+              defaultValue={""}
+              className={commonSelectClassName}
+            >
+              <option value="" disabled>
+                Select School Name
+              </option>
+              {schools
+                ?.filter(
+                  (school) =>
+                    school?.educationVariant?.toLowerCase() ===
+                    educationVariant?.toLowerCase()
+                )
+                ?.map((school, idx) => (
+                  <option key={idx} value={school?.schoolName}>
+                    {school?.schoolName}
+                  </option>
+                ))}
+            </select>
+            {errors.schoolName && (
+              <p className="text-red-500 text-sm absolute">
+                {errors.schoolName?.message}
+              </p>
+            )}
+          </div>
+
+          {/* high school board */}
+          <div className="w-full">
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              High School Board
+            </label>
+            <select
+              {...register("highSchoolBoard", {
+                required: "Hight School Board is required",
+              })}
+              defaultValue={""}
+              className={commonSelectClassName}
+            >
+              <option value="" disabled>
+                Select high school board
+              </option>
+              {curriculumBoards
+                ?.filter(
+                  (board) =>
+                    board?.educationVariant?.toLowerCase() ===
+                    educationVariant?.toLowerCase()
+                )
+                ?.map((board, idx) => (
+                  <option key={idx} value={board?.boardName}>
+                    {board?.boardName}
+                  </option>
+                ))}
+            </select>
+            {errors.highSchoolBoard ? (
+              <p className="text-red-500 absolute">
+                {errors.highSchoolBoard.message}
+              </p>
             ) : (
               ""
             )}
           </div>
+
+          {/* high school result */}
+          <div className="w-full">
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              High School Result
+            </label>
+            <input
+              type="text"
+              {...register("highSchoolResult", {
+                required: "High School Result is required",
+              })}
+              className={commonInputClassName}
+              placeholder="Enter High School Result"
+            />
+            {errors.highSchoolResult ? (
+              <p className="text-red-500 absolute">
+                {errors.highSchoolResult.message}
+              </p>
+            ) : (
+              ""
+            )}
+          </div>
+
+          {/* collage name */}
+          <div className={`w-full`}>
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Select Collage
+            </label>
+            <select
+              {...register("collageName", {
+                required: "Collage Name is required",
+              })}
+              defaultValue={""}
+              className={commonSelectClassName}
+            >
+              <option value="" disabled>
+                Select Collage Name
+              </option>
+              {collages
+                ?.filter(
+                  (collage) =>
+                    collage?.educationVariant?.toLowerCase() ===
+                    educationVariant?.toLowerCase()
+                )
+                ?.map((collage, idx) => (
+                  <option key={idx} value={collage?.collageName}>
+                    {collage?.collageName}
+                  </option>
+                ))}
+            </select>
+            {errors.collageName && (
+              <p className="text-red-500 text-sm absolute">
+                {errors.collageName?.message}
+              </p>
+            )}
+          </div>
+
+          {/* collage board */}
+          <div className="w-full">
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Collage Board
+            </label>
+            <select
+              {...register("collageBoard", {
+                required: "Collage Board is required",
+              })}
+              defaultValue={""}
+              className={commonSelectClassName}
+            >
+              <option value="" disabled>
+                Select Collage board
+              </option>
+              {curriculumBoards
+                ?.filter(
+                  (board) =>
+                    board?.educationVariant?.toLowerCase() ===
+                    educationVariant?.toLowerCase()
+                )
+                ?.map((board, idx) => (
+                  <option key={idx} value={board?.boardName}>
+                    {board?.boardName}
+                  </option>
+                ))}
+            </select>
+            {errors.collageBoard ? (
+              <p className="text-red-500 absolute">
+                {errors.collageBoard.message}
+              </p>
+            ) : (
+              ""
+            )}
+          </div>
+
+          {/* Collage result */}
+          <div className="w-full">
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Collage Result
+            </label>
+            <input
+              type="text"
+              {...register("collageResult", {
+                required: "Collage Result is required",
+              })}
+              className={commonInputClassName}
+              placeholder="Enter Collage Result"
+            />
+            {errors.collageResult ? (
+              <p className="text-red-500 absolute">
+                {errors.collageResult.message}
+              </p>
+            ) : (
+              ""
+            )}
+          </div>
+
           {/* university name */}
           <div className="w-full">
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
@@ -164,18 +356,16 @@ const AcademicInfo = ({setActiveTab}) => {
                 Select University
               </option>
               {universities?.map((university, idx) => (
-                <option
-                  
-                  key={idx}
-                  value={university?.name}
-                >
+                <option key={idx} value={university?.name}>
                   {university?.name}
                 </option>
               ))}
             </select>
 
             {errors.universityName ? (
-              <p className="text-red-500">{errors.universityName.message}</p>
+              <p className="text-red-500 absolute">
+                {errors.universityName.message}
+              </p>
             ) : (
               ""
             )}
@@ -190,12 +380,13 @@ const AcademicInfo = ({setActiveTab}) => {
               {...register("subjectsName", {
                 required: "Subject name is Required",
               })}
-              
               className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
               placeholder="Computer Science"
             />
             {errors.subjectsName ? (
-              <p className="text-red-500">{errors.subjectsName.message}</p>
+              <p className="text-red-500 absolute">
+                {errors.subjectsName.message}
+              </p>
             ) : (
               ""
             )}
@@ -217,18 +408,14 @@ const AcademicInfo = ({setActiveTab}) => {
                 Select University running year
               </option>
               {semesters?.map((semester, idx) => (
-                <option
-                  
-                  key={idx}
-                  value={semester?.value}
-                >
+                <option key={idx} value={semester?.value}>
                   {semester?.value}
                 </option>
               ))}
             </select>
 
             {errors.universityRunningYear ? (
-              <p className="text-red-500">
+              <p className="text-red-500 absolute">
                 {errors.universityRunningYear.message}
               </p>
             ) : (
@@ -252,123 +439,21 @@ const AcademicInfo = ({setActiveTab}) => {
                 Select Current Affair
               </option>
               {currentAffairs?.map((affair, idx) => (
-                <option
-                  key={idx}
-                  
-                  value={affair?.affair}
-                >
+                <option key={idx} value={affair?.affair}>
                   {affair?.affair}
                 </option>
               ))}
             </select>
             {errors.currentAffair ? (
-              <p className="text-red-500">{errors.currentAffair.message}</p>
-            ) : (
-              ""
-            )}
-          </div>
-
-          {/* high school board */}
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              High School Board
-            </label>
-            <input
-              type="text"
-              {...register("highSchoolBoard", {
-                required: "High School board is Required",
-              })}
-              
-              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-              placeholder="State Education Board"
-            />
-            {errors.highSchoolBoard ? (
-              <p className="text-red-500">{errors.highSchoolBoard.message}</p>
-            ) : (
-              ""
-            )}
-          </div>
-          {/* high school result */}
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              High School Result
-            </label>
-            <select
-              defaultValue=""
-              className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register("highSchoolResult", {
-                required: "High School result is Required",
-              })}
-            >
-              <option disabled value="">
-                Select High School Result
-              </option>
-              {resultData.map((data, idx) => (
-                <option
-                  
-                  key={idx}
-                  value={data}
-                >
-                  {data}
-                </option>
-              ))}
-            </select>
-            {errors.highSchoolResult ? (
-              <p className="text-red-500">{errors.highSchoolResult.message}</p>
-            ) : (
-              ""
-            )}
-          </div>
-
-          {/* collage board */}
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Collage Board
-            </label>
-            <input
-              type="text"
-              {...register("collageBoard", {
-                required: "Collage board is Required",
-              })}
-            
-              className="shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-              placeholder="National Collage Board"
-            />
-            {errors.collageBoard ? (
-              <p className="text-red-500">{errors.collageBoard.message}</p>
-            ) : (
-              ""
-            )}
-          </div>
-          {/* Collage result */}
-          <div className="w-full">
-            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-              Collage Result
-            </label>
-            <select
-              defaultValue=""
-              className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              {...register("collageResult", {
-                required: "Collage result is Required",
-              })}
-            >
-              <option disabled value="">
-                Select Collage Result
-              </option>
-              {resultData.map((data, idx) => (
-                <option key={idx} value={data}>
-                  {data}
-                </option>
-              ))}
-            </select>
-            {errors.collageResult ? (
-              <p className="text-red-500">{errors.collageResult.message}</p>
+              <p className="text-red-500 absolute">
+                {errors.currentAffair.message}
+              </p>
             ) : (
               ""
             )}
           </div>
         </div>
-        <div>
+        <div className="flex justify-end">
           <button
             type="submit"
             disabled={isLoading}
@@ -377,7 +462,7 @@ const AcademicInfo = ({setActiveTab}) => {
             {isLoading ? (
               <ImSpinner9 className="animate-spin my-1 mx-4" />
             ) : (
-              "Submit"
+              "Save"
             )}
           </button>
         </div>
