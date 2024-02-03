@@ -66,7 +66,7 @@ export const AddMediaLibraryModal = ({
             </TabsHeader>
             <TabsBody>
               <TabPanel value="videos">
-                <AddVideoTab />
+                <AddVideoTab handleOpen={handleOpen} />
               </TabPanel>
               <TabPanel value="photos">
                 <AddPhotoTab handleOpen={handleOpen} />

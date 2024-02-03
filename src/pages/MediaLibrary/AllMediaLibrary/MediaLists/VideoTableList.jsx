@@ -9,11 +9,8 @@ import {
   useDeleteMediaMutation,
   useGetAllMediaQuery,
 } from "../../../../store/service/mediaLibrary/mediaLibraryApiService";
-import { DeleteMediaModal } from "../DeleteMedia/DeleteMediaModal";
 
 export const VideoTableList = () => {
-  const [open, setOpen] = useState(false);
-
   const { data: videoCardData, isLoading } = useGetAllMediaQuery("video");
   const [deleteMedia] = useDeleteMediaMutation();
 
@@ -21,11 +18,18 @@ export const VideoTableList = () => {
     <p>Loading....</p>;
   }
 
-  const handleOpen = () => setOpen(!open);
-
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
     toast.success("Copied to clipboard");
+  };
+
+  const handleDelete = async (id) => {
+    const res = await deleteMedia(id);
+    if (res?.data?.statusCode === 200) {
+      toast.success(res.data.message);
+    } else {
+      toast.error("Error in deleting video!");
+    }
   };
 
   return (
@@ -53,14 +57,6 @@ export const VideoTableList = () => {
                     <FaCopy className="text-xl" />
                   </button>
                 </Tooltip>
-                {open && (
-                  <DeleteMediaModal
-                    open={open}
-                    handleOpen={handleOpen}
-                    deleteMedia={deleteMedia}
-                    id={item?._id}
-                  />
-                )}
                 <Tooltip content="URL">
                   <Link to={item?.mediaUrl} target="_blank">
                     <button className="border p-2 rounded-md border-primary bg-primary text-white hover:bg-transparent hover:text-primary duration-500">
@@ -71,7 +67,7 @@ export const VideoTableList = () => {
                 <Tooltip content="Delete">
                   <button
                     className="border p-2 rounded-md border-red-500 bg-red-500 text-white hover:bg-transparent hover:text-red-400 duration-500"
-                    onClick={handleOpen}
+                    onClick={() => handleDelete(item?._id)}
                   >
                     <FaTrashAlt className="text-xl" />
                   </button>

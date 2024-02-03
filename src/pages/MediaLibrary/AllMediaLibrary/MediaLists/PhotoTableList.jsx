@@ -5,8 +5,6 @@ import {
   Tooltip,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { DeleteMediaModal } from "../DeleteMedia/DeleteMediaModal";
 import toast from "react-hot-toast";
 import { FaCopy } from "react-icons/fa6";
 import { BsCursorFill } from "react-icons/bs";
@@ -17,8 +15,6 @@ import {
 } from "../../../../store/service/mediaLibrary/mediaLibraryApiService";
 
 export const PhotoTableList = () => {
-  const [open, setOpen] = useState(false);
-
   const { data: imageCardData, isLoading } = useGetAllMediaQuery("image");
   const [deleteMedia] = useDeleteMediaMutation();
 
@@ -26,7 +22,15 @@ export const PhotoTableList = () => {
     <p>Loading....</p>;
   }
 
-  const handleOpen = () => setOpen(!open);
+  const handleDelete = async (id) => {
+    const res = await deleteMedia(id);
+    console.log(res);
+    if (res.data.statusCode === 200) {
+      toast.success(res.data.message);
+    } else {
+      toast.error("Error in deleting video!");
+    }
+  };
 
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
@@ -58,14 +62,7 @@ export const PhotoTableList = () => {
                     <FaCopy className="text-xl" />
                   </button>
                 </Tooltip>
-                {open && (
-                  <DeleteMediaModal
-                    open={open}
-                    handleOpen={handleOpen}
-                    deleteMedia={deleteMedia}
-                    id={item?._id}
-                  />
-                )}
+
                 <Tooltip content="URL">
                   <Link to={item?.mediaUrl} target="_blank">
                     <button className="border p-2 rounded-md border-primary bg-primary text-white hover:bg-transparent hover:text-primary duration-500">
@@ -76,7 +73,7 @@ export const PhotoTableList = () => {
                 <Tooltip content="Delete">
                   <button
                     className="border p-2 rounded-md border-red-500 bg-red-500 text-white hover:bg-transparent hover:text-red-400 duration-500"
-                    onClick={handleOpen}
+                    onClick={() => handleDelete(item?._id)}
                   >
                     <FaTrashAlt className="text-xl" />
                   </button>

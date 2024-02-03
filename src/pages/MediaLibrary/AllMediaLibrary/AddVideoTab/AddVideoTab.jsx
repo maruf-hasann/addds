@@ -4,7 +4,7 @@ import { Button, Input } from "@material-tailwind/react";
 import { useUploadMediaMutation } from "../../../../store/service/mediaLibrary/mediaLibraryApiService";
 import toast from "react-hot-toast";
 
-export const AddVideoTab = () => {
+export const AddVideoTab = ({ handleOpen }) => {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [videoTitle, setVideoTitle] = useState("");
 
@@ -50,6 +50,8 @@ export const AddVideoTab = () => {
       try {
         await uploadMedia(formData);
         toast.success("Video uploaded successfully!");
+        handleOpen();
+        setVideoTitle("");
         setSelectedVideo(null);
       } catch (error) {
         console.error("Error uploading video:", error);

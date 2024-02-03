@@ -10,16 +10,13 @@ import {
 import { toast } from "react-hot-toast";
 import { useDeleteEducationVariantMutation } from "../../../../store/service/educationVariant/educationVariantApiService";
 
-
-
-
 const DeleteEducationVariantModal = ({
   setDeleteEducationVariantData,
   deleteEducationVariantData,
   setOpenDeleteEducationVariantModal,
   openDeleteEducationVariantModal,
 }) => {
-  const [deleteEducationVariant] = useDeleteEducationVariantMutation()
+  const [deleteEducationVariant] = useDeleteEducationVariantMutation();
 
   const handleClose = () => {
     setDeleteEducationVariantData(null);
@@ -32,7 +29,7 @@ const DeleteEducationVariantModal = ({
 
   // handle delete Education variant function
   const handleDelete = async (name) => {
-    const result = await deleteEducationVariant({name});
+    const result = await deleteEducationVariant({ name });
     if (result?.data?.success) {
       toast.success(result?.data?.message);
       setDeleteEducationVariantData(null);
@@ -55,7 +52,9 @@ const DeleteEducationVariantModal = ({
           unmount: { scale: 0.9, y: -100 },
         }}
       >
-        <DialogHeader>Are you want to sure delete this Education Variant?</DialogHeader>
+        <DialogHeader>
+          Are you want to sure delete this Education Variant?
+        </DialogHeader>
         <DialogBody divider>
           <div>
             <Typography>
@@ -76,7 +75,9 @@ const DeleteEducationVariantModal = ({
           <Button
             variant="gradient"
             color="green"
-            onClick={() => handleDelete(deleteEducationVariantData?.variantName)}
+            onClick={() =>
+              handleDelete(deleteEducationVariantData?.variantName)
+            }
           >
             <span>Confirm</span>
           </Button>

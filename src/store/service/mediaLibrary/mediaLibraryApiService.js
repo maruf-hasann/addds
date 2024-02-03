@@ -19,14 +19,15 @@ const mediaLibraryApiService = baseApi.injectEndpoints({
       invalidatesTags: ["MediaLibrary"],
     }),
     deleteMedia: build.mutation({
-      query: (id) => ({
-        url: `media-library/media/${id}`,
-        method: "DELETE",
-      }),
+      query: (id) => {
+        return {
+          url: `media-library/media/${id}`,
+          method: "DELETE",
+        };
+      },
       invalidatesTags: ["MediaLibrary"],
     }),
   }),
-  overrideExisting: false,
 });
 
 export const {

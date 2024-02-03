@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AddMediaLibraryModal } from "./AddMedilaLibraryModal/AddMediaLibraryModal";
+import { AddMediaLibraryModal } from "./AddMediaLibraryModal/AddMediaLibraryModal";
 import {
   Tabs,
   TabsHeader,
