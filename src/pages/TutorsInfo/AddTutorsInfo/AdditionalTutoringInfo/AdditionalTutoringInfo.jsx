@@ -18,27 +18,24 @@ import { checkFalsyFromObjAndReturn } from "../../../../libs/checkFalsyFromObjAn
 import { ImSpinner9 } from "react-icons/im";
 
 const AdditionalTutoringInfo = ({ setActiveTab }) => {
-  const [number, setNumber] = useState(null);
-  const [numberError, setNumberError] = useState(false);
-
   const editor = useRef(null);
-  const [personalInfo, setPersonalInfo] = useState(null);
-  const [additionalTutoringInfo, setAdditionalTutoringInfo] = useState(null);
-  const [growTutoringProgram, setGrowTutoringProgram] = useState(false);
-  const [tutoringPrograms, setTutoringPrograms] = useState([]);
-
-  const [tutoringTraining, setTutoringTraining] = useState(false);
-  const [teachingExperience, setTeachingExperience] = useState(false);
-
-  const [tutoringPlaces, setTutoringPlaces] = useState([]);
-  const [tutoringLocations, setTutoringLocations] = useState([]);
-  const [studentVariants, setStudentVariants] = useState([]);
-
-  const [yearsOfExperience, setYearsOfExperience] = useState("0");
-  const [teachingHistory, setTeachingHistory] = useState(null);
-  const [minExpectedSalary, setMinExpectedSalary] = useState(null);
-  const [maxExpectedSalary, setMaxExpectedSalary] = useState(null);
-  const [personalStatement, setPersonalStatement] = useState(null);
+  const [initialState, setInitialState] = useState({
+    numberError: false,
+    personalInfo: null,
+    growTutoringProgram: false,
+    tutoringPrograms: [],
+    tutoringTraining: false,
+    teachingExperience: false,
+    tutoringPlaces: [],
+    tutoringLocations: [],
+    studentVariants: [],
+    yearsOfExperience: "0",
+    teachingHistory: null,
+    minExpectedSalary: null,
+    maxExpectedSalary: null,
+    personalStatement: null,
+  });
+  const [number, setNumber] = useState(null);
   const [customErrors, setCustomErrors] = useState({
     tutoringPlace: "",
     studentVariant: "",
@@ -51,10 +48,8 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
     teachingHistory: "",
     minExpectedSalary: "",
     maxExpectedSalary: "",
-  });
-
+  }); 
   const { handleSubmit, register } = useForm();
-
   const { data: allTutoringProgramData } = useGetTutoringProgramsQuery();
   const allTutoringPrograms = allTutoringProgramData?.data;
 
@@ -66,12 +61,11 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
 
   const { data: allTutoringLocationData } = useGetAllTutoringLocationQuery();
   const allTutoringLocations = allTutoringLocationData?.data;
-
-  console.log("allTutoringLocations", allTutoringLocations, personalInfo);
-
+  
   const locations = allTutoringLocations?.filter(
     (location) =>
-      location?.city?.toLowerCase() === personalInfo?.city?.toLowerCase()
+      location?.city?.toLowerCase() ===
+      initialState?.personalInfo?.city?.toLowerCase()
   );
 
   const [addAdditionalTutoringInfo, { isLoading }] =
@@ -86,7 +80,7 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
   // handle check valid number or not
   useEffect(() => {
     if (number && !isValidPhoneNumber(number) && number?.length < 14) {
-      setNumberError(true);
+      setInitialState({ ...initialState, numberError: true });
     }
   }, [number]);
 
@@ -97,8 +91,11 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
       const fetch = async () => {
         const result = await getPersonalInfo(number?.substring(1));
         if (result?.data?.success) {
-          const personalInfo = result?.data?.data;
-          setPersonalInfo(personalInfo);
+          const currentPersonalInfo = result?.data?.data;
+          setInitialState({
+            ...initialState,
+            personalInfo: currentPersonalInfo,
+          });
         }
       };
 
@@ -108,16 +105,16 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
 
   // handle submit form
   const onSubmit = async (data) => {
-    if (numberError) return;
+    if (initialState?.numberError) return;
     if (!number) return toast.error("Please enter a number");
     let formData = {};
     let requiredFields = [];
-    if (teachingExperience) {
+    if (initialState?.teachingExperience) {
       formData = {
-        experienceYears: yearsOfExperience,
-        teachingHistory,
-        minExpectedSalary,
-        maxExpectedSalary,
+        experienceYears: initialState?.yearsOfExperience,
+        teachingHistory: initialState?.teachingHistory,
+        minExpectedSalary: initialState?.minExpectedSalary,
+        maxExpectedSalary: initialState?.maxExpectedSalary,
       };
       requiredFields = [
         "experienceYears",
@@ -127,8 +124,8 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
       ];
     } else {
       formData = {
-        minExpectedSalary,
-        maxExpectedSalary,
+        minExpectedSalary: initialState?.minExpectedSalary,
+        maxExpectedSalary: initialState?.maxExpectedSalary,
       };
       requiredFields = ["minExpectedSalary", "maxExpectedSalary"];
     }
@@ -152,31 +149,35 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
       return;
     }
 
-    const tutoringPlace = tutoringPlaces.map((placeName) => {
+    const tutoringPlace = initialState?.tutoringPlaces.map((placeName) => {
       return { placeName };
     });
 
-    const tutoringLocation = tutoringLocations.map((locationName) => {
-      return { locationName };
-    });
+    const tutoringLocation = initialState?.tutoringLocations.map(
+      (locationName) => {
+        return { locationName };
+      }
+    );
 
-    const studentVariant = studentVariants.map((variantName) => {
+    const studentVariant = initialState?.studentVariants.map((variantName) => {
       return { variantName };
     });
 
-    const tutoringProgram = tutoringPrograms.map((programName) => {
-      return { programName };
-    });
+    const tutoringProgram = initialState?.tutoringPrograms.map(
+      (programName) => {
+        return { programName };
+      }
+    );
 
     //check minExpSalary is greater than or not maxExpSalary
     const currentMinExpectedSalary = parseInt(data?.minExpectedSalary)
       ? parseInt(data?.minExpectedSalary)
-      : minExpectedSalary;
+      : initialState?.minExpectedSalary;
     const currentMaxExpectedSalary = parseInt(data?.maxExpectedSalary)
       ? parseInt(data?.maxExpectedSalary)
-      : maxExpectedSalary;
+      : initialState?.maxExpectedSalary;
 
-    if (growTutoringProgram && !tutoringProgram?.length)
+    if (initialState?.growTutoringProgram && !tutoringProgram?.length)
       return setCustomErrors({
         ...errors,
         tutoringVariant: "Tutoring variant is required",
@@ -205,7 +206,10 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
         "Min Expected Salary should not be greater than Max Expected Salary"
       );
     }
-    if (!personalStatement || personalStatement === "<p><br></p>")
+    if (
+      !initialState?.personalStatement ||
+      initialState?.personalStatement === "<p><br></p>"
+    )
       return setCustomErrors({
         ...errors,
         personalStatement: "Personal statement is required",
@@ -213,35 +217,42 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
 
     const additionalInfo = {
       phoneNumber: number?.substring(1),
-      isGrowTutoringProgram: growTutoringProgram,
-      isTutoringTraining: tutoringTraining,
-      isTeachingExperience: teachingExperience,
-      yearsOfExperience: teachingExperience ? yearsOfExperience : 0,
-      teachingHistory: teachingExperience ? teachingHistory : "",
+      isGrowTutoringProgram: initialState?.growTutoringProgram,
+      isTutoringTraining: initialState?.tutoringTraining,
+      isTeachingExperience: initialState?.teachingExperience,
+      yearsOfExperience: initialState?.teachingExperience
+        ? initialState?.yearsOfExperience
+        : 0,
+      teachingHistory: initialState?.teachingExperience
+        ? initialState?.teachingHistory
+        : "",
       tutoringProgram,
       tutoringPlace,
       studentVariant,
-      minExpectedSalary: Number(minExpectedSalary),
-      maxExpectedSalary: Number(maxExpectedSalary),
+      minExpectedSalary: Number(initialState?.minExpectedSalary),
+      maxExpectedSalary: Number(initialState?.maxExpectedSalary),
       tutoringLocation,
-      personalStatement,
+      personalStatement: initialState?.personalStatement,
     };
     const result = await addAdditionalTutoringInfo(additionalInfo);
     if (result.data) {
       toast.success(result.data.message);
-      setAdditionalTutoringInfo(null);
-      setGrowTutoringProgram(false);
-      setTutoringTraining(false);
-      setTeachingExperience(false);
-      setYearsOfExperience("0");
-      setTeachingHistory(null);
-      setMaxExpectedSalary(null);
-      setMinExpectedSalary(null);
-      setPersonalStatement(null);
-      setStudentVariants([]);
-      setTutoringPlaces([]);
-      setTutoringLocations([]);
-      setTutoringPrograms([]);
+      setInitialState({
+        numberError: false,
+        personalInfo: null,
+        growTutoringProgram: false,
+        tutoringPrograms: [],
+        tutoringTraining: false,
+        teachingExperience: false,
+        tutoringPlaces: [],
+        tutoringLocations: [],
+        studentVariants: [],
+        yearsOfExperience: "0",
+        teachingHistory: null,
+        minExpectedSalary: null,
+        maxExpectedSalary: null,
+        personalStatement: null,
+      });
       setErrors({
         experienceYears: "",
         teachingHistory: "",
@@ -279,7 +290,9 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
         {number && isValidPhoneNumber(number) ? (
           ""
         ) : (
-          <p className={`text-red-500 ${!numberError && "hidden"}`}>
+          <p
+            className={`text-red-500 ${!initialState?.numberError && "hidden"}`}
+          >
             Please enter a valid number
           </p>
         )}
@@ -295,7 +308,12 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
             <div className={`flex gap-10 items-center mb-3`}>
               <div className="flex ">
                 <input
-                  onInput={() => setGrowTutoringProgram(true)}
+                  onInput={() => {
+                    setInitialState({
+                      ...initialState,
+                      growTutoringProgram: true,
+                    });
+                  }}
                   id="tutoringProgram-1"
                   type="radio"
                   name="tutoringProgram"
@@ -311,7 +329,12 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
               </div>
               <div className="flex items-center">
                 <input
-                  onInput={() => setGrowTutoringProgram(false)}
+                  onInput={() => {
+                    setInitialState({
+                      ...initialState,
+                      growTutoringProgram: true,
+                    });
+                  }}
                   id="tutoringProgram-2"
                   type="radio"
                   value=""
@@ -328,7 +351,7 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
             </div>
           </div>
           {/* note */}
-          <div className={`${!growTutoringProgram && "hidden"}`}>
+          <div className={`${!initialState?.growTutoringProgram && "hidden"}`}>
             <Note
               text={`It can be a tremendous resource for current
               and future tutoring: benefits include continued earning,
@@ -340,7 +363,11 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
             />
           </div>
           {/* choose variant */}
-          <div className={`w-full ${!growTutoringProgram && "hidden"} my-5`}>
+          <div
+            className={`w-full ${
+              !initialState?.growTutoringProgram && "hidden"
+            } my-5`}
+          >
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
               Choose Tutoring Variant
             </label>
@@ -350,8 +377,14 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
               className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(event) => {
                 const selectedValue = event.target.value;
-                if (!tutoringPrograms.includes(selectedValue)) {
-                  setTutoringPrograms([...tutoringPrograms, selectedValue]);
+                if (!initialState?.tutoringPrograms.includes(selectedValue)) {
+                  setInitialState({
+                    ...initialState,
+                    tutoringPrograms: [
+                      ...initialState?.tutoringPrograms,
+                      selectedValue,
+                    ],
+                  });
                 }
               }}
             >
@@ -364,20 +397,25 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
                 </option>
               ))}
             </select>
-            {!tutoringPrograms?.length && customErrors?.tutoringVariant && (
-              <p className="text-red-500 text-sm absolute">
-                {customErrors?.tutoringVariant}
-              </p>
-            )}
+            {!initialState?.tutoringPrograms?.length &&
+              customErrors?.tutoringVariant && (
+                <p className="text-red-500 text-sm absolute">
+                  {customErrors?.tutoringVariant}
+                </p>
+              )}
             <div className="flex flex-wrap mt-3 gap-2">
-              {tutoringPrograms?.map((item, idx) => (
+              {initialState?.tutoringPrograms?.map((item, idx) => (
                 <div
                   onClick={() => {
                     let selectedVariant;
-                    selectedVariant = tutoringPrograms.filter(
+                    selectedVariant = initialState?.tutoringPrograms.filter(
                       (sub, index) => item[idx] !== sub[index]
                     );
-                    setTutoringPrograms(selectedVariant);
+
+                    setInitialState({
+                      ...initialState,
+                      tutoringPrograms: selectedVariant,
+                    });
                   }}
                   key={idx}
                   className="flex items-center justify-between gap-5 bg-gray-100 mb-1"
@@ -403,7 +441,9 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
           <div className={`flex gap-10 items-center mb-3`}>
             <div className="flex ">
               <input
-                onInput={() => setTutoringTraining(true)}
+                onInput={() => {
+                  setInitialState({ ...initialState, tutoringTraining: true });
+                }}
                 id="tutoringTraining-1"
                 type="radio"
                 name="tutoringTraining"
@@ -419,11 +459,13 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
             </div>
             <div className="flex items-center">
               <input
-                onInput={() => setTutoringTraining(false)}
+                onInput={() => {
+                  setInitialState({ ...initialState, tutoringTraining: true });
+                }}
                 id="tutoringTraining-2"
                 type="radio"
                 value=""
-                name="tutoringTraining"
+                name="initialState?.tutoringTraining"
                 className="w-4 h-4"
               />
               <label
@@ -435,7 +477,7 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
             </div>
           </div>
           {/* note */}
-          <div className={`${!tutoringTraining && "hidden"}`}>
+          <div className={`${!initialState?.tutoringTraining && "hidden"}`}>
             <Note
               text={`We offer tutoring preparation training programs. Not all tutors are educators, but they can benefit from education degrees and training—a fresher! who has an academic degree but has never been a tutor. Schooling improves your attitude, technique, and the entire process of how to grow your tutoring job. We are instant supporters of you while you tutor.`}
             />
@@ -452,7 +494,12 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
             <div className={`flex gap-10 items-center mb-3`}>
               <div className="flex ">
                 <input
-                  onInput={() => setTeachingExperience(true)}
+                  onInput={() => {
+                    setInitialState({
+                      ...initialState,
+                      teachingExperience: true,
+                    });
+                  }}
                   id="teachingExperience-1"
                   type="radio"
                   name="teachingExperience"
@@ -468,7 +515,12 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
               </div>
               <div className="flex items-center">
                 <input
-                  onInput={() => setTeachingExperience(false)}
+                  onInput={() => {
+                    setInitialState({
+                      ...initialState,
+                      teachingExperience: true,
+                    });
+                  }}
                   id="teachingExperience-2"
                   type="radio"
                   value=""
@@ -485,7 +537,11 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
             </div>
           </div>
           {/* choose variant */}
-          <div className={`w-full ${!teachingExperience && "hidden"} my-5`}>
+          <div
+            className={`w-full ${
+              !initialState?.teachingExperience && "hidden"
+            } my-5`}
+          >
             <div>
               <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
                 Years Of Experience
@@ -494,19 +550,28 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
                 type="number"
                 {...register("experienceYears")}
                 className={`shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light`}
-                value={yearsOfExperience}
+                value={initialState?.yearsOfExperience}
                 placeholder="Years Of Experience"
-                onChange={(e) => setYearsOfExperience(e.target.value)}
+                onChange={(e) => {
+                  setInitialState({
+                    ...initialState,
+                    yearsOfExperience: e.target.value,
+                  });
+                }}
                 onKeyDown={handleRemoveMinus}
               />
-              {!yearsOfExperience && errors.experienceYears && (
+              {!initialState?.yearsOfExperience && errors.experienceYears && (
                 <p className="text-red-500 text-sm absolute">
                   {errors?.experienceYears}
                 </p>
               )}
             </div>
             {/* note */}
-            <div className={`${!teachingExperience && "hidden"} mt-10`}>
+            <div
+              className={`${
+                !initialState?.teachingExperience && "hidden"
+              } mt-10`}
+            >
               <Note
                 text={`How many students & classes have you taught before? E.g- I taught so far-STD-5(2), STD-8(1), O LEVEL(4) Edexcel-PMath, Phy, Acco, A LEVEL(3)Cambridge-Fp1p3, Che, Econ, SSC(2)-Maths, Bio)`}
               />
@@ -518,11 +583,16 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
               <textarea
                 {...register("teachingHistory")}
                 className={`shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light `}
-                value={teachingHistory}
-                onChange={(e) => setTeachingHistory(e.target.value)}
+                value={initialState?.teachingHistory}
+                onChange={(e) => {
+                  setInitialState({
+                    ...initialState,
+                    teachingHistory: e.target.value,
+                  });
+                }}
                 placeholder="Teaching History"
               />
-              {!teachingHistory && errors.teachingHistory && (
+              {!initialState?.teachingHistory && errors.teachingHistory && (
                 <p className="text-red-500 text-sm absolute">
                   {errors?.teachingHistory}
                 </p>
@@ -543,8 +613,14 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
               className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(event) => {
                 const selectedValue = event.target.value;
-                if (!tutoringPlaces.includes(selectedValue)) {
-                  setTutoringPlaces([...tutoringPlaces, selectedValue]);
+                if (!initialState?.tutoringPlaces.includes(selectedValue)) {
+                  setInitialState({
+                    ...initialState,
+                    tutoringPlaces: [
+                      ...initialState?.tutoringPlaces,
+                      selectedValue,
+                    ],
+                  });
                 }
               }}
             >
@@ -561,20 +637,25 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
                 </option>
               ))}
             </select>
-            {!tutoringPlaces?.length && customErrors?.tutoringPlace && (
-              <p className="text-red-500 text-sm absolute">
-                {customErrors?.tutoringPlace}
-              </p>
-            )}
+            {!initialState?.tutoringPlaces?.length &&
+              customErrors?.tutoringPlace && (
+                <p className="text-red-500 text-sm absolute">
+                  {customErrors?.tutoringPlace}
+                </p>
+              )}
             <div className="flex flex-wrap mt-3 gap-2">
-              {tutoringPlaces?.map((item, idx) => (
+              {initialState?.tutoringPlaces?.map((item, idx) => (
                 <div
                   onClick={() => {
                     let selectedPlace;
-                    selectedPlace = tutoringPlaces.filter(
+                    selectedPlace = initialState?.tutoringPlaces.filter(
                       (sub, index) => item[idx] !== sub[index]
                     );
-                    setTutoringPlaces(selectedPlace);
+
+                    setInitialState({
+                      ...initialState,
+                      tutoringPlaces: selectedPlace,
+                    });
                   }}
                   key={idx}
                   className="flex items-center justify-between gap-5 bg-gray-100 mb-1"
@@ -604,8 +685,14 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
               className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(event) => {
                 const selectedValue = event.target.value;
-                if (!studentVariants.includes(selectedValue)) {
-                  setStudentVariants([...studentVariants, selectedValue]);
+                if (!initialState?.studentVariants.includes(selectedValue)) {
+                  setInitialState({
+                    ...initialState,
+                    studentVariants: [
+                      ...initialState?.studentVariants,
+                      selectedValue,
+                    ],
+                  });
                 }
               }}
             >
@@ -618,20 +705,25 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
                 </option>
               ))}
             </select>
-            {!studentVariants?.length && customErrors?.studentVariant && (
-              <p className="text-red-500 text-sm absolute">
-                {customErrors?.studentVariant}
-              </p>
-            )}
+            {!initialState?.studentVariants?.length &&
+              customErrors?.studentVariant && (
+                <p className="text-red-500 text-sm absolute">
+                  {customErrors?.studentVariant}
+                </p>
+              )}
             <div className="flex flex-wrap mt-3 gap-2">
-              {studentVariants?.map((item, idx) => (
+              {initialState?.studentVariants?.map((item, idx) => (
                 <div
                   onClick={() => {
                     let selectedVariants;
-                    selectedVariants = studentVariants.filter(
+                    selectedVariants = initialState?.studentVariants.filter(
                       (sub, index) => item[idx] !== sub[index]
                     );
-                    setStudentVariants(selectedVariants);
+
+                    setInitialState({
+                      ...initialState,
+                      studentVariants: selectedVariants,
+                    });
                   }}
                   key={idx}
                   className="flex items-center justify-between gap-5 bg-gray-100 mb-1"
@@ -660,12 +752,17 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
                 type="number"
                 {...register("minExpectedSalary")}
                 className={`shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light `}
-                value={minExpectedSalary}
-                onChange={(e) => setMinExpectedSalary(e.target.value)}
+                value={initialState?.minExpectedSalary}
+                onChange={(e) => {
+                  setInitialState({
+                    ...initialState,
+                    minExpectedSalary: e.target.value,
+                  });
+                }}
                 placeholder="Min Expected Salary"
                 onKeyDown={handleRemoveMinus}
               />
-              {!minExpectedSalary && errors.minExpectedSalary && (
+              {!initialState?.minExpectedSalary && errors.minExpectedSalary && (
                 <p className="text-red-500 text-sm absolute">
                   {errors?.minExpectedSalary}
                 </p>
@@ -680,12 +777,17 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
                 type="number"
                 {...register("maxExpectedSalary")}
                 className={`shadow-sm bg-gray-50 border border-gray-300 outline-none text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light `}
-                value={maxExpectedSalary}
+                value={initialState?.maxExpectedSalary}
                 placeholder="Max Expected Salary"
-                onChange={(e) => setMaxExpectedSalary(e.target.value)}
+                onChange={(e) => {
+                  setInitialState({
+                    ...initialState,
+                    maxExpectedSalary: e.target.value,
+                  });
+                }}
                 onKeyDown={handleRemoveMinus}
               />
-              {!maxExpectedSalary && errors.maxExpectedSalary && (
+              {!initialState?.maxExpectedSalary && errors.maxExpectedSalary && (
                 <p className="text-red-500 text-sm absolute">
                   {errors?.maxExpectedSalary}
                 </p>
@@ -706,8 +808,14 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
               className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={(event) => {
                 const selectedValue = event.target.value;
-                if (!tutoringLocations.includes(selectedValue)) {
-                  setTutoringLocations([...tutoringLocations, selectedValue]);
+                if (!initialState?.tutoringLocations.includes(selectedValue)) {
+                  setInitialState({
+                    ...initialState,
+                    tutoringLocations: [
+                      ...initialState?.tutoringLocations,
+                      selectedValue,
+                    ],
+                  });
                 }
               }}
             >
@@ -720,20 +828,25 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
                 </option>
               ))}
             </select>
-            {!tutoringLocations?.length && customErrors?.tutoringLocation && (
-              <p className="text-red-500 text-sm absolute">
-                {customErrors?.tutoringLocation}
-              </p>
-            )}
+            {!initialState?.tutoringLocations?.length &&
+              customErrors?.tutoringLocation && (
+                <p className="text-red-500 text-sm absolute">
+                  {customErrors?.tutoringLocation}
+                </p>
+              )}
             <div className="flex flex-wrap mt-3 gap-2">
-              {tutoringLocations?.map((location, idx) => (
+              {initialState?.tutoringLocations?.map((location, idx) => (
                 <div
                   onClick={() => {
                     let selectedLocation;
-                    selectedLocation = tutoringLocations.filter(
+                    selectedLocation = initialState?.tutoringLocations.filter(
                       (sub, index) => location[idx] !== sub[index]
                     );
-                    setTutoringLocations(selectedLocation);
+
+                    setInitialState({
+                      ...initialState,
+                      tutoringLocations: selectedLocation,
+                    });
                   }}
                   key={idx}
                   className="flex items-center justify-between gap-5 bg-gray-100 mb-1"
@@ -760,11 +873,17 @@ const AdditionalTutoringInfo = ({ setActiveTab }) => {
 
             <JoditEditor
               ref={editor}
-              value={personalStatement}
+              value={initialState?.personalStatement}
               tabIndex={1} // tabIndex of textarea
-              onBlur={(newContent) => setPersonalStatement(newContent)}
+              onBlur={(newContent) => {
+                setInitialState({
+                  ...initialState,
+                  personalStatement: newContent,
+                });
+              }}
             />
-            {(!personalStatement || personalStatement === "<p><br></p>") &&
+            {(!initialState?.personalStatement ||
+              initialState?.personalStatement === "<p><br></p>") &&
               customErrors?.personalStatement && (
                 <p className="text-red-500 text-sm absolute">
                   {customErrors?.personalStatement}

@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { ImSpinner9 } from "react-icons/im";
 import { useSaveContactInfoMutation } from "../../../../store/service/tutorInfo/contactInfo/contactInfoApiService";
 import { useGetConvenientQuery } from "../../../../store/service/convenientTime/convenientTimeApiService";
+import { validateNumberAndSetError } from "../../../../libs/validateNumberAndSetError";
 
 const ContactInfo = ({ setActiveTab }) => {
   const [number, setNumber] = useState(null);
@@ -17,6 +18,12 @@ const ContactInfo = ({ setActiveTab }) => {
   const [emergencyError, setEmergencyError] = useState(false);
   const [whatsappNumber, setWhatsappNumber] = useState(null);
   const [whatsappNumberError, setWhatsappError] = useState(false);
+
+  const numberStates = [
+    { number: number, setNumberError: setNumberError },
+    { number: whatsappNumber, setNumberError: setWhatsappError },
+    { number: emergencyNumber, setNumberError: setEmergencyError },
+  ];
 
   const [saveContactInfo, { isLoading }] = useSaveContactInfoMutation();
   const { data: convenientTimesData } = useGetConvenientQuery();
@@ -28,39 +35,12 @@ const ContactInfo = ({ setActiveTab }) => {
     setNumber(number);
   }, []);
 
-  //check number is valid or not
-  useEffect(() => {
-    number && isValidPhoneNumber(number)
-      ? setNumberError(false)
-      : setNumberError(true);
-
-    if (number?.length < 14) {
-      setNumberError(true);
-    }
-  }, [number]);
-
   // check number is valid or not
-  useEffect(() => {
-    whatsappNumber && isValidPhoneNumber(whatsappNumber)
-      ? setWhatsappError(false)
-      : setWhatsappError(true);
-
-    if (whatsappNumber?.length < 14) {
-      setWhatsappError(true);
-    }
-  }, [whatsappNumber]);
-
-  // check number is valid or not
-  useEffect(() => {
-    {
-      emergencyNumber && isValidPhoneNumber(emergencyNumber)
-        ? setEmergencyError(false)
-        : setEmergencyError(true);
-    }
-    if (emergencyNumber?.length < 14) {
-      setEmergencyError(true);
-    }
-  }, [emergencyNumber]);
+  numberStates.forEach(({ number, setNumberError }) => {
+    useEffect(() => {
+      validateNumberAndSetError(number, setNumberError);
+    }, [number]);
+  });
 
   const {
     register,
