@@ -1,10 +1,12 @@
-import { FaLock } from "react-icons/fa";
+import { FaAws, FaLock, FaYoutube } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { FaAngleDown } from "react-icons/fa6";
+import { TbReplace } from "react-icons/tb";
 import ReactPlayer from "react-player";
 import TableSkeleton from "../../../DataTable/TableSkeleton/TableSkeleton";
+import VideoUrlReplaceModal from "../VideoUrlReplaceModal/VideoUrlReplaceModal";
 
 const Videos = ({ videos, isLoading }) => {
   const [hideThumbnail, setHideThumbnail] = useState(null);
@@ -17,6 +19,9 @@ const Videos = ({ videos, isLoading }) => {
   const [selectedRow, setSelectedRow] = useState([]);
   const [entries, setEntries] = useState(10);
   const [sortedData, setSortedData] = useState([]);
+  const [openVideoUrlReplaceModal, setOpenVideoUrlReplaceModal] =
+    useState(false);
+  const [replaceVideoData, setReplaceVideoData] = useState({});
 
   useEffect(() => {
     if (videos) {
@@ -74,6 +79,12 @@ const Videos = ({ videos, isLoading }) => {
     },
     {
       name: "Date",
+    },
+    {
+      name: "Hosting Location",
+    },
+    {
+      name: "Action",
     },
   ];
 
@@ -365,12 +376,51 @@ const Videos = ({ videos, isLoading }) => {
                       <p className="text-sm">Published</p>
                     </div>
                   </td>
+                  {/* hosting location */}
+                  <td
+                    className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top  font-semibold`}
+                  >
+                    {item?.videoUrl?.includes("youtu.be") ? (
+                      <div className="flex items-center gap-2 justify-center">
+                        <FaYoutube /> Youtube
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 justify-center">
+                        <FaAws /> Aws
+                      </div>
+                    )}
+                  </td>
+                  {/* action */}
+                  <td
+                    className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top flex justify-center`}
+                  >
+                    <TbReplace
+                      onClick={() => {
+                        setOpenVideoUrlReplaceModal(true),
+                          setReplaceVideoData({
+                            id: item?._id,
+                            preUrl: item?.videoUrl,
+                          });
+                      }}
+                      title="Replace Video URL"
+                      className="cursor-pointer text-xl"
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
+      {openVideoUrlReplaceModal && (
+        <VideoUrlReplaceModal
+          replaceVideoData={replaceVideoData}
+          setReplaceVideoData={setReplaceVideoData}
+          isOpen={openVideoUrlReplaceModal}
+          setIsOpen={setOpenVideoUrlReplaceModal}
+          setData={setData}
+        />
+      )}
     </div>
   );
 };
