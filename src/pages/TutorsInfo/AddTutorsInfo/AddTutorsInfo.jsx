@@ -4,13 +4,12 @@ import PersonalInfo from "./PersonalInfo/PersonalInfo";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import AcademicInfo from "./AcademicInfo/AcademicInfo";
 import TutoringInfo from "./TutoringInfo/TutoringInfo";
-import Promotion from "./Promotion/Promotion";
 import { useState } from "react";
+import AdditionalTutoringInfo from "./AdditionalTutoringInfo/AdditionalTutoringInfo";
+import Promotion from "./Promotion/Promotion";
 
 const AddTutorsInfo = () => {
-  const [activeTab, setActiveTab] = useState(1);
-
-  console.log(activeTab);
+  const [activeTab, setActiveTab] = useState(5);
 
   const tabHeaders = [
     {
@@ -26,12 +25,16 @@ const AddTutorsInfo = () => {
       id: 3,
     },
     {
-      label: "Tutor Info",
+      label: "Tutoring Info",
       id: 4,
     },
     {
-      label: "Promotion",
+      label: "Additional Tutoring Info",
       id: 5,
+    },
+    {
+      label: "Promotion",
+      id: 6,
     },
   ];
 
@@ -54,7 +57,11 @@ const AddTutorsInfo = () => {
     },
     {
       id: 5,
-      value: <Promotion setActiveTab={setActiveTab} />,
+      value: <AdditionalTutoringInfo setActiveTab={setActiveTab} />,
+    },
+    {
+      id: 6,
+      value: <Promotion />,
     },
   ];
 
@@ -71,7 +78,7 @@ const AddTutorsInfo = () => {
           See All
         </Link>
       </div>
-      <div className="grid grid-cols-5 bg-blue-50 p-1 rounded-t-md">
+      <div className="grid grid-cols-6 bg-blue-50 p-1 rounded-t-md">
         {tabHeaders.map(({ label, id }) => {
           return (
             <Button
@@ -90,37 +97,15 @@ const AddTutorsInfo = () => {
         })}
       </div>
       <div className="bg-white border">
-        {data?.map((form) => (
+        {data?.map((form, index) => (
           <section
-            id={form.id}
+            id={index}
             className={`${activeTab === form.id ? "block" : "hidden"}`}
           >
             {form.value}
           </section>
         ))}
       </div>
-      {/* <Tabs id="custom-animation" value={1}>
-        <TabsHeader>
-          {tabHeaders.map(({ label, id }) => (
-            <Tab key={id} value={id}>
-              {label}
-            </Tab>
-          ))}
-        </TabsHeader>
-        <TabsBody
-          animate={{
-            initial: { y: 250 },
-            mount: { y: 0 },
-            unmount: { y: 250 },
-          }}
-        >
-          {data.map(({ id, value }) => (
-            <TabPanel key={id} value={id}>
-              {value}
-            </TabPanel>
-          ))}
-        </TabsBody>
-      </Tabs> */}
     </div>
   );
 };

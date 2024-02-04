@@ -6,57 +6,106 @@ import { RxCross2 } from "react-icons/rx";
 import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 
+import { modifySubjectsForPost } from "../../../../libs/tutoringInfo/modifySubjectForPost";
+import { filterObjectsFromArray } from "../../../../libs/tutoringInfo/filterObjectsFromArray";
+import { useLazyGetAcademicInfoQuery } from "../../../../store/service/tutorInfo/academicInfo/academicInfoApiService";
 import { useGetTutoringVariantsQuery } from "../../../../store/service/tutoringVariant/tutoringVariantApiService";
-import {
-  useGetAllALevelSubjectsQuery,
-  useGetAllOLevelSubjectsQuery,
-} from "../../../../store/service/boardWiseSubject/boardWiseSubjectApiService";
-import { useGetExtraSubjectsQuery } from "../../../../store/service/extraSubject/extraSubjectApiService";
-import {
-  useGetClassesQuery,
-  useLazyGetSubjectsByClassQuery,
-} from "../../../../store/service/tutoringClasses/tutoringClassesApiService";
+import { useGetSubjectVariantSubjectsQuery } from "../../../../store/service/subjectVariant/subjectVariantApiService";
+import { useGetTutoringClassPMQuery } from "../../../../store/service/tutoringClassPM/tutoringClassPMApiService";
+import { useGetCurriculumBoardsQuery } from "../../../../store/service/curriculumBoard/curriculumBoardApiService";
 import { useSaveTutoringInfoMutation } from "../../../../store/service/tutorInfo/tutoringInfo/tutoringInfoApiService";
+import SubjectCommonComponent from "./SubjectsCommonComponent/SubjectsCommonComponent";
+import { isObjectInArray } from "../../../../libs/tutoringInfo/isObjectInArray";
 
 const TutoringInfo = ({ setActiveTab }) => {
   const [number, setNumber] = useState(null);
   const [numberError, setNumberError] = useState(false);
 
+  const [selectedTutoringSubjects, setSelectedTutoringSubjects] = useState([]);
+  const [academicInfo, setAcademicInfo] = useState(null);
   const [tutoringVariants, setTutoringVariants] = useState([]);
-  const [isTeachOLevel, setIsTeachOLevel] = useState();
-  const [oLevelSubjects, setOLevelSubjects] = useState([]);
-
-  const [isTeachALevel, setIsTeachALevel] = useState();
-  const [aLevelSubjects, setALevelSubjects] = useState([]);
-
-  const [isTeachTestPaper, setIsTeachTestPaper] = useState();
+  const [tutoringGrades, setTutoringGrades] = useState([]);
+  const [tutoringCurriculum, setTutoringCurriculum] = useState([]);
+  const [isTeachTestPaper, setIsTeachTestPaper] = useState(false);
   const [testPaperSubjects, setTestPaperSubjects] = useState([]);
-
-  const [isTeachAdmissionTest, setIsTeachAdmissionTest] = useState();
+  const [isTeachAdmissionTest, setIsTeachAdmissionTest] = useState(false);
   const [admissionTestSubjects, setAdmissionTestSubjects] = useState([]);
+  const [isTeachEnrichment, setIsTeachEnrichment] = useState(false);
+  const [enrichmentSubjects, setEnrichmentSubjects] = useState([]);
+  const [isTeachProfessional, setIsTeachProfessional] = useState(false);
+  const [professionalSubjects, setProfessionalSubjects] = useState([]);
+  const [errors, setErrors] = useState({
+    tutoringVariants: "",
+    tutoringGrades: "",
+    tutoringCurriculum: "",
+    selectedTutoringSubjects: "",
+    testPaperSubjects: "",
+    admissionTestSubjects: "",
+    enrichmentSubjects: "",
+    professionalSubjects: "",
+  });
 
-  const [tutoringClasses, setTutoringClasses] = useState([]);
-  const [classWiseSubjects, setClassWiseSubjects] = useState([]);
-  const [subjects, setSubjects] = useState([]);
+  const commonSelectClassName =
+    "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-10 focus:outline-none";
 
-  const { handleSubmit, register, reset } = useForm();
+  const { handleSubmit, register } = useForm();
+
+  const [getAcademicInfo] = useLazyGetAcademicInfoQuery();
 
   const { data: allTutoringVariant } = useGetTutoringVariantsQuery();
   const variants = allTutoringVariant?.data;
 
-  const { data: allOLevelSubjectsData } = useGetAllOLevelSubjectsQuery();
-  const allOLevelSubjects = allOLevelSubjectsData?.data;
+  const { data: subjectListData } = useGetSubjectVariantSubjectsQuery();
+  const allVariants = subjectListData?.data;
+  const tutoringSubjectsList = allVariants?.find(
+    (variant) => variant?.subjectVariant === "Academic"
+  );
+  const testPaperSubjectsList = allVariants?.find(
+    (variant) => variant?.subjectVariant === "Test Preparation"
+  );
+  const admissionTestSubjectsList = allVariants?.find(
+    (variant) => variant?.subjectVariant === "Admission Test "
+  );
+  const enrichmentSubjectsList = allVariants?.find(
+    (variant) => variant?.subjectVariant === "Enrichment"
+  );
+  const professionalSubjectsList = allVariants?.find(
+    (variant) => variant?.subjectVariant === "Professional"
+  );
 
-  const { data: allALevelSubjectsData } = useGetAllALevelSubjectsQuery();
-  const allALevelSubjects = allALevelSubjectsData?.data;
+  const { data: allGradesData } = useGetTutoringClassPMQuery();
+  const allGrades = allGradesData?.data;
 
-  const { data: allExtraSubjectsData } = useGetExtraSubjectsQuery();
-  const allExtraSubjects = allExtraSubjectsData?.data;
+  const filteredGrades = allGrades?.filter(
+    (data) =>
+      data?.educationVariant?.toLowerCase() ===
+      academicInfo?.educationVariant?.toLowerCase()
+  );
 
-  const { data: allClassesData } = useGetClassesQuery();
-  const classes = allClassesData?.data;
+  const { data: allCurriculumBoardData } = useGetCurriculumBoardsQuery();
+  const allCurriculumBoards = allCurriculumBoardData?.data;
+  const filteredCurriculumBoards = allCurriculumBoards?.filter(
+    (data) =>
+      data?.educationVariant?.toLowerCase() ===
+      academicInfo?.educationVariant?.toLowerCase()
+  );
 
-  const [getSubject] = useLazyGetSubjectsByClassQuery();
+  // fetch academic info
+  useEffect(() => {
+    if (number) {
+      const fetch = async () => {
+        const result = await getAcademicInfo(number?.substring(1));
+        if (result?.data?.success) {
+          const academicInfo = result?.data?.data;
+          console.log(academicInfo);
+          setAcademicInfo(academicInfo);
+        }
+      };
+
+      fetch();
+    }
+  }, [number]);
+
   const [saveTutoringInfo, { isLoading }] = useSaveTutoringInfoMutation();
 
   // get previous tab number
@@ -72,100 +121,117 @@ const TutoringInfo = ({ setActiveTab }) => {
     }
   }, [number]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      for (const tutoringClass of tutoringClasses) {
-        const alreadyFetched = classWiseSubjects.some((obj) => {
-          return obj.className === tutoringClass;
-        });
-
-        if (alreadyFetched) {
-          continue;
-        }
-
-        const result = await getSubject(tutoringClass);
-        if (result.data?.success) {
-          const subject = result.data?.data;
-          setClassWiseSubjects([...classWiseSubjects, ...subject]);
-        }
-      }
-    };
-
-    fetchData();
-  }, [tutoringClasses]);
-
-  // check object include or not in a array
-  function isObjectInArray(array, targetObject) {
-    return array.some(
-      (obj) => JSON.stringify(obj) === JSON.stringify(targetObject)
-    );
-  }
-
-  // filter out targeted objects
-  function filterObjectsFromArray(array, targetObject) {
-    return array.filter((obj) => {
-      const keys1 = Object.keys(obj);
-      const keys2 = Object.keys(targetObject);
-
-      if (keys1.length !== keys2.length) {
-        return true;
-      }
-
-      for (const key of keys1) {
-        if (obj[key] !== targetObject[key]) {
-          return true;
-        }
-      }
-
-      return false;
-    });
-  }
-
-  const onSubmit = async (data) => {
+  // handle submit function
+  const onSubmit = async () => {
     if (!tutoringVariants.length)
-      return toast.error("Please add tutoring variant");
-    if (!subjects.length)
-      return toast.error("Please add tutoring grade subject");
-    if (isTeachALevel && !aLevelSubjects.length)
-      return toast.error("Please add A level subject");
-    if (isTeachOLevel && !oLevelSubjects.length)
-      return toast.error("Please add O level subject");
+      return setErrors({
+        ...errors,
+        tutoringVariants: "Tutoring variant is required",
+      });
     if (isTeachTestPaper && !testPaperSubjects.length)
-      return toast.error("Please add test paper subject");
+      return setErrors({
+        ...errors,
+        testPaperSubjects: "Test paper subject is required",
+      });
     if (isTeachAdmissionTest && !admissionTestSubjects.length)
-      return toast.error("Please add admission test subject");
+      return setErrors({
+        ...errors,
+        admissionTestSubjects: "Admission test subject is required",
+      });
+    if (isTeachEnrichment && !enrichmentSubjects.length)
+      return setErrors({
+        ...errors,
+        enrichmentSubjects: "Enrichment subject is required",
+      });
 
-    const tutoringInfo = {
-      phoneNumber: number.substring(1),
+    if (isTeachProfessional && !professionalSubjects.length)
+      return setErrors({
+        ...errors,
+        professionalSubjects: "Professional subject is required",
+      });
+
+    if (!tutoringGrades?.length)
+      return setErrors({
+        ...errors,
+        tutoringGrades: "Tutoring grade is required",
+      });
+
+    if (!tutoringCurriculum?.length)
+      return setErrors({
+        ...errors,
+        tutoringCurriculum: "Tutoring curriculum is required",
+      });
+    if (!selectedTutoringSubjects?.length)
+      return setErrors({
+        ...errors,
+        selectedTutoringSubjects: "Tutoring subject is required",
+      });
+
+    const tutoringData = {
+      phoneNumber: number?.substring(1),
       tutoringVariant: tutoringVariants,
-      tutoringGrade: subjects,
-      isTeachALevel,
-      teachALevel: aLevelSubjects,
-      isTeachOLevel,
-      teachOLevel: oLevelSubjects,
+      tutoringGrade: tutoringGrades,
+      tutoringCurriculum,
+      tutoringSubjects: modifySubjectsForPost(selectedTutoringSubjects),
       isTeachTestPapers: isTeachTestPaper,
-      teachTestPapers: testPaperSubjects,
+      teachTestPapers: isTeachTestPaper
+        ? modifySubjectsForPost(testPaperSubjects)
+        : [],
       isTeachAdmissionTest,
-      teachAdmissionTest: admissionTestSubjects,
+      teachAdmissionTest: isTeachAdmissionTest
+        ? modifySubjectsForPost(admissionTestSubjects)
+        : [],
+      isTeachEnrichment,
+      teachEnrichment: isTeachEnrichment
+        ? modifySubjectsForPost(enrichmentSubjects)
+        : [],
+      isTeachProfessional,
+      teachProfessional: isTeachProfessional
+        ? modifySubjectsForPost(professionalSubjects)
+        : [],
     };
 
-    const result = await saveTutoringInfo(tutoringInfo);
-    console.log(result);
-    if (result.data) {
-      toast.success(result.data?.message);
-      localStorage.setItem("tutor-number", number);
-      reset();
-      setSubjects([]);
-      setClassWiseSubjects([]);
-      setTutoringClasses([]);
-      setAdmissionTestSubjects([]);
-      setTestPaperSubjects([]);
-      setALevelSubjects([]);
-      setOLevelSubjects([]);
-      setTutoringVariants([]);
+    const result = await saveTutoringInfo(tutoringData);
+
+    if (result?.data?.success) {
+      toast.success(result?.data?.message);
+      setNumberError(false)
+      setSelectedTutoringSubjects([])
+      setAcademicInfo(null)
+      setTutoringVariants([])
+      setTutoringGrades([])
+      setTutoringCurriculum([])
+      setIsTeachTestPaper(false)
+      setTestPaperSubjects([]) 
+      setIsTeachAdmissionTest(false)
+      setAdmissionTestSubjects([])
+      setIsTeachEnrichment(false)
+      setEnrichmentSubjects([])
+      setIsTeachProfessional(false)
+      setProfessionalSubjects([])
       setActiveTab(5);
+      setErrors({
+        tutoringVariants: "",
+        tutoringGrades: "",
+        tutoringCurriculum: "",
+        selectedTutoringSubjects: "",
+        testPaperSubjects: "",
+        admissionTestSubjects: "",
+        enrichmentSubjects: "",
+        professionalSubjects: "",
+      });
     } else {
       toast.error(result?.error?.data?.message);
+      setErrors({
+        tutoringVariants: "",
+        tutoringGrades: "",
+        tutoringCurriculum: "",
+        selectedTutoringSubjects: "",
+        testPaperSubjects: "",
+        admissionTestSubjects: "",
+        enrichmentSubjects: "",
+        professionalSubjects: "",
+      });
     }
   };
 
@@ -203,7 +269,7 @@ const TutoringInfo = ({ setActiveTab }) => {
             <select
               {...register("tutoringVariant")}
               defaultValue=""
-              className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={commonSelectClassName}
               onChange={(event) => {
                 const selectedValue = JSON.parse(event.target.value);
                 if (!isObjectInArray(tutoringVariants, selectedValue)) {
@@ -223,7 +289,12 @@ const TutoringInfo = ({ setActiveTab }) => {
                 </option>
               ))}
             </select>
-            <div className="flex overflow-auto mt-3 gap-2">
+            {!tutoringVariants?.length && errors.tutoringVariants && (
+              <p className="text-red-500 text-sm absolute">
+                {errors.tutoringVariants}
+              </p>
+            )}
+            <div className="flex flex-wrap mt-3 gap-2">
               {tutoringVariants?.map((item, idx) => (
                 <div
                   onClick={() => {
@@ -249,55 +320,56 @@ const TutoringInfo = ({ setActiveTab }) => {
             </div>
           </div>
 
-          {/* Tutoring Class */}
+          {/* Tutoring Grade */}
           <div className={`w-full  my-10`}>
             <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
               Choose Tutoring Grade
             </label>
             <select
-              {...register("tutoringClass")}
+              {...register("tutoringGrade")}
               defaultValue=""
-              className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className={commonSelectClassName}
               onChange={(event) => {
-                const selectedValue = event.target.value;
-                if (!tutoringClasses.includes(selectedValue)) {
-                  setTutoringClasses([...tutoringClasses, selectedValue]);
+                const selectedValue = JSON.parse(event.target.value);
+                if (!isObjectInArray(tutoringGrades, selectedValue)) {
+                  setTutoringGrades([...tutoringGrades, selectedValue]);
                 }
               }}
             >
               <option value="" disabled>
-                Choose Class
+                Choose Grade
               </option>
-              {classes?.map((variant, idx) => (
-                <option key={idx} value={variant?.className}>
-                  {variant?.className}
+              {filteredGrades?.map((grade, idx) => (
+                <option
+                  key={idx}
+                  value={JSON.stringify({ gradeName: grade?.className })}
+                >
+                  {grade?.className}
                 </option>
               ))}
             </select>
-            <div className="flex overflow-auto mt-3 gap-2">
-              {tutoringClasses?.map((item, idx) => (
+            {!tutoringGrades?.length && errors.tutoringGrades && (
+              <p className="text-red-500 text-sm absolute">
+                {errors.tutoringGrades}
+              </p>
+            )}
+            <div className="flex flex-wrap mt-3 gap-2">
+              {tutoringGrades?.map((item, idx) => (
                 <div
                   onClick={() => {
-                    let selectedClass;
-                    selectedClass = tutoringClasses.filter(
-                      (sub, index) => item[idx] !== sub[index]
+                    let selectedGrade;
+                    selectedGrade = filterObjectsFromArray(
+                      tutoringGrades,
+                      item
                     );
-                    setClassWiseSubjects(
-                      classWiseSubjects.filter(
-                        (subject) => subject.className !== item
-                      )
-                    );
-                    setSubjects(
-                      subjects.filter((subject) => subject.className !== item)
-                    );
-                    setTutoringClasses(selectedClass);
+                    setTutoringGrades(selectedGrade);
                   }}
                   key={idx}
                   className="flex items-center justify-between gap-5 bg-gray-100 mb-1"
                 >
                   <div className="py-1 pl-3 text-sm font-semibold text-gray-500 capitalize whitespace-nowrap">
-                    <span className="mr-2">{idx + 1}.</span>
-                    {item}
+                    <span className="mr-2">{idx + 1}</span>
+                    {item?.gradeName}
                   </div>
                   <div className="hover:bg-red-500 h-full w-full flex justify-center items-center rounded-r px-1 cursor-pointer text-red-500 hover:text-white transition-colors duration-200">
                     <RxCross2 className="h-5 w-5" />
@@ -307,280 +379,77 @@ const TutoringInfo = ({ setActiveTab }) => {
             </div>
           </div>
 
-          {/* class wise dynamic field */}
-          {classWiseSubjects.map((subject, idx) => (
-            <div key={idx}>
-              {" "}
-              {/* Subject */}
-              <div className={`w-full my-5`}>
-                <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-                  Choose Subject ({subject?.className}) Class
-                </label>
-                <select
-                  {...register(`subject-${subject.className}`)}
-                  defaultValue=""
-                  className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  onChange={(event) => {
-                    const selectedValue = JSON.parse(event.target.value);
-                    if (!isObjectInArray(subjects, selectedValue)) {
-                      setSubjects([...subjects, selectedValue]);
-                    }
-                  }}
+          {/* Tutoring Curriculum */}
+          <div className={`w-full  my-10`}>
+            <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Choose Tutoring Curriculum
+            </label>
+            <select
+              {...register("tutoringCurriculum")}
+              defaultValue=""
+              className={commonSelectClassName}
+              onChange={(event) => {
+                const selectedValue = JSON.parse(event.target.value);
+                if (!isObjectInArray(tutoringCurriculum, selectedValue)) {
+                  setTutoringCurriculum([...tutoringCurriculum, selectedValue]);
+                }
+              }}
+            >
+              <option value="" disabled>
+                Choose Tutoring Curriculum
+              </option>
+              {filteredCurriculumBoards?.map((board, idx) => (
+                <option
+                  key={idx}
+                  value={JSON.stringify({ curriculumBoard: board?.boardName })}
                 >
-                  <option value="" disabled>
-                    Choose Subject
-                  </option>
-                  {classWiseSubjects
-                    ?.filter((sub) => sub.className === subject.className)
-                    .map((subject) =>
-                      subject?.subjects?.map((sub, index) => (
-                        <option
-                          key={index}
-                          value={JSON.stringify({
-                            className: subject?.className,
-                            subject: sub,
-                          })}
-                        >
-                          {sub}
-                        </option>
-                      ))
-                    )}
-                </select>
-                <div className="flex overflow-auto mt-3 gap-2">
-                  {subjects
-                    ?.filter((sub) => sub.className === subject.className)
-                    ?.map((item, idx) => (
-                      <div
-                        onClick={() => {
-                          let selectedSubject;
-                          selectedSubject = filterObjectsFromArray(
-                            subjects,
-                            item
-                          );
-                          setSubjects(selectedSubject);
-                        }}
-                        key={idx}
-                        className="flex items-center justify-between gap-5 bg-gray-100 mb-1"
-                      >
-                        <div className="py-1 pl-3 text-sm font-semibold text-gray-500 capitalize whitespace-nowrap">
-                          <span className="mr-2">{idx + 1}.</span>
-                          {item?.subject}
-                        </div>
-                        <div className="hover:bg-red-500 h-full w-full flex justify-center items-center rounded-r px-1 cursor-pointer text-red-500 hover:text-white transition-colors duration-200">
-                          <RxCross2 className="h-5 w-5" />
-                        </div>
-                      </div>
-                    ))}
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {/* Teach O Level */}
-          <div className="my-10">
-            {/* O Level radio box */}
-            <div>
-              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-                Can you Teach O Level?
-              </label>
-              <div className={`flex gap-10 items-center mb-3`}>
-                <div className="flex ">
-                  <input
-                    onInput={() => setIsTeachOLevel(true)}
-                    id="teachOLevel-1"
-                    type="radio"
-                    name="teachOLevel"
-                    className="w-4 h-4"
-                    required
-                  />
-                  <label
-                    htmlFor="teachOLevel"
-                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Yes
-                  </label>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    onInput={() => setIsTeachOLevel(false)}
-                    id="teachOLevel-2"
-                    type="radio"
-                    value=""
-                    name="teachOLevel"
-                    className="w-4 h-4"
-                  />
-                  <label
-                    htmlFor="teachOLevel-2"
-                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    No
-                  </label>
-                </div>
-              </div>
-            </div>
-            {/* choose Subject */}
-            <div className={`w-full ${!isTeachOLevel && "hidden"} my-5`}>
-              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-                Choose O Level Subject
-              </label>
-              <select
-                {...register("oLevelSubject")}
-                defaultValue=""
-                className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onChange={(event) => {
-                  const selectedValue = JSON.parse(event.target.value);
-                  if (!isObjectInArray(oLevelSubjects, selectedValue)) {
-                    setOLevelSubjects([...oLevelSubjects, selectedValue]);
-                  }
-                }}
-              >
-                <option value="" disabled>
-                  Choose Subject
+                  {board?.boardName}
                 </option>
-                {allOLevelSubjects?.map((subject) =>
-                  subject?.subjects?.map((sub, index) => (
-                    <option
-                      key={index}
-                      value={JSON.stringify({
-                        type: "o-level",
-                        board: subject?.board,
-                        subject: sub,
-                      })}
-                    >
-                      Board - {subject?.board} --- Subject - {sub}
-                    </option>
-                  ))
-                )}
-              </select>
-              <div className="flex overflow-auto mt-3 gap-2">
-                {oLevelSubjects?.map((item, idx) => (
-                  <div
-                    onClick={() => {
-                      let selectedSubject;
-                      selectedSubject = filterObjectsFromArray(
-                        oLevelSubjects,
-                        item
-                      );
-                      setOLevelSubjects(selectedSubject);
-                    }}
-                    key={idx}
-                    className="flex items-center justify-between gap-5 bg-gray-100 mb-1"
-                  >
-                    <div className="py-1 pl-3 text-sm font-semibold text-gray-500 capitalize whitespace-nowrap">
-                      <span className="mr-2">{idx + 1}.</span>
-                      Board - {item?.board} --- Subject - {item?.subject}
-                    </div>
-                    <div className="hover:bg-red-500 h-full w-full flex justify-center items-center rounded-r px-1 cursor-pointer text-red-500 hover:text-white transition-colors duration-200">
-                      <RxCross2 className="h-5 w-5" />
-                    </div>
+              ))}
+            </select>
+            {!tutoringCurriculum?.length && errors.tutoringCurriculum && (
+              <p className="text-red-500 text-sm absolute">
+                {errors.tutoringCurriculum}
+              </p>
+            )}
+            <div className="flex flex-wrap mt-3 gap-2">
+              {tutoringCurriculum?.map((item, idx) => (
+                <div
+                  onClick={() => {
+                    let selectedBoard;
+                    selectedBoard = filterObjectsFromArray(
+                      tutoringCurriculum,
+                      item
+                    );
+                    setTutoringCurriculum(selectedBoard);
+                  }}
+                  key={idx}
+                  className="flex items-center justify-between gap-5 bg-gray-100 mb-1"
+                >
+                  <div className="py-1 pl-3 text-sm font-semibold text-gray-500 capitalize whitespace-nowrap">
+                    <span className="mr-2">{idx + 1}</span>
+                    {item?.curriculumBoard}
                   </div>
-                ))}
-              </div>
+                  <div className="hover:bg-red-500 h-full w-full flex justify-center items-center rounded-r px-1 cursor-pointer text-red-500 hover:text-white transition-colors duration-200">
+                    <RxCross2 className="h-5 w-5" />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Teach A Level */}
-          <div className="my-10">
-            {/* A Level radio box */}
-            <div>
-              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-                Can you Teach A Level?
-              </label>
-              <div className={`flex gap-10 items-center mb-3`}>
-                <div className="flex ">
-                  <input
-                    onInput={() => setIsTeachALevel(true)}
-                    id="teachALevel-1"
-                    type="radio"
-                    name="teachALevel"
-                    className="w-4 h-4"
-                    required
-                  />
-                  <label
-                    htmlFor="teachALevel"
-                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Yes
-                  </label>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    onInput={() => setIsTeachALevel(false)}
-                    id="teachALevel-2"
-                    type="radio"
-                    value=""
-                    name="teachALevel"
-                    className="w-4 h-4"
-                  />
-                  <label
-                    htmlFor="teachALevel-2"
-                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    No
-                  </label>
-                </div>
-              </div>
-            </div>
-            {/* choose Subject */}
-            <div className={`w-full ${!isTeachALevel && "hidden"} my-5`}>
-              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-                Choose A Level Subject
-              </label>
-              <select
-                {...register("aLevelSubject")}
-                defaultValue=""
-                className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onChange={(event) => {
-                  const selectedValue = JSON.parse(event.target.value);
-                  if (!isObjectInArray(aLevelSubjects, selectedValue)) {
-                    setALevelSubjects([...aLevelSubjects, selectedValue]);
-                  }
-                }}
-              >
-                <option value="" disabled>
-                  Choose Subject
-                </option>
-                {allALevelSubjects?.map((subject) =>
-                  subject?.subjects?.map((sub, index) => (
-                    <option
-                      key={index}
-                      value={JSON.stringify({
-                        type: "a-level",
-                        board: subject?.board,
-                        subject: sub,
-                      })}
-                    >
-                      Board - {subject?.board} --- Subject - {sub}
-                    </option>
-                  ))
-                )}
-              </select>
-              <div className="flex overflow-auto mt-3 gap-2">
-                {aLevelSubjects?.map((item, idx) => (
-                  <div
-                    onClick={() => {
-                      let selectedSubject;
-                      selectedSubject = filterObjectsFromArray(
-                        aLevelSubjects,
-                        item
-                      );
-                      setALevelSubjects(selectedSubject);
-                    }}
-                    key={idx}
-                    className="flex items-center justify-between gap-5 bg-gray-100 mb-1"
-                  >
-                    <div className="py-1 pl-3 text-sm font-semibold text-gray-500 capitalize whitespace-nowrap">
-                      <span className="mr-2">{idx + 1}.</span>
-                      Board - {item?.board} --- Subject - {item?.subject}
-                    </div>
-                    <div className="hover:bg-red-500 h-full w-full flex justify-center items-center rounded-r px-1 cursor-pointer text-red-500 hover:text-white transition-colors duration-200">
-                      <RxCross2 className="h-5 w-5" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          {/* tutoring nested subject subSubject */}
+          {tutoringSubjectsList?.subjectsList?.length > 0 ? (
+            <SubjectCommonComponent
+              allSubjects={tutoringSubjectsList?.subjectsList}
+              selectedSubjects={selectedTutoringSubjects}
+              setSelectedSubjects={setSelectedTutoringSubjects}
+              subjectError={errors.selectedTutoringSubjects}
+              componentName={"Tutoring"}
+            />
+          ) : (
+            ""
+          )}
 
           {/* Teach Test Paper */}
           <div className="my-10">
@@ -596,6 +465,7 @@ const TutoringInfo = ({ setActiveTab }) => {
                     id="teachTestPaper-1"
                     type="radio"
                     name="teachTestPaper"
+                    
                     className="w-4 h-4"
                     required
                   />
@@ -613,6 +483,7 @@ const TutoringInfo = ({ setActiveTab }) => {
                     type="radio"
                     value=""
                     name="teachTestPaper"
+                    
                     className="w-4 h-4"
                   />
                   <label
@@ -624,64 +495,20 @@ const TutoringInfo = ({ setActiveTab }) => {
                 </div>
               </div>
             </div>
-            {/* choose Subject */}
-            <div className={`w-full ${!isTeachTestPaper && "hidden"} my-5`}>
-              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-                Choose Test Paper Subject
-              </label>
-              <select
-                {...register("testPaperSubject")}
-                defaultValue=""
-                className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onChange={(event) => {
-                  const selectedValue = JSON.parse(event.target.value);
-                  if (!isObjectInArray(testPaperSubjects, selectedValue)) {
-                    setTestPaperSubjects([...testPaperSubjects, selectedValue]);
-                  }
-                }}
-              >
-                <option value="" disabled>
-                  Choose Subject
-                </option>
-                {allExtraSubjects
-                  ?.filter((subject) => subject?.type === "test-papers")
-                  ?.map((subject, index) => (
-                    <option
-                      key={index}
-                      value={JSON.stringify({
-                        type: subject?.type,
-                        subject: subject?.subject,
-                      })}
-                    >
-                      {subject?.subject}
-                    </option>
-                  ))}
-              </select>
-              <div className="flex overflow-auto mt-3 gap-2">
-                {testPaperSubjects?.map((item, idx) => (
-                  <div
-                    onClick={() => {
-                      let selectedSubject;
-                      selectedSubject = filterObjectsFromArray(
-                        testPaperSubjects,
-                        item
-                      );
-                      setTestPaperSubjects(selectedSubject);
-                    }}
-                    key={idx}
-                    className="flex items-center justify-between gap-5 bg-gray-100 mb-1"
-                  >
-                    <div className="py-1 pl-3 text-sm font-semibold text-gray-500 capitalize whitespace-nowrap">
-                      <span className="mr-2">{idx + 1}.</span>
-                      {item?.subject}
-                    </div>
-                    <div className="hover:bg-red-500 h-full w-full flex justify-center items-center rounded-r px-1 cursor-pointer text-red-500 hover:text-white transition-colors duration-200">
-                      <RxCross2 className="h-5 w-5" />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+
+            {/* test paper nested subject subSubject */}
+            {isTeachTestPaper &&
+            testPaperSubjectsList?.subjectsList?.length > 0 ? (
+              <SubjectCommonComponent
+                allSubjects={testPaperSubjectsList?.subjectsList}
+                selectedSubjects={testPaperSubjects}
+                setSelectedSubjects={setTestPaperSubjects}
+                subjectError={errors?.testPaperSubjects}
+                componentName={"Test Paper"}
+              />
+            ) : (
+              ""
+            )}
           </div>
 
           {/* Teach Admission Test */}
@@ -692,17 +519,18 @@ const TutoringInfo = ({ setActiveTab }) => {
                 Can you Teach Admission Test?
               </label>
               <div className={`flex gap-10 items-center mb-3`}>
-                <div className="flex ">
+                <div className="flex">
                   <input
-                    onInput={() => setIsTeachAdmissionTest(true)}
+                    onClick={() => setIsTeachAdmissionTest(true)}
                     id="teachAdmissionTest-1"
                     type="radio"
                     name="teachAdmissionTest"
+                 
                     className="w-4 h-4"
                     required
                   />
                   <label
-                    htmlFor="teachAdmissionTest"
+                    htmlFor="teachAdmissionTest-1"
                     className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
                     Yes
@@ -710,11 +538,11 @@ const TutoringInfo = ({ setActiveTab }) => {
                 </div>
                 <div className="flex items-center">
                   <input
-                    onInput={() => setIsTeachAdmissionTest(false)}
+                    onClick={() => setIsTeachAdmissionTest(false)}
                     id="teachAdmissionTest-2"
                     type="radio"
-                    value=""
                     name="teachAdmissionTest"
+                  
                     className="w-4 h-4"
                   />
                   <label
@@ -726,67 +554,135 @@ const TutoringInfo = ({ setActiveTab }) => {
                 </div>
               </div>
             </div>
-            {/* choose Subject */}
-            <div className={`w-full ${!isTeachAdmissionTest && "hidden"} my-5`}>
+            {/* admission test nested subject subSubject */}
+            {isTeachAdmissionTest &&
+            admissionTestSubjectsList?.subjectsList?.length > 0 ? (
+              <SubjectCommonComponent
+                allSubjects={admissionTestSubjectsList?.subjectsList}
+                selectedSubjects={admissionTestSubjects}
+                setSelectedSubjects={setAdmissionTestSubjects}
+                subjectError={errors.admissionTestSubjects}
+                componentName={"Admission Test"}
+              />
+            ) : (
+              ""
+            )}
+          </div>
+
+          {/* Teach Enrichment */}
+          <div className="my-10">
+            {/* Enrichment radio box */}
+            <div>
               <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-                Choose Admission Test Subject
+                Can you Teach Enrichment?
               </label>
-              <select
-                {...register("admissionTestSubject")}
-                defaultValue=""
-                className="bg-gray-50 mb- border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                onChange={(event) => {
-                  const selectedValue = JSON.parse(event.target.value);
-                  if (!isObjectInArray(admissionTestSubjects, selectedValue)) {
-                    setAdmissionTestSubjects([
-                      ...admissionTestSubjects,
-                      selectedValue,
-                    ]);
-                  }
-                }}
-              >
-                <option value="" disabled>
-                  Choose Subject
-                </option>
-                {allExtraSubjects
-                  ?.filter((subject) => subject?.type === "admission-test")
-                  ?.map((subject, index) => (
-                    <option
-                      key={index}
-                      value={JSON.stringify({
-                        type: subject?.type,
-                        subject: subject?.subject,
-                      })}
-                    >
-                      {subject?.subject}
-                    </option>
-                  ))}
-              </select>
-              <div className="flex overflow-auto mt-3 gap-2">
-                {admissionTestSubjects?.map((item, idx) => (
-                  <div
-                    onClick={() => {
-                      let selectedSubject;
-                      selectedSubject = filterObjectsFromArray(
-                        admissionTestSubjects,
-                        item
-                      );
-                      setAdmissionTestSubjects(selectedSubject);
-                    }}
-                    key={idx}
-                    className="flex items-center justify-between gap-5 bg-gray-100 mb-1"
+              <div className={`flex gap-10 items-center mb-3`}>
+                <div className="flex">
+                  <input
+                    onClick={() => setIsTeachEnrichment(true)}
+                    id="teachEnrichment-1"
+                    type="radio"
+                    name="teachEnrichment"
+  
+                    className="w-4 h-4"
+                    required
+                  />
+                  <label
+                    htmlFor="teachEnrichment-1"
+                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                   >
-                    <div className="py-1 pl-3 text-sm font-semibold text-gray-500 capitalize whitespace-nowrap">
-                      <span className="mr-2">{idx + 1}.</span>
-                      {item?.subject}
-                    </div>
-                    <div className="hover:bg-red-500 h-full w-full flex justify-center items-center rounded-r px-1 cursor-pointer text-red-500 hover:text-white transition-colors duration-200">
-                      <RxCross2 className="h-5 w-5" />
-                    </div>
-                  </div>
-                ))}
+                    Yes
+                  </label>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    onClick={() => setIsTeachEnrichment(false)}
+                    id="teachEnrichment-2"
+                    type="radio"
+                    name="teachEnrichment"
+          
+                    className="w-4 h-4"
+                  />
+                  <label
+                    htmlFor="teachEnrichment-2"
+                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    No
+                  </label>
+                </div>
               </div>
             </div>
+            {/* admission test nested subject subSubject */}
+            {isTeachEnrichment &&
+            enrichmentSubjectsList?.subjectsList?.length > 0 ? (
+              <SubjectCommonComponent
+                allSubjects={enrichmentSubjectsList?.subjectsList}
+                selectedSubjects={enrichmentSubjects}
+                setSelectedSubjects={setEnrichmentSubjects}
+                subjectError={errors?.enrichmentSubjects}
+                componentName={"Enrichment"}
+              />
+            ) : (
+              ""
+            )}
+          </div>
+
+          {/* Teach Professional */}
+          <div className="my-10">
+            {/* Professional radio box */}
+            <div>
+              <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+                Can you Teach Professional?
+              </label>
+              <div className={`flex gap-10 items-center mb-3`}>
+                <div className="flex">
+                  <input
+                    onClick={() => setIsTeachProfessional(true)}
+                    id="teachProfessional-1"
+                    type="radio"
+                    name="teachProfessional"
+            
+                    className="w-4 h-4"
+                    required
+                  />
+                  <label
+                    htmlFor="teachProfessional-1"
+                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div className="flex items-center">
+                  <input
+                    onClick={() => setIsTeachProfessional(false)}
+                    id="teachProfessional-2"
+                    type="radio"
+                    name="teachProfessional"
+            
+                    className="w-4 h-4"
+                  />
+                  <label
+                    htmlFor="teachProfessional-2"
+                    className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  >
+                    No
+                  </label>
+                </div>
+              </div>
+            </div>
+            {/* admission test nested subject subSubject */}
+            {isTeachProfessional &&
+            professionalSubjectsList?.subjectsList?.length > 0 ? (
+              <SubjectCommonComponent
+                allSubjects={professionalSubjectsList?.subjectsList}
+                selectedSubjects={professionalSubjects}
+                setSelectedSubjects={setProfessionalSubjects}
+                subjectError={errors?.professionalSubjects}
+                componentName={"Professional"}
+              />
+            ) : (
+              ""
+            )}
           </div>
 
           {/* Submit Button */}
@@ -799,7 +695,7 @@ const TutoringInfo = ({ setActiveTab }) => {
               {isLoading ? (
                 <ImSpinner9 className="animate-spin my-1 mx-4" />
               ) : (
-                "Submit"
+                "Save"
               )}
             </button>
           </div>
