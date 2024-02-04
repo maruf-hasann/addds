@@ -4,9 +4,9 @@ import PersonalInfo from "./PersonalInfo/PersonalInfo";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import AcademicInfo from "./AcademicInfo/AcademicInfo";
 import TutoringInfo from "./TutoringInfo/TutoringInfo";
-import Promotion from "./Promotion/Promotion";
 import { useState } from "react";
 import AdditionalTutoringInfo from "./AdditionalTutoringInfo/AdditionalTutoringInfo";
+import Promotion from "./Promotion/Promotion";
 
 const AddTutorsInfo = () => {
   const [activeTab, setActiveTab] = useState(5);
@@ -61,7 +61,7 @@ const AddTutorsInfo = () => {
     },
     {
       id: 6,
-      value: <Promotion setActiveTab={setActiveTab} />,
+      value: <Promotion />,
     },
   ];
 
