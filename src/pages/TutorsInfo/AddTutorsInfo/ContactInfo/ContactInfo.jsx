@@ -22,6 +22,12 @@ const ContactInfo = ({ setActiveTab }) => {
   const { data: convenientTimesData } = useGetConvenientQuery();
   const convenientTimes = convenientTimesData?.data;
 
+  // get previous tab number
+  useEffect(() => {
+    const number = localStorage.getItem("tutor-number");
+    setNumber(number);
+  }, []);
+
   //check number is valid or not
   useEffect(() => {
     number && isValidPhoneNumber(number)
