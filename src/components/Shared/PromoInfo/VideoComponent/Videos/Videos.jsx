@@ -2,13 +2,14 @@ import { FaAws, FaLock, FaYoutube } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleDown, FaDownload } from "react-icons/fa6";
 import { TbReplace } from "react-icons/tb";
 import ReactPlayer from "react-player";
 import TableSkeleton from "../../../DataTable/TableSkeleton/TableSkeleton";
 import VideoUrlReplaceModal from "../VideoUrlReplaceModal/VideoUrlReplaceModal";
 import CopyToClipboard from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
+import CommonTextModalForCopy from "../../../CommonTextModalForCopy/CommonTextModalForCopy";
 
 const Videos = ({ videos, isLoading }) => {
   const [hideThumbnail, setHideThumbnail] = useState(null);
@@ -24,6 +25,8 @@ const Videos = ({ videos, isLoading }) => {
   const [openVideoUrlReplaceModal, setOpenVideoUrlReplaceModal] =
     useState(false);
   const [replaceVideoData, setReplaceVideoData] = useState({});
+  const [isOpenCopyModal, setIsOpenCopyModal] = useState(false);
+  const [modalContent, setModalContent] = useState("");
 
   useEffect(() => {
     if (videos) {
@@ -117,6 +120,12 @@ const Videos = ({ videos, isLoading }) => {
     }
     setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
   };
+
+  const handleDownloadVideoAndThumbnail = ({ videoUrl, imageUrl }) => {
+    if (!videoUrl || !imageUrl) return;
+  };
+
+  console.log();
 
   return (
     <div>
@@ -272,28 +281,28 @@ const Videos = ({ videos, isLoading }) => {
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
                   >
                     <div>
-                      <CopyToClipboard
-                        onCopy={() => toast.success("Title copied")}
-                        text={item?.title}
+                      <div
+                        onClick={() => {
+                          setIsOpenCopyModal(true),
+                            setModalContent(item?.description);
+                        }}
                         className="font-semibold cursor-pointer"
                       >
-                        <div>
-                          {item?.title?.length > 20
-                            ? item?.title?.slice(0, 20) + "..."
-                            : item?.title}
-                        </div>
-                      </CopyToClipboard>
-                      <CopyToClipboard
-                        onCopy={() => toast.success("Description copied")}
-                        text={item?.description}
+                        {item?.title?.length > 20
+                          ? item?.title?.slice(0, 20) + "..."
+                          : item?.title}
+                      </div>
+                      <p
+                        onClick={() => {
+                          setIsOpenCopyModal(true),
+                            setModalContent(item?.description);
+                        }}
                         className="mt-2 text-sm whitespace-normal cursor-pointer"
                       >
-                        <div>
-                          {item?.description?.length > 50
-                            ? item?.description?.slice(0, 50) + "..."
-                            : item?.description}
-                        </div>
-                      </CopyToClipboard>
+                        {item?.description?.length > 50
+                          ? item?.description?.slice(0, 50) + "..."
+                          : item?.description}
+                      </p>
                     </div>
                   </td>
                   {/* visibility */}
@@ -408,17 +417,29 @@ const Videos = ({ videos, isLoading }) => {
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top flex justify-center`}
                   >
-                    <TbReplace
-                      onClick={() => {
-                        setOpenVideoUrlReplaceModal(true),
-                          setReplaceVideoData({
-                            id: item?._id,
-                            preUrl: item?.videoUrl,
-                          });
-                      }}
-                      title="Replace Video URL"
-                      className="cursor-pointer text-xl"
-                    />
+                    <div className="flex  items-center gap-5">
+                      <TbReplace
+                        onClick={() => {
+                          setOpenVideoUrlReplaceModal(true),
+                            setReplaceVideoData({
+                              id: item?._id,
+                              preUrl: item?.videoUrl,
+                            });
+                        }}
+                        title="Replace Video URL"
+                        className="cursor-pointer text-xl"
+                      />
+                      <FaDownload
+                        onClick={() =>
+                          handleDownloadVideoAndThumbnail({
+                            videoUrl: item?.videoUrl,
+                            imageUrl: item?.thumbnail,
+                          })
+                        }
+                        className="cursor-pointer text-xl"
+                        title="Download Video and Thumbnail"
+                      />
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -433,6 +454,15 @@ const Videos = ({ videos, isLoading }) => {
           isOpen={openVideoUrlReplaceModal}
           setIsOpen={setOpenVideoUrlReplaceModal}
           setData={setData}
+        />
+      )}
+
+      {isOpenCopyModal && modalContent && (
+        <CommonTextModalForCopy
+          content={modalContent}
+          setContent={setModalContent}
+          isOpenModal={isOpenCopyModal}
+          setIsOpenModal={setIsOpenCopyModal}
         />
       )}
     </div>
