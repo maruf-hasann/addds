@@ -7,6 +7,8 @@ import { TbReplace } from "react-icons/tb";
 import ReactPlayer from "react-player";
 import TableSkeleton from "../../../DataTable/TableSkeleton/TableSkeleton";
 import VideoUrlReplaceModal from "../VideoUrlReplaceModal/VideoUrlReplaceModal";
+import CopyToClipboard from "react-copy-to-clipboard";
+import toast from "react-hot-toast";
 
 const Videos = ({ videos, isLoading }) => {
   const [hideThumbnail, setHideThumbnail] = useState(null);
@@ -270,16 +272,28 @@ const Videos = ({ videos, isLoading }) => {
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
                   >
                     <div>
-                      <p className="font-semibold">
-                        {item?.title?.length > 20
-                          ? item?.title?.slice(0, 20) + "..."
-                          : item?.title}
-                      </p>
-                      <p className="mt-2 text-sm whitespace-normal">
-                        {item?.description?.length > 50
-                          ? item?.description?.slice(0, 50) + "..."
-                          : item?.description}
-                      </p>
+                      <CopyToClipboard
+                        onCopy={() => toast.success("Title copied")}
+                        text={item?.title}
+                        className="font-semibold cursor-pointer"
+                      >
+                        <div>
+                          {item?.title?.length > 20
+                            ? item?.title?.slice(0, 20) + "..."
+                            : item?.title}
+                        </div>
+                      </CopyToClipboard>
+                      <CopyToClipboard
+                        onCopy={() => toast.success("Description copied")}
+                        text={item?.description}
+                        className="mt-2 text-sm whitespace-normal cursor-pointer"
+                      >
+                        <div>
+                          {item?.description?.length > 50
+                            ? item?.description?.slice(0, 50) + "..."
+                            : item?.description}
+                        </div>
+                      </CopyToClipboard>
                     </div>
                   </td>
                   {/* visibility */}
