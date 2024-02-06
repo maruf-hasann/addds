@@ -40,7 +40,18 @@ const AllBlog = () => {
         tableData={allBlogs}
         handleSelectedRowItem={(data) => console.log(data)}
         columns={[
-          { name: "Title", dataIndex: "title", key: "_id" },
+          {
+            name: "Title",
+            render: ({ item }) => (
+              <div>
+                <h1 className=" font-semibold">
+                  {item?.title.length > 60
+                    ? item?.title?.slice(0, 60) + "..."
+                    : item?.title}
+                </h1>
+              </div>
+            ),
+          },
           {
             name: "Category",
             dataIndex: "category",
