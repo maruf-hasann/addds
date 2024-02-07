@@ -121,11 +121,29 @@ const Videos = ({ videos, isLoading }) => {
     setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
   };
 
-  const handleDownloadVideoAndThumbnail = ({ videoUrl, imageUrl }) => {
-    if (!videoUrl || !imageUrl) return;
+  const handleDownloadVideoAndThumbnail = async (url, fileName) => {
+    try {
+      // const response = await fetch(url);
+
+      const response = await fetch(url);
+
+      const blob = await response.blob();
+
+      // Create a link element
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = fileName;
+
+      // Trigger the download automatically
+      link.click();
+
+      // Clean up
+      window.URL.revokeObjectURL(link.href);
+    } catch (error) {
+      toast.error("Error downloading file");
+    }
   };
 
-  console.log();
 
   return (
     <div>
@@ -215,11 +233,10 @@ const Videos = ({ videos, isLoading }) => {
               {sortedData?.slice(0, entries).map((item, idx) => (
                 <tr
                   key={item._id}
-                  className={`hover:bg-blue-50 ${
-                    idx === sortedData?.length - 1
-                      ? "border-b border-b-blue-gray-100"
-                      : ""
-                  }`}
+                  className={`hover:bg-blue-50 ${idx === sortedData?.length - 1
+                    ? "border-b border-b-blue-gray-100"
+                    : ""
+                    }`}
                 >
                   <td className="p-4 border-t border-t-blue-gray-100">
                     <input
@@ -269,9 +286,8 @@ const Videos = ({ videos, isLoading }) => {
                             onMouseEnter={() => setHideThumbnail(item?._id)}
                             src={item?.thumbnail}
                             alt=""
-                            className={`absolute inset-0 w-60 h-28 object-cover ${
-                              hideThumbnail === item?._id && "-z-10"
-                            }`}
+                            className={`absolute inset-0 w-60 h-28 object-cover ${hideThumbnail === item?._id && "-z-10"
+                              }`}
                           />
                         ))}
                     </div>
@@ -431,10 +447,10 @@ const Videos = ({ videos, isLoading }) => {
                       />
                       <FaDownload
                         onClick={() =>
-                          handleDownloadVideoAndThumbnail({
-                            videoUrl: item?.videoUrl,
-                            imageUrl: item?.thumbnail,
-                          })
+                          handleDownloadVideoAndThumbnail(
+                            item?.thumbnail,
+                            "thumbnail-download",
+                          )
                         }
                         className="cursor-pointer text-xl"
                         title="Download Video and Thumbnail"
