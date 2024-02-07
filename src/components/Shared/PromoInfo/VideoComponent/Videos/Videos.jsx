@@ -121,11 +121,29 @@ const Videos = ({ videos, isLoading }) => {
     setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
   };
 
-  const handleDownloadVideoAndThumbnail = ({ videoUrl, imageUrl }) => {
-    if (!videoUrl || !imageUrl) return;
-  };
+  const handleDownloadVideoAndThumbnail = async (url, fileName) => {
+    console.log(url, fileName)
+    try {
+      // const response = await fetch(url);
 
-  console.log();
+      const response = await fetch(url);
+
+      const blob = await response.blob();
+
+      // Create a link element
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = fileName;
+
+      // Trigger the download automatically
+      link.click();
+
+      // Clean up
+      window.URL.revokeObjectURL(link.href);
+    } catch (error) {
+      toast.error("Error downloading file", error);
+    }
+  };
 
   return (
     <div>
@@ -431,10 +449,10 @@ const Videos = ({ videos, isLoading }) => {
                       />
                       <FaDownload
                         onClick={() =>
-                          handleDownloadVideoAndThumbnail({
-                            videoUrl: item?.videoUrl,
-                            imageUrl: item?.thumbnail,
-                          })
+                          handleDownloadVideoAndThumbnail(
+                            item?.thumbnail,
+                            "thumbnail-download"
+                          )
                         }
                         className="cursor-pointer text-xl"
                         title="Download Video and Thumbnail"

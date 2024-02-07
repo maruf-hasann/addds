@@ -49,7 +49,7 @@ const UpdateCoachingModal = ({
     curriculumBoard: "",
     coachingFee: "",
     duration: "",
-    aboutClass: "",
+    aboutCoaching: "",
     programDetails: "",
     startingDate: "",
     uploadClassRoutineImage: null,
@@ -65,44 +65,19 @@ const UpdateCoachingModal = ({
   const [customErrors, setCustomErrors] = useState({
     tutoringGrades: "",
     tutoringSubjects: "",
-    aboutClass: "",
     programDetails: "",
     classRoutineInText: "",
     classRoutineInImage: "",
     featuredMedia: "",
   });
-
-  useEffect(() => {
-    if (coaching) {
-      setSelectedTutoringGrades(
-        coaching.grade?.map((grade) => {
-          return { gradeName: grade?.className };
-        })
-      );
-      setSelectedTutoringSubjects(subjectConverter(coaching?.subjectsList));
-      setInitialState({
-        ...initialState,
-        title: coaching?.title,
-        educationVariant: coaching.educationVariant,
-        tutoringVariant: coaching.coachingVariant,
-        curriculumBoard: coaching?.curriculumBoard,
-        coachingFee: coaching?.coachingFee,
-        duration: coaching?.duration.charAt(0),
-        startingDate: coaching?.startingDate,
-        coachingPlace: coaching?.coachingPlace,
-        aboutClass: coaching.aboutCoaching,
-        programDetails: coaching.programDetails,
-        uploadClassRoutineImage: coaching?.classRoutingInImage ? true : false,
-        classRoutineInText: coaching.classRoutingInText,
-        routineImageUrl: coaching.classRoutingInImage,
-        featuredMediaExtension:
-          coaching?.featureMediaType === "video" ? "mp4" : "jpg",
-        featuredMediaUrl: coaching.featureMediaUrl,
-        routineImagePreview: coaching.classRoutingInImage,
-        featuredMediaPreview: coaching.featureMediaUrl,
-      });
-    }
-  }, [coaching]);
+  const requiredFields = [
+    "tutoringGrades",
+    "tutoringSubjects",
+    "programDetails",
+    "classRoutineInText",
+    "classRoutineInImage",
+    "featuredMedia",
+  ];
 
   const [uploadMedia] = useUploadCoachingMediaMutation();
   const [deleteMedia] = useDeleteCoachingMediaMutation();
@@ -155,7 +130,6 @@ const UpdateCoachingModal = ({
           ? true
           : false,
       tutoringSubjects: selectedTutoringSubjects?.length ? true : false,
-      aboutClass: initialState?.aboutClass,
       programDetails: initialState?.programDetails,
       classRoutineInText: initialState?.uploadClassRoutineImage
         ? true
@@ -168,15 +142,6 @@ const UpdateCoachingModal = ({
       featuredMedia:
         initialState?.featuredMedia || initialState?.featuredMediaUrl,
     };
-    const requiredFields = [
-      "tutoringGrades",
-      "tutoringSubjects",
-      "aboutClass",
-      "programDetails",
-      "classRoutineInText",
-      "classRoutineInImage",
-      "featuredMedia",
-    ];
 
     let isSuccess = true;
     requiredFields.forEach((field) => {
@@ -282,7 +247,7 @@ const UpdateCoachingModal = ({
             })
           : undefined,
       subjectsList: modifySubjectsForPost(selectedTutoringSubjects),
-      aboutCoaching: initialState?.aboutClass,
+      aboutCoaching: initialState?.aboutCoaching,
       programDetails: initialState?.programDetails,
       coachingFee: Number(initialState?.coachingFee),
       coachingPlace: initialState?.coachingPlace,
@@ -304,8 +269,6 @@ const UpdateCoachingModal = ({
       featureMediaUrl: featuredMediaUrl,
     };
 
-    console.log(coachingData);
-
     const createCoachingResult = await updateCoaching({
       data: coachingData,
       id: coaching?.coachingId,
@@ -323,7 +286,7 @@ const UpdateCoachingModal = ({
         curriculumBoard: "",
         coachingFee: "",
         duration: "",
-        aboutClass: "",
+        aboutCoaching: "",
         programDetails: "",
         uploadClassRoutineImage: null,
         classRoutineInText: "",
@@ -338,7 +301,6 @@ const UpdateCoachingModal = ({
       setCustomErrors({
         tutoringGrades: "",
         tutoringSubjects: "",
-        aboutClass: "",
         programDetails: "",
         classRoutineInText: "",
         classRoutineInImage: "",
@@ -365,6 +327,38 @@ const UpdateCoachingModal = ({
     setIsOpenModal(!isOpenModal);
     setCoaching(null);
   };
+
+  useEffect(() => {
+    if (coaching) {
+      setSelectedTutoringGrades(
+        coaching.grade?.map((grade) => {
+          return { gradeName: grade?.className };
+        })
+      );
+      setSelectedTutoringSubjects(subjectConverter(coaching?.subjectsList));
+      setInitialState({
+        ...initialState,
+        title: coaching?.title,
+        educationVariant: coaching.educationVariant,
+        tutoringVariant: coaching.coachingVariant,
+        curriculumBoard: coaching?.curriculumBoard,
+        coachingFee: coaching?.coachingFee,
+        duration: coaching?.duration.charAt(0),
+        startingDate: coaching?.startingDate,
+        coachingPlace: coaching?.coachingPlace,
+        aboutCoaching: coaching.aboutCoaching,
+        programDetails: coaching.programDetails,
+        uploadClassRoutineImage: coaching?.classRoutingInImage ? true : false,
+        classRoutineInText: coaching.classRoutingInText,
+        routineImageUrl: coaching.classRoutingInImage,
+        featuredMediaExtension:
+          coaching?.featureMediaType === "video" ? "mp4" : "jpg",
+        featuredMediaUrl: coaching.featureMediaUrl,
+        routineImagePreview: coaching.classRoutingInImage,
+        featuredMediaPreview: coaching.featureMediaUrl,
+      });
+    }
+  }, [coaching]);
 
   return (
     <div
@@ -486,6 +480,8 @@ const UpdateCoachingModal = ({
                   initialState={initialState}
                   setInitialState={setInitialState}
                   customErrors={customErrors}
+                  errors={errors}
+                  register={register}
                 />
                 <ClassRoutine
                   initialState={initialState}

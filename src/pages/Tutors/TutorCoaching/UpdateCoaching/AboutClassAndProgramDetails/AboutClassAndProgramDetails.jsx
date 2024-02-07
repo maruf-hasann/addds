@@ -1,35 +1,46 @@
 import JoditEditor from "jodit-react";
 import { useRef } from "react";
+import { commonInputClassName } from "../../../../../libs/commonInputClassName";
 
 const AboutClassAndProgramDetails = ({
   initialState,
   setInitialState,
   customErrors,
+  errors,
+  register,
 }) => {
   const editor = useRef(null);
   return (
     <div className="grid grid-cols-1 gap-8">
       {/* about class */}
       <div className="w-full">
-        <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-          About The Class *
-        </label>
-
-        <JoditEditor
-          ref={editor}
-          value={initialState?.aboutClass}
-          tabIndex={1} // tabIndex of textarea
-          onBlur={(newContent) =>
-            setInitialState({ ...initialState, aboutClass: newContent })
-          }
-        />
-        {(!initialState?.aboutClass ||
-          initialState?.aboutClass === "<p><br></p>") &&
-          customErrors?.aboutClass && (
+        {/* title */}
+        <div className="w-full">
+          <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+            About Coaching *
+          </label>
+          <textarea
+            type="textArea"
+            {...register("aboutCoaching", {
+              required: initialState?.aboutCoaching
+                ? false
+                : "About Coaching is required",
+            })}
+            value={initialState?.aboutCoaching}
+            onChange={(e) =>
+              setInitialState({
+                ...initialState,
+                aboutCoaching: e.target.value,
+              })
+            }
+            className={`${commonInputClassName} h-28`}
+          />
+          {errors.aboutCoaching && (
             <p className="text-red-500 text-sm absolute">
-              {customErrors.aboutClass}
+              {errors?.aboutCoaching?.message}
             </p>
           )}
+        </div>
       </div>
       {/* programDetails */}
       <div className="w-full">
