@@ -65,6 +65,7 @@ import MediaLibrary from "../pages/MediaLibrary/AllMediaLibrary/MediaLibrary";
 import AllBlog from "../pages/Blog/AllBlog/AllBlog";
 import AllCategory from "../pages/Category/AllCategory/AllCategory";
 import AllVideo from "../pages/Blog/Video/AllVideo/AllVideo";
+import TutorCoaching from "../pages/Tutors/TutorCoaching/TutorCoaching";
 
 export const router = createBrowserRouter([
   {
@@ -186,6 +187,10 @@ export const router = createBrowserRouter([
         element: <TutorProfile />,
       },
       {
+        path: "/tutor-coaching/:number",
+        element: <TutorCoaching />,
+      },
+      {
         path: "/tutor-profile-cv-format/:number",
         element: <TutorProfileCVFormat />,
       },
@@ -196,14 +201,17 @@ export const router = createBrowserRouter([
       {
         path: "/tutor-account",
         element: <TutorAccount />,
-      }, {
-         path: "/blog",
+      },
+      {
+        path: "/blog",
         element: <AllBlog />,
-      }, {
-         path: "/category",
+      },
+      {
+        path: "/category",
         element: <AllCategory />,
-      }, {
-         path: "/video",
+      },
+      {
+        path: "/video",
         element: <AllVideo />,
       },
       {

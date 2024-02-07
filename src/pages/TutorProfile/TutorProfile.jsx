@@ -12,6 +12,7 @@ import PromoInfo from "./PromoInfo/PromoInfo";
 import IdentityInfo from "./IdentityInfo/IdentityInfo";
 import { SiMicrosoftacademic } from "react-icons/si";
 import { MdOutlineManageAccounts } from "react-icons/md";
+import { FaBookOpenReader } from "react-icons/fa6";
 
 const TutorProfile = () => {
   const { number } = useParams();
@@ -76,6 +77,13 @@ const TutorProfile = () => {
                   title="Details In CV Format"
                 >
                   <BiSolidUserAccount className="text-3xl" />
+                </Link>
+                <Link
+                  to={`/tutor-coaching/${number}`}
+                  className=" py-2 text-gray-600 hover:text-primary cursor-pointer"
+                  title="Details In CV Format"
+                >
+                  <FaBookOpenReader className="text-3xl" />
                 </Link>
               </div>
             </div>
