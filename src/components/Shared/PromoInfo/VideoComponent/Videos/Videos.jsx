@@ -2,11 +2,14 @@ import { FaAws, FaLock, FaYoutube } from "react-icons/fa";
 import { BiWorld } from "react-icons/bi";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleDown, FaDownload } from "react-icons/fa6";
 import { TbReplace } from "react-icons/tb";
 import ReactPlayer from "react-player";
 import TableSkeleton from "../../../DataTable/TableSkeleton/TableSkeleton";
 import VideoUrlReplaceModal from "../VideoUrlReplaceModal/VideoUrlReplaceModal";
+import CopyToClipboard from "react-copy-to-clipboard";
+import toast from "react-hot-toast";
+import CommonTextModalForCopy from "../../../CommonTextModalForCopy/CommonTextModalForCopy";
 
 const Videos = ({ videos, isLoading }) => {
   const [hideThumbnail, setHideThumbnail] = useState(null);
@@ -22,6 +25,8 @@ const Videos = ({ videos, isLoading }) => {
   const [openVideoUrlReplaceModal, setOpenVideoUrlReplaceModal] =
     useState(false);
   const [replaceVideoData, setReplaceVideoData] = useState({});
+  const [isOpenCopyModal, setIsOpenCopyModal] = useState(false);
+  const [modalContent, setModalContent] = useState("");
 
   useEffect(() => {
     if (videos) {
@@ -116,6 +121,30 @@ const Videos = ({ videos, isLoading }) => {
     setSelectedRow((prevSelectedRow) => [...prevSelectedRow, row]);
   };
 
+  const handleDownloadVideoAndThumbnail = async (url, fileName) => {
+    try {
+      // const response = await fetch(url);
+
+      const response = await fetch(url);
+
+      const blob = await response.blob();
+
+      // Create a link element
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = fileName;
+
+      // Trigger the download automatically
+      link.click();
+
+      // Clean up
+      window.URL.revokeObjectURL(link.href);
+    } catch (error) {
+      toast.error("Error downloading file");
+    }
+  };
+
+
   return (
     <div>
       <div className="bg-white rounded-md text-gray-700 px-3 py-10 mt-2">
@@ -204,11 +233,10 @@ const Videos = ({ videos, isLoading }) => {
               {sortedData?.slice(0, entries).map((item, idx) => (
                 <tr
                   key={item._id}
-                  className={`hover:bg-blue-50 ${
-                    idx === sortedData?.length - 1
-                      ? "border-b border-b-blue-gray-100"
-                      : ""
-                  }`}
+                  className={`hover:bg-blue-50 ${idx === sortedData?.length - 1
+                    ? "border-b border-b-blue-gray-100"
+                    : ""
+                    }`}
                 >
                   <td className="p-4 border-t border-t-blue-gray-100">
                     <input
@@ -258,9 +286,8 @@ const Videos = ({ videos, isLoading }) => {
                             onMouseEnter={() => setHideThumbnail(item?._id)}
                             src={item?.thumbnail}
                             alt=""
-                            className={`absolute inset-0 w-60 h-28 object-cover ${
-                              hideThumbnail === item?._id && "-z-10"
-                            }`}
+                            className={`absolute inset-0 w-60 h-28 object-cover ${hideThumbnail === item?._id && "-z-10"
+                              }`}
                           />
                         ))}
                     </div>
@@ -270,12 +297,24 @@ const Videos = ({ videos, isLoading }) => {
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
                   >
                     <div>
-                      <p className="font-semibold">
+                      <div
+                        onClick={() => {
+                          setIsOpenCopyModal(true),
+                            setModalContent(item?.description);
+                        }}
+                        className="font-semibold cursor-pointer"
+                      >
                         {item?.title?.length > 20
                           ? item?.title?.slice(0, 20) + "..."
                           : item?.title}
-                      </p>
-                      <p className="mt-2 text-sm whitespace-normal">
+                      </div>
+                      <p
+                        onClick={() => {
+                          setIsOpenCopyModal(true),
+                            setModalContent(item?.description);
+                        }}
+                        className="mt-2 text-sm whitespace-normal cursor-pointer"
+                      >
                         {item?.description?.length > 50
                           ? item?.description?.slice(0, 50) + "..."
                           : item?.description}
@@ -394,17 +433,29 @@ const Videos = ({ videos, isLoading }) => {
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top flex justify-center`}
                   >
-                    <TbReplace
-                      onClick={() => {
-                        setOpenVideoUrlReplaceModal(true),
-                          setReplaceVideoData({
-                            id: item?._id,
-                            preUrl: item?.videoUrl,
-                          });
-                      }}
-                      title="Replace Video URL"
-                      className="cursor-pointer text-xl"
-                    />
+                    <div className="flex  items-center gap-5">
+                      <TbReplace
+                        onClick={() => {
+                          setOpenVideoUrlReplaceModal(true),
+                            setReplaceVideoData({
+                              id: item?._id,
+                              preUrl: item?.videoUrl,
+                            });
+                        }}
+                        title="Replace Video URL"
+                        className="cursor-pointer text-xl"
+                      />
+                      <FaDownload
+                        onClick={() =>
+                          handleDownloadVideoAndThumbnail(
+                            item?.thumbnail,
+                            "thumbnail-download",
+                          )
+                        }
+                        className="cursor-pointer text-xl"
+                        title="Download Video and Thumbnail"
+                      />
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -419,6 +470,15 @@ const Videos = ({ videos, isLoading }) => {
           isOpen={openVideoUrlReplaceModal}
           setIsOpen={setOpenVideoUrlReplaceModal}
           setData={setData}
+        />
+      )}
+
+      {isOpenCopyModal && modalContent && (
+        <CommonTextModalForCopy
+          content={modalContent}
+          setContent={setModalContent}
+          isOpenModal={isOpenCopyModal}
+          setIsOpenModal={setIsOpenCopyModal}
         />
       )}
     </div>
