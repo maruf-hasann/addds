@@ -3,19 +3,19 @@
 @tailwind utilities;
 
 body {
-  font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 body,
 scrolly {
-  msoverflowstyle: none;
-  overflow-y: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+    msoverflowstyle: none;
+    overflow-y: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 /* width */
-::-webkit-scrollbar {
-  width: 15px;
+/* ::-webkit-scrollbar {
+  width: 10px;
 }
 
 ::-webkit-scrollbar:horizontal{
@@ -24,24 +24,44 @@ scrolly {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #BBDEFB;
+    background: #bbdefb;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #1C6BAD;
+    background: #1c6bad;
 }
 
 ::-moz-scrollbar {
-  display: none;
+    display: none;
+}
+*/ input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    display: none;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-        display: none;
- }
+.PhoneInputInput {
+    padding: 10px;
+    background-color: transparent;
+}
 
- .PhoneInputInput {
-  padding: 10px;
-  background-color: transparent;
+.before-menu-content::before {
+    content: "";
+    width: 2px;
+    height: 100%;
+    background-color: #1b6baf;
+    position: absolute;
+    left: 0;
+}
+.before-hover-menu-content::before {
+    content: "";
+    width: 2px;
+    height: 0%;
+    background-color: #1b6baf;
+    position: absolute;
+    left: 0;
+    transition: all 0.3s;
+}
+.before-hover-menu-content:hover::before {
+    height: 100%;
 }

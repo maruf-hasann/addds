@@ -77,7 +77,7 @@ export const AddPhotoTab = ({ handleOpen }) => {
       </div>
       {!selectedImage ? (
         <div
-          className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer my-10"
+          className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer my-10 hover:border-primary transition-all group"
           onDrop={handleDrop}
           onDragOver={handleDragOver}
           onClick={() => {
@@ -94,12 +94,12 @@ export const AddPhotoTab = ({ handleOpen }) => {
           />
           <label htmlFor="image-input" className="cursor-pointer">
             <div
-              className={`grid grid-cols-1 items-center justify-center gap-5`}
+              className={`grid grid-cols-1 items-center justify-center gap-5 `}
             >
-              <div className="text-gray-400 text-7xl mx-auto">
+              <div className="text-gray-400 text-7xl transition-all mx-auto group-hover:text-primary">
                 <MdCloudUpload />
               </div>
-              <p className="font-bold">
+              <p className="font-bold transition-all group-hover:text-primary">
                 Drag and drop an image here <br /> or <br /> click to select an
                 image
               </p>

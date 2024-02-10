@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import { MdCloudUpload } from "react-icons/md";
 import { Button, Input } from "@material-tailwind/react";
+
 import { useUploadMediaMutation } from "../../../../store/service/mediaLibrary/mediaLibraryApiService";
-import toast from "react-hot-toast";
 
 export const AddVideoTab = ({ handleOpen }) => {
   const [selectedVideo, setSelectedVideo] = useState(null);
@@ -11,7 +12,7 @@ export const AddVideoTab = ({ handleOpen }) => {
   const [uploadMedia] = useUploadMediaMutation();
 
   const handleFileChange = (e) => {
-    const fileInput = document.getElementById("video-file-input");
+    // const fileInput = document.getElementById("video-file-input");
     const file = e.target.files[0];
     if (file && file.type.startsWith("video/")) {
       setSelectedVideo(file);
@@ -74,7 +75,7 @@ export const AddVideoTab = ({ handleOpen }) => {
       </div>
       {!selectedVideo ? (
         <div
-          className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer my-10"
+          className="border-2 border-dashed border-gray-300 hover:border-primary transition-all rounded-lg p-4 text-center cursor-pointer my-10 group"
           onDrop={handleDrop}
           onDragOver={handleDragOver}
         >
@@ -82,10 +83,10 @@ export const AddVideoTab = ({ handleOpen }) => {
             <div
               className={`grid grid-cols-1 items-center justify-center gap-5`}
             >
-              <div className="text-gray-400 text-7xl mx-auto">
+              <div className="text-gray-400 text-7xl mx-auto transition-all group-hover:text-primary">
                 <MdCloudUpload />
               </div>
-              <p className="font-bold">
+              <p className="font-bold transition-all group-hover:text-primary">
                 Drag and drop a video here <br /> or <br /> click to select a
                 video
               </p>
