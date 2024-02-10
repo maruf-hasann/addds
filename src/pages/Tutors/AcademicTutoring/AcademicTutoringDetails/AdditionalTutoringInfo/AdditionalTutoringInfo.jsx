@@ -2,32 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import CommonAdditionalTutoringInfo from "../../../../../components/Shared/TutorProfile/AdditionalTutoringInfo/CommonAdditionalTutoringInfo";
 
-const CommonComponent = ({ name, value }) => {
-  return (
-    <div className="p-5 border-0 border-b-[1px] border-gray-200 bg-white">
-      <h4 className="font-medium text-sm mb-1">{name}</h4>
-      <h2 className="font-bold text-lg">{value}</h2>
-    </div>
-  );
-};
-
-const ArrayCommonComponent = ({ name, values, valueName }) => {
-  return (
-    <div className="p-5 border-0 border-b-[1px] border-gray-200 bg-white">
-      <h4 className="font-medium text-sm mb-1">{name}</h4>
-      <div className="flex items-center gap-2 flex-wrap">
-        {values?.map((value, idx) => (
-          <h2
-            key={idx}
-            className="font-bold text-lg bg-blue-50 px-3 rounded-sm"
-          >
-            {value?.[valueName]}
-          </h2>
-        ))}
-      </div>
-    </div>
-  );
-};
 
 const AdditionalTutoringInfo = ({ additionalTutoringInfo, number }) => {
   return (
