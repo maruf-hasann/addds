@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { AddMediaLibraryModal } from "./AddMediaLibraryModal/AddMediaLibraryModal";
 import {
   Tabs,
   TabsHeader,
@@ -7,6 +6,8 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
+
+import { AddMediaLibraryModal } from "./AddMediaLibraryModal/AddMediaLibraryModal";
 import { VideoTableList } from "./MediaLists/VideoTableList";
 import { PhotoTableList } from "./MediaLists/PhotoTableList";
 
@@ -31,19 +32,19 @@ const MediaLibrary = () => {
 
   return (
     <section className="py-10">
-      <div className="flex justify-between items-center mb-5">
-        <h1 className="font-bold text-xl md:text-2xl text-white">
+      <div className="flex justify-between items-center mb-7">
+        <h1 className="font-bold text-xl md:text-3xl text-white">
           Media Library
         </h1>
         <div
-          className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
+          className="font-semibold text-sm border px-6 py-[8px] text-[#1C6BAD] rounded-[4px] border-sky-200 bg-white cursor-pointer"
           onClick={handleOpen}
         >
           Add New Media
         </div>
       </div>
 
-      <div className="bg-white mt-10 rounded-lg">
+      <div className="bg-white mt-14 rounded-lg pb-9">
         <Tabs value={activeTab}>
           <TabsHeader
             className="border-b border-blue-gray-50 bg-white py-4 lg:w-1/3"

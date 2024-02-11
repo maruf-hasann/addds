@@ -65,6 +65,7 @@ import MediaLibrary from "../pages/MediaLibrary/AllMediaLibrary/MediaLibrary";
 import AllBlog from "../pages/Blog/AllBlog/AllBlog";
 import AllCategory from "../pages/Category/AllCategory/AllCategory";
 import AllVideo from "../pages/Blog/Video/AllVideo/AllVideo";
+import Dashboard from "../pages/Dashboard/Dashboard";
 import TutorCoaching from "../pages/Tutors/TutorCoaching/TutorCoaching";
 
 export const router = createBrowserRouter([
@@ -74,7 +75,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <MediaLibrary />,
+        element: <Dashboard />,
       },
       {
         path: "/media-library",
