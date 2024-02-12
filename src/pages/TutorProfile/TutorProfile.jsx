@@ -13,6 +13,7 @@ import IdentityInfo from "./IdentityInfo/IdentityInfo";
 import { SiMicrosoftacademic } from "react-icons/si";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { FaBookOpenReader } from "react-icons/fa6";
+import Availability from "./Availability/Availability";
 
 const TutorProfile = () => {
   const { number } = useParams();
@@ -115,6 +116,10 @@ const TutorProfile = () => {
               <AdditionalTutoringInfo
                 additionalTutoringInfo={allInfo?.additionalInfo}
               />
+            </div>
+            {/* availability */}
+            <div className="bg-white  my-10">
+              <Availability number={allInfo?.phoneNumber} />
             </div>
             {/* Promo Info */}
             <div className="bg-white  my-10">
