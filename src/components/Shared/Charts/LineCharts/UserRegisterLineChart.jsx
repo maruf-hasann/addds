@@ -7,8 +7,7 @@ const options = {
     legend: {
         show: false,
         position: "top",
-        horizontalAlign: "left",
-       
+        horizontalAlign: "left",  
     },
     colors: ["#3b82f6", "#3b82f6"],
     chart: {
@@ -131,7 +130,7 @@ const options = {
             text: "Total Registered",
             style: {
                 fontSize: "17px",
-                color: "#334155",
+                color: "#4b5563",
             },
         },
         axisTicks: {

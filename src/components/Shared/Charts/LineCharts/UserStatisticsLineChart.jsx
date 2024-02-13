@@ -146,7 +146,7 @@ const options = {
             text: "Count Register",
             style: {
                 fontSize: "17px",
-                color: "#334155",
+                color: "#4b5563",
             },
         },
         min: 0,

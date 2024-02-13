@@ -1,36 +1,35 @@
-import React from "react";
-import { MdOutlineAddHomeWork, MdAssuredWorkload } from "react-icons/md";
-import { FaBlog, FaSchoolFlag } from "react-icons/fa6";
-import { FaSchool, FaBook } from "react-icons/fa";
-import { GiTeacher } from "react-icons/gi";
-import { RiParentFill } from "react-icons/ri";
-import { PiStudentBold } from "react-icons/pi";
-import { BiSolidSchool } from "react-icons/bi";
-import DashboardWidget from "../../components/Shared/Widgets/DashboardWidget";
 import { Button } from "@material-tailwind/react";
+import React from "react";
+import { BiSolidSchool } from "react-icons/bi";
+import { FaBook, FaSchool } from "react-icons/fa";
+import { FaBlog, FaSchoolFlag } from "react-icons/fa6";
+import { GiTeacher } from "react-icons/gi";
+import { PiStudentBold } from "react-icons/pi";
+import { RiParentFill } from "react-icons/ri";
 import UserRegisterLineChart from "../../components/Shared/Charts/LineCharts/UserRegisterLineChart";
 import UserStatisticsLineChart from "../../components/Shared/Charts/LineCharts/UserStatisticsLineChart";
+import DashboardWidget from "../../components/Shared/Widgets/DashboardWidget";
 
 const Dashboard = () => {
     return (
         <div className="">
             <div className="grid grid-cols-4 gap-4">
                 <DashboardWidget amount={1000} name={"Total Tutors"}>
-                    <GiTeacher size={25} className="text-white" />
+                    <GiTeacher size={24} className="text-white" />
                 </DashboardWidget>
                 <DashboardWidget amount={1000} name={"Total Parents"}>
                     <RiParentFill size={25} className="text-white" />
                 </DashboardWidget>
 
                 <DashboardWidget amount={1000} name={"Total Students"}>
-                    <PiStudentBold size={25} className="text-white" />
+                    <PiStudentBold size={24} className="text-white" />
                 </DashboardWidget>
 
                 <DashboardWidget amount={1000} name={"Total Blogs"}>
                     <FaBlog size={25} className="text-white" />
                 </DashboardWidget>
                 <DashboardWidget amount={1000} name={"Total School"}>
-                    <FaSchool size={25} className="text-white" />
+                    <FaSchool size={24} className="text-white" />
                 </DashboardWidget>
 
                 <DashboardWidget amount={1000} name={"Total University"}>
@@ -38,7 +37,7 @@ const Dashboard = () => {
                 </DashboardWidget>
 
                 <DashboardWidget amount={1000} name={"Total Collage"}>
-                    <FaSchoolFlag size={25} className="text-white" />
+                    <FaSchoolFlag size={24} className="text-white" />
                 </DashboardWidget>
 
                 <DashboardWidget amount={1000} name={" Total Subjects"}>

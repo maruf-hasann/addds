@@ -2,7 +2,7 @@ import React from "react";
 
 const DashboardWidget = ({ children, amount, name }) => {
     return (
-        <div className="bg-white shadow-sm shadow-white rounded-2xl p-4">
+        <div className="bg-white shadow-sm shadow-white rounded-2xl p-4 hover:-translate-y-1 transition-all duration-500 hover:cursor-pointer">
             <div className="grid grid-cols-4 items-center justify-between">
                 <div className="inline-flex col-span-1 flex-shrink-0 justify-center items-center w-12 h-12 text-white bg-gradient-to-br from-primary to-primary/80 rounded-lg">
                     {children}
