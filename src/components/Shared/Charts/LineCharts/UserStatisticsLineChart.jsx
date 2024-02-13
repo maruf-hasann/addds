@@ -169,8 +169,10 @@ const options = {
     },
     yaxis: {
         title: {
+            text: "Count Register",
             style: {
-                fontSize: "0px",
+                fontSize: "17px",
+                color: "#334155",
             },
         },
         min: 0,
