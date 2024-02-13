@@ -14,6 +14,7 @@ import {
     // MdLibraryBooks,
     MdPermMedia,
     MdDashboardCustomize,
+    MdOutlineSettings
 } from "react-icons/md";
 import { FaBlog, FaSchoolFlag } from "react-icons/fa6";
 import { FaSchool, FaBook } from "react-icons/fa";
@@ -336,7 +337,6 @@ export const withSubmenu = [
             {
                 name: "All Parent Account",
                 url: "./all-parent-account",
-                icon: <span>🧾</span>,
             },
         ],
     },
@@ -348,7 +348,6 @@ export const withSubmenu = [
             {
                 name: "All Student Account",
                 url: "./all-student-account",
-                icon: <span>🧾</span>,
             },
         ],
     },
@@ -360,17 +359,14 @@ export const withSubmenu = [
             {
                 name: "All Blog",
                 url: "./blog",
-                icon: <span>🧾</span>,
             },
             {
                 name: "Category",
                 url: "./category",
-                icon: <span>🧾</span>,
             },
             {
                 name: "Video",
                 url: "./video",
-                icon: <span>🧾</span>,
             },
         ],
     },
@@ -382,17 +378,14 @@ export const withSubmenu = [
             {
                 name: "Active Jobs",
                 url: "./all-active-regular-jobs",
-                icon: <span>🧾</span>,
             },
             {
                 name: "InActive Jobs",
                 url: "./all-un-active-regular-jobs",
-                icon: <span>🧾</span>,
             },
             {
                 name: "Hired  Jobs",
                 url: "./all-hired-regular-jobs",
-                icon: <span>🧾</span>,
             },
         ],
     },
@@ -404,17 +397,25 @@ export const withSubmenu = [
             {
                 name: "Active Jobs",
                 url: "./all-active-mock-test-jobs",
-                icon: <span>🧾</span>,
             },
             {
                 name: "InActive Jobs",
                 url: "./all-un-active-mock-test-jobs",
-                icon: <span>🧾</span>,
             },
             {
                 name: "Hired Jobs",
                 url: "./all-hired-mock-test-jobs",
-                icon: <span>🧾</span>,
+            },
+        ],
+    },
+    {
+        id: 12,
+        name: "Settings",
+        icon: <MdOutlineSettings size={22} className="text-primary" />,
+        subMenus: [
+            {
+                name: "Dashboard Widgets",
+                url: "./settings/dashboard-widgets",
             },
         ],
     },

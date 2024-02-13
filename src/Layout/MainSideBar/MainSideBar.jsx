@@ -19,7 +19,7 @@ const MainSideBar = () => {
     return (
         <div className="flex flex-col h-full   w-[18rem] fixed  pb-20 z-40 bg-white">
             <div
-                className="flex-1 scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray-100"
+                className="flex-1 scrollbar scrollbar-thumb-primary/80 hover:scrollbar-thumb-primary/60 scrollbar-track-gray-100 hover:scrollbar-track-gray-100  "
                 style={{
                     overflowX: "hidden",
                     scrollMarginRight: "15px",
