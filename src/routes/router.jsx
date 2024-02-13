@@ -68,6 +68,7 @@ import AllVideo from "../pages/Blog/Video/AllVideo/AllVideo";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import TutorCoaching from "../pages/Tutors/TutorCoaching/TutorCoaching";
 import DashboardWidgets from "../pages/Settings/DashboardWidgets/DashboardWidgets";
+import BlogBanner from "../pages/BlogBanner/BlogBanner";
 
 export const router = createBrowserRouter([
   {
@@ -207,6 +208,9 @@ export const router = createBrowserRouter([
       {
         path: "/blog",
         element: <AllBlog />,
+      }, {
+        path: "/blog-banner",
+        element:<BlogBanner/>
       },
       {
         path: "/category",
