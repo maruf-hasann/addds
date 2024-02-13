@@ -424,6 +424,17 @@ export const withSubmenu = [
       },
     ],
   },
+  {
+    id: 12,
+    name: "Settings",
+    icon: <MdOutlineSettings size={22} className="text-primary" />,
+    subMenus: [
+      {
+        name: "Dashboard Widgets",
+        url: "./settings/dashboard-widgets",
+      },
+    ],
+  },
 ];
 
 export function SettingIcon({ id, open }) {
