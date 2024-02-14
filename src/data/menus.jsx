@@ -14,6 +14,7 @@ import {
     // MdLibraryBooks,
     MdPermMedia,
     MdDashboardCustomize,
+    MdOutlineSettings
 } from "react-icons/md";
 import { FaBlog, FaSchoolFlag } from "react-icons/fa6";
 import { FaSchool, FaBook } from "react-icons/fa";
@@ -420,6 +421,17 @@ export const withSubmenu = [
         name: "Hired Jobs",
         url: "./all-hired-mock-test-jobs",
         icon: <span>🧾</span>,
+      },
+    ],
+  },
+  {
+    id: 12,
+    name: "Settings",
+    icon: <MdOutlineSettings size={22} className="text-primary" />,
+    subMenus: [
+      {
+        name: "Dashboard Widgets",
+        url: "./settings/dashboard-widgets",
       },
     ],
   },

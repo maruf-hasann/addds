@@ -67,6 +67,7 @@ import AllCategory from "../pages/Category/AllCategory/AllCategory";
 import AllVideo from "../pages/Blog/Video/AllVideo/AllVideo";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import TutorCoaching from "../pages/Tutors/TutorCoaching/TutorCoaching";
+import DashboardWidgets from "../pages/Settings/DashboardWidgets/DashboardWidgets";
 import BlogBanner from "../pages/BlogBanner/BlogBanner";
 
 export const router = createBrowserRouter([
@@ -302,6 +303,10 @@ export const router = createBrowserRouter([
       {
         path: "/mock-test-job-details/:jobType/:jobId",
         element: <MockTestJobDetails />,
+      },
+      {
+        path: "/settings/dashboard-widgets",
+        element: <DashboardWidgets />,
       },
     ],
   },
