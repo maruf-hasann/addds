@@ -17,6 +17,8 @@ import { AiOutlineSchedule } from "react-icons/ai";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import CoachingDetails from "./CoachingDetails/CoachingDetails";
 import AddMedia from "./AddMedia/AddMedia";
+import AddSchedule from "./AddSchedule/AddSchedule";
+import CoachingRoutine from "./CoachingRoutine/CoachingRoutine";
 
 const AllCoaching = ({ allCoaching, isLoading }) => {
   const [selectAll, setSelectAll] = useState(false);
@@ -556,6 +558,23 @@ const AllCoaching = ({ allCoaching, isLoading }) => {
           setCoaching={setMediaModalData}
           isOpen={isMediaModalOpen}
           setIsOpen={setIsMediaModalOpen}
+        />
+      )}
+
+      {isScheduleModalOpen && scheduleModalData && (
+        <AddSchedule
+          coaching={scheduleModalData}
+          isOpen={isScheduleModalOpen}
+          setIsOpen={setIsScheduleModalOpen}
+        />
+      )}
+
+      {isCoachingRoutineModalOpen && coachingRoutineModalData && (
+        <CoachingRoutine
+          coaching={coachingRoutineModalData}
+          setCoaching={setCoachingRoutineModalData}
+          isOpen={isCoachingRoutineModalOpen}
+          setIsOpen={setIsCoachingRoutineModalOpen}
         />
       )}
     </div>
