@@ -77,6 +77,9 @@ const Videos = ({ videos, isLoading }) => {
       name: "Title",
     },
     {
+      name: "From",
+    },
+    {
       name: "Visibility",
     },
     {
@@ -122,7 +125,7 @@ const Videos = ({ videos, isLoading }) => {
   };
 
   const handleDownloadVideoAndThumbnail = async (url, fileName) => {
-    console.log(url, fileName)
+    console.log(url, fileName);
     try {
       // const response = await fetch(url);
 
@@ -323,6 +326,14 @@ const Videos = ({ videos, isLoading }) => {
                       </p>
                     </div>
                   </td>
+                  {/* from */}
+                  <td
+                    className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
+                  >
+                    <div className="flex flex-col gap-1 capitalize">
+                      {item?.type ? item?.type : "N/A"}
+                    </div>
+                  </td>
                   {/* visibility */}
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
@@ -421,7 +432,8 @@ const Videos = ({ videos, isLoading }) => {
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top  font-semibold`}
                   >
-                    {item?.videoUrl?.includes("youtu.be") ? (
+                    {item?.videoUrl?.includes("youtu.be") ||
+                    item?.videoUrl?.includes("youtube.com") ? (
                       <div className="flex items-center gap-2 justify-center">
                         <FaYoutube /> Youtube
                       </div>
@@ -440,6 +452,7 @@ const Videos = ({ videos, isLoading }) => {
                         onClick={() => {
                           setOpenVideoUrlReplaceModal(true),
                             setReplaceVideoData({
+                              type: item?.type,
                               id: item?._id,
                               preUrl: item?.videoUrl,
                             });

@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { Button } from "@material-tailwind/react";
 import { FaSpinner } from "react-icons/fa";
-import { useChangeVideoUrlMutation } from "../../../../../store/service/tutorInfo/promotion/promotionApiService";
 import toast from "react-hot-toast";
+import {
+  useChangeCoachingVideoUrlMutation,
+  useChangePromoVideoUrlMutation,
+} from "../../../../../store/service/tutorInfo/mediaGallery/mediaGallery";
 
 const VideoUrlReplaceModal = ({
   isOpen,
@@ -15,7 +18,8 @@ const VideoUrlReplaceModal = ({
   const [newUrl, setNewUrl] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const [changeVideoUrl] = useChangeVideoUrlMutation();
+  const [changePromoVideoUrl] = useChangePromoVideoUrlMutation();
+  const [changeCoachingVideoUrl] = useChangeCoachingVideoUrlMutation();
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -37,15 +41,28 @@ const VideoUrlReplaceModal = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    const result = await changeVideoUrl({ ...replaceVideoData, newUrl });
+    let result
+    let uploadFunction
+    if(replaceVideoData?.type === 'promo'){
+      uploadFunction = changePromoVideoUrl
+    }else {
+      uploadFunction = changeCoachingVideoUrl
+    }
+
+    const {type, ...currentReplaceData} = replaceVideoData
+
+     result = await uploadFunction({ ...currentReplaceData, newUrl });
+
+     console.log(result?.data)
+
     if (result?.data?.success) {
       toast.success(result?.data?.message);
-      const videoGallery = result?.data?.data?.videoGallery;
-      console.log(
-        videoGallery?.find((vid) => vid?._id === replaceVideoData?.id)?.videoUrl
-      );
+      // const videoGallery = result?.data?.data?.videoGallery;
+      // console.log(
+      //   videoGallery?.find((vid) => vid?._id === replaceVideoData?.id)?.videoUrl
+      // );
 
-      setData([...videoGallery]);
+      // setData([...videoGallery]);
       setIsLoading(false);
       setIsOpen(false);
       setReplaceVideoData(null);
