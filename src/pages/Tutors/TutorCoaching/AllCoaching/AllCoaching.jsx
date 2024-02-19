@@ -16,6 +16,7 @@ import { MdPermMedia } from "react-icons/md";
 import { AiOutlineSchedule } from "react-icons/ai";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import CoachingDetails from "./CoachingDetails/CoachingDetails";
+import AddMedia from "./AddMedia/AddMedia";
 
 const AllCoaching = ({ allCoaching, isLoading }) => {
   const [selectAll, setSelectAll] = useState(false);
@@ -546,6 +547,15 @@ const AllCoaching = ({ allCoaching, isLoading }) => {
           setCoaching={setDetailsModalData}
           isOpenModal={isDetailsModalOpen}
           setIsOpenModal={setIsDetailsModalOpen}
+        />
+      )}
+
+      {isMediaModalOpen && mediaModalData && (
+        <AddMedia
+          coaching={mediaModalData}
+          setCoaching={setMediaModalData}
+          isOpen={isMediaModalOpen}
+          setIsOpen={setIsMediaModalOpen}
         />
       )}
     </div>
