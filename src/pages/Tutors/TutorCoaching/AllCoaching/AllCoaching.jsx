@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaUpload } from "react-icons/fa";
+import { IoEye } from "react-icons/io5";
 import ReactPlayer from "react-player";
 import moment from "moment";
 import toast from "react-hot-toast";
@@ -11,8 +12,11 @@ import { handleSelectRow } from "../../../../libs/DataTable/handleSelectRow";
 import DeleteConfirmationModal from "../../AcademicTutoring/EditAcademicTutoring/EditPromoInfo/DeleteConfirmationModal/DeleteConfirmationModal";
 import CommonTextModal from "../../../../components/Shared/CommonTextModal.jsx/CommonTextModal";
 import UpdateCoachingModal from "../UpdateCoaching/UpdateCoaching";
+import { MdPermMedia } from "react-icons/md";
+import { AiOutlineSchedule } from "react-icons/ai";
+import { PhotoProvider, PhotoView } from "react-photo-view";
 
-const AllCoaching = ({ allCoaching , isLoading}) => {
+const AllCoaching = ({ allCoaching, isLoading }) => {
   const [selectAll, setSelectAll] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [selectedRow, setSelectedRow] = useState([]);
@@ -28,6 +32,20 @@ const AllCoaching = ({ allCoaching , isLoading}) => {
 
   const [updateCoachingData, setUpdateCoachingData] = useState(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+
+  const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false);
+  const [scheduleModalData, setScheduleModalData] = useState(null);
+
+  const [isMediaModalOpen, setIsMediaModalOpen] = useState(false);
+  const [mediaModalData, setMediaModalData] = useState(null);
+
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [detailsModalData, setDetailsModalData] = useState(null);
+
+  const [isCoachingRoutineModalOpen, setIsCoachingRoutineModalOpen] =
+    useState(false);
+  const [coachingRoutineModalData, setCoachingRoutineModalData] =
+    useState(null);
 
   const [deleteCoaching, { isLoading: coachingDeleteLoading }] =
     useDeleteCoachingMutation();
@@ -94,6 +112,9 @@ const AllCoaching = ({ allCoaching , isLoading}) => {
       name: "Coaching Fee",
     },
     {
+      name: "Fee Variation",
+    },
+    {
       name: "Coaching Place",
     },
     {
@@ -101,6 +122,9 @@ const AllCoaching = ({ allCoaching , isLoading}) => {
     },
     {
       name: "Duration",
+    },
+    {
+      name: "Gender",
     },
     {
       name: "About Coaching",
@@ -132,8 +156,6 @@ const AllCoaching = ({ allCoaching , isLoading}) => {
     setDeleteData(null);
     setIsDeleteModalOpen(false);
   };
-
-  console.log(isTextModalOpen, textModalContent);
 
   return (
     <div>
@@ -263,25 +285,55 @@ const AllCoaching = ({ allCoaching , isLoading}) => {
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
                   >
                     <div className="flex items-center justify-center">
-                      {item?.featureMediaType === "video" ? (
-                        item?.featureMediaUrl ? (
+                      {item?.mediasInfo?.[0]?.videoGallery?.length ||
+                      item?.mediasInfo?.[0]?.mediaGallery?.length ? (
+                        item?.mediasInfo?.[0]?.videoGallery?.length ? (
                           <ReactPlayer
                             controls
                             width={"208px"}
                             height={"112px"}
-                            url={[item?.featureMediaUrl]}
+                            url={[
+                              item?.mediasInfo?.[0]?.videoGallery?.[0]
+                                ?.videoUrl,
+                            ]}
                             onPlay={() => setCurrentlyPlayingVideo(item?._id)}
                             playing={currentlyPlayingVideo === item?._id}
                           />
                         ) : (
-                          ""
+                          <PhotoProvider
+                            speed={() => 800}
+                            easing={(type) =>
+                              type === 2
+                                ? "cubic-bezier(0.36, 0, 0.66, -0.56)"
+                                : "cubic-bezier(0.34, 1.56, 0.64, 1)"
+                            }
+                          >
+                            <PhotoView
+                              src={
+                                item?.mediasInfo?.[0]?.mediaGallery?.[0]?.imgUrl
+                              }
+                            >
+                              <img
+                                src={
+                                  item?.mediasInfo?.[0]?.mediaGallery?.[0]
+                                    ?.imgUrl
+                                }
+                                alt="featured media"
+                                className="w-52 h-28 object-cover cursor-pointer"
+                              />
+                            </PhotoView>
+                          </PhotoProvider>
                         )
                       ) : (
-                        <img
-                          src={item?.featureMediaUrl}
-                          alt="featured media"
-                          className="w-52 h-28 object-cover"
-                        />
+                        <div
+                          onClick={() => {
+                            setIsMediaModalOpen(true), setMediaModalData(item);
+                          }}
+                          className="flex flex-col items-center justify-center gap-2 border w-52 h-28 hover:border-primary hover:text-primary cursor-pointer"
+                        >
+                          <FaUpload className="text-4xl" />
+                          Add Media
+                        </div>
                       )}
                     </div>
                   </td>
@@ -308,7 +360,7 @@ const AllCoaching = ({ allCoaching , isLoading}) => {
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
                   >
-                    {item?.educationVariant}
+                    {item?.educationVariant ? item?.educationVariant : "N/A"}
                   </td>
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
@@ -318,7 +370,7 @@ const AllCoaching = ({ allCoaching , isLoading}) => {
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
                   >
-                    {item?.curriculumBoard}
+                    {item?.curriculumBoard ? item?.curriculumBoard : "N/A"}
                   </td>
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
@@ -326,6 +378,11 @@ const AllCoaching = ({ allCoaching , isLoading}) => {
                     {item?.coachingFee === 0
                       ? "Free"
                       : "BDT " + item?.coachingFee}
+                  </td>
+                  <td
+                    className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
+                  >
+                    {item?.feeVariation ? item?.feeVariation : "N/A"}
                   </td>
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
@@ -341,6 +398,11 @@ const AllCoaching = ({ allCoaching , isLoading}) => {
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
                   >
                     {item?.duration}
+                  </td>
+                  <td
+                    className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top capitalize`}
+                  >
+                    {item?.gender}
                   </td>
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
@@ -391,43 +453,44 @@ const AllCoaching = ({ allCoaching , isLoading}) => {
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
                   >
-                    {item?.classRoutingInImage ? (
-                      <div className="w-52 h-28">
-                        <img
-                          src={item?.classRoutingInImage}
-                          alt="featured media"
-                          className="size-full object-cover"
-                        />
-                      </div>
-                    ) : (
-                      <div className="flex">
-                        <div
-                          className={`${
-                            item?.classRoutingInText?.length > 20 &&
-                            "cursor-pointer"
-                          }`}
-                          onClick={() => {
-                            item?.classRoutingInText?.length > 20 &&
-                              setIsTextModalOpen(true),
-                              setTextModalContent(item?.classRoutingInText);
-                          }}
-                          dangerouslySetInnerHTML={{
-                            __html:
-                              item?.classRoutingInText?.length > 20
-                                ? item?.classRoutingInText?.slice(0, 20)
-                                : item?.classRoutingInText,
-                          }}
-                        ></div>
-                        <div>
-                          {item?.classRoutingInText?.length > 20 && "..."}
-                        </div>
-                      </div>
-                    )}
+                    <span
+                      className="cursor-pointer hover:text-primary"
+                      onClick={() => {
+                        setIsCoachingRoutineModalOpen(true),
+                          setCoachingRoutineModalData(item);
+                      }}
+                    >
+                      {" "}
+                      View Routine
+                    </span>
                   </td>
                   <td
                     className={`p-4 border-t border-t-blue-gray-100 whitespace-nowrap align-top `}
                   >
                     <div className="flex items-center gap-5">
+                      <IoEye
+                        onClick={() => {
+                          setIsDetailsModalOpen(true),
+                            setDetailsModalData(item);
+                        }}
+                        className="cursor-pointer hover:text-blue-500 text-xl"
+                        title="View Details"
+                      />
+                      <MdPermMedia
+                        onClick={() => {
+                          setIsMediaModalOpen(true), setMediaModalData(item);
+                        }}
+                        className="cursor-pointer hover:text-blue-500 text-xl"
+                        title="Add Media"
+                      />
+                      <AiOutlineSchedule
+                        onClick={() => {
+                          setIsScheduleModalOpen(true),
+                            setScheduleModalData(item);
+                        }}
+                        className="cursor-pointer hover:text-blue-500 text-xl"
+                        title="Add Schedule"
+                      />
                       <FaEdit
                         onClick={() => {
                           setIsUpdateModalOpen(true),
