@@ -23,7 +23,7 @@ const TutoringVariantAndGender = ({
     {
       id: 3,
       genderName: "Any Gender",
-      value: "any gender",
+      value: "any",
     },
   ];
 
