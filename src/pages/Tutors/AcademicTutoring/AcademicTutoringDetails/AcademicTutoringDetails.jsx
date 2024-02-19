@@ -92,9 +92,7 @@ const AcademicTutoringDetails = () => {
             number={allInfo?.phoneNumber}
           />
           <PromoInfo
-            promoInfo={allInfo?.promoInfo}
             number={allInfo?.phoneNumber}
-            isLoading={isLoading}
           />
         </div>
       )}

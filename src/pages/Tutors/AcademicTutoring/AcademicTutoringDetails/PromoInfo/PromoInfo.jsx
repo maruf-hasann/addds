@@ -3,10 +3,36 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Videos from "../../../../../components/Shared/PromoInfo/VideoComponent/Videos/Videos";
 import Images from "../../../../../components/Shared/PromoInfo/ImageComponent/Images/Images";
+import { useGetTutorMediaGalleryQuery } from "../../../../../store/service/tutorInfo/mediaGallery/mediaGallery";
 
-
-const PromoInfo = ({ promoInfo, number, isLoading }) => {
+const PromoInfo = ({ number }) => {
   const [activeTab, setActiveTab] = useState("video");
+
+  const { data: mediaGalleryData, isLoading } =
+    useGetTutorMediaGalleryQuery(number);
+  const mediaGallery = mediaGalleryData?.data;
+
+  let combinedVideoGallery = [];
+
+  mediaGallery?.forEach((obj) => {
+    let videoGallery = obj.videoGallery;
+    videoGallery.forEach((item) => {
+      let newItem = { ...item };
+      newItem.type = obj.type;
+      combinedVideoGallery.push(newItem);
+    });
+  });
+
+  let combinedMediaGallery = [];
+
+  mediaGallery?.forEach((obj) => {
+    let mediaGallery = obj.mediaGallery;
+    mediaGallery.forEach((item) => {
+      let newItem = { ...item };
+      newItem.type = obj.type;
+      combinedMediaGallery.push(newItem);
+    });
+  });
 
   return (
     <div className="bg-white  my-10">
@@ -51,16 +77,10 @@ const PromoInfo = ({ promoInfo, number, isLoading }) => {
               </div>
               <div className="p-5 bg-white">
                 {activeTab === "video" && (
-                  <Videos
-                    isLoading={isLoading}
-                    videos={promoInfo?.videoGallery}
-                  />
+                  <Videos isLoading={isLoading} videos={combinedVideoGallery} />
                 )}
                 {activeTab === "photo" && (
-                  <Images
-                    isLoading={isLoading}
-                    images={promoInfo?.mediaGallery}
-                  />
+                  <Images isLoading={isLoading} images={combinedMediaGallery} />
                 )}
               </div>
             </div>
