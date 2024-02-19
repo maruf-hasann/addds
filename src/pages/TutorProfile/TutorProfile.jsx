@@ -82,7 +82,7 @@ const TutorProfile = () => {
                 <Link
                   to={`/tutor-coaching/${number}`}
                   className=" py-2 text-gray-600 hover:text-primary cursor-pointer"
-                  title="Details In CV Format"
+                  title="Tutors Coaching"
                 >
                   <FaBookOpenReader className="text-3xl" />
                 </Link>

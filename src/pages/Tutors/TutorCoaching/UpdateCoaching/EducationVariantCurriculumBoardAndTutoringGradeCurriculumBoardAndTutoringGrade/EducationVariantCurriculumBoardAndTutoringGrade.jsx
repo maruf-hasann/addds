@@ -1,9 +1,10 @@
 import { RxCross2 } from "react-icons/rx";
+
 import { isObjectInArray } from "../../../../../libs/tutoringInfo/isObjectInArray";
 import { filterObjectsFromArray } from "../../../../../libs/tutoringInfo/filterObjectsFromArray";
 
 
-const CurriculumBoardAndTutoringGrade = ({
+const EducationVariantCurriculumBoardAndTutoringGrade = ({
   register,
   initialState,
   curriculumBoards,
@@ -12,42 +13,87 @@ const CurriculumBoardAndTutoringGrade = ({
   tutoringGrades,
   selectedTutoringGrades,
   setSelectedTutoringGrades,
+  setInitialState,
+  educationVariants,
 }) => {
   const commonSelectClassName =
     "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 h-10 focus:outline-none";
   return (
     <div className="grid grid-cols-1 gap-8">
-      {/* curriculum board  */}
-      <div className="w-full">
-        <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-          Curriculum Board *
-        </label>
-        <select
-          {...register("curriculumBoard", {
-            required:
-              initialState?.tutoringVariant === "Academic"
-                ? initialState?.curriculumBoard
-                  ? false
-                  : "Curriculum Board is required"
-                : false,
-          })}
-          className={commonSelectClassName}
-          value={initialState?.curriculumBoard}
-        >
-          <option value="" disabled>
-            Select Curriculum Board
-          </option>
-          {curriculumBoards?.map((board, idx) => (
-            <option key={idx} value={board?.boardName}>
-              {board?.boardName}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* education variant */}
+        <div className="w-full">
+          <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+            Education Variant *
+          </label>
+          <select
+            {...register("educationVariant", {
+              required: initialState?.educationVariant
+                ? false
+                : "Education variant is required",
+            })}
+            className={commonSelectClassName}
+            value={initialState?.educationVariant}
+            onChange={(event) =>
+              setInitialState({
+                ...initialState,
+                educationVariant: event.target.value,
+              })
+            }
+          >
+            <option value="" disabled>
+              Select Education Variant
             </option>
-          ))}
-        </select>
-        {!selectedTutoringGrades?.length && errors.curriculumBoard && (
-          <p className="text-red-500 text-sm absolute">
-            {errors.curriculumBoard?.message}
-          </p>
-        )}
+            {educationVariants?.map((variant, idx) => (
+              <option key={idx} value={variant?.variantName}>
+                {variant?.variantName}
+              </option>
+            ))}
+          </select>
+          {errors.educationVariant && (
+            <p className="text-red-500 text-sm absolute">
+              {errors.educationVariant?.message}
+            </p>
+          )}
+        </div>
+        {/* curriculum board  */}
+        <div className="w-full">
+          <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+            Curriculum Board *
+          </label>
+          <select
+            {...register("curriculumBoard", {
+              required:
+                initialState?.tutoringVariant === "Academic"
+                  ? initialState?.curriculumBoard
+                    ? false
+                    : "Curriculum Board is required"
+                  : false,
+            })}
+            className={commonSelectClassName}
+            value={initialState?.curriculumBoard}
+            onChange={(e)=>{
+              setInitialState({
+             ...initialState,
+                curriculumBoard: e.target.value,
+              })
+            }}
+          >
+            <option value="" disabled>
+              Select Curriculum Board
+            </option>
+            {curriculumBoards?.map((board, idx) => (
+              <option key={idx} value={board?.boardName}>
+                {board?.boardName}
+              </option>
+            ))}
+          </select>
+          {!selectedTutoringGrades?.length && errors.curriculumBoard && (
+            <p className="text-red-500 text-sm absolute">
+              {errors.curriculumBoard?.message}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Tutoring Grade */}
@@ -119,4 +165,4 @@ const CurriculumBoardAndTutoringGrade = ({
   );
 };
 
-export default CurriculumBoardAndTutoringGrade;
+export default EducationVariantCurriculumBoardAndTutoringGrade;

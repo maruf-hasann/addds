@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaRegCircleXmark } from "react-icons/fa6";
-import { ImSpinner9 } from "react-icons/im";
-import toast from "react-hot-toast";
 
-import {
-  useDeleteCoachingMediaMutation,
-  useUpdateCoachingMutation,
-  useUploadCoachingMediaMutation,
-} from "../../../../store/service/tutorInfo/coaching/coachingApiService";
-import { useGetEducationVariantsQuery } from "../../../../store/service/educationVariant/educationVariantApiService";
+import toast from "react-hot-toast";
+import { ImSpinner9 } from "react-icons/im";
+import { useEffect, useState } from "react";
+
+import { checkFalsyFromObjAndReturn } from "../../../../libs/checkFalsyFromObjAndReturn";
+import { formatFieldName } from "../../../../libs/formatFieldName";
+import { subjectConverter } from "../../../../libs/tutoringInfo/subjectConverter";
+import { modifySubjectsForPost } from "../../../../libs/tutoringInfo/modifySubjectForPost";
+import { sortDataByCreatedAt } from "../../../../libs/sortDataByCreatedAt";
+
+import { useUpdateCoachingMutation } from "../../../../store/service/tutorInfo/coaching/coachingApiService";
 import {
   useGetSubjectVariantQuery,
   useGetSubjectVariantSubjectsQuery,
@@ -17,21 +18,16 @@ import {
 import { useGetCurriculumBoardsQuery } from "../../../../store/service/curriculumBoard/curriculumBoardApiService";
 import { useGetTutoringClassPMQuery } from "../../../../store/service/tutoringClassPM/tutoringClassPMApiService";
 
-import SubjectCommonComponent from "../../../../components/Shared/SubjectsCommonComponent/SubjectsCommonComponent";
 import AboutClassAndProgramDetails from "./AboutClassAndProgramDetails/AboutClassAndProgramDetails";
-import EducationVariantAndTutoringVariant from "./EducationVariantAndTutoringVariant/EducationVariantAndTutoringVariant";
-import CurriculumBoardAndTutoringGrade from "./CurriculumBoardAndTutoringGrade/CurriculumBoardAndTutoringGrade";
 import CoachingFeeAndDuration from "./CoachingFeeAndDuration/CoachingFeeAndDuration";
 import StartingDateAndCoachingPlace from "./StartingDateAndCoachingPlace/StartingDateAndCoachingPlace";
-import ClassRoutine from "./ClassRoutine/ClassRoutine";
-import FeatureImageVideo from "./FeatureImageVideo/FeatureImageVideo";
-
-import { checkFalsyFromObjAndReturn } from "../../../../libs/checkFalsyFromObjAndReturn";
-import { formatFieldName } from "../../../../libs/formatFieldName";
-import { subjectConverter } from "../../../../libs/tutoringInfo/subjectConverter";
+import TutoringVariantAndGender from "./TutoringVariantAndGender/TutoringVariantAndGender";
+import EligibleFor from "./EligibleFor/EligibleFor";
+import { RxCross2 } from "react-icons/rx";
+import EducationVariantCurriculumBoardAndTutoringGrade from "./EducationVariantCurriculumBoardAndTutoringGradeCurriculumBoardAndTutoringGrade/EducationVariantCurriculumBoardAndTutoringGrade";
+import SubjectCommonComponent from "../../../../components/Shared/SubjectsCommonComponent/SubjectsCommonComponent";
 import { commonInputClassName } from "../../../../libs/commonInputClassName";
-import { modifySubjectsForPost } from "../../../../libs/tutoringInfo/modifySubjectForPost";
-import { sortDataByCreatedAt } from "../../../../libs/sortDataByCreatedAt";
+import { useGetEducationVariantsQuery } from "../../../../store/service/educationVariant/educationVariantApiService";
 
 const UpdateCoachingModal = ({
   isOpenModal,
@@ -41,6 +37,7 @@ const UpdateCoachingModal = ({
 }) => {
   const [selectedTutoringGrades, setSelectedTutoringGrades] = useState([]);
   const [selectedTutoringSubjects, setSelectedTutoringSubjects] = useState([]);
+  const [selectedEligiblesFor, setSelectedEligiblesFor] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [initialState, setInitialState] = useState({
     title: "",
@@ -52,35 +49,29 @@ const UpdateCoachingModal = ({
     aboutCoaching: "",
     programDetails: "",
     startingDate: "",
-    uploadClassRoutineImage: null,
-    classRoutineInText: "",
-    routineImageUrl: null,
-    classRoutineInImage: null,
-    featuredMediaExtension: null,
-    featuredMedia: null,
-    featuredMediaUrl: null,
-    routineImagePreview: null,
-    featuredMediaPreview: null,
+    feeVariation: "",
+    gender: "",
   });
   const [customErrors, setCustomErrors] = useState({
     tutoringGrades: "",
     tutoringSubjects: "",
     programDetails: "",
-    classRoutineInText: "",
-    classRoutineInImage: "",
-    featuredMedia: "",
+    eligibleFor: "",
   });
+
   const requiredFields = [
     "tutoringGrades",
     "tutoringSubjects",
     "programDetails",
-    "classRoutineInText",
-    "classRoutineInImage",
-    "featuredMedia",
+    "eligibleFor",
   ];
 
-  const [uploadMedia] = useUploadCoachingMediaMutation();
-  const [deleteMedia] = useDeleteCoachingMediaMutation();
+  const eligiblesFor = [
+    { name: "Children" },
+    { name: "Young" },
+    { name: "Adult" },
+  ];
+
   const [updateCoaching] = useUpdateCoachingMutation();
 
   const { data: allEducationVariantData } = useGetEducationVariantsQuery();
@@ -121,6 +112,12 @@ const UpdateCoachingModal = ({
     formState: { errors },
   } = useForm();
 
+  // handle close modal
+  const handleClose = () => {
+    setIsOpenModal(!isOpenModal);
+    setCoaching(null);
+  };
+
   const handleUpdateCoaching = async (data) => {
     const formData = {
       tutoringGrades:
@@ -131,16 +128,12 @@ const UpdateCoachingModal = ({
           : false,
       tutoringSubjects: selectedTutoringSubjects?.length ? true : false,
       programDetails: initialState?.programDetails,
-      classRoutineInText: initialState?.uploadClassRoutineImage
-        ? true
-        : initialState?.classRoutineInText === "<p><br></p>"
-        ? false
-        : initialState?.classRoutineInText,
-      classRoutineInImage: initialState?.uploadClassRoutineImage
-        ? initialState?.classRoutineInImage || initialState?.routineImageUrl
-        : true,
-      featuredMedia:
-        initialState?.featuredMedia || initialState?.featuredMediaUrl,
+      eligibleFor:
+        initialState?.tutoringVariant === "Academic"
+          ? true
+          : selectedEligiblesFor?.length
+          ? true
+          : false,
     };
 
     let isSuccess = true;
@@ -164,88 +157,30 @@ const UpdateCoachingModal = ({
       isSuccess = checkFalsyFromObjAndReturn(customErrors);
     }
     if (!isSuccess) {
-      console.log("not success");
+      // console.log("not success");
       return;
     }
-
-    let classRoutineImageUrl = null;
-    let featuredMediaUrl = null;
     setIsLoading(true);
-
-    // upload class routine image
-    if (
-      initialState?.uploadClassRoutineImage === true &&
-      initialState?.classRoutineInImage
-    ) {
-      const classRoutineFormData = new FormData();
-      classRoutineFormData.append("media", initialState?.classRoutineInImage);
-      classRoutineFormData.append("extensions", "jpg");
-      classRoutineFormData.append(
-        "title",
-        `Class Routine - ${initialState?.title} - ${coaching?.phoneNumber}`
-      );
-
-      const uploadClassRoutineResult = await uploadMedia(classRoutineFormData);
-      if (uploadClassRoutineResult?.data?.success) {
-        classRoutineImageUrl = uploadClassRoutineResult?.data?.data;
-      } else {
-        setIsLoading(false);
-        return toast.error(
-          uploadClassRoutineResult?.error?.data?.message ||
-            "Something went wrong"
-        );
-      }
-    } else if (initialState?.routineImageUrl) {
-      classRoutineImageUrl = initialState?.routineImageUrl;
-    }
-
-    // upload featured media
-    if (initialState?.featuredMedia) {
-      const featuredMediaFormData = new FormData();
-      featuredMediaFormData.append("media", initialState?.featuredMedia);
-      featuredMediaFormData.append(
-        "extensions",
-        initialState?.featuredMediaExtension
-      );
-      featuredMediaFormData.append(
-        "title",
-        `Featured Media - ${initialState?.title} - ${coaching?.phoneNumber}`
-      );
-      const uploadFeaturedMediaResult = await uploadMedia(
-        featuredMediaFormData
-      );
-      if (uploadFeaturedMediaResult?.data?.success) {
-        featuredMediaUrl = uploadFeaturedMediaResult?.data?.data;
-      } else {
-        if (classRoutineImageUrl) {
-          await deleteMedia({ url: classRoutineImageUrl });
-        }
-        setIsLoading(false);
-        return toast.error(
-          uploadFeaturedMediaResult?.error?.data?.message ||
-            "Something went wrong"
-        );
-      }
-    } else {
-      featuredMediaUrl = initialState?.featuredMediaUrl;
-    }
 
     // create coaching
     const coachingData = {
       phoneNumber: coaching?.phoneNumber,
       title: initialState?.title,
-      educationVariant: initialState?.educationVariant,
+      educationVariant:
+        initialState?.tutoringVariant !== "Academic"
+          ? ""
+          : initialState?.educationVariant,
       coachingVariant: initialState?.tutoringVariant,
       curriculumBoard:
         initialState?.tutoringVariant === "Academic"
           ? initialState?.curriculumBoard
-          : undefined,
+          : "",
       grade:
         initialState?.tutoringVariant === "Academic"
           ? selectedTutoringGrades?.map((grade) => {
               return { className: grade?.gradeName };
             })
-          : undefined,
+          : [],
       subjectsList: modifySubjectsForPost(selectedTutoringSubjects),
       aboutCoaching: initialState?.aboutCoaching,
       programDetails: initialState?.programDetails,
@@ -257,16 +192,15 @@ const UpdateCoachingModal = ({
           ? `${initialState?.duration} Month`
           : `${initialState?.duration} Months`,
       startingDate: initialState?.startingDate,
-      classRoutingInText: initialState?.uploadClassRoutineImage
-        ? ""
-        : initialState?.classRoutineInText,
-      classRoutingInImage: initialState?.uploadClassRoutineImage
-        ? classRoutineImageUrl
-        : "",
-
-      featureMediaType:
-        initialState?.featuredMediaExtension === "mp4" ? "video" : "image",
-      featureMediaUrl: featuredMediaUrl,
+      eligibleFor:
+        initialState?.tutoringVariant === "Academic"
+          ? []
+          : selectedEligiblesFor,
+      gender: initialState?.gender,
+      feeVariation:
+        Number(initialState?.coachingFee) === 0
+          ? ""
+          : initialState?.feeVariation,
     };
 
     const createCoachingResult = await updateCoaching({
@@ -278,6 +212,7 @@ const UpdateCoachingModal = ({
       setIsLoading(false);
       setSelectedTutoringGrades([]);
       setSelectedTutoringSubjects([]);
+      setSelectedEligiblesFor([]);
       reset();
       setInitialState({
         title: "",
@@ -288,44 +223,24 @@ const UpdateCoachingModal = ({
         duration: "",
         aboutCoaching: "",
         programDetails: "",
-        uploadClassRoutineImage: null,
-        classRoutineInText: "",
-        routineImageUrl: null,
-        classRoutineInImage: null,
-        featuredMediaExtension: null,
-        featuredMedia: null,
-        featuredMediaUrl: null,
-        routineImagePreview: null,
-        featuredMediaPreview: null,
+        startingDate: "",
+        feeVariation: "",
+        gender: "",
       });
       setCustomErrors({
         tutoringGrades: "",
         tutoringSubjects: "",
         programDetails: "",
-        classRoutineInText: "",
-        classRoutineInImage: "",
-        featuredMedia: "",
+        eligibleFor: "",
       });
       setIsOpenModal(!isOpenModal);
       setCoaching(null);
     } else {
-      if (initialState?.featuredMedia) {
-        await deleteMedia({ url: classRoutineImageUrl });
-      }
-      if (initialState?.classRoutineInImage) {
-        await deleteMedia({ url: featuredMediaUrl });
-      }
       setIsLoading(false);
       return toast.error(
         createCoachingResult?.error?.data?.message || "Something went wrong"
       );
     }
-  };
-
-  // handle close modal
-  const handleClose = () => {
-    setIsOpenModal(!isOpenModal);
-    setCoaching(null);
   };
 
   useEffect(() => {
@@ -335,7 +250,9 @@ const UpdateCoachingModal = ({
           return { gradeName: grade?.className };
         })
       );
+      // console.log(subjectConverter(coaching?.subjectsList));
       setSelectedTutoringSubjects(subjectConverter(coaching?.subjectsList));
+      setSelectedEligiblesFor(coaching?.eligibleFor || []);
       setInitialState({
         ...initialState,
         title: coaching?.title,
@@ -348,14 +265,8 @@ const UpdateCoachingModal = ({
         coachingPlace: coaching?.coachingPlace,
         aboutCoaching: coaching.aboutCoaching,
         programDetails: coaching.programDetails,
-        uploadClassRoutineImage: coaching?.classRoutingInImage ? true : false,
-        classRoutineInText: coaching.classRoutingInText,
-        routineImageUrl: coaching.classRoutingInImage,
-        featuredMediaExtension:
-          coaching?.featureMediaType === "video" ? "mp4" : "jpg",
-        featuredMediaUrl: coaching.featureMediaUrl,
-        routineImagePreview: coaching.classRoutingInImage,
-        featuredMediaPreview: coaching.featureMediaUrl,
+        feeVariation: coaching?.feeVariation,
+        gender: coaching?.gender,
       });
     }
   }, [coaching]);
@@ -371,16 +282,29 @@ const UpdateCoachingModal = ({
         onClick={handleClose}
       ></div>
       <div className="relative z-50 w-full max-w-5xl max-h-full mx-auto overflow-y-auto bg-white rounded-lg shadow-md">
-        <div className={`relative shadow px-10 bg-white w-full `}>
-          {/* modal close button */}
-          <button
-            onClick={handleClose}
-            type="button"
-            className="absolute top-3 right-2.5 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-          >
-            <FaRegCircleXmark className="text-3xl text-red-400 hover:text-red-500" />
-          </button>
-          <div className="py-8">
+        <div className={`relative shadow bg-white w-full `}>
+          <div className="px-4 py-3 border-b sticky top-0 z-50 backdrop-filter backdrop-blur-sm">
+            <div className="overflow-hidden">
+              {initialState?.title ? (
+                <p
+                  className={`font-semibold whitespace-nowrap ${
+                    !initialState?.title && "h-5"
+                  }`}
+                >
+                  {initialState?.title}
+                </p>
+              ) : (
+                <p className="font-semibold">Update Coaching</p>
+              )}
+            </div>{" "}
+            <button
+              onClick={handleClose}
+              className="absolute top-3 right-3 text-gray-500 text-2xl hover:text-red-500"
+            >
+              <RxCross2 />
+            </button>
+          </div>
+          <div className="py-8 px-10">
             <form onSubmit={handleSubmit(handleUpdateCoaching)}>
               <div className="mb-10 grid grid-cols-1 gap-8">
                 {/* title */}
@@ -412,8 +336,7 @@ const UpdateCoachingModal = ({
                   )}
                 </div>
                 {/* education variant & tutoring variant */}
-                <EducationVariantAndTutoringVariant
-                  educationVariants={educationVariants}
+                <TutoringVariantAndGender
                   errors={errors}
                   initialState={initialState}
                   register={register}
@@ -424,7 +347,7 @@ const UpdateCoachingModal = ({
 
                 {/* curriculum board & tutoring variant */}
                 {initialState?.tutoringVariant === "Academic" ? (
-                  <CurriculumBoardAndTutoringGrade
+                  <EducationVariantCurriculumBoardAndTutoringGrade
                     curriculumBoards={curriculumBoards}
                     errors={errors}
                     customErrors={customErrors}
@@ -433,6 +356,8 @@ const UpdateCoachingModal = ({
                     selectedTutoringGrades={selectedTutoringGrades}
                     setSelectedTutoringGrades={setSelectedTutoringGrades}
                     tutoringGrades={tutoringGrades}
+                    educationVariants={educationVariants}
+                    setInitialState={setInitialState}
                   />
                 ) : (
                   ""
@@ -467,6 +392,18 @@ const UpdateCoachingModal = ({
                   setInitialState={setInitialState}
                 />
 
+                {initialState?.tutoringVariant &&
+                initialState?.tutoringVariant !== "Academic" ? (
+                  <EligibleFor
+                    customErrors={customErrors}
+                    eligiblesFor={eligiblesFor}
+                    selectedEligiblesFor={selectedEligiblesFor}
+                    setSelectedEligiblesFor={setSelectedEligiblesFor}
+                  />
+                ) : (
+                  ""
+                )}
+
                 {/* coaching place and starting date */}
                 <StartingDateAndCoachingPlace
                   initialState={initialState}
@@ -483,28 +420,16 @@ const UpdateCoachingModal = ({
                   errors={errors}
                   register={register}
                 />
-                <ClassRoutine
-                  initialState={initialState}
-                  register={register}
-                  setInitialState={setInitialState}
-                  errors={errors}
-                  customErrors={customErrors}
-                />
-                <FeatureImageVideo
-                  initialState={initialState}
-                  setInitialState={setInitialState}
-                  customErrors={customErrors}
-                />
               </div>
 
               {/* Submit Button */}
               <div className="mt-4 mb-10 flex justify-end">
                 <button
                   type="submit"
-                  className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
+                  className="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-offset-2 focus:border-blue-300"
                 >
                   {isLoading ? (
-                    <ImSpinner9 className="animate-spin my-1 mx-4" />
+                    <ImSpinner9 className="animate-spin my-1 mx-2.5" />
                   ) : (
                     "Save"
                   )}
