@@ -34,9 +34,9 @@ const MainSideBar = () => {
                             onClick={() => setOpen(false)}
                             className={`${
                                 menu?.url.slice(1) === pathname
-                                    ? "bg-blue-50 text-[#01183b]"
-                                    : ""
-                            }  py-2 px-2 hover:bg-blue-50 transition-all duration-500  cursor-pointer text-gray-900 flex items-center gap-3  rounded-md text-[16.5px]`}
+                                    ? "bg-blue-50/40 text-gray-900 before-menu-content"
+                                    : "before-hover-menu-content text-gray-800/90"
+                            } relative py-2 px-2 hover:bg-blue-50/40 duration-500  cursor-pointer  hover:text-gray-900 flex items-center gap-3 rounded-md text-[14.8px] transition-all`}
                         >
                             {menu?.icon} {menu?.name}
                         </Link>
@@ -60,11 +60,11 @@ const MainSideBar = () => {
                                         (subMenu) =>
                                             subMenu?.url?.slice(1) === pathname
                                     )
-                                        ? "bg-blue-50 text-gray-800"
-                                        : "text-gray-800 hover:text-gray-900"
-                                } border-b-0 py-2 pr-2.5 cursor-pointer flex items-center gap-3 rounded-md font-normal`}
+                                        ? "bg-blue-50/40 text-gray-900 before-menu-content"
+                                        : "text-gray-800/90 hover:text-gray-900 "
+                                } relative border-b-0 py-2 pr-2.5 cursor-pointer flex items-center gap-3 rounded-md font-normal transition-all`}
                             >
-                                <div className="px-2 flex items-center gap-3 text-[16.5px]">
+                                <div className="px-2 flex items-center gap-3 text-[14.8px]">
                                     {menuItem?.icon} {menuItem?.name}
                                 </div>
                             </AccordionHeader>
@@ -77,8 +77,8 @@ const MainSideBar = () => {
                                             className={`${
                                                 menu?.url?.slice(1) === pathname
                                                     ? "before-menu-content text-gray-800"
-                                                    : "text-gray-800 hover:text-gray-900 before-hover-menu-content"
-                                            } relative mb-2  py-1 transition-all cursor-pointer flex  items-center gap-3  text-[16.5px] pl-10  `}
+                                                    : "text-gray-800/90 hover:text-gray-900 before-hover-menu-content"
+                                            } relative mb-2  py-1 transition-all cursor-pointer flex  items-center gap-3  text-[14.8px] pl-10  `}
                                         >
                                             {menu?.name}
                                         </Link>

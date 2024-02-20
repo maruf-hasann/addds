@@ -18,31 +18,31 @@ export const menus = [
         id: 0,
         name: "Dashboard",
         url: "./",
-        icon: <MdDashboard size={23} className="text-primary" />,
+        icon: <MdDashboard size={21} className="text-primary/80" />,
     },
     {
         id: 1,
         name: "Media Library",
         url: "./media-library",
-        icon: <MdPermMedia size={22} className="text-primary" />,
+        icon: <MdPermMedia size={20} className="text-primary/80" />,
     },
 
     {
         id: 2,
         name: "Parents",
-        icon: <RiParentFill size={22} className="text-primary" />,
+        icon: <RiParentFill size={21} className="text-primary/80" />,
         url: "./all-parent-account",
     },
     {
         id: 3,
         name: "Students",
-        icon: <PiStudentBold size={22} className="text-primary" />,
+        icon: <PiStudentBold size={21} className="text-primary/80" />,
         url: "./all-student-account",
     },
     {
         id: 4,
         name: "Register Tutor",
-        icon: <FaHouseUser size={21} className="text-primary" />,
+        icon: <FaHouseUser size={20} className="text-primary/80" />,
         url: "./add-tutor-info",
     },
 ];
@@ -52,7 +52,7 @@ export const withSubmenu = [
     {
         id: 1,
         name: "Tutor",
-        icon: <GiTeacher size={22} className="text-primary" />,
+        icon: <GiTeacher size={20} className="text-primary/80" />,
         subMenus: [
             {
                 name: "Tutor Account",
@@ -67,7 +67,7 @@ export const withSubmenu = [
     {
         id: 2,
         name: "Tutoring Setting",
-        icon: <FaChalkboardTeacher size={22} className="text-primary" />,
+        icon: <FaChalkboardTeacher size={20} className="text-primary/80" />,
         subMenus: [
             {
                 name: "Education Variant",
@@ -118,7 +118,7 @@ export const withSubmenu = [
     {
         id: 3,
         name: "Subject Setting",
-        icon: <FaBook size={20} className="text-primary" />,
+        icon: <FaBook size={18} className="text-primary/80" />,
         subMenus: [
             {
                 name: "Subject Class Variant",
@@ -145,7 +145,7 @@ export const withSubmenu = [
     {
         id: 4,
         name: "Account Setting",
-        icon: <MdCastForEducation size={22} className="text-primary" />,
+        icon: <MdCastForEducation size={20} className="text-primary/80" />,
         subMenus: [
             {
                 name: "Curriculum Board",
@@ -178,7 +178,7 @@ export const withSubmenu = [
     {
         id: 5,
         name: "Blog Setting",
-        icon: <FaBlog size={21} className="text-primary" />,
+        icon: <FaBlog size={20} className="text-primary/80" />,
         subMenus: [
             {
                 name: "All Blog",
@@ -201,7 +201,7 @@ export const withSubmenu = [
     {
         id: 6,
         name: "Tutoring Job",
-        icon: <MdAssuredWorkload size={22} className="text-primary" />,
+        icon: <MdAssuredWorkload size={20} className="text-primary/80" />,
         subMenus: [
             {
                 name: "Active Jobs",
@@ -220,7 +220,7 @@ export const withSubmenu = [
     {
         id: 7,
         name: "Mock Jobs",
-        icon: <MdOutlineAddHomeWork size={22} className="text-primary" />,
+        icon: <MdOutlineAddHomeWork size={20} className="text-primary/80" />,
         subMenus: [
             {
                 name: "Active Jobs",
@@ -239,7 +239,7 @@ export const withSubmenu = [
     {
         id: 8,
         name: "Dashboard Setting",
-        icon: <MdDashboardCustomize size={22} className="text-primary" />,
+        icon: <MdDashboardCustomize size={21} className="text-primary/80" />,
         subMenus: [
             {
                 name: "Widgets",

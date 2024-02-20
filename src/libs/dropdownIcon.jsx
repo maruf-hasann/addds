@@ -7,8 +7,8 @@ export function DropdownIcon({ id, open }) {
             strokeWidth={2}
             stroke="currentColor"
             className={`${
-                id === open ? "rotate-360" : "-rotate-90"
-            } h-4 w-4 transition-transform`}
+                id === open ? "rotate-360 " : "-rotate-90"
+            } h-3.5 w-3.5 transition-transform text-gray-800/90`}
         >
             <path
                 strokeLinecap="round"
