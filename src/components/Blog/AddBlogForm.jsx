@@ -92,31 +92,6 @@ const AddBlogForm = ({setModalOpen}) => {
       onSubmit={handleSubmit(blogSubmit)}
       className="w-full mx-auto p-4 border rounded-md mt-5 bg-white"
     >
-      {/* Blog title  */}
-      <div className="mb-2">
-        <label
-          htmlFor="title"
-          className="block mb-2 font-semibold text-sm text-gray-500"
-        >
-          Blog Title
-        </label>
-        <input
-          {...register("title", {
-            required: "Blog title is required!",
-          })}
-          type="text"
-          id="title"
-          name="title"
-          className="w-full p-2 mb-4 text-black border rounded-md outline-none focus:outline-primaryAlfa-50"
-          placeholder="Please add a title"
-          onKeyUp={() => {
-            trigger("title");
-          }}
-        />
-        <small className="text-red-500 text-xs font-medium my-2">
-          {errors?.title?.message}
-        </small>
-      </div>
       {/* category and sub category */}
       <div className="grid grid-cols-2 gap-4 ">
         {/* category */}
@@ -187,6 +162,31 @@ const AddBlogForm = ({setModalOpen}) => {
           </div>
           <p className="text-pinkRed text-xs mt-1">{errors.name?.message}</p>
         </div>
+      </div>
+      {/* Blog title  */}
+      <div className="mb-2">
+        <label
+          htmlFor="title"
+          className="block mb-2 font-semibold text-sm text-gray-500"
+        >
+          Blog Title
+        </label>
+        <input
+          {...register("title", {
+            required: "Blog title is required!",
+          })}
+          type="text"
+          id="title"
+          name="title"
+          className="w-full p-2 mb-4 text-black border rounded-md outline-none focus:outline-primaryAlfa-50"
+          placeholder="Please add a title"
+          onKeyUp={() => {
+            trigger("title");
+          }}
+        />
+        <small className="text-red-500 text-xs font-medium my-2">
+          {errors?.title?.message}
+        </small>
       </div>
 
       {/* Tags*/}
