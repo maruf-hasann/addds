@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { TagsInput } from "react-tag-input-component";
-import { Button } from "@material-tailwind/react";
+import { Button, Option, Select } from "@material-tailwind/react";
 import { FaSpinner } from "react-icons/fa6";
 import { BsImage } from "react-icons/bs";
 import { useGetAllCategoryQuery } from '../../store/service/category/categoryApiservice';
 import JoditReact from '../Jodit/JoditReact';
 import { IoIosClose } from 'react-icons/io';
 import { useAddBlogMutation } from '../../store/service/blog/blogApiService';
+import { useGetAllSubCategoryQuery } from '../../store/service/subCategory/subCategoryApiService';
 
 
 const AddBlogForm = ({setModalOpen}) => {
@@ -20,8 +21,10 @@ const AddBlogForm = ({setModalOpen}) => {
   const [content, setContent] = useState();
  /* redux api call */
   const { data } = useGetAllCategoryQuery();
-  // category data
-  const categoryData = data?.data;
+    // category data
+  const categoryData = data?.data || [];
+  const { data: subCategoryInfo } = useGetAllSubCategoryQuery();
+  const subCategoryData = subCategoryInfo?.data || [];
   const [addBlog, { isLoading }] = useAddBlogMutation()
   
   const {
@@ -30,6 +33,7 @@ const AddBlogForm = ({setModalOpen}) => {
     trigger,
     watch,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -48,6 +52,7 @@ const AddBlogForm = ({setModalOpen}) => {
 
     const shortdes = data?.shortDescription;
     const category = data?.category;
+    const subCategory = data?.SubCategory;
     const formData = new FormData();
     const phone = "8801708666342";
     const author = "Mafee";
@@ -60,6 +65,7 @@ const AddBlogForm = ({setModalOpen}) => {
     formData.append("slug", slug);
     formData.append("description", content);
     formData.append("categoryId", category);
+    formData.append("subCategoryId", subCategory);
     formData.append("phoneNumber", phone);
     formData.append("authorName", author);
 
@@ -111,8 +117,80 @@ const AddBlogForm = ({setModalOpen}) => {
           {errors?.title?.message}
         </small>
       </div>
-      {/* Tags and category  */}
+      {/* category and sub category */}
       <div className="grid grid-cols-2 gap-4 ">
+        {/* category */}
+        <div>
+          <label
+            htmlFor="className"
+            className="block mb-2 font-semibold text-sm text-gray-500"
+          >
+            Post Type
+          </label>
+
+          <div className="my-3">
+            <Controller
+              name="category"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: "Post Type is required",
+              }}
+              render={({ field, fieldState }) => (
+                <Select
+                  label="Post Type"
+                  error={fieldState.error?.message}
+                  {...field}
+                >
+                  {categoryData?.map((item) => (
+                    <Option key={item?._id} value={item?.categoryId}>
+                      {item?.name}
+                    </Option>
+                  ))}
+                </Select>
+              )}
+            />
+          </div>
+          <p className="text-pinkRed text-xs mt-1">{errors.name?.message}</p>
+        </div>
+        {/* subCategory */}
+        <div>
+          <label
+            htmlFor="className"
+            className="block mb-2 font-semibold text-sm text-gray-500"
+          >
+            Category
+          </label>
+
+          <div className="my-3">
+            <Controller
+              name="name"
+              control={control}
+              defaultValue=""
+              rules={{
+                required: " Category is required",
+              }}
+              render={({ field, fieldState }) => (
+                <Select
+                  label=" Category"
+                  error={fieldState.error?.message}
+                  {...field}
+                >
+                  {subCategoryData?.map((item) => (
+                    <Option key={item?._id} value={item?.subCategoryId}>
+                      {item?.name}
+                    </Option>
+                  ))}
+                </Select>
+              )}
+            />
+          </div>
+          <p className="text-pinkRed text-xs mt-1">{errors.name?.message}</p>
+        </div>
+      </div>
+
+      {/* Tags*/}
+      <div>
         <div className="mb-2">
           <label
             htmlFor="tags"
@@ -131,36 +209,6 @@ const AddBlogForm = ({setModalOpen}) => {
               }}
             />
             <em className="text-xs">Press enter to add new tag</em>
-          </div>
-        </div>
-
-        {/* Category */}
-        <div className="mb-4">
-          <div className=" mb-4">
-            <label
-              htmlFor="category"
-              className="block mb-2 font-semibold text-sm text-gray-500"
-            >
-              Category
-            </label>
-            <select
-              id="category"
-              className="w-full text-black p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
-              {...register("category", {
-                required: "Category are required!",
-              })}
-            >
-              {categoryData?.map((item) => (
-                <option key={item?._id} value={item?.categoryId}>
-                  {item?.name}
-                </option>
-              ))}
-            </select>
-            {errors?.category && (
-              <small className="text-red-500 text-xs font-medium my-2">
-                {errors?.category?.message}
-              </small>
-            )}
           </div>
         </div>
       </div>

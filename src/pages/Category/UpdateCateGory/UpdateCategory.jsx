@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Button } from "@material-tailwind/react";
-import { useForm } from "react-hook-form";
+import { Button, Option, Select } from "@material-tailwind/react";
+import { Controller, useForm } from "react-hook-form";
 import { BsImage } from "react-icons/bs";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaSpinner } from "react-icons/fa";
 import { IoIosClose } from "react-icons/io";
 import { useUpdateCategoryMutation } from "../../../store/service/category/categoryApiservice";
 import toast from "react-hot-toast";
+import { useGetSubjectVariantQuery } from "../../../store/service/subjectVariant/subjectVariantApiService";
 
 const UpdateCategory = ({ updateModal, setUpdateModal, updateData }) => {
-  // category Id
-  const id = updateData?._id;
   // category Image
   const [imageShow, setImageShow] = useState("");
+  // category Id
+  const id = updateData?._id;
+  // all subject variant
+  const { data: subjectInfo } = useGetSubjectVariantQuery();
+  const allSubjectData = subjectInfo?.data || [];
   // update category
   const [updateCategory, { isLoading }] = useUpdateCategoryMutation(id);
 
@@ -21,6 +25,7 @@ const UpdateCategory = ({ updateModal, setUpdateModal, updateData }) => {
     handleSubmit,
     watch,
     reset,
+    control,
     formState: { errors },
   } = useForm();
   // show image after changing
@@ -41,7 +46,7 @@ const UpdateCategory = ({ updateModal, setUpdateModal, updateData }) => {
     formData.append("categoryImage", categoryImage);
     //   addCategory result
     const result = await updateCategory({ formData, id });
- 
+
     if (result?.data?.success) {
       toast.success(result?.data?.message);
       setUpdateModal(false);
@@ -104,20 +109,33 @@ const UpdateCategory = ({ updateModal, setUpdateModal, updateData }) => {
                   >
                     Category Name
                   </label>
-                  <input
-                    type="text"
-                    id="className"
-                    name="className"
-                    required
-                    {...register("name")}
-                    placeholder="Enter Category Name"
-                    className="w-full p-2 mb-4 border rounded-md outline-none focus:outline-primaryAlfa-50"
-                  />
-                  {errors.name?.type === "required" && (
-                    <p role="alert" className="text-red-500 text-[14px]">
-                      Category name is required
-                    </p>
-                  )}
+
+                  <div className="my-3">
+                    <Controller
+                      name="name"
+                      control={control}
+                      defaultValue=""
+                      rules={{
+                        required: "Name is required",
+                      }}
+                      render={({ field, fieldState }) => (
+                        <Select
+                          label="Select Category"
+                          error={fieldState.error?.message}
+                          {...field}
+                        >
+                          {allSubjectData?.map((item) => (
+                            <Option key={item?._id} value={item?.variant}>
+                              {item?.variant}
+                            </Option>
+                          ))}
+                        </Select>
+                      )}
+                    />
+                  </div>
+                  <p className="text-pinkRed text-xs mt-1">
+                    {errors.name?.message}
+                  </p>
                 </div>
                 {/* Image */}
                 <div className="cursor-pointer">

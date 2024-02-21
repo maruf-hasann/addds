@@ -5,40 +5,49 @@ import { Button, Option, Select } from "@material-tailwind/react";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { IoIosArrowDown, IoIosClose } from "react-icons/io";
-import { useAddCategoryMutation } from "../../../store/service/category/categoryApiservice";
 import { FaSpinner } from "react-icons/fa";
-import { useGetSubjectVariantQuery } from "../../../store/service/subjectVariant/subjectVariantApiService";
+import { useAddSubCategoryMutation } from "../../../store/service/subCategory/subCategoryApiService";
+import { useGetMainSubjectQuery } from "../../../store/service/mainSubject/mainSubjectApiService";
+import { useGetAllCategoryQuery } from "../../../store/service/category/categoryApiservice";
 
-const AddCategory = ({ modalOpen, setModalOpen }) => {
-  // category Image
+const AddSubCategory = ({ modalOpen, setModalOpen }) => {
+  // subcategory Image
   const [imageShow, setImageShow] = useState("");
-  // all subject variant
-  const { data: subjectInfo } = useGetSubjectVariantQuery();
-  const allSubjectData = subjectInfo?.data || [];
+  // main subject data
+  const { data: mainSubjectInfo, isLoading: subCategoryLoading } =
+    useGetMainSubjectQuery();
+  const mainSubjectData = mainSubjectInfo?.data || [];
 
-  // add category
-  const [addCategory, { isLoading }] = useAddCategoryMutation();
+  // category data
+  const { data: categoryInfo, isLoading: categoryLoading } =
+    useGetAllCategoryQuery();
+  const allCategories = categoryInfo?.data || [];
 
-  /* React hook form */
+  // add subcategory
+  const [addSubCategory, { isLoading }] = useAddSubCategoryMutation();
+
   const {
     register,
     handleSubmit,
-  watch,
-    formState: { errors },
+    watch,
+    reset,
     control,
+    formState: { errors },
   } = useForm();
 
   // from data
   const onSubmit = async (data) => {
     //   image
-    const categoryImage = data?.post_image[0];
+    const subCategoryImage = data?.post_image[0];
     // name
     const name = data?.name;
     const formData = new FormData();
+    const categoryId = data?.id;
     formData.append("name", name);
-    formData.append("categoryImage", categoryImage);
+    formData.append("subCategoryImage", subCategoryImage);
+    formData.append("categoryId", categoryId);
     //   addCategory result
-    const result = await addCategory(formData);
+    const result = await addSubCategory(formData);
     if (result?.data?.success) {
       toast.success(result?.data?.message);
       setModalOpen(false);
@@ -83,14 +92,16 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
           <>
             <div className="py-10">
               <div className="flex justify-between items-center mb-5">
-                <h1 className="font-bold text-blue-gray-800">Add Category</h1>
+                <h1 className="font-bold text-blue-gray-800">
+                  Add Sub Category
+                </h1>
               </div>
 
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white text-black"
               >
-                {/* name area */}
+                {/* category */}
                 <div>
                   <label
                     htmlFor="className"
@@ -101,11 +112,11 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
 
                   <div className="my-3">
                     <Controller
-                      name="name"
+                      name="id"
                       control={control}
                       defaultValue=""
                       rules={{
-                        required: "Name is required",
+                        required: "Category is required",
                       }}
                       render={({ field, fieldState }) => (
                         <Select
@@ -113,12 +124,11 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
                           error={fieldState.error?.message}
                           {...field}
                         >
-                          {allSubjectData?.map((item) => (
-                            <Option key={item?._id} value={item?.variant}>
-                              {item?.variant}
+                          {allCategories?.map((item) => (
+                            <Option key={item?._id} value={item?.categoryId}>
+                              {item?.name}
                             </Option>
                           ))}
-                        
                         </Select>
                       )}
                     />
@@ -127,6 +137,42 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
                     {errors.name?.message}
                   </p>
                 </div>
+                <div>
+                  <label
+                    htmlFor="className"
+                    className="block mb-2 font-semibold text-sm text-gray-500"
+                  >
+                    Sub Category Name
+                  </label>
+
+                  <div className="my-3">
+                    <Controller
+                      name="name"
+                      control={control}
+                      defaultValue=""
+                      rules={{
+                        required: "Sub Category is required",
+                      }}
+                      render={({ field, fieldState }) => (
+                        <Select
+                          label="Select Sub Category"
+                          error={fieldState.error?.message}
+                          {...field}
+                        >
+                          {mainSubjectData?.map((item) => (
+                            <Option key={item?._id} value={item?.name}>
+                              {item?.name}
+                            </Option>
+                          ))}
+                        </Select>
+                      )}
+                    />
+                  </div>
+                  <p className="text-pinkRed text-xs mt-1">
+                    {errors.name?.message}
+                  </p>
+                </div>
+
                 {/* Image */}
                 <div className="cursor-pointer ">
                   {imageShow ? (
@@ -151,11 +197,14 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
                       <>
                         {imageShow ? (
                           <div className="relative">
-                            <img className="h-auto w-[200px]" src={imageShow} />
+                            <img
+                              className="h-[92px] w-[200px] object-cover"
+                              src={imageShow}
+                            />
                           </div>
                         ) : (
                           <>
-                            <div className="w-[200px]">
+                            <div className="w-[200px] h-[92px]">
                               <div className="text-center">
                                 <IoCloudUploadOutline
                                   size={50}
@@ -212,4 +261,4 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
   );
 };
 
-export default AddCategory;
+export default AddSubCategory;

@@ -1,48 +1,44 @@
 import React, { useState } from "react";
-import { FaRegImage } from "react-icons/fa";
-import { FaRegEdit } from "react-icons/fa";
+import { FaRegEdit, FaTrash } from "react-icons/fa";
+import DataTable from "../../components/Shared/DataTable/DataTable";
 import {
-  useDeleteCategoryMutation,
-  useGetAllCategoryQuery,
-} from "../../../store/service/category/categoryApiservice";
-import DataTable from "../../../components/Shared/DataTable/DataTable";
-import { FaTrash } from "react-icons/fa6";
-import DeleteModal from "../../../components/Shared/DeleteModal/DeleteModal";
-import AddCategory from "../AddCategory/AddCategory";
-import UpdateCategory from "../UpdateCateGory/UpdateCategory";
+  useDeleteSubCategoryMutation,
+  useGetAllSubCategoryQuery,
+} from "../../store/service/subCategory/subCategoryApiService";
+import AddSubCategory from "./AddSubCategory/AddSubCategory";
+import DeleteModal from "../../components/Shared/DeleteModal/DeleteModal";
+import UpdateSubCategory from "./UpdateSubcategory/UpdateSubCategory";
 
-const AllCategory = () => {
-  const [categoryData, setCategoryData] = useState(null);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+const SubCategory = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [updateData, setUpdateData] = useState(null);
   const [updateModal, setUpdateModal] = useState(false);
+  const [subCategoryData, setSubCategoryData] = useState(null);
 
-  // category data
-  const { data: categoryInfo, isLoading } = useGetAllCategoryQuery();
-  const allCategories = categoryInfo?.data;
-  
-  // delete category
-  const [deleteCategory] = useDeleteCategoryMutation();
+  // redux api
+  const { data: subcategoryInfo, isLoading } = useGetAllSubCategoryQuery();
+  const [deleteSubCategory] = useDeleteSubCategoryMutation();
+  const allSubCategories = subcategoryInfo?.data;
 
   return (
     <div className="py-10 w-full">
       <div className="flex justify-between items-center mb-5">
         <h1 className="font-bold text-xl md:text-2xl text-white">
-          All Categories
+          All Sub Categories
         </h1>
         <div
           className="font-semibold text-sm border px-6 py-[6px] text-[#1C6BAD] rounded-sm border-sky-200 bg-white cursor-pointer"
           onClick={() => setModalOpen(true)}
         >
-          Add Category
+          Add Sub Category
         </div>
       </div>
 
       <DataTable
         isLoading={isLoading}
         error={false}
-        tableData={allCategories}
+        tableData={allSubCategories}
         handleSelectedRowItem={(data) => console.log(data)}
         columns={[
           {
@@ -86,7 +82,7 @@ const AllCategory = () => {
             render: ({ item }) => (
               <FaTrash
                 onClick={() => {
-                  setCategoryData(item), setOpenDeleteModal(true);
+                  setSubCategoryData(item), setOpenDeleteModal(true);
                 }}
                 className="cursor-pointer hover:text-red-500"
               />
@@ -94,32 +90,31 @@ const AllCategory = () => {
           },
         ]}
       />
-      {/* add category Modal */}
+      {/* add subCategory */}
       {modalOpen && (
-        <AddCategory modalOpen={modalOpen} setModalOpen={setModalOpen} />
+        <AddSubCategory modalOpen={modalOpen} setModalOpen={setModalOpen} />
       )}
-      {/* edit category data */}
+      {/* update  */}
       {updateModal && (
-        <UpdateCategory
+        <UpdateSubCategory
           updateModal={updateModal}
           setUpdateModal={setUpdateModal}
           updateData={updateData}
         />
       )}
-      {/* delete Category */}
-
+      {/* delete subcategory */}
       {openDeleteModal && (
         <DeleteModal
-          id={categoryData?._id}
-          name={categoryData?.name}
-          setDeleteData={setCategoryData}
+          id={subCategoryData?._id}
+          name={subCategoryData?.name}
+          setDeleteData={setSubCategoryData}
           openDeleteModal={openDeleteModal}
           setOpenDeleteModal={setOpenDeleteModal}
-          deleteFunction={deleteCategory}
+          deleteFunction={deleteSubCategory}
         />
       )}
     </div>
   );
 };
 
-export default AllCategory;
+export default SubCategory;
