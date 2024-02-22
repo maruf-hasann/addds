@@ -47,17 +47,17 @@ input::-webkit-inner-spin-button {
 
 .before-menu-content::before {
     content: "";
-    width: 2px;
+    width: 1.7px;
     height: 100%;
-    background-color: #1b6baf;
+    background-color: #5aa4e2;
     position: absolute;
     left: 0;
 }
 .before-hover-menu-content::before {
     content: "";
-    width: 2px;
+    width: 1.7px;
     height: 0%;
-    background-color: #1b6baf;
+    background-color: #5aa4e2;
     position: absolute;
     left: 0;
     transition: all 0.3s;
