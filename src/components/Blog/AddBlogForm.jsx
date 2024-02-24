@@ -39,6 +39,7 @@ const AddBlogForm = ({setModalOpen}) => {
 
   // submit blogs
   const blogSubmit = async (data) => {
+   
     //   image
     const blogImage = data?.post_image[0];
 
@@ -139,7 +140,7 @@ const AddBlogForm = ({setModalOpen}) => {
 
           <div className="my-3">
             <Controller
-              name="name"
+              name="SubCategory"
               control={control}
               defaultValue=""
               rules={{
@@ -160,7 +161,9 @@ const AddBlogForm = ({setModalOpen}) => {
               )}
             />
           </div>
-          <p className="text-pinkRed text-xs mt-1">{errors.name?.message}</p>
+          <p className="text-pinkRed text-xs mt-1">
+            {errors.SubCategory?.message}
+          </p>
         </div>
       </div>
       {/* Blog title  */}
@@ -269,7 +272,7 @@ const AddBlogForm = ({setModalOpen}) => {
             <>
               {imageShow ? (
                 <div className="relative">
-                  <img className="h-auto w-[240px]" src={imageShow} />
+                  <img className="h-[90px] object-cover w-[240px]" src={imageShow} />
                 </div>
               ) : (
                 <>
