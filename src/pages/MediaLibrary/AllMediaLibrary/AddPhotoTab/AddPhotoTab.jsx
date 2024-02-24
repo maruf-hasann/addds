@@ -1,4 +1,4 @@
-import { Button, Input } from "@material-tailwind/react";
+import { Button, Input, Textarea } from "@material-tailwind/react";
 import React, { useState } from "react";
 import { MdCloudUpload } from "react-icons/md";
 import { useUploadMediaMutation } from "../../../../store/service/mediaLibrary/mediaLibraryApiService";
@@ -70,8 +70,8 @@ export const AddPhotoTab = ({ handleOpen }) => {
         <Input
           variant="outlined"
           label="Image Title"
+          type="text"
           required
-          value={imageTitle}
           onBlur={(e) => setImageTitle(e.target.value)}
         />
       </div>
