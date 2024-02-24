@@ -69,6 +69,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import TutorCoaching from "../pages/Tutors/TutorCoaching/TutorCoaching";
 import DashboardWidgets from "../pages/Settings/DashboardWidgets/DashboardWidgets";
 import BlogBanner from "../pages/BlogBanner/BlogBanner";
+import SubCategory from "../pages/SubCategory/SubCategory";
 
 export const router = createBrowserRouter([
   {
@@ -215,6 +216,9 @@ export const router = createBrowserRouter([
       {
         path: "/category",
         element: <AllCategory />,
+      },  {
+        path: "/sub-category",
+        element: <SubCategory/>,
       },
       {
         path: "/video",

@@ -187,6 +187,9 @@ export const withSubmenu = [
             {
                 name: "Category",
                 url: "./category",
+            },    {
+                name: "Sub Category",
+                url: "./sub-category",
             },
             {
                 name: "Video",
