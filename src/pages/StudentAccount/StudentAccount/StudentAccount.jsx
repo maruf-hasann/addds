@@ -51,12 +51,12 @@ const StudentAccount = () => {
                             <div>
                                 {item?.identityInfo?.personalPhoto ? (
                                     <img
-                                        class="w-10 h-10 rounded-full"
+                                        className="h-10 w-10 rounded-full"
                                         src={item?.identityInfo?.personalPhoto}
                                         alt={item?.personalInfo?.fullName}
                                     />
                                 ) : (
-                                    <FaUser class="w-10 h-10 rounded-full" />
+                                    <FaUser className="h-10 w-10 rounded-full" />
                                 )}
                             </div>
                         ),
