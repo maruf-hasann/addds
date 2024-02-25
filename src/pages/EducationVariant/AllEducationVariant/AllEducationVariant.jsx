@@ -48,7 +48,7 @@ const AllEducationVariant = () => {
                                 <Button
                                     color="red"
                                     size="md"
-                                    className="px-4 bg-red-400 shadow-lg"
+                                    className="px-3.5 py-2.5 bg-red-400 shadow-lg"
                                     onClick={() => {
                                         setOpenDeleteEducationVariantModal(
                                             true
@@ -56,7 +56,7 @@ const AllEducationVariant = () => {
                                             setDeleteEducationVariantData(item);
                                     }}
                                 >
-                                   <FaTrash size={14} />
+                                   <FaTrash className="text-[12px]" />
                                 </Button>
                             </div>
                         ),
