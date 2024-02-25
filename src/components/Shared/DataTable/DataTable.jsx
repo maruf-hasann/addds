@@ -161,7 +161,7 @@ const DataTable = ({
                 </div>
             </div>
             {/* table start here  */}
-            <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-primary scrollbar-track-gray-100">
+            <div className="overflow-x-auto scrollbar scrollbar-thumb-primary/80 scrollbar-track-gray-100">
                 <table className="min-w-full overflow-hidden mt-4">
                     <thead className="bg-blue-50/30">
                         <tr className="text-sm">
@@ -228,7 +228,7 @@ const DataTable = ({
                                 }`}
                             >
                                 {checkbox && (
-                                    <td className="p-6 border-t border-t-blue-gray-100">
+                                    <td className="px-4 py-3 border-t border-t-blue-gray-100">
                                         <input
                                             type="checkbox"
                                             checked={
@@ -244,7 +244,7 @@ const DataTable = ({
                                     </td>
                                 )}
                                 {!hideSerial && (
-                                    <td className="p-4 text-[14.5px] font-normal text-center border-t border-t-blue-gray-100 w-28">
+                                    <td className="px-4 py-2.5 text-[13px] font-normal text-center border-t border-t-blue-gray-100 w-28">
                                         {idx + 1}
                                     </td>
                                 )}
@@ -252,29 +252,31 @@ const DataTable = ({
                                 {columns?.map((column, index) => (
                                     <td
                                         key={index}
-                                        className={`py-4 px-3 font-normal border-t text-[14.5px] border-t-blue-gray-100 whitespace-normal align-middle ${
+                                        className={`py-2.5 px-3 font-normal border-t text-[13px] border-t-blue-gray-100 whitespace-normal align-middle ${
                                             index === columns.length - 1
                                                 ? "w-40"
                                                 : ""
                                         }`}
                                     >
-                                        {column?.render ? (
-                                            <column.render item={item} />
-                                        ) : column?.dataIndex2 ? (
-                                            item[column?.dataIndex]?.[
-                                                column?.dataIndex2
-                                            ] ? (
+                                        <span className="text-nowrap">
+                                            {column?.render ? (
+                                                <column.render item={item} />
+                                            ) : column?.dataIndex2 ? (
                                                 item[column?.dataIndex]?.[
                                                     column?.dataIndex2
-                                                ]
+                                                ] ? (
+                                                    item[column?.dataIndex]?.[
+                                                        column?.dataIndex2
+                                                    ]
+                                                ) : (
+                                                    "N/A"
+                                                )
+                                            ) : item[column?.dataIndex] ? (
+                                                item[column?.dataIndex]
                                             ) : (
                                                 "N/A"
-                                            )
-                                        ) : item[column?.dataIndex] ? (
-                                            item[column?.dataIndex]
-                                        ) : (
-                                            "N/A"
-                                        )}
+                                            )}
+                                        </span>
                                     </td>
                                 ))}
                             </tr>
