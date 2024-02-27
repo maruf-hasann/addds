@@ -9,6 +9,12 @@ const blogApiService = baseApi.injectEndpoints({
       }),
       providesTags: ["Blog"],
     }),
+    getTutorBlogs: build.query({
+      query: (payload) => ({
+        url: `/blogs/blogs?phoneNumber=${payload}`,
+      }),
+      providesTags: ["Blog"],
+    }),
     addBlog: build.mutation({
       query: (payload) => ({
         url: `blogs/blogs`,
@@ -30,6 +36,7 @@ const blogApiService = baseApi.injectEndpoints({
 
 export const {
   useGetAllBlogsQuery,
+  useGetTutorBlogsQuery,
   useDeleteBlogMutation,
   useAddBlogMutation
 } = blogApiService;
