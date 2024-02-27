@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Videos from "../../../../../components/Shared/PromoInfo/VideoComponent/Videos/Videos";
 import Images from "../../../../../components/Shared/PromoInfo/ImageComponent/Images/Images";
 import { useGetTutorMediaGalleryQuery } from "../../../../../store/service/tutorInfo/mediaGallery/mediaGallery";
+import Post from "../../../../../components/Shared/PromoInfo/PostComponent/Post/Post";
 
 const PromoInfo = ({ number }) => {
   const [activeTab, setActiveTab] = useState("video");
@@ -73,6 +74,15 @@ const PromoInfo = ({ number }) => {
                   {activeTab === "photo" && (
                     <div className="h-1 w-14 bg-primary absolute top-[88%] rounded-t-full"></div>
                   )}
+                </div>{" "}
+                <div
+                  className="pb-3 relative cursor-pointer"
+                  onClick={() => setActiveTab("post")}
+                >
+                  <p className="font-semibold text-gray-700 ">Post</p>
+                  {activeTab === "post" && (
+                    <div className="h-1 w-14 bg-primary absolute top-[88%] rounded-t-full"></div>
+                  )}
                 </div>
               </div>
               <div className="p-5 bg-white">
@@ -81,6 +91,9 @@ const PromoInfo = ({ number }) => {
                 )}
                 {activeTab === "photo" && (
                   <Images isLoading={isLoading} images={combinedMediaGallery} />
+                )}{" "}
+                {activeTab === "post" && (
+                  <Post  number={number}  />
                 )}
               </div>
             </div>
