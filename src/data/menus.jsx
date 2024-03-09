@@ -49,207 +49,223 @@ export const menus = [
 
 // setting menu
 export const withSubmenu = [
-    {
-        id: 1,
-        name: "Tutor",
-        icon: <GiTeacher size={20} className="text-primary/80" />,
-        subMenus: [
-            {
-                name: "Tutor Account",
-                url: "./tutor-account",
-            },
-            {
-                name: "Tutoring Info",
-                url: "./academic-tutoring",
-            },
-        ],
-    },
-    {
-        id: 2,
-        name: "Tutoring Setting",
-        icon: <FaChalkboardTeacher size={20} className="text-primary/80" />,
-        subMenus: [
-            {
-                name: "Education Variant",
-                url: "./all-education-variants",
-            },
-            {
-                name: "Tutoring Variant",
-                url: "./all-tutoring-variants",
-            },
-            // {
-            //     name: "Add Tutor Info",
-            //     url: "./add-tutor-info",
-            // },
-            {
-                name: "Tutoring Place",
-                url: "./all-tutoring-places",
-            },
-            // {
-            //     name: "Tutoring Program",
-            //     url: "./all-tutoring-programs",
-            // },
-            {
-                name: "Tutoring Category",
-                url: "./all-tutoring-categories",
-            },
-            {
-                name: "Additional Program",
-                url: "./all-tutoring-programs",
-            },
-            // {
-            //     name: "Tutoring Class",
-            //     url: "./all-tutoring-classes",
-            // },
-            {
-                name: "Tutoring Class",
-                url: "./all-tutoring-class-pm",
-            },
-            {
-                name: "Tutoring Curriculum",
-                url: "./tutoring-curriculum",
-            },
-            {
-                name: "Tutoring Location",
-                url: "./all-tutoring-location",
-            },
-        ],
-    },
-    {
-        id: 3,
-        name: "Subject Setting",
-        icon: <FaBook size={18} className="text-primary/80" />,
-        subMenus: [
-            {
-                name: "Subject Class Variant",
-                url: "./subject-class-variant",
-            },
-            {
-                name: "Subject Variant",
-                url: "./subject-variant",
-            },
-            {
-                name: "Main Subject",
-                url: "./all-main-subject",
-            },
-            {
-                name: "Sub Subject",
-                url: "./all-sub-subject",
-            },
-            {
-                name: "Mock Pricing",
-                url: "./mock-pricing",
-            },
-        ],
-    },
-    {
-        id: 4,
-        name: "Account Setting",
-        icon: <MdCastForEducation size={20} className="text-primary/80" />,
-        subMenus: [
-            {
-                name: "Curriculum Board",
-                url: "./all-curriculum-board",
-            },
-            {
-                name: "School",
-                url: "./all-school-pm",
-            },
-            {
-                name: "Collage",
-                url: "./all-collage-hc",
-            },
-            {
-                name: "University",
-                url: "./all-universities",
-            },
-            {
-                name: "Semester",
-                url: "./all-semesters",
-            },
+  {
+    id: 1,
+    name: "Tutor",
+    icon: <GiTeacher size={20} className="text-primary/80" />,
+    subMenus: [
+      {
+        name: "Tutor Account",
+        url: "./tutor-account",
+      },
+      {
+        name: "Tutoring Info",
+        url: "./academic-tutoring",
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Tutoring Setting",
+    icon: <FaChalkboardTeacher size={20} className="text-primary/80" />,
+    subMenus: [
+      {
+        name: "Education Variant",
+        url: "./all-education-variants",
+      },
+      {
+        name: "Tutoring Variant",
+        url: "./all-tutoring-variants",
+      },
+      // {
+      //     name: "Add Tutor Info",
+      //     url: "./add-tutor-info",
+      // },
+      {
+        name: "Tutoring Place",
+        url: "./all-tutoring-places",
+      },
+      // {
+      //     name: "Tutoring Program",
+      //     url: "./all-tutoring-programs",
+      // },
+      {
+        name: "Tutoring Category",
+        url: "./all-tutoring-categories",
+      },
+      {
+        name: "Additional Program",
+        url: "./all-tutoring-programs",
+      },
+      // {
+      //     name: "Tutoring Class",
+      //     url: "./all-tutoring-classes",
+      // },
+      {
+        name: "Tutoring Class",
+        url: "./all-tutoring-class-pm",
+      },
+      {
+        name: "Tutoring Curriculum",
+        url: "./tutoring-curriculum",
+      },
+      {
+        name: "Tutoring Location",
+        url: "./all-tutoring-location",
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "Subject Setting",
+    icon: <FaBook size={18} className="text-primary/80" />,
+    subMenus: [
+      {
+        name: "Subject Class Variant",
+        url: "./subject-class-variant",
+      },
+      {
+        name: "Subject Variant",
+        url: "./subject-variant",
+      },
+      {
+        name: "Main Subject",
+        url: "./all-main-subject",
+      },
+      {
+        name: "Sub Subject",
+        url: "./all-sub-subject",
+      },
+      {
+        name: "Mock Pricing",
+        url: "./mock-pricing",
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: "Account Setting",
+    icon: <MdCastForEducation size={20} className="text-primary/80" />,
+    subMenus: [
+      {
+        name: "Curriculum Board",
+        url: "./all-curriculum-board",
+      },
+      {
+        name: "School",
+        url: "./all-school-pm",
+      },
+      {
+        name: "Collage",
+        url: "./all-collage-hc",
+      },
+      {
+        name: "University",
+        url: "./all-universities",
+      },
+      {
+        name: "Semester",
+        url: "./all-semesters",
+      },
 
-            {
-                name: "Current Affair",
-                url: "./all-current-affairs",
-            },
-        ],
-    },
+      {
+        name: "Current Affair",
+        url: "./all-current-affairs",
+      },
+    ],
+  },
 
-    {
-        id: 5,
-        name: "Blog Setting",
-        icon: <FaBlog size={20} className="text-primary/80" />,
-        subMenus: [
-            {
-                name: "All Blog",
-                url: "./blog",
-            },
-            {
-                name: "Category",
-                url: "./category",
-            },    {
-                name: "Sub Category",
-                url: "./sub-category",
-            },
-            {
-                name: "Video",
-                url: "./video",
-            },
-            {
-                name: "Banner",
-                url: "./blog-banner",
-            },
-        ],
-    },
-    {
-        id: 6,
-        name: "Tutoring Job",
-        icon: <MdAssuredWorkload size={20} className="text-primary/80" />,
-        subMenus: [
-            {
-                name: "Active Jobs",
-                url: "./all-active-regular-jobs",
-            },
-            {
-                name: "InActive Jobs",
-                url: "./all-un-active-regular-jobs",
-            },
-            {
-                name: "Hired  Jobs",
-                url: "./all-hired-regular-jobs",
-            },
-        ],
-    },
-    {
-        id: 7,
-        name: "Mock Jobs",
-        icon: <MdOutlineAddHomeWork size={20} className="text-primary/80" />,
-        subMenus: [
-            {
-                name: "Active Jobs",
-                url: "./all-active-mock-test-jobs",
-            },
-            {
-                name: "InActive Jobs",
-                url: "./all-un-active-mock-test-jobs",
-            },
-            {
-                name: "Hired Jobs",
-                url: "./all-hired-mock-test-jobs",
-            },
-        ],
-    },
-    {
-        id: 8,
-        name: "Dashboard Setting",
-        icon: <MdDashboardCustomize size={21} className="text-primary/80" />,
-        subMenus: [
-            {
-                name: "Widgets",
-                url: "./settings/dashboard-widgets",
-            },
-        ],
-    },
+  {
+    id: 5,
+    name: "Blog Setting",
+    icon: <FaBlog size={20} className="text-primary/80" />,
+    subMenus: [
+      {
+        name: "All Blog",
+        url: "./blog",
+      },
+      {
+        name: "Category",
+        url: "./category",
+      },
+      {
+        name: "Sub Category",
+        url: "./sub-category",
+      },
+      {
+        name: "Video",
+        url: "./video",
+      },
+      {
+        name: "Banner",
+        url: "./blog-banner",
+      },
+    ],
+  },
+  {
+    id: 6,
+    name: "Tutoring Job",
+    icon: <MdAssuredWorkload size={20} className="text-primary/80" />,
+    subMenus: [
+      {
+        name: "Active Jobs",
+        url: "./all-active-regular-jobs",
+      },
+      {
+        name: "InActive Jobs",
+        url: "./all-un-active-regular-jobs",
+      },
+      {
+        name: "Hired  Jobs",
+        url: "./all-hired-regular-jobs",
+      },
+    ],
+  },
+  {
+    id: 7,
+    name: "Mock Jobs",
+    icon: <MdOutlineAddHomeWork size={20} className="text-primary/80" />,
+    subMenus: [
+      {
+        name: "Active Jobs",
+        url: "./all-active-mock-test-jobs",
+      },
+      {
+        name: "InActive Jobs",
+        url: "./all-un-active-mock-test-jobs",
+      },
+      {
+        name: "Hired Jobs",
+        url: "./all-hired-mock-test-jobs",
+      },
+    ],
+  },
+  {
+    id: 8,
+    name: "Learning",
+    icon: <GiTeacher size={20} className="text-primary/80" />,
+    subMenus: [
+      {
+        name: "Learning Category",
+        url: "./learning-category",
+      },
+      {
+        name: "Learning Program",
+        url: "./learning-program",
+      },
+    ],
+  },
+  {
+    id: 9,
+    name: "Dashboard Setting",
+    icon: <MdDashboardCustomize size={21} className="text-primary/80" />,
+    subMenus: [
+      {
+        name: "Widgets",
+        url: "./settings/dashboard-widgets",
+      },
+    ],
+  },
 ];
 
 export function SettingIcon({ id, open }) {
