@@ -70,6 +70,8 @@ import TutorCoaching from "../pages/Tutors/TutorCoaching/TutorCoaching";
 import DashboardWidgets from "../pages/Settings/DashboardWidgets/DashboardWidgets";
 import BlogBanner from "../pages/BlogBanner/BlogBanner";
 import SubCategory from "../pages/SubCategory/SubCategory";
+import LearningProgram from "../pages/Learning/LeariningProgram/LearningProgram";
+import LearningCategory from "../pages/Learning/LearningCategory/LearningCategory";
 
 export const router = createBrowserRouter([
   {
@@ -303,6 +305,12 @@ export const router = createBrowserRouter([
       {
         path: "/all-hired-mock-test-jobs",
         element: <MockTestHiredJobBoard />,
+      }, {
+            path: "/learning-program",
+        element: <LearningProgram />,
+      },{
+            path: "/learning-category",
+        element: <LearningCategory />,
       },
       {
         path: "/mock-test-job-details/:jobType/:jobId",
