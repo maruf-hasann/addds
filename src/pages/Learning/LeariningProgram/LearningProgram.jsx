@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import AddProgram from '../../../components/Learning/Program/AddProgram';
+import { useGetAllProgramQuery } from '../../../store/service/learningProgram/learningProgramApiService';
 
 const LearningProgram = () => {
   const [modalOpen, setModalOpen] = useState(false);
-
+  // redux api
+  const { data: programInfo } = useGetAllProgramQuery()
+  console.log(programInfo);
     return (
       <div className="py-10 w-full">
         <div className="flex justify-between items-center mb-5">

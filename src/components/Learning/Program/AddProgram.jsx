@@ -38,7 +38,7 @@ const AddProgram = ({ modalOpen, setModalOpen }) => {
                 <h1 className="font-bold text-blue-gray-800">Add Program</h1>
               </div>
 
-             <AddProgramForm/>
+              <AddProgramForm setModalOpen={setModalOpen} />
             </div>
           </>
         </div>
