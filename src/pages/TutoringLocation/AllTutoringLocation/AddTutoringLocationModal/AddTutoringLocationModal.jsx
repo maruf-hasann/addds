@@ -7,18 +7,20 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useSaveTutoringLocationMutation } from "../../../../store/service/tutoringLocation/tutoringLocationApiService";
+import { allDistricts } from "../../../../data/alldistrict";
 
 const AddTutoringLocationModal = ({
   openAddTutoringLocationModal,
-  setOpenAddTutoringLocationModal,
+  setOpenTutoringLocationModal,
 }) => {
   /* state for sub subject */
   const [countries, setCountries] = useState([]);
-  const [states, setStates] = useState([]);
+
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
   const [lName, setLName] = useState(null);
-
+  // states
+  const states = allDistricts;
   const [addTutoringLocation, { isLoading }] =
     useSaveTutoringLocationMutation();
 
@@ -58,29 +60,6 @@ const AddTutoringLocationModal = ({
     return () => {};
   }, []);
 
-  // fetch all states
-  useEffect(() => {
-    if (selectedCountry) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `https://api.countrystatecity.in/v1/countries/${selectedCountry?.iso2}/states`,
-            {
-              headers,
-            }
-          );
-          setStates(response.data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-
-      fetchData();
-
-      return () => {};
-    }
-  }, [selectedCountry]);
-
   // handle select country
   const handleSelectCountry = (id) => {
     setSelectedState(null);
@@ -101,14 +80,12 @@ const AddTutoringLocationModal = ({
     const result = await addTutoringLocation(location);
     if (result?.data?.success) {
       toast.success(result?.data?.message);
-      setLocationName(null);
+      setOpenTutoringLocationModal(false);
       reset();
     } else {
       toast.error(result?.error?.data?.message);
     }
   };
-
-  console.log(lName);
 
   return (
     <div
@@ -187,8 +164,8 @@ const AddTutoringLocationModal = ({
                       Choose City
                     </option>
                     {states?.map((state, idx) => (
-                      <option key={idx} value={state?.name}>
-                        {state?.name}
+                      <option key={idx} value={state}>
+                        {state}
                       </option>
                     ))}
                   </select>
