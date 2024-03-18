@@ -9,13 +9,9 @@ import { RxCross2 } from "react-icons/rx";
 
 const AfterSelectPhoto = ({
   imagePreview,
-  isPublished,
   setIsPublished,
-  setImage,
-  setImagePreview,
   isOpen,
-  setIsOpen,
-  setMediaType,
+  setState,
 }) => {
   const publishPlatforms = [
     {
@@ -44,17 +40,20 @@ const AfterSelectPhoto = ({
   };
 
   const handleCancel = () => {
-    setImage(null), setImagePreview(null), setIsOpen(false), setMediaType(null);
-    setIsPublished({
-      facebook: false,
-      instagram: false,
-      tiktok: false,
-      youtube: false,
-    });
+    setState((prev) => ({
+      ...prev,
+      mediaModalOpen: false,
+      media: null,
+      mediaPreview: null,
+      mediaType: null,
+    }));
   };
 
   const handleSave = () => {
-    setIsOpen(false);
+    setState((prev) => ({
+      ...prev,
+      mediaModalOpen: false,
+    }));
   };
 
   return (
@@ -88,13 +87,13 @@ const AfterSelectPhoto = ({
                   />
                   <div
                     onClick={() => {
-                      setImage(null), setImagePreview(null), setMediaType(null);
-                      setIsPublished({
-                        facebook: false,
-                        instagram: false,
-                        tiktok: false,
-                        youtube: false,
-                      });
+                      setState((prev) => ({
+                        ...prev,
+
+                        media: null,
+                        mediaPreview: null,
+                        mediaType: null,
+                      }));
                     }}
                     className="border border-red-400 text-red-400 hover:text-red-500 hover:border-red-500 absolute top-3 right-3 rounded-full bg-white cursor-pointer"
                   >

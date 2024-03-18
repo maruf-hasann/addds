@@ -10,7 +10,7 @@ const LearningProgram = () => {
   // redux api
   const { data: programInfo, isLoading } = useGetAllProgramQuery();
   const allProgramData = programInfo?.data;
-  console.log(allProgramData);
+ 
 
   return (
     <div className="py-10 w-full">
@@ -29,7 +29,7 @@ const LearningProgram = () => {
         isLoading={isLoading}
         error={false}
         tableData={allProgramData}
-        handleSelectedRowItem={(data) => console.log(data)}
+      
         columns={[
           {
             name: "Media",

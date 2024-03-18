@@ -1,15 +1,6 @@
 import { FaTrash } from "react-icons/fa";
 
-const Media = ({
-  mediaType,
-  mediaPreview,
-  setMediaType,
-  setMediaPreview,
-  setMedia,
-  setIsPublished,
-  setThumbnail,
-  setThumbnailPreview,
-}) => {
+const Media = ({ mediaType, mediaPreview, setState }) => {
   return (
     <div>
       <label className="block mb-3 text-sm font-semibold outline-none text-gray-900 dark:text-white">
@@ -25,13 +16,13 @@ const Media = ({
               />
               <div
                 onClick={() => {
-                  setMediaPreview(null), setMediaType(null), setMedia(null);
-                  setIsPublished({
-                    facebook: false,
-                    instagram: false,
-                    tiktok: false,
-                    youtube: false,
-                  });
+                 
+                  setState((prev) => ({
+                    ...prev,
+                    mediaPreview: null,
+                    mediaType: null,
+                    media: null,
+                  }));
                 }}
                 className="border border-red-400 text-red-400 hover:text-red-500 hover:border-red-500 absolute top-3 right-3 rounded-full bg-white cursor-pointer"
               >
@@ -47,14 +38,12 @@ const Media = ({
             </video>
             <div
               onClick={() => {
-                setMedia(null), setMediaPreview(null), setMediaType(null);
-                setThumbnail(null), setThumbnailPreview(null);
-                setIsPublished({
-                  facebook: false,
-                  instagram: false,
-                  tiktok: false,
-                  youtube: false,
-                });
+               setState((prev) => ({
+                 ...prev,
+                 mediaPreview: null,
+                 mediaType: null,
+                 media: null,
+               }));
               }}
               className="border border-red-400 text-red-400 hover:text-red-500 hover:border-red-500 absolute top-3 right-3 rounded-full bg-white cursor-pointer"
             >

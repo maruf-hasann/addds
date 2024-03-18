@@ -7,8 +7,10 @@ const BeforeSelectMedia = ({
   handleDragLeave,
   isDraggingOver,
   isOpen,
-  setIsOpen,
+  setState
 }) => {
+
+
   return (
     <>
       <div
@@ -17,13 +19,15 @@ const BeforeSelectMedia = ({
         } transition-opacity duration-300 ease-in-out flex items-center justify-center `}
       >
         <div className="fixed inset-0 backdrop-filter backdrop-blur-sm"></div>
-        <div
-          className="bg-white rounded-md z-10  w-full max-w-5xl  max-h-full mt-[8vh] relative mx-1 "
-          
-        >
+        <div className="bg-white rounded-md z-10  w-full max-w-5xl  max-h-full mt-[8vh] relative mx-1 ">
           <div className="p-4 border-b py-6">
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setState((prev) => ({
+                  ...prev,
+                  mediaModalOpen: false,
+                }));
+              }}
               className="absolute top-3 right-3 text-gray-500 text-2xl bg-white hover:text-red-500"
             >
               <RxCross2 />

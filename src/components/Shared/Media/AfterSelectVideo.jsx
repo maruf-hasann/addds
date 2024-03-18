@@ -1,83 +1,25 @@
-import toast from "react-hot-toast";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaTiktok,
-  FaTrash,
-  FaYoutube,
-} from "react-icons/fa";
-import { MdFileUpload } from "react-icons/md";
+import { FaTrash } from "react-icons/fa";
+
 import { RxCross2 } from "react-icons/rx";
 
-const AfterSelectVideo = ({
-  setThumbnailPreview,
-  thumbnailPreview,
-  thumbnail,
-  setThumbnail,
-  videoPreview,
-  isPublished,
-  setIsPublished,
-  isOpen,
-  setIsOpen,
-  setVideo,
-  setVideoPreview,
-  setMediaType,
-}) => {
-  const publishPlatforms = [
-    {
-      name: "youtube",
-      icon: <FaYoutube />,
-    },
-    {
-      name: "facebook",
-      icon: <FaFacebook />,
-    },
-    {
-      name: "instagram",
-      icon: <FaInstagram />,
-    },
-    {
-      name: "tiktok",
-      icon: <FaTiktok />,
-    },
-  ];
-  //   handle add thumbnail
-  const handleAddImage = async (e) => {
-    e.preventDefault();
-    let files = e.target.files;
-    if (files.length > 0) {
-      const selectedImage = files[0];
-      setThumbnail(selectedImage);
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        setThumbnailPreview(reader.result);
-      };
-      reader.readAsDataURL(selectedImage);
-    }
-  };
-
-  const handleCheckboxChange = (platformName) => {
-    setIsPublished((prevCheckboxes) => ({
-      ...prevCheckboxes,
-      [platformName]: !prevCheckboxes[platformName],
+const AfterSelectVideo = ({ setState, videoPreview, isOpen }) => {
+  const handleCancel = () => {
+    setState((prev) => ({
+      ...prev,
+      media: null,
+      mediaPreview: null,
+      mediaModalOpen: false,
+      mediaType: null,
+      thumbnail: null,
+      thumbnailPreview: null,
     }));
   };
 
-  const handleCancel = () => {
-    setVideo(null), setVideoPreview(null), setIsOpen(false), setMediaType(null);
-    setThumbnail(null), setThumbnailPreview(null);
-    setIsPublished({
-      facebook: false,
-      instagram: false,
-      tiktok: false,
-      youtube: false,
-    });
-  };
-
   const handleSave = () => {
-   
-    setIsOpen(false);
+    setState((prev) => ({
+      ...prev,
+      mediaModalOpen: false,
+    }));
   };
 
   return (
@@ -114,14 +56,12 @@ const AfterSelectVideo = ({
                 </video>
                 <div
                   onClick={() => {
-                    setVideo(null), setVideoPreview(null), setMediaType(null);
-                    setThumbnail(null), setThumbnailPreview(null);
-                    setIsPublished({
-                      facebook: false,
-                      instagram: false,
-                      tiktok: false,
-                      youtube: false,
-                    });
+                    setState((prev) => ({
+                      ...prev,
+                      media: null,
+                      mediaPreview: null,
+                      mediaType: null,
+                    }));
                   }}
                   className="border border-red-400 text-red-400 hover:text-red-500 hover:border-red-500 absolute top-3 right-3 rounded-full bg-white cursor-pointer"
                 >

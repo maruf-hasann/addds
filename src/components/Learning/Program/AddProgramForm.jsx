@@ -13,21 +13,23 @@ import AfterSelectVideo from "../../Shared/Media/AfterSelectVideo";
 import { useAddLearningProgramMutation } from "../../../store/service/learningProgram/learningProgramApiService";
 
 const AddProgramForm = ({ setModalOpen }) => {
-  // jodit content
-  const [content, setContent] = useState("");
-  const [media, setMedia] = useState(null);
-  const [mediaPreview, setMediaPreview] = useState(null);
-  const [mediaType, setMediaType] = useState(null);
-  const [mediaModalOpen, setMediaModalOpen] = useState(false);
-  const [isDraggingOver, setIsDraggingOver] = useState(false);
-  const [thumbnail, setThumbnail] = useState(null);
-  const [thumbnailPreview, setThumbnailPreview] = useState(null);
-  const [isPublished, setIsPublished] = useState({
-    facebook: false,
-    instagram: false,
-    tiktok: false,
-    youtube: false,
+  const [state, setState] = useState({
+    content: "",
+    media: null,
+    mediaPreview: null,
+    mediaType: null,
+    mediaModalOpen: false,
+    isDraggingOver: false,
+    thumbnail: null,
+    thumbnailPreview: null,
+    isPublished: {
+      facebook: false,
+      instagram: false,
+      tiktok: false,
+      youtube: false,
+    },
   });
+
   //  redux api
   const [addLearningProgram, { isLoading }] = useAddLearningProgramMutation();
   // category
@@ -42,7 +44,7 @@ const AddProgramForm = ({ setModalOpen }) => {
   } = useForm();
 
   //   handle add media
-  const handleAddMedia = (e) => {
+  const handleAddMedia = async (e) => {
     e.preventDefault();
     e.stopPropagation(); // Prevents further propagation of the current event.
 
@@ -55,62 +57,84 @@ const AddProgramForm = ({ setModalOpen }) => {
 
     if (files.length > 0) {
       const selectedMedia = files[0];
+
       const mediaUrl = URL.createObjectURL(selectedMedia);
+      const mediaTypes = selectedMedia.type; // Get the MIME type
 
-      const mediaType = selectedMedia.type; // Get the MIME type
-
-      if (mediaType.startsWith("image/")) {
-        setMediaType("image");
-        const reader = new FileReader();
-        reader.onload = () => {
-          setMediaPreview(reader.result);
-        };
-        reader.readAsDataURL(selectedMedia);
-        setIsDraggingOver(false);
-      } else if (mediaType.startsWith("video/")) {
-        setMediaType("video");
-        setMediaPreview(mediaUrl);
-        setIsDraggingOver(false);
+      const maxSizeImage = 5 * 1024 * 1024; // 5MB in bytes
+      const maxSizeVideo = 100 * 1024 * 1024; // 100MB in bytes
+      if (
+        mediaTypes.startsWith("image/") &&
+        selectedMedia.size <= maxSizeImage &&
+        selectedMedia.type === "image/jpeg"
+      ) {
+        setState({
+          ...state,
+          media: selectedMedia,
+          mediaPreview: mediaUrl,
+          mediaType: "image",
+        });
+      } else if (
+        mediaTypes.startsWith("video/") &&
+        selectedMedia.size <= maxSizeVideo &&
+        selectedMedia.type === "video/mp4"
+      ) {
+        setState({
+          ...state,
+          media: selectedMedia,
+          mediaPreview: mediaUrl,
+          mediaType: "video",
+        });
+      } else {
+        toast.error(
+          ` Invalid file format or size. Please upload a PNG image (max 5MB) or an MP4 video (max 100MB).`
+        );
       }
-      setMedia(selectedMedia);
     }
   };
+
   const handleDragEnter = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDraggingOver(true);
+
+    setState({
+      ...state,
+      isDraggingOver: true,
+    });
   };
 
   const handleDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDraggingOver(false);
+
+    setState({
+      ...state,
+      isDraggingOver: false,
+    });
   };
 
   // from data
   const onSubmit = async (data) => {
-   
     let number = "8801711223344";
 
-    if (media) {
+    if (state.media) {
       const formData = new FormData();
-
       formData.append("title", data?.title);
       formData.append("phoneNumber", number);
-      formData.append("description", content);
+      formData.append("description", state.content);
       formData.append("batchNo", data?.batchNo);
       formData.append("programCategory", data?.programCategory);
       formData.append("sessionNote", data?.sessionNote);
       formData.append("startingTime", data?.startingTime);
       formData.append("scheduleTime", data?.scheduleTime);
-      formData.append("media", media);
-      formData.append("mediaType", mediaType);
+      formData.append("media", state.media);
+      formData.append("mediaType", state.mediaType);
       formData.append("externalInfoUrl", data?.externalInfoUrl);
       const result = await addLearningProgram(formData);
 
       if (result?.data?.success) {
         toast.success(result?.data?.message);
-        setModalOpen(false)
+        setModalOpen(false);
       } else {
         toast.error(result?.error?.data?.message);
       }
@@ -215,9 +239,9 @@ const AddProgramForm = ({ setModalOpen }) => {
             )}
           </div>
         </div>
-
+        {/* note and url */}
         <div className="grid md:grid-cols-2 gap-3 my-4">
-          {/* note*/}
+          {/* note */}
           <div className="w-full">
             <label className="block mb-2 text-sm font-semibold outline-none text-gray-900 dark:text-white">
               Session Note
@@ -257,52 +281,67 @@ const AddProgramForm = ({ setModalOpen }) => {
           </div>
         </div>
 
-        {/* title */}
-        <div className="w-full my-4">
-          <label className="block mb-2 text-sm font-semibold outline-none text-gray-900 dark:text-white">
-            Title
-          </label>
-          <input
-            type="text"
-            {...register("title", {
-              required: " Title is required",
-            })}
-            className="w-full p-2  text-black border rounded-md outline-none outline focus:outline-primaryAlfa-50"
-            placeholder="Progamoy Quran for all"
-          />
-          {errors.title && (
-            <p className="text-red-500 text-[12px]  absolute">
-              {errors?.title?.message}
-            </p>
-          )}
+        <div>
+          {/* title */}
+          <div className="w-full my-4">
+            <label className="block mb-2 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Title
+            </label>
+            <input
+              type="text"
+              {...register("title", {
+                required: " Title is required",
+              })}
+              className="w-full p-2  text-black border rounded-md outline-none outline focus:outline-primaryAlfa-50"
+              placeholder="Progamoy Quran for all"
+            />
+            {errors.title && (
+              <p className="text-red-500 text-[12px]  absolute">
+                {errors?.title?.message}
+              </p>
+            )}
+          </div>
+
+          {/* Number*/}
+          <div className="w-full my-4">
+            <label className="block mb-2 text-sm font-semibold outline-none text-gray-900 dark:text-white">
+              Number
+            </label>
+            <input
+              type="text"
+              className="w-full p-2  text-black border rounded-md outline-none outline focus:outline-primaryAlfa-50"
+              placeholder="8801711223344"
+              disabled
+            />
+          </div>
         </div>
         {/* description */}
         <div className="mb-6 text-black">
           <label className="block mb-2 font-semibold text-sm ">
             Description
           </label>
-          <JoditReact content={content} setContent={setContent} />
+          <JoditReact content={state.content} setState={setState} />
         </div>
 
-        {media && mediaPreview && (
+        {state.media && state.mediaPreview && (
           <Media
-            mediaPreview={mediaPreview}
-            mediaType={mediaType}
-            setIsPublished={setIsPublished}
-            setMedia={setMedia}
-            setMediaPreview={setMediaPreview}
-            setMediaType={setMediaType}
-            setThumbnail={setThumbnail}
-            setThumbnailPreview={setThumbnailPreview}
+            mediaPreview={state.mediaPreview}
+            mediaType={state.mediaType}
+           setState={setState}
           />
         )}
         {/* media and button */}
 
         <div className="mt-4 mb-5 flex justify-between items-center">
           <div className="flex items-center gap-5 text-2xl text-gray-600 ms-2">
-            {!media && !mediaPreview && (
+            {!state.media && !state.mediaPreview && (
               <div
-                onClick={() => setMediaModalOpen(true)}
+                onClick={() =>
+                  setState({
+                    ...state,
+                    mediaModalOpen: true,
+                  })
+                }
                 className="cursor-pointer hover:text-primary grid grid-cols-1 items-center justify-center"
                 title="Add Media"
               >
@@ -323,44 +362,31 @@ const AddProgramForm = ({ setModalOpen }) => {
           </button>
         </div>
       </form>
-      {!mediaType && mediaModalOpen && (
+      {!state.mediaType && state.mediaModalOpen && (
         <BeforeSelectMedia
           handleDragEnter={handleDragEnter}
           handleDragLeave={handleDragLeave}
-          isDraggingOver={isDraggingOver}
-          isOpen={mediaModalOpen}
-          setIsOpen={setMediaModalOpen}
+          isDraggingOver={state.isDraggingOver}
+          isOpen={state.mediaModalOpen}
+          setState={setState}
           handleAddMedia={handleAddMedia}
         />
       )}
 
-      {mediaType && mediaType === "image" && (
+      {state.mediaType && state.mediaType === "image" && (
         <AfterSelectPhoto
-          imagePreview={mediaPreview}
-          setImagePreview={setMediaPreview}
-          setImage={setMedia}
-          isPublished={isPublished}
-          setIsPublished={setIsPublished}
-          setMediaType={setMediaType}
-          isOpen={mediaModalOpen}
-          setIsOpen={setMediaModalOpen}
+          imagePreview={state.mediaPreview}
+          isPublished={state.isPublished}
+          isOpen={state.mediaModalOpen}
+          setState={setState}
         />
       )}
 
-      {mediaType && mediaType === "video" && (
+      {state.mediaType && state.mediaType === "video" && (
         <AfterSelectVideo
-          videoPreview={mediaPreview}
-          isPublished={isPublished}
-          setIsPublished={setIsPublished}
-          setThumbnail={setThumbnail}
-          setThumbnailPreview={setThumbnailPreview}
-          thumbnail={thumbnail}
-          thumbnailPreview={thumbnailPreview}
-          isOpen={mediaModalOpen}
-          setIsOpen={setMediaModalOpen}
-          setVideo={setMedia}
-          setVideoPreview={setMediaPreview}
-          setMediaType={setMediaType}
+          videoPreview={state.mediaPreview}
+          isOpen={state.mediaModalOpen}
+          setState={setState}
         />
       )}
     </>
