@@ -76,7 +76,7 @@ const AfterSelectVideo = ({
   };
 
   const handleSave = () => {
-    if (!thumbnail) return toast.error("Please add thumbnail");
+   
     setIsOpen(false);
   };
 

@@ -89,7 +89,7 @@ const AddProgramForm = ({ setModalOpen }) => {
 
   // from data
   const onSubmit = async (data) => {
-    console.log(data);
+   
     let number = "8801711223344";
 
     if (media) {
@@ -101,7 +101,7 @@ const AddProgramForm = ({ setModalOpen }) => {
       formData.append("batchNo", data?.batchNo);
       formData.append("programCategory", data?.programCategory);
       formData.append("sessionNote", data?.sessionNote);
-      formData.append("startingTime", data?.startingDate);
+      formData.append("startingTime", data?.startingTime);
       formData.append("scheduleTime", data?.scheduleTime);
       formData.append("media", media);
       formData.append("mediaType", mediaType);
