@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { IoCloudUploadOutline } from "react-icons/io5";
@@ -6,27 +6,30 @@ import { TagsInput } from "react-tag-input-component";
 import { Button, Option, Select } from "@material-tailwind/react";
 import { FaSpinner } from "react-icons/fa6";
 import { BsImage } from "react-icons/bs";
-import { useGetAllCategoryQuery } from '../../store/service/category/categoryApiservice';
-import JoditReact from '../Jodit/JoditReact';
-import { IoIosClose } from 'react-icons/io';
-import { useAddBlogMutation } from '../../store/service/blog/blogApiService';
-import { useGetAllSubCategoryQuery } from '../../store/service/subCategory/subCategoryApiService';
+import { useGetAllCategoryQuery } from "../../store/service/category/categoryApiservice";
+import JoditReact from "../Jodit/JoditReact";
+import { IoIosClose } from "react-icons/io";
+import { useAddBlogMutation } from "../../store/service/blog/blogApiService";
+import { useGetAllSubCategoryQuery } from "../../store/service/subCategory/subCategoryApiService";
+import MaterialSelectInput from "../Shared/Form/MaterialSelectInput";
 
-
-const AddBlogForm = ({setModalOpen}) => {
+const AddBlogForm = ({ setModalOpen }) => {
   // category Image
   const [imageShow, setImageShow] = useState("");
   const [selectedBlogTag, setSelectedBlogTag] = useState([]);
+  const [state, setState] = useState({
+    content: "",
+  });
 
   const [content, setContent] = useState();
- /* redux api call */
+  /* redux api call */
   const { data } = useGetAllCategoryQuery();
-    // category data
+  // category data
   const categoryData = data?.data || [];
   const { data: subCategoryInfo } = useGetAllSubCategoryQuery();
   const subCategoryData = subCategoryInfo?.data || [];
-  const [addBlog, { isLoading }] = useAddBlogMutation()
-  
+  const [addBlog, { isLoading }] = useAddBlogMutation();
+
   const {
     register,
     handleSubmit,
@@ -34,12 +37,12 @@ const AddBlogForm = ({setModalOpen}) => {
     watch,
     reset,
     control,
+    setValue,
     formState: { errors },
   } = useForm();
 
   // submit blogs
   const blogSubmit = async (data) => {
-   
     //   image
     const blogImage = data?.post_image[0];
 
@@ -64,7 +67,7 @@ const AddBlogForm = ({setModalOpen}) => {
     formData.append("shortDescription", shortdes);
     formData.append("tags", tags);
     formData.append("slug", slug);
-    formData.append("description", content);
+    formData.append("description", state.content);
     formData.append("categoryId", category);
     formData.append("subCategoryId", subCategory);
     formData.append("phoneNumber", phone);
@@ -97,73 +100,37 @@ const AddBlogForm = ({setModalOpen}) => {
       <div className="grid grid-cols-2 gap-4 ">
         {/* category */}
         <div>
-          <label
-            htmlFor="className"
-            className="block mb-2 font-semibold text-sm text-gray-500"
+          <MaterialSelectInput
+            error={errors?.category}
+            label={" Post Type"}
+            register={register}
+            selectName={"category"}
+            errorMessage={"Post Type is required"}
+            setValue={setValue}
           >
-            Post Type
-          </label>
-
-          <div className="my-3">
-            <Controller
-              name="category"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: "Post Type is required",
-              }}
-              render={({ field, fieldState }) => (
-                <Select
-                  label="Post Type"
-                  error={fieldState.error?.message}
-                  {...field}
-                >
-                  {categoryData?.map((item) => (
-                    <Option key={item?._id} value={item?.categoryId}>
-                      {item?.name}
-                    </Option>
-                  ))}
-                </Select>
-              )}
-            />
-          </div>
-          <p className="text-pinkRed text-xs mt-1">{errors.name?.message}</p>
+            {categoryData?.map((item) => (
+              <Option key={item?._id} value={item?.categoryId}>
+                {item?.name}
+              </Option>
+            ))}
+          </MaterialSelectInput>
         </div>
         {/* subCategory */}
         <div>
-          <label
-            htmlFor="className"
-            className="block mb-2 font-semibold text-sm text-gray-500"
+          <MaterialSelectInput
+            error={errors?.category}
+            label={"Category"}
+            register={register}
+            selectName={"SubCategory"}
+            errorMessage={"Sub Category is required"}
+            setValue={setValue}
           >
-            Category
-          </label>
-
-          <div className="my-3">
-            <Controller
-              name="SubCategory"
-              control={control}
-              defaultValue=""
-              rules={{
-                required: " Category is required",
-              }}
-              render={({ field, fieldState }) => (
-                <Select
-                  label=" Category"
-                  error={fieldState.error?.message}
-                  {...field}
-                >
-                  {subCategoryData?.map((item) => (
-                    <Option key={item?._id} value={item?.subCategoryId}>
-                      {item?.name}
-                    </Option>
-                  ))}
-                </Select>
-              )}
-            />
-          </div>
-          <p className="text-pinkRed text-xs mt-1">
-            {errors.SubCategory?.message}
-          </p>
+            {categoryData?.map((item) => (
+              <Option key={item?._id} value={item?.categoryId}>
+                {item?.name}
+              </Option>
+            ))}
+          </MaterialSelectInput>
         </div>
       </div>
       {/* Blog title  */}
@@ -246,7 +213,7 @@ const AddBlogForm = ({setModalOpen}) => {
         <label className="block mb-2 font-semibold text-sm text-gray-500">
           Description
         </label>
-        <JoditReact content={content} setContent={setContent} />
+        <JoditReact content={state.content} setState={setState} />
       </div>
       {/* Image */}
       <div className="cursor-pointer ">
@@ -272,7 +239,10 @@ const AddBlogForm = ({setModalOpen}) => {
             <>
               {imageShow ? (
                 <div className="relative">
-                  <img className="h-[90px] object-cover w-[240px]" src={imageShow} />
+                  <img
+                    className="h-[90px] object-cover w-[240px]"
+                    src={imageShow}
+                  />
                 </div>
               ) : (
                 <>

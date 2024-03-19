@@ -16,18 +16,17 @@ import { useSavePersonalInfoMutation } from "../../../../store/service/personalI
 import axios from "axios";
 import { ImSpinner10, ImSpinner9 } from "react-icons/im";
 import { useLazyGetLocationByCityQuery } from "../../../../store/service/tutoringLocation/tutoringLocationApiService";
+import { allDistricts } from "../../../../data/alldistrict";
 
 const PersonalInfo = ({ setActiveTab }) => {
   const [number, setNumber] = useState(null);
   const [numberError, setNumberError] = useState(false);
-
   const [countries, setCountries] = useState([]);
-  const [states, setStates] = useState([]);
-
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [locations, setLocations] = useState([]);
-
+  // states
+  const states = allDistricts;
   const [tutorRegistration, { isLoading }] = useSavePersonalInfoMutation();
   const [getLocations] = useLazyGetLocationByCityQuery();
 
@@ -74,28 +73,7 @@ const PersonalInfo = ({ setActiveTab }) => {
     }
   }, [selectedState]);
 
-  // fetch all states
-  useEffect(() => {
-    if (selectedCountry) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `https://api.countrystatecity.in/v1/countries/${selectedCountry?.iso2}/states`,
-            {
-              headers,
-            }
-          );
-          setStates(response.data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-
-      fetchData();
-
-      return () => {};
-    }
-  }, [selectedCountry]);
+ 
 
   // handle select country
   const handleSelectCountry = (id) => {
@@ -313,8 +291,8 @@ const PersonalInfo = ({ setActiveTab }) => {
                 Choose City
               </option>
               {states?.map((state, idx) => (
-                <option key={idx} value={state?.name}>
-                  {state?.name}
+                <option key={idx} value={state}>
+                  {state}
                 </option>
               ))}
             </select>
