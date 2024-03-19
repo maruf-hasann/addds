@@ -1,10 +1,9 @@
-
 import JoditEditor from "jodit-react";
 import { useMemo } from "react";
 import { useState } from "react";
 import { useRef } from "react";
 
-const JoditReact = ({ content, setContent }) => {
+const JoditReact = ({ setState, content}) => {
   const editor = useRef(null);
 
   const config = useMemo(() => {
@@ -21,7 +20,12 @@ const JoditReact = ({ content, setContent }) => {
         tabIndex={1}
         ref={editor}
         config={config}
-        onChange={(newContent) => setContent(newContent)}
+        onChange={(newContent) =>
+          setState((prev) => ({
+            ...prev,
+            content: newContent,
+          }))
+        }
       />
     </>
   );
