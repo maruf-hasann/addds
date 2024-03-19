@@ -14,9 +14,7 @@ const AddTutoringLocationModal = ({
   setOpenTutoringLocationModal,
 }) => {
   /* state for sub subject */
-  const [countries, setCountries] = useState([]);
 
-  const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
   const [lName, setLName] = useState(null);
   // states
@@ -31,40 +29,6 @@ const AddTutoringLocationModal = ({
     reset,
   } = useForm();
 
-  // get country, state, city header
-  const headers = {
-    "X-CSCAPI-KEY": "OHJGV1poUEN5TzhYT3B2SU1yRHNIUGxHczl1SXVjYUd3Q3RTS1Q3UQ==",
-  };
-
-  // fetch all countries
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://api.countrystatecity.in/v1/countries",
-          {
-            headers,
-          }
-        );
-        setCountries(response.data);
-        setSelectedCountry(
-          response.data?.find((country) => country?.iso2 === "BD")
-        );
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-
-    return () => {};
-  }, []);
-
-  // handle select country
-  const handleSelectCountry = (id) => {
-    setSelectedState(null);
-    setSelectedCountry(countries.find((country) => country.id === Number(id)));
-  };
 
   // handle close modal
   const handleClose = () => {
@@ -72,10 +36,9 @@ const AddTutoringLocationModal = ({
   };
 
   const onSubmit = async (data) => {
-    if (!selectedCountry) return toast.error("Please select a country");
     if (!selectedState) return toast.error("Please select a city");
     if (!lName) return toast.error("Please type Location");
-    const location = { city: data?.city, locationName: lName };
+    const location = { city: data?.city, locationName: lName, };
 
     const result = await addTutoringLocation(location);
     if (result?.data?.success) {
@@ -89,9 +52,8 @@ const AddTutoringLocationModal = ({
 
   return (
     <div
-      className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${
-        openAddTutoringLocationModal ? "block" : "hidden"
-      }`}
+      className={`fixed top-0 left-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-[calc(100%)] max-h-full backdrop-blur-sm ${openAddTutoringLocationModal ? "block" : "hidden"
+        }`}
     >
       <div
         className="w-full h-full z-0 absolute top-0 left-0"
@@ -137,15 +99,13 @@ const AddTutoringLocationModal = ({
                     <option value="" disabled>
                       Choose Country
                     </option>
-                    {countries?.map((country, idx) => (
-                      <option
-                        key={idx}
-                        value={country.id}
-                        selected={country?.iso2 === "BD"}
-                      >
-                        {country?.name}
-                      </option>
-                    ))}
+                    <option
+                      key="Bangladesh"
+                      value="Bangladesh"
+                      selected="Bangladesh"
+                    >
+                      Bangladesh
+                    </option>
                   </select>
                 </div>
 
