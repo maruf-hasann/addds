@@ -125,8 +125,8 @@ const AddBlogForm = ({ setModalOpen }) => {
             errorMessage={"Sub Category is required"}
             setValue={setValue}
           >
-            {categoryData?.map((item) => (
-              <Option key={item?._id} value={item?.categoryId}>
+            {subCategoryData?.map((item) => (
+              <Option key={item?._id} value={item?.subCategoryId}>
                 {item?.name}
               </Option>
             ))}
