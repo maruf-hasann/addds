@@ -9,6 +9,7 @@ import { FaSpinner } from "react-icons/fa";
 import { useAddSubCategoryMutation } from "../../../store/service/subCategory/subCategoryApiService";
 import { useGetMainSubjectQuery } from "../../../store/service/mainSubject/mainSubjectApiService";
 import { useGetAllCategoryQuery } from "../../../store/service/category/categoryApiservice";
+import MaterialSelectInput from "../../../components/Shared/Form/MaterialSelectInput";
 
 const AddSubCategory = ({ modalOpen, setModalOpen }) => {
   // subcategory Image
@@ -32,6 +33,7 @@ const AddSubCategory = ({ modalOpen, setModalOpen }) => {
     watch,
     reset,
     control,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -103,74 +105,38 @@ const AddSubCategory = ({ modalOpen, setModalOpen }) => {
               >
                 {/* category */}
                 <div>
-                  <label
-                    htmlFor="className"
-                    className="block mb-2 font-semibold text-sm text-gray-500"
+                  <MaterialSelectInput
+                    error={errors?.category}
+                    label={" Category Name"}
+                    register={register}
+                    selectName={"id"}
+                    errorMessage={"Post Type is required"}
+                    setValue={setValue}
                   >
-                    Category Name
-                  </label>
-
-                  <div className="my-3">
-                    <Controller
-                      name="id"
-                      control={control}
-                      defaultValue=""
-                      rules={{
-                        required: "Category is required",
-                      }}
-                      render={({ field, fieldState }) => (
-                        <Select
-                          label="Select Category"
-                          error={fieldState.error?.message}
-                          {...field}
-                        >
-                          {allCategories?.map((item) => (
-                            <Option key={item?._id} value={item?.categoryId}>
-                              {item?.name}
-                            </Option>
-                          ))}
-                        </Select>
-                      )}
-                    />
-                  </div>
-                  <p className="text-pinkRed text-xs mt-1">
-                    {errors.name?.message}
-                  </p>
+                    {allCategories?.map((item) => (
+                      <Option key={item?._id} value={item?.categoryId}>
+                        {item?.name}
+                      </Option>
+                    ))}
+                  </MaterialSelectInput>
                 </div>
+                {/* subcategory */}
+               
                 <div>
-                  <label
-                    htmlFor="className"
-                    className="block mb-2 font-semibold text-sm text-gray-500"
+                  <MaterialSelectInput
+                    error={errors?.category}
+                    label={" Sub Category Name"}
+                    register={register}
+                    selectName={"name"}
+                    errorMessage={"Post Type is required"}
+                    setValue={setValue}
                   >
-                    Sub Category Name
-                  </label>
-
-                  <div className="my-3">
-                    <Controller
-                      name="name"
-                      control={control}
-                      defaultValue=""
-                      rules={{
-                        required: "Sub Category is required",
-                      }}
-                      render={({ field, fieldState }) => (
-                        <Select
-                          label="Select Sub Category"
-                          error={fieldState.error?.message}
-                          {...field}
-                        >
-                          {mainSubjectData?.map((item) => (
-                            <Option key={item?._id} value={item?.name}>
-                              {item?.name}
-                            </Option>
-                          ))}
-                        </Select>
-                      )}
-                    />
-                  </div>
-                  <p className="text-pinkRed text-xs mt-1">
-                    {errors.name?.message}
-                  </p>
+                    {mainSubjectData?.map((item) => (
+                      <Option key={item?._id} value={item?.name}>
+                        {item?.name}
+                      </Option>
+                    ))}
+                  </MaterialSelectInput>
                 </div>
 
                 {/* Image */}

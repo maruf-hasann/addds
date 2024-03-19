@@ -7,6 +7,7 @@ import { FaRegCircleXmark } from "react-icons/fa6";
 import { useUpdateTutoringLocationByIdMutation } from "../../../../store/service/tutoringLocation/tutoringLocationApiService";
 import { useState } from "react";
 import axios from "axios";
+import { allDistricts } from "../../../../data/alldistrict";
 
 const EditTutoringLocationModal = ({
   openEditTutoringLocationModal,
@@ -14,10 +15,12 @@ const EditTutoringLocationModal = ({
   editData,
 }) => {
   const [countries, setCountries] = useState([]);
-  const [states, setStates] = useState([]);
+ 
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
   const [lName, setLName] = useState(null);
+  // state
+  const states = allDistricts
   /* redux api call */
   const [editTutoringLocation, { isLoading }] =
     useUpdateTutoringLocationByIdMutation();
@@ -59,28 +62,7 @@ const EditTutoringLocationModal = ({
     return () => {};
   }, []);
 
-  // fetch all states
-  useEffect(() => {
-    if (selectedCountry) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `https://api.countrystatecity.in/v1/countries/${selectedCountry?.iso2}/states`,
-            {
-              headers,
-            }
-          );
-          setStates(response.data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
 
-      fetchData();
-
-      return () => {};
-    }
-  }, [selectedCountry]);
 
   // handle select country
   const handleSelectCountry = (id) => {
@@ -202,13 +184,13 @@ const EditTutoringLocationModal = ({
                     {states?.map((state, idx) => (
                       <option
                         key={idx}
-                        value={state?.name}
+                        value={state}
                         selected={
                           editData?.city?.toLowerCase() ===
                           state?.name.toLowerCase()
                         }
                       >
-                        {state?.name}
+                        {state}
                       </option>
                     ))}
                   </select>

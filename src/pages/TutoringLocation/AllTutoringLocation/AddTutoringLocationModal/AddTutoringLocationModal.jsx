@@ -32,7 +32,7 @@ const AddTutoringLocationModal = ({
 
   // handle close modal
   const handleClose = () => {
-    setOpenAddTutoringLocationModal(!openAddTutoringLocationModal);
+   setOpenTutoringLocationModal(false)
   };
 
   const onSubmit = async (data) => {

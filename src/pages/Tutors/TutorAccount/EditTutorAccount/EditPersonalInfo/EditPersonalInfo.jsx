@@ -8,13 +8,13 @@ import {
 } from "../../../../../store/service/personalInfo/personalInfoApiService";
 import { ImSpinner9 } from "react-icons/im";
 import axios from "axios";
+import { allDistricts } from "../../../../../data/alldistrict";
 
 const EditPersonalInfo = () => {
   const { number } = useParams();
   const navigate = useNavigate();
   const [fetchLoading, setFetchLoading] = useState(false);
   const [countries, setCountries] = useState([]);
-  const [states, setStates] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
 
@@ -28,7 +28,8 @@ const EditPersonalInfo = () => {
 
   const [updatePersonalInfo, { isLoading }] = useUpdatePersonalInfoMutation();
   const [getPersonalInfo] = useLazyGetPersonalInfoQuery();
-
+  // state
+  const states = allDistricts
   // fetch current personal info
   useEffect(() => {
     if (number) {
@@ -84,28 +85,6 @@ const EditPersonalInfo = () => {
     return () => {};
   }, []);
 
-  // fetch all states
-  useEffect(() => {
-    if (selectedCountry) {
-      const fetchData = async () => {
-        try {
-          const response = await axios.get(
-            `https://api.countrystatecity.in/v1/countries/${selectedCountry?.iso2}/states`,
-            {
-              headers,
-            }
-          );
-          setStates(response.data);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      };
-
-      fetchData();
-
-      return () => {};
-    }
-  }, [selectedCountry]);
 
   // handle select country
   const handleSelectCountry = (id) => {
@@ -278,11 +257,11 @@ const EditPersonalInfo = () => {
                 </option>
                 {states?.map((state, idx) => (
                   <option
-                    selected={city === state?.name}
+                    selected={city === state}
                     key={idx}
-                    value={state?.name}
+                    value={state}
                   >
-                    {state?.name}
+                    {state}
                   </option>
                 ))}
               </select>

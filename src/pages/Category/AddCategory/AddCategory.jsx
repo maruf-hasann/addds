@@ -8,6 +8,7 @@ import { IoIosArrowDown, IoIosClose } from "react-icons/io";
 import { useAddCategoryMutation } from "../../../store/service/category/categoryApiservice";
 import { FaSpinner } from "react-icons/fa";
 import { useGetSubjectVariantQuery } from "../../../store/service/subjectVariant/subjectVariantApiService";
+import MaterialSelectInput from "../../../components/Shared/Form/MaterialSelectInput";
 
 const AddCategory = ({ modalOpen, setModalOpen }) => {
   // category Image
@@ -23,17 +24,19 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
   const {
     register,
     handleSubmit,
-  watch,
+    watch,
     formState: { errors },
     control,
+    setValue
   } = useForm();
 
   // from data
   const onSubmit = async (data) => {
+  
     //   image
     const categoryImage = data?.post_image[0];
     // name
-    const name = data?.name;
+    const name = data?.category;
     const formData = new FormData();
     formData.append("name", name);
     formData.append("categoryImage", categoryImage);
@@ -90,42 +93,21 @@ const AddCategory = ({ modalOpen, setModalOpen }) => {
                 onSubmit={handleSubmit(onSubmit)}
                 className="max-w-md mx-auto p-4 border rounded-md mt-5 bg-white text-black"
               >
-                {/* name area */}
                 <div>
-                  <label
-                    htmlFor="className"
-                    className="block mb-2 font-semibold text-sm text-gray-500"
+                  <MaterialSelectInput
+                    error={errors?.category}
+                    label={" Category Name"}
+                    register={register}
+                    selectName={"category"}
+                    errorMessage={"Post Type is required"}
+                    setValue={setValue}
                   >
-                    Category Name
-                  </label>
-
-                  <div className="my-3">
-                    <Controller
-                      name="name"
-                      control={control}
-                      defaultValue=""
-                      rules={{
-                        required: "Name is required",
-                      }}
-                      render={({ field, fieldState }) => (
-                        <Select
-                          label="Select Category"
-                          error={fieldState.error?.message}
-                          {...field}
-                        >
-                          {allSubjectData?.map((item) => (
-                            <Option key={item?._id} value={item?.variant}>
-                              {item?.variant}
-                            </Option>
-                          ))}
-                        
-                        </Select>
-                      )}
-                    />
-                  </div>
-                  <p className="text-pinkRed text-xs mt-1">
-                    {errors.name?.message}
-                  </p>
+                    {allSubjectData?.map((item) => (
+                      <Option key={item?._id} value={item?.variant}>
+                        {item?.variant}
+                      </Option>
+                    ))}
+                  </MaterialSelectInput>
                 </div>
                 {/* Image */}
                 <div className="cursor-pointer ">
