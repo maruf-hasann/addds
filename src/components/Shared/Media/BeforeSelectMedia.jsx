@@ -7,20 +7,18 @@ const BeforeSelectMedia = ({
   handleDragLeave,
   isDraggingOver,
   isOpen,
-  setState
+  setState,
 }) => {
-
-
   return (
     <>
       <div
         className={`fixed  inset-0 z-50 ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        } transition-opacity duration-300 ease-in-out flex items-center justify-center `}
+        } transition-opacity duration-300 ease-in-out flex items-center justify-center  `}
       >
         <div className="fixed inset-0 backdrop-filter backdrop-blur-sm"></div>
-        <div className="bg-white rounded-md z-10  w-full max-w-5xl  max-h-full mt-[8vh] relative mx-1 ">
-          <div className="p-4 border-b py-6">
+        <div className="bg-white rounded-md z-10  w-full max-w-5xl  h-full pt-[9vh]  relative mx-1  ">
+          <div className="p-4 py-6">
             <button
               onClick={() => {
                 setState((prev) => ({
@@ -28,15 +26,14 @@ const BeforeSelectMedia = ({
                   mediaModalOpen: false,
                 }));
               }}
-              className="absolute top-3 right-3 text-gray-500 text-2xl bg-white hover:text-red-500"
+              className="absolute top-3 right-3 text-gray-500 text-2xl bg-white hover:text-red-500 "
             >
               <RxCross2 />
             </button>
           </div>
 
           <div
-            style={{ height: "calc(100vh - 170px)" }}
-            className={`p-4 flex flex-col gap-5 items-center justify-center`}
+            className={`p-4 flex flex-col gap-5 items-center justify-center h-[50vh]`}
             onDragOver={handleDragEnter}
             onDragEnter={handleDragEnter}
             onDragLeave={handleDragLeave}
@@ -44,7 +41,7 @@ const BeforeSelectMedia = ({
           >
             <input
               type="file"
-              accept="video/mp4, image/png"
+              accept="video/mp4, image/jpeg"
               onChange={(e) => handleAddMedia(e)}
               id="input-type-media"
               name="media"

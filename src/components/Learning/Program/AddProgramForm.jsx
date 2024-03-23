@@ -4,7 +4,6 @@ import { MdPermMedia } from "react-icons/md";
 import toast from "react-hot-toast";
 import { ImSpinner9 } from "react-icons/im";
 import { Button, Option, Select } from "@material-tailwind/react";
-import JoditReact from "../../Jodit/JoditReact";
 import { categoryData } from "../../../data/learningCategoryData";
 import Media from "../../Shared/Media/Media";
 import BeforeSelectMedia from "../../Shared/Media/BeforeSelectMedia";
@@ -14,7 +13,6 @@ import { useAddLearningProgramMutation } from "../../../store/service/learningPr
 
 const AddProgramForm = ({ setModalOpen }) => {
   const [state, setState] = useState({
-    content: "",
     media: null,
     mediaPreview: null,
     mediaType: null,
@@ -29,6 +27,7 @@ const AddProgramForm = ({ setModalOpen }) => {
       youtube: false,
     },
   });
+  console.log(state.thumbnail);
 
   //  redux api
   const [addLearningProgram, { isLoading }] = useAddLearningProgramMutation();
@@ -121,7 +120,7 @@ const AddProgramForm = ({ setModalOpen }) => {
       const formData = new FormData();
       formData.append("title", data?.title);
       formData.append("phoneNumber", number);
-      formData.append("description", state.content);
+      formData.append("description", data?.description);
       formData.append("batchNo", data?.batchNo);
       formData.append("programCategory", data?.programCategory);
       formData.append("sessionNote", data?.sessionNote);
@@ -130,6 +129,8 @@ const AddProgramForm = ({ setModalOpen }) => {
       formData.append("media", state.media);
       formData.append("mediaType", state.mediaType);
       formData.append("externalInfoUrl", data?.externalInfoUrl);
+      formData.append("thumbnail", state?.thumbnail);
+
       const result = await addLearningProgram(formData);
 
       if (result?.data?.success) {
@@ -316,18 +317,35 @@ const AddProgramForm = ({ setModalOpen }) => {
           </div>
         </div>
         {/* description */}
-        <div className="mb-6 text-black">
-          <label className="block mb-2 font-semibold text-sm ">
+
+        <div className=" mb-2">
+          <label
+            htmlFor="desc"
+            className="block mb-2 font-semibold text-sm text-gray-900"
+          >
             Description
           </label>
-          <JoditReact content={state.content} setState={setState} />
-        </div>
 
+          <textarea
+            rows="3"
+            className="w-full p-2  text-black  border rounded-md outline-none focus:outline-primaryAlfa-50"
+            type="text"
+            {...register("description", {
+              required: " Description is required",
+            })}
+            placeholder="Please enter  description"
+          />
+          {errors.description && (
+            <p className="text-red-500 text-[12px] ">
+              {errors?.description?.message}
+            </p>
+          )}
+        </div>
         {state.media && state.mediaPreview && (
           <Media
             mediaPreview={state.mediaPreview}
             mediaType={state.mediaType}
-           setState={setState}
+            setState={setState}
           />
         )}
         {/* media and button */}
@@ -387,6 +405,7 @@ const AddProgramForm = ({ setModalOpen }) => {
           videoPreview={state.mediaPreview}
           isOpen={state.mediaModalOpen}
           setState={setState}
+          state={state}
         />
       )}
     </>

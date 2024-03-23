@@ -61,10 +61,10 @@ const AfterSelectPhoto = ({
       <div
         className={`fixed inset-0 z-50 ${
           isOpen ? "opacity-100 visible" : "opacity-0 invisible"
-        } transition-opacity duration-300 ease-in-out flex items-center justify-center `}
+        } transition-opacity duration-300 ease-in-out flex items-center justify-center  `}
       >
         <div className="fixed inset-0 backdrop-filter backdrop-blur-sm"></div>
-        <div className="bg-white rounded-md z-10  w-full max-w-5xl  max-h-full mt-[10vh] relative mx-1 ">
+        <div className="bg-white rounded-md z-10  w-full max-w-5xl   relative mx-1 h-full  ">
           <div className="p-4 border-b py-6">
             <button
               onClick={() => handleCancel()}
@@ -74,10 +74,7 @@ const AfterSelectPhoto = ({
             </button>
           </div>
 
-          <div
-            className="p-8 overflow-y-auto"
-            style={{ height: "calc(100vh - 120px)" }}
-          >
+          <div className="p-8" >
             <div className="grid grid-cols-1 ">
               <div className=" grid grid-cols-1 gap-3">
                 <div className="border p-1 relative">

@@ -10,6 +10,7 @@ const LearningProgram = () => {
   // redux api
   const { data: programInfo, isLoading } = useGetAllProgramQuery();
   const allProgramData = programInfo?.data;
+
  
 
   return (
@@ -29,7 +30,6 @@ const LearningProgram = () => {
         isLoading={isLoading}
         error={false}
         tableData={allProgramData}
-      
         columns={[
           {
             name: "Media",
@@ -46,6 +46,7 @@ const LearningProgram = () => {
                     controls
                     width={"208px"}
                     height={"112px"}
+                    light={item?.media?.thumbnail}
                     url={item?.media?.url}
                   />
                 )}
