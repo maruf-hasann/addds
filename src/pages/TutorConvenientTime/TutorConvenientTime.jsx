@@ -8,7 +8,7 @@ import UpdateTutorConvenientTime from "../../components/TutorConvenientTime/Upda
 import {
   useDeleteTutorConvenientTimeMutation,
   useGetTutorConvenientTimeQuery,
-} from "../../store/service/tutorConvenientTime/tutorConvenientTimeApiService";
+} from "../../store/service/tutorConvenient/tutorConvenientTimeApiService";
 
 const TutorConvenientTime = () => {
   const [state, setState] = useState({
