@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { FaEdit,  FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import { Button } from "@material-tailwind/react";
 import DataTable from "../../components/Shared/DataTable/DataTable";
-import {
-  useDeleteTutorConvenientTimeMutation,
-  useGetTutorConvenientTimeQuery,
-} from "../../store/service/TutorConvenientTime/TutorConvenientTimeApiService";
 import AddConvenientTime from "../../components/TutorConvenientTime/AddConvenientTime";
 import DeleteModal from "../../components/Shared/DeleteModal/DeleteModal";
 import UpdateTutorConvenientTime from "../../components/TutorConvenientTime/UpdateTutorConvenientTime";
+import {
+  useDeleteTutorConvenientTimeMutation,
+  useGetTutorConvenientTimeQuery,
+} from "../../store/service/tutorConvenientTime/tutorConvenientTimeApiService";
 
 const TutorConvenientTime = () => {
   const [state, setState] = useState({
@@ -17,8 +17,6 @@ const TutorConvenientTime = () => {
     timeData: null,
     updateModal: false,
     updateData: null,
-
-    
   });
 
   // redux api
@@ -41,12 +39,12 @@ const TutorConvenientTime = () => {
     }));
   };
   // closeUpdate modal
-   const closeUpdateModal = (newState) => {
-     setState((prev) => ({
-       ...prev,
-       updateModal: newState,
-     }));
-   };
+  const closeUpdateModal = (newState) => {
+    setState((prev) => ({
+      ...prev,
+      updateModal: newState,
+    }));
+  };
   return (
     <>
       <div className="py-10">

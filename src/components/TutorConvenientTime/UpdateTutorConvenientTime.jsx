@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import { FaSpinner } from "react-icons/fa";
-import { useUpdateTutorConvenientTimeMutation } from "../../store/service/TutorConvenientTime/TutorConvenientTimeApiService";
+import { useUpdateTutorConvenientTimeMutation } from "../../store/service/tutorConvenientTime/tutorConvenientTimeApiService";
 
 
 const UpdateTutorConvenientTime = ({
