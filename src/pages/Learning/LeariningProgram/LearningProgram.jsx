@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
+import moment from "moment";
 import AddProgram from "../../../components/Learning/Program/AddProgram";
 import { useGetAllProgramQuery } from "../../../store/service/learningProgram/learningProgramApiService";
 import DataTable from "../../../components/Shared/DataTable/DataTable";
 import { FaRegImage } from "react-icons/fa6";
+import { formatAMPM } from "../../../libs/formatAMPM";
 
 const LearningProgram = () => {
   const [modalOpen, setModalOpen] = useState(false);
   // redux api
   const { data: programInfo, isLoading } = useGetAllProgramQuery();
   const allProgramData = programInfo?.data;
-
- 
 
   return (
     <div className="py-10 w-full">
@@ -61,15 +61,18 @@ const LearningProgram = () => {
             key: "_id",
           },
           {
-            name: "Starting Time",
-            dataIndex: "startingTime",
-            key: "_id",
+            name: "Schedule Time",
+            render: ({ item }) => <div>{formatAMPM(item?.startingTime)}</div>,
           },
           {
-            name: "Schedule Time",
-            dataIndex: "scheduleTime",
-            key: "_id",
+            name: "Starting Time",
+            render: ({ item }) => (
+              <div>
+                {moment(item?.startingTime).format("dddd, MMMM Do YYYY")}
+              </div>
+            ),
           },
+
           {
             name: "Batch No",
             dataIndex: "batchNo",

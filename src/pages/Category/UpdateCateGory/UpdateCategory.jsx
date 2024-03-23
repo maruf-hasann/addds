@@ -30,11 +30,7 @@ const UpdateCategory = ({ updateModal, setUpdateModal, updateData }) => {
   } = useForm();
   // show image after changing
   const post_image = watch("post_image");
-  useEffect(() => {
-    if (post_image?.length > 0) {
-      setImageShow(URL.createObjectURL(post_image[0]));
-    }
-  }, [watch, post_image]);
+
   // from data
   const onSubmit = async (data) => {
     //   image
@@ -58,6 +54,11 @@ const UpdateCategory = ({ updateModal, setUpdateModal, updateData }) => {
   const handleClose = () => {
     setUpdateModal(!updateModal);
   };
+    useEffect(() => {
+      if (post_image?.length > 0) {
+        setImageShow(URL.createObjectURL(post_image[0]));
+      }
+    }, [watch, post_image]);
   // reset value
   useEffect(() => {
     reset({

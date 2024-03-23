@@ -72,6 +72,7 @@ import BlogBanner from "../pages/BlogBanner/BlogBanner";
 import SubCategory from "../pages/SubCategory/SubCategory";
 import LearningProgram from "../pages/Learning/LeariningProgram/LearningProgram";
 import LearningCategory from "../pages/Learning/LearningCategory/LearningCategory";
+import TutorConvenientTime from "../pages/TutorConvenientTime/TutorConvenientTime";
 
 export const router = createBrowserRouter([
   {
@@ -102,6 +103,10 @@ export const router = createBrowserRouter([
       {
         path: "/all-tutoring-places",
         element: <AllTutoringPlace />,
+      },
+      {
+        path: "/convenient-time",
+        element: <TutorConvenientTime />,
       },
 
       {
@@ -211,16 +216,18 @@ export const router = createBrowserRouter([
       {
         path: "/blog",
         element: <AllBlog />,
-      }, {
+      },
+      {
         path: "/blog-banner",
-        element:<BlogBanner/>
+        element: <BlogBanner />,
       },
       {
         path: "/category",
         element: <AllCategory />,
-      },  {
+      },
+      {
         path: "/sub-category",
-        element: <SubCategory/>,
+        element: <SubCategory />,
       },
       {
         path: "/video",
@@ -305,11 +312,13 @@ export const router = createBrowserRouter([
       {
         path: "/all-hired-mock-test-jobs",
         element: <MockTestHiredJobBoard />,
-      }, {
-            path: "/learning-program",
+      },
+      {
+        path: "/learning-program",
         element: <LearningProgram />,
-      },{
-            path: "/learning-category",
+      },
+      {
+        path: "/learning-category",
         element: <LearningCategory />,
       },
       {

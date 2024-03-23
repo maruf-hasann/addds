@@ -3,6 +3,7 @@ import AddLearningCategory from '../../../components/Learning/LearningCategory/A
 
 const LearningCategory = () => {
      const [modalOpen, setModalOpen] = useState(false);
+     
     return (
       <div className="py-10 w-full">
         <div className="flex justify-between items-center mb-5">

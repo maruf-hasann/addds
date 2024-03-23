@@ -27,7 +27,6 @@ const AddProgramForm = ({ setModalOpen }) => {
       youtube: false,
     },
   });
-  console.log(state.thumbnail);
 
   //  redux api
   const [addLearningProgram, { isLoading }] = useAddLearningProgramMutation();
@@ -114,6 +113,8 @@ const AddProgramForm = ({ setModalOpen }) => {
 
   // from data
   const onSubmit = async (data) => {
+
+    
     let number = "8801711223344";
 
     if (state.media) {
